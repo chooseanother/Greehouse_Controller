@@ -34,4 +34,16 @@
         android:name="com.example.greehousecontroller.ui.settings.SettingsFragment"
         android:label="@string/menu_settings"
         tools:layout="@layout/fragment_settings" />
+
+    <fragment
+        android:id="@+id/nav_login"
+        android:name="com.example.greehousecontroller.ui.login_register.LoginFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_login" />
+
+    <fragment
+        android:id="@+id/nav_register"
+        android:name="com.example.greehousecontroller.ui.login_register.RegisterFragment"
+        android:label="Register"
+        tools:layout="@layout/fragment_register" />
 </navigation>
