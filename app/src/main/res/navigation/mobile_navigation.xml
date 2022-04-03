@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.greehousecontroller.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_status"
+        android:name="com.example.greehousecontroller.ui.status.StatusFragment"
+        android:label="@string/menu_status"
+        tools:layout="@layout/fragment_status" />
+
+    <fragment
+        android:id="@+id/nav_graphs"
+        android:name="com.example.greehousecontroller.ui.graphs.GraphsFragment"
+        android:label="@string/menu_graphs"
+        tools:layout="@layout/fragment_graphs" />
+
+    <fragment
+        android:id="@+id/nav_pots"
+        android:name="com.example.greehousecontroller.ui.pots.PotsFragment"
+        android:label="@string/menu_pots"
+        tools:layout="@layout/fragment_pots" />
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.example.greehousecontroller.ui.settings.SettingsFragment"
+        android:label="@string/menu_settings"
+        tools:layout="@layout/fragment_settings" />
+</navigation>
