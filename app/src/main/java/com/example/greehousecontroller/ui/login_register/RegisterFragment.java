@@ -8,18 +8,18 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.greehousecontroller.databinding.FragmentHomeBinding;
+import com.example.greehousecontroller.databinding.FragmentRegisterBinding;
 
 public class RegisterFragment extends Fragment {
 
-    private FragmentHomeBinding binding;
+    private FragmentRegisterBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         RegisterViewModel registerViewModel =
                 new ViewModelProvider(this).get(RegisterViewModel.class);
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentRegisterBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         return root;
