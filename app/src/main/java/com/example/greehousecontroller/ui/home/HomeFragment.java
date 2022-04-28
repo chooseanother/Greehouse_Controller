@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -24,7 +25,6 @@ import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
 
-    private FragmentHomeBinding binding;
     private RecyclerView recyclerView;
     private HomeFragmentAdapter adapter;
     private ArrayList<Pot> potArrayList;
@@ -39,7 +39,6 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        //View root = binding.getRoot();
         homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
         homeViewModel.getAllPots().observe(getViewLifecycleOwner(), new Observer<ArrayList<Pot>>() {
@@ -50,13 +49,16 @@ public class HomeFragment extends Fragment {
         });
         root = inflater.inflate(R.layout.fragment_home, container, false);
         settingOfTextViews();
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
         recyclerView = root.findViewById(R.id.listOfPotsRecycleView);
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         potArrayList = new ArrayList<>();
         adapter = new HomeFragmentAdapter(potArrayList);
         recyclerView.setAdapter(adapter);
+        adapter.setOnClickListener(pot -> {
+            //For now
+            Toast.makeText(getContext(), pot.getName(), Toast.LENGTH_SHORT).show();
+        });
         testingData(potArrayList);
         return root;
     }
@@ -64,7 +66,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding = null;
     }
 
     public void settingOfTextViews(){
@@ -102,8 +103,8 @@ public class HomeFragment extends Fragment {
     }
 
     public void testingData(ArrayList<Pot> pots){
-        pots.add(new Pot(1, 60));
-        pots.add(new Pot(2, 59));
-        pots.add(new Pot(3, 0));
+        pots.add(new Pot("Cactus", 60, 50));
+        pots.add(new Pot("Weed", 59, 30));
+        pots.add(new Pot("More weed", 0, 0));
     }
 }

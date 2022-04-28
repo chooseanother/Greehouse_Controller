@@ -1,19 +1,25 @@
 package com.example.greehousecontroller.model;
 
 public class Pot {
-    private int id;
-    private int moisture;
+    private String name;
+    private int currentHumidity;
+    private int minimalHumidity;
 
-    public Pot(int id, int moisture) {
-        this.id = id;
-        this.moisture = moisture;
+    public Pot(String name, int currentHumidity, int minimalHumidity) {
+        this.name = name;
+        this.currentHumidity = currentHumidity;
+        this.minimalHumidity = minimalHumidity;
     }
 
-    public int getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public int getMoisture() {
-        return moisture;
+    public int getCurrentHumidity() {
+        return currentHumidity;
+    }
+
+    public int getMinimalHumidity(){
+        return minimalHumidity;
     }
 }
