@@ -39,4 +39,9 @@
         android:name="com.example.greehousecontroller.ui.addPot.AddPotFragment"
         android:label="fragment_add_pot_pot"
         tools:layout="@layout/fragment_add_pot" />
+    <fragment
+        android:id="@+id/nav_login"
+        android:name="com.example.greehousecontroller.ui.login_register.LoginFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_login" />
 </navigation>
