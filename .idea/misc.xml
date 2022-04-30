@@ -3,7 +3,25 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/micha/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/fragment_login.xml" value="0.25" />
+        <entry key="..\:/Users/jakub/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/drawable/fully_round_layout_bg.xml" value="0.3545" />
+        <entry key="..\:/Users/jakub/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/drawable/home_bg.xml" value="0.3545" />
+        <entry key="..\:/Users/jakub/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/drawable/round_layout_bg.xml" value="0.3545" />
+        <entry key="..\:/Users/jakub/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/activity_main.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/jakub/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/fragment_home.xml" value="0.5" />
+        <entry key="..\:/Users/jakub/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/fragment_pots.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/jakub/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/pot_item.xml" value="0.25" />
+        <entry key="..\:/Users/jakub/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/menu/activity_main_drawer.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/micha/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/activity_main.xml" value="0.18541666666666667" />
+        <entry key="..\:/Users/micha/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/app_bar_main.xml" value="0.18541666666666667" />
+        <entry key="..\:/Users/micha/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/content_main.xml" value="0.18541666666666667" />
+        <entry key="..\:/Users/micha/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/fragment_graphs.xml" value="0.18541666666666667" />
+        <entry key="..\:/Users/micha/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/fragment_home.xml" value="0.18541666666666667" />
+        <entry key="..\:/Users/micha/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/fragment_login.xml" value="0.22" />
+        <entry key="..\:/Users/micha/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/fragment_pots.xml" value="0.18541666666666667" />
+        <entry key="..\:/Users/micha/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/fragment_register.xml" value="0.18541666666666667" />
+        <entry key="..\:/Users/micha/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/fragment_settings.xml" value="0.18541666666666667" />
+        <entry key="..\:/Users/micha/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/fragment_status.xml" value="0.18541666666666667" />
+        <entry key="..\:/Users/micha/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/nav_header_main.xml" value="0.18541666666666667" />
         <entry key="app/src/main/res/layout/.xml" value="0.375" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.375" />
         <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.1" />

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "438617250907",
+    "project_id": "greehouse-controller",
+    "storage_bucket": "greehouse-controller.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:438617250907:android:0af76f84204fb64e39b37e",
+        "android_client_info": {
+          "package_name": "com.example.greehousecontroller"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "438617250907-dduflpib90gckl8dvnml4dach97vk4lg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkvzYc3Qu4-NK_4cn2pk8QOUyL7wvHI-A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "438617250907-dduflpib90gckl8dvnml4dach97vk4lg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
