@@ -8,23 +8,21 @@
     tools:context=".ui.addPot.AddPotFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="310dp"
+        android:layout_width="match_parent"
         android:layout_height="333dp"
+        android:layout_margin="@dimen/margin_from_screen_edges"
         android:background="@drawable/round_layout_bg"
-        android:backgroundTint="#66827A7A"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:backgroundTint="@color/grey_background"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.108">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginStart="@dimen/small_margin"
+            android:layout_marginTop="@dimen/small_margin"
             android:text="Name:"
             android:textColor="#FFFFFF"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,22 +32,21 @@
             android:id="@+id/potNameTextView"
             android:layout_width="250dp"
             android:layout_height="42dp"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="64dp"
+            android:layout_marginTop="@dimen/small_margin"
+            android:layout_marginStart="@dimen/small_margin"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-        </EditText>
+            app:layout_constraintTop_toBottomOf="@+id/textView5"/>
 
         <TextView
             android:id="@+id/textView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginBottom="178dp"
+            android:layout_marginTop="@dimen/small_margin"
             android:text="Minimal humidity:"
             android:textColor="#FFFFFF"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:layout_marginStart="@dimen/small_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/potNameTextView" />
 
         <Button
             android:id="@+id/saveAddPotButton"
@@ -82,31 +79,31 @@
             android:id="@+id/minimalHumidityTextView"
             android:layout_width="50dp"
             android:layout_height="20dp"
-            android:layout_marginStart="150dp"
-            android:layout_marginBottom="177.5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"></EditText>
+            android:layout_marginTop="@dimen/small_margin"
+            android:layout_marginLeft="@dimen/small_margin"
+            app:layout_constraintStart_toEndOf="@+id/textView7"
+            app:layout_constraintTop_toBottomOf="@+id/potNameTextView" />
 
 
         <TextView
             android:id="@+id/textView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginBottom="128dp"
+            android:layout_marginStart="@dimen/small_margin"
+            android:layout_marginTop="@dimen/small_margin"
             android:text="Sensor:"
             android:textColor="#FFFFFF"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
         <Spinner
             android:id="@+id/sensorSpinner"
             android:layout_width="103dp"
             android:layout_height="20dp"
-            android:layout_marginStart="96dp"
-            android:layout_marginBottom="128dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:layout_marginTop="@dimen/small_margin"
+            android:layout_marginLeft="@dimen/small_margin"
+            app:layout_constraintStart_toEndOf="@+id/textView9"
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
         <TextView
             android:id="@+id/errorMessageTextView"
