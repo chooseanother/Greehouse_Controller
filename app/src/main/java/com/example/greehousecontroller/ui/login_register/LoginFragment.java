@@ -29,10 +29,7 @@ public class LoginFragment extends Fragment {
 
         binding = FragmentLoginBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        login = root.findViewById(R.id.loginbutton);
-        login.setOnClickListener(v->{
-            ((MainActivity)getActivity()).login();
-        });
+
         return root;
     }
 
