@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.greehousecontroller.R;
 import com.example.greehousecontroller.adapters.HomeFragmentAdapter;
@@ -24,7 +25,6 @@ public class AddPotFragment extends Fragment {
     private AddPotViewModel viewModel;
     private EditText namePotTextView;
     private EditText minimalHumidityTextView;
-    private TextView errorMessage;
     private Button savePotButton;
     private Button cancelPotButton;
     private NavController navController;
@@ -38,7 +38,6 @@ public class AddPotFragment extends Fragment {
         root = inflater.inflate(R.layout.fragment_add_pot, container, false);
         namePotTextView = root.findViewById(R.id.potNameTextView);
         minimalHumidityTextView = root.findViewById(R.id.minimalHumidityTextView);
-        errorMessage = root.findViewById(R.id.errorMessageTextView);
         savePotButton = root.findViewById(R.id.saveAddPotButton);
         cancelPotButton = root.findViewById(R.id.cancelPotButton);
         navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment_content_main);
@@ -47,14 +46,13 @@ public class AddPotFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //Should include sensor in the future
-                if(viewModel.validInput(namePotTextView.getText().toString(),
-                        minimalHumidityTextView.getText().toString()) == null){
+                String result = viewModel.validInput(namePotTextView.getText().toString(),
+                        minimalHumidityTextView.getText().toString());
+                if(result == null){
                     navController.navigate(R.id.nav_home);
                 }
                 else{
-                    errorMessage.setVisibility(View.VISIBLE);
-                    errorMessage.setText(viewModel.validInput(namePotTextView.getText().toString(),
-                            minimalHumidityTextView.getText().toString()));
+                    Toast.makeText(getContext(), ""+result, Toast.LENGTH_SHORT).show();
                 }
             }
         });
