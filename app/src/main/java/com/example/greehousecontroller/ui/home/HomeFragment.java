@@ -46,6 +46,10 @@ public class HomeFragment extends Fragment {
             String tmp = temperature.getTemperature() + " °C";
             temperatureTextView.setText(tmp);
         });
+        homeViewModel.getGreenHouseData().getValue().getHumidity().observe(getViewLifecycleOwner(), humidity -> {
+            String tmp = humidity.getHumidity() + " °%";
+            temperatureTextView.setText(tmp);
+        });
         root = inflater.inflate(R.layout.fragment_home, container, false);
         settingOfTextViews();
         recyclerView = root.findViewById(R.id.listOfPotsRecycleView);
@@ -89,7 +93,7 @@ public class HomeFragment extends Fragment {
 
         GreenHouse greenHouse = homeViewModel.getGreenHouseData().getValue();
         if(greenHouse != null){
-            humidityTextView.setText(greenHouse.getHumidity() + " %");
+            humidityTextView.setText(greenHouse.getHumidity().getValue().getHumidity() + " %");
             temperatureTextView.setText(greenHouse.getTemperature().getValue().getTemperature() + " °C");
             co2TextView.setText(greenHouse.getCo2() + " grams");
             luminosityTextView.setText(greenHouse.getLuminosity() + " lum");
