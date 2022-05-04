@@ -7,8 +7,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.greehousecontroller.Repository.Measurements.Humidity.HumidityRepository;
 import com.example.greehousecontroller.Repository.Measurements.Temperature.TemperatureRepository;
 import com.example.greehousecontroller.model.GreenHouse;
+import com.example.greehousecontroller.model.Humidity;
 import com.example.greehousecontroller.model.Pot;
 import com.example.greehousecontroller.model.Temperature;
 import com.example.greehousecontroller.model.User;
@@ -21,12 +23,16 @@ public class HomeViewModel extends AndroidViewModel {
     private final MutableLiveData<ArrayList<Pot>> pots;
     private final MutableLiveData<GreenHouse> greenHouseData;
     private final MutableLiveData<User> user;
+    private TemperatureRepository temperatureRepository;
+    private HumidityRepository humidityRepository;
 
     public HomeViewModel(Application application) {
         super(application);
+        temperatureRepository = TemperatureRepository.getInstance(application);
+        humidityRepository = HumidityRepository.getInstance(application);
         //Getting data from repository in the future
         pots = new MutableLiveData<>();
-        greenHouseData = new MutableLiveData<>(new GreenHouse(application, 4321, 1234));
+        greenHouseData = new MutableLiveData<>();
         user = new MutableLiveData<>();
         ArrayList<Pot> newList = new ArrayList<>();
         pots.setValue(newList);
@@ -51,8 +57,16 @@ public class HomeViewModel extends AndroidViewModel {
         return user;
     }
 
+    public MutableLiveData<Temperature> getLatestTemperature() {
+        return temperatureRepository.getLatest();
+    }
 
-    public void updateMeasurements(){
-        greenHouseData.getValue().updateMeasurements();
+    public MutableLiveData<Humidity> getLatestHumidity() {
+        return humidityRepository.getLatest();
+    }
+
+    public void updateLatestMeasurements(String greenhouseId){
+        temperatureRepository.updateLatestMeasurement(greenhouseId);
+        humidityRepository.updateLatestMeasurement(greenhouseId);
     }
 }

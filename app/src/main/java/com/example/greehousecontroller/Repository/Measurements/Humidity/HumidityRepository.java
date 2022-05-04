@@ -44,13 +44,14 @@ public class HumidityRepository {
             @Override
             public void onResponse(Call<List<Humidity>> call, Response<List<Humidity>> response) {
                 if (response.isSuccessful()){
+                    Log.i("Api-hum-ulm", response.body().toString());
                     latest.setValue(response.body().get(0));
                 }
             }
             @EverythingIsNonNull
             @Override
             public void onFailure(Call<List<Humidity>> call, Throwable t) {
-                Log.e("Api",t.getMessage());
+                Log.e("Api-hum-ulm",t.getMessage());
             }
         });
     }

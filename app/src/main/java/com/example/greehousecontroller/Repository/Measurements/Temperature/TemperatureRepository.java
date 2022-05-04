@@ -44,13 +44,14 @@ public class TemperatureRepository {
             @Override
             public void onResponse(Call<List<Temperature>> call, Response<List<Temperature>> response) {
                 if (response.isSuccessful()){
+                    Log.i("Api-temp-ulm", response.body().toString());
                     latest.setValue(response.body().get(0));
                 }
             }
             @EverythingIsNonNull
             @Override
             public void onFailure(Call<List<Temperature>> call, Throwable t) {
-                Log.e("Api",t.getMessage());
+                Log.e("Api-temp-ulm",t.getMessage());
             }
         });
     }

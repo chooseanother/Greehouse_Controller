@@ -5,7 +5,7 @@ import java.util.Date;
 public class Temperature {
     private double temperature;
     // TODO: Figure out how to convert the time in ap to date
-    private int time;
+    private long time;
     private String greenHouseId;
 
     public Temperature() {
@@ -24,7 +24,7 @@ public class Temperature {
         this.temperature = temperature;
     }
 
-    public int getTime() {
+    public long getTime() {
         return time;
     }
 
@@ -38,5 +38,14 @@ public class Temperature {
 
     public void setGreenHouseId(String greenHouseId) {
         this.greenHouseId = greenHouseId;
+    }
+
+    @Override
+    public String toString() {
+        return "Temperature{" +
+                "temperature=" + temperature +
+                ", time=" + time +
+                ", greenHouseId='" + greenHouseId + '\'' +
+                '}';
     }
 }
