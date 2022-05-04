@@ -21,18 +21,16 @@ public class HomeViewModel extends AndroidViewModel {
     private final MutableLiveData<ArrayList<Pot>> pots;
     private final MutableLiveData<GreenHouse> greenHouseData;
     private final MutableLiveData<User> user;
-    private TemperatureRepository temperatureRepository;
 
     public HomeViewModel(Application application) {
         super(application);
         //Getting data from repository in the future
         pots = new MutableLiveData<>();
-        greenHouseData = new MutableLiveData<>();
+        greenHouseData = new MutableLiveData<>(new GreenHouse(application, 4321, 34, 1234));
         user = new MutableLiveData<>();
         ArrayList<Pot> newList = new ArrayList<>();
         pots.setValue(newList);
 
-        temperatureRepository = TemperatureRepository.getInstance(application);
     }
 
     public MutableLiveData<ArrayList<Pot>> getAllPots() {
@@ -53,13 +51,8 @@ public class HomeViewModel extends AndroidViewModel {
         return user;
     }
 
-    public MutableLiveData<Temperature> getTemperature(){
-        return temperatureRepository.getLatest();
-    }
 
     public void updateMeasurements(){
-        // TODO: handle greenhouseid
-        String greenhouseid = "test";
-        temperatureRepository.updateLatestMeasurement(greenhouseid);
+        greenHouseData.getValue().updateMeasurements();
     }
 }
