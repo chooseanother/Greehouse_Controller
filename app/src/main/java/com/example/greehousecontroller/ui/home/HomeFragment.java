@@ -42,14 +42,7 @@ public class HomeFragment extends Fragment {
         homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
         homeViewModel.getAllPots().observe(getViewLifecycleOwner(), pots -> potArrayList.addAll(pots));
-        homeViewModel.getGreenHouseData().getValue().getTemperature().observe(getViewLifecycleOwner(), temperature -> {
-            String tmp = temperature.getTemperature() + " °C";
-            temperatureTextView.setText(tmp);
-        });
-        homeViewModel.getGreenHouseData().getValue().getHumidity().observe(getViewLifecycleOwner(), humidity -> {
-            String tmp = humidity.getHumidity() + " °%";
-            temperatureTextView.setText(tmp);
-        });
+
         root = inflater.inflate(R.layout.fragment_home, container, false);
         settingOfTextViews();
         recyclerView = root.findViewById(R.id.listOfPotsRecycleView);
@@ -63,25 +56,38 @@ public class HomeFragment extends Fragment {
             Toast.makeText(getContext(), pot.getName(), Toast.LENGTH_SHORT).show();
         });
         testingData(potArrayList);
-        updateMeasurements();
+        updateLatestMeasurements();
+        observeData();
         return root;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        updateMeasurements();
+        updateLatestMeasurements();
     }
 
     @Override
     public void onResume(){
         super.onResume();
-        updateMeasurements();
+        updateLatestMeasurements();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    private void observeData(){
+        homeViewModel.getLatestTemperature().observe(getViewLifecycleOwner(),temperature -> {
+            String display = temperature.getTemperature() + " °C";
+            temperatureTextView.setText(display);
+        });
+        homeViewModel.getLatestHumidity().observe(getViewLifecycleOwner(),humidity -> {
+            String display = humidity.getHumidity() + " %";
+            humidityTextView.setText(display);
+        });
+
     }
 
     public void settingOfTextViews(){
@@ -93,14 +99,14 @@ public class HomeFragment extends Fragment {
 
         GreenHouse greenHouse = homeViewModel.getGreenHouseData().getValue();
         if(greenHouse != null){
-//            humidityTextView.setText(greenHouse.getHumidity().getValue().getHumidity() + " %");
-//            temperatureTextView.setText(greenHouse.getTemperature().getValue().getTemperature() + " °C");
+//            humidityTextView.setText(greenHouse.getHumidity() + " %");
+//            temperatureTextView.setText(greenHouse.getTemperature() + " °C");
             co2TextView.setText(greenHouse.getCo2() + " grams");
             luminosityTextView.setText(greenHouse.getLuminosity() + " lum");
         }
         else{
-            humidityTextView.setText("Unkown" + " %");
-            temperatureTextView.setText("Unknown" + " °C");
+//            humidityTextView.setText("Unkown" + " %");
+//            temperatureTextView.setText("Unknown" + " °C");
             co2TextView.setText("Unknown" + " grams");
             luminosityTextView.setText("Unknown" + " lum");
         }
@@ -124,7 +130,8 @@ public class HomeFragment extends Fragment {
         pots.add(new Pot("More weed", 0, 0));
     }
 
-    private void updateMeasurements(){
-        homeViewModel.updateMeasurements();
+    private void updateLatestMeasurements(){
+        // TODO: Figure out how to handle greenhouseId
+        homeViewModel.updateLatestMeasurements("test");
     }
 }

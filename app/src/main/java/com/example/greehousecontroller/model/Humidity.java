@@ -38,4 +38,13 @@ public class Humidity {
     public void setGreenhouseId(String greenhouseId) {
         this.greenhouseId = greenhouseId;
     }
+
+    @Override
+    public String toString() {
+        return "Humidity{" +
+                "humidity=" + humidity +
+                ", time=" + time +
+                ", greenhouseId='" + greenhouseId + '\'' +
+                '}';
+    }
 }
