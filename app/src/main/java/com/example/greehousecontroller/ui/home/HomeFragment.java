@@ -41,11 +41,10 @@ public class HomeFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
-        homeViewModel.getAllPots().observe(getViewLifecycleOwner(), new Observer<ArrayList<Pot>>() {
-            @Override
-            public void onChanged(ArrayList<Pot> pots) {
-                potArrayList.addAll(pots);
-            }
+        homeViewModel.getAllPots().observe(getViewLifecycleOwner(), pots -> potArrayList.addAll(pots));
+        homeViewModel.getTemperature().observe(getViewLifecycleOwner(), temperature -> {
+            String tmp = temperature.getTemperature() + " °C";
+            temperatureTextView.setText(tmp);
         });
         root = inflater.inflate(R.layout.fragment_home, container, false);
         settingOfTextViews();
@@ -60,7 +59,20 @@ public class HomeFragment extends Fragment {
             Toast.makeText(getContext(), pot.getName(), Toast.LENGTH_SHORT).show();
         });
         testingData(potArrayList);
+        updateMeasurements();
         return root;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        updateMeasurements();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        updateMeasurements();
     }
 
     @Override
@@ -78,13 +90,13 @@ public class HomeFragment extends Fragment {
         GreenHouse greenHouse = homeViewModel.getGreenHouseData().getValue();
         if(greenHouse != null){
             humidityTextView.setText(greenHouse.getHumidity() + " %");
-            temperatureTextView.setText(greenHouse.getTemperature() + " °C");
+//            temperatureTextView.setText(greenHouse.getTemperature() + " °C");
             co2TextView.setText(greenHouse.getCo2() + " grams");
             luminosityTextView.setText(greenHouse.getLuminosity() + " lum");
         }
         else{
             humidityTextView.setText("Unkown" + " %");
-            temperatureTextView.setText("Unknown" + " °C");
+//            temperatureTextView.setText("Unknown" + " °C");
             co2TextView.setText("Unknown" + " grams");
             luminosityTextView.setText("Unknown" + " lum");
         }
@@ -106,5 +118,10 @@ public class HomeFragment extends Fragment {
         pots.add(new Pot("Cactus", 60, 50));
         pots.add(new Pot("Weed", 59, 30));
         pots.add(new Pot("More weed", 0, 0));
+    }
+
+    private void updateMeasurements(){
+        // TODO: Figure out if greenhouse id is put here
+        homeViewModel.updateMeasurements();
     }
 }
