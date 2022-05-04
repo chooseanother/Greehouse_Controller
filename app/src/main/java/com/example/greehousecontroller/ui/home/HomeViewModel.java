@@ -26,7 +26,7 @@ public class HomeViewModel extends AndroidViewModel {
         super(application);
         //Getting data from repository in the future
         pots = new MutableLiveData<>();
-        greenHouseData = new MutableLiveData<>(new GreenHouse(application, 4321, 34, 1234));
+        greenHouseData = new MutableLiveData<>(new GreenHouse(application, 4321, 1234));
         user = new MutableLiveData<>();
         ArrayList<Pot> newList = new ArrayList<>();
         pots.setValue(newList);
