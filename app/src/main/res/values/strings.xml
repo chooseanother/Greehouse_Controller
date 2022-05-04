@@ -28,4 +28,12 @@
     <string name="backgroundimage">BackgroundImage</string>
     <string name="register">Register</string>
     <string name="confirm_password">Confirm Password</string>
+
+    <!--Buttons for the whole app-->
+    <string name="cancel_button">Cancel</string>
+    <string name="save_button">Save</string>
+
+    <!--Add pot-->
+    <string name="add_pot_minimal_humidity">Minimal humidity:</string>
+    <string name="add_pot_name">Name:</string>
 </resources>

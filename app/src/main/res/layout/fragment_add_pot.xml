@@ -9,7 +9,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="333dp"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_from_screen_edges"
         android:background="@drawable/round_layout_bg"
         android:backgroundTint="@color/grey_background"
@@ -23,8 +23,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/small_margin"
             android:layout_marginTop="@dimen/small_margin"
-            android:text="Name:"
-            android:textColor="#FFFFFF"
+            android:text="@string/add_pot_name"
+            android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -42,8 +42,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/small_margin"
-            android:text="Minimal humidity:"
-            android:textColor="#FFFFFF"
+            android:text="@string/add_pot_minimal_humidity"
+            android:textColor="@color/white"
             android:layout_marginStart="@dimen/small_margin"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/potNameTextView" />
@@ -52,35 +52,34 @@
             android:id="@+id/saveAddPotButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginBottom="28dp"
-            android:backgroundTint="#AEFF92"
+            android:layout_margin="@dimen/medium_margin"
+            android:backgroundTint="@color/green_button_save"
             android:onClick="saveButtonHandle"
-            android:text="SAVE"
-            android:textColor="#A3A3A3"
-            app:iconTint="#AEFF92"
+            android:text="@string/save_button"
+            android:textColor="@color/button_text_grey"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
         <Button
             android:id="@+id/cancelPotButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="28dp"
-            android:layout_marginBottom="28dp"
-            android:backgroundTint="#FFD1D1"
+            android:layout_margin="@dimen/medium_margin"
+            android:backgroundTint="@color/red_button_cancel"
             android:onClick="cancelButtonHandle"
-            android:text="CANCEL"
-            android:textColor="#A3A3A3"
+            android:text="@string/cancel_button"
+            android:textColor="@color/button_text_grey"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
         <EditText
             android:id="@+id/minimalHumidityTextView"
             android:layout_width="50dp"
-            android:layout_height="20dp"
+            android:layout_height="@dimen/medium_text_size"
             android:layout_marginTop="@dimen/small_margin"
-            android:layout_marginLeft="@dimen/small_margin"
+            android:layout_marginStart="@dimen/small_margin"
             app:layout_constraintStart_toEndOf="@+id/textView7"
             app:layout_constraintTop_toBottomOf="@+id/potNameTextView" />
 
@@ -92,30 +91,18 @@
             android:layout_marginStart="@dimen/small_margin"
             android:layout_marginTop="@dimen/small_margin"
             android:text="Sensor:"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
         <Spinner
             android:id="@+id/sensorSpinner"
             android:layout_width="103dp"
-            android:layout_height="20dp"
+            android:layout_height="@dimen/medium_text_size"
             android:layout_marginTop="@dimen/small_margin"
-            android:layout_marginLeft="@dimen/small_margin"
+            android:layout_marginStart="@dimen/small_margin"
             app:layout_constraintStart_toEndOf="@+id/textView9"
             app:layout_constraintTop_toBottomOf="@+id/textView7" />
-
-        <TextView
-            android:id="@+id/errorMessageTextView"
-            android:layout_width="310dp"
-            android:layout_height="18dp"
-            android:layout_marginBottom="88dp"
-            android:text="TextView"
-            android:textAlignment="center"
-            android:textColor="#9A2222"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

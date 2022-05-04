@@ -8,7 +8,7 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="margin_from_screen_edges">32dp</dimen>
     <dimen name="small_margin">16dp</dimen>
-    <dimen name="medium_vertical_margin">32dp</dimen>
+    <dimen name="medium_margin">32dp</dimen>
 
     <dimen name="medium_text_size">20sp</dimen>
 </resources>
