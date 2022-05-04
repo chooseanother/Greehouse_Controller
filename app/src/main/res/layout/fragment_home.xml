@@ -5,11 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/home_bg"
-    tools:context=".ui.home.HomeFragment">
+    tools:context=".ui.home.HomeFragment"
+    android:backgroundTint="@color/pastel_green"
+    >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/dark_green"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
-        android:layout_width="339dp"
+        android:layout_width="match_parent"
+        android:layout_marginRight="@dimen/margin_from_screen_edges"
+        android:layout_marginLeft="@dimen/margin_from_screen_edges"
         android:layout_height="151dp"
         android:layout_marginTop="112dp"
         android:background="@drawable/round_layout_bg"
@@ -166,9 +178,11 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listOfPotsRecycleView"
-        android:layout_width="339dp"
-        android:layout_height="454dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/margin_from_screen_edges"
+        android:layout_marginRight="@dimen/margin_from_screen_edges"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/small_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
@@ -177,11 +191,10 @@
         android:id="@+id/welcomingTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="32dp"
-        android:text="TextView"
+        android:layout_marginStart="@dimen/margin_from_screen_edges"
+        android:layout_marginTop="@dimen/medium_margin"
         android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textSize="@dimen/medium_text_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -189,11 +202,10 @@
         android:id="@+id/dayDescriptionTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="20dp"
-        android:text="TextView"
+        android:layout_marginStart="@dimen/margin_from_screen_edges"
+        android:layout_marginTop="@dimen/small_margin"
         android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textSize="@dimen/medium_text_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcomingTextView" />
 
