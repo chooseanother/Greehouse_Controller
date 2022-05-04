@@ -93,8 +93,8 @@ public class HomeFragment extends Fragment {
 
         GreenHouse greenHouse = homeViewModel.getGreenHouseData().getValue();
         if(greenHouse != null){
-            humidityTextView.setText(greenHouse.getHumidity().getValue().getHumidity() + " %");
-            temperatureTextView.setText(greenHouse.getTemperature().getValue().getTemperature() + " °C");
+//            humidityTextView.setText(greenHouse.getHumidity().getValue().getHumidity() + " %");
+//            temperatureTextView.setText(greenHouse.getTemperature().getValue().getTemperature() + " °C");
             co2TextView.setText(greenHouse.getCo2() + " grams");
             luminosityTextView.setText(greenHouse.getLuminosity() + " lum");
         }

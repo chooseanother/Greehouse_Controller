@@ -10,6 +10,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 public interface HumidityApi {
-    @GET("{id}")
-    Call<List<Humidity>> getLatestHumidity(@Path("id") String greenhouseId);
+    @GET("Humidity/{greenhouseId}")
+    Call<List<Humidity>> getLatestHumidity(@Path("greenhouseId") String greenhouseId);
 }
