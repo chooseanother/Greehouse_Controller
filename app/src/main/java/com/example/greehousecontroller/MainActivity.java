@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.greehousecontroller.Repository.UserRepository.UserRepository;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -12,6 +14,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
@@ -40,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     NavController navController;
     UserRepository userRepository;
     NavigationView navigationView;
+    FloatingActionButton fab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         initViews();
         setupNavigation();
-
+        fab = findViewById(R.id.fab);
     }
     @Override
     public void onStart() {
@@ -66,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
             navController.navigate(R.id.nav_login);
+            FloatingActionButton fab = findViewById(R.id.fab);
+            fab.setVisibility(View.INVISIBLE);
             login();
         }
     }
@@ -73,6 +79,10 @@ public class MainActivity extends AppCompatActivity {
     {
         UserRepository.getInstance().signOut(getApplication());
         navController.navigate(R.id.nav_login);
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setVisibility(View.INVISIBLE);
+        login();
     }
 
     private void initViews() {
@@ -138,6 +148,7 @@ public class MainActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            fab.setVisibility(View.VISIBLE);
                             navController.navigate(R.id.nav_home);
                         } else {
                             // If sign in fails, display a message to the user.
