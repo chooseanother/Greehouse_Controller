@@ -2,7 +2,7 @@ package com.example.greehousecontroller.model;
 
 public class Humidity {
     private double humidity;
-    // TODO: Figure out how to convert the time in api to date
+    // TODO: Implement JsonAdapterClass to handle converting to Date from seconds
     private long time;
     private String greenhouseId;
 

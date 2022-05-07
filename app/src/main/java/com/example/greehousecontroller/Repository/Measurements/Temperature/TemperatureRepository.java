@@ -23,6 +23,8 @@ public class TemperatureRepository {
     private TemperatureRepository(Application app){
         this.app = app;
         latest = new MutableLiveData<>(new Temperature());
+        // TODO: Store latest measurement in phones storage
+        //  so that if connection fails, latest received date is shown
     }
 
     public static TemperatureRepository getInstance(Application app){

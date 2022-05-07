@@ -1,17 +1,18 @@
 package com.example.greehousecontroller.model;
 
+import com.google.gson.annotations.JsonAdapter;
+
 import java.util.Date;
 
+@JsonAdapter(TemperatureJsonAdapter.class)
 public class Temperature {
     private double temperature;
-    // TODO: Figure out how to convert the time in ap to date
-    private long time;
-    private String greenHouseId;
+    private Date time;
 
     public Temperature() {
     }
 
-    public Temperature(double temperature, int time, String greenHouseId) {
+    public Temperature(double temperature, Date time) {
         this.temperature = temperature;
         this.time = time;
     }
@@ -24,20 +25,12 @@ public class Temperature {
         this.temperature = temperature;
     }
 
-    public long getTime() {
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(int time) {
+    public void setTime(Date time) {
         this.time = time;
-    }
-
-    public String getGreenHouseId() {
-        return greenHouseId;
-    }
-
-    public void setGreenHouseId(String greenHouseId) {
-        this.greenHouseId = greenHouseId;
     }
 
     @Override
@@ -45,7 +38,7 @@ public class Temperature {
         return "Temperature{" +
                 "temperature=" + temperature +
                 ", time=" + time +
-                ", greenHouseId='" + greenHouseId + '\'' +
+                 '\'' +
                 '}';
     }
 }
