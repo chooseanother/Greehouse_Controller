@@ -56,7 +56,6 @@ public class HomeFragment extends Fragment {
             Toast.makeText(getContext(), pot.getName(), Toast.LENGTH_SHORT).show();
         });
         testingData(potArrayList);
-        updateLatestMeasurements();
         observeData();
         return root;
     }
@@ -64,12 +63,13 @@ public class HomeFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        updateLatestMeasurements();
     }
 
     @Override
     public void onResume(){
         super.onResume();
+        // TODO: Figure out where to place this, is this the best place
+        //  since this is always called no matter what
         updateLatestMeasurements();
     }
 
@@ -80,12 +80,17 @@ public class HomeFragment extends Fragment {
 
     private void observeData(){
         homeViewModel.getLatestTemperature().observe(getViewLifecycleOwner(),temperature -> {
-            String display = temperature.getTemperature() + " °C";
-            temperatureTextView.setText(display);
+            String readings = temperature.getTemperature() + " °C";
+            temperatureTextView.setText(readings);
+
+            // TODO: Remove this when testing is done
+            String show = "Date: "+temperature.getTime()+" T: "+temperature.getTemperature()+" °C";
+            Toast.makeText(getContext(), show, Toast.LENGTH_SHORT).show();
+
         });
         homeViewModel.getLatestHumidity().observe(getViewLifecycleOwner(),humidity -> {
-            String display = humidity.getHumidity() + " %";
-            humidityTextView.setText(display);
+            String readings = humidity.getHumidity() + " %";
+            humidityTextView.setText(readings);
         });
 
     }
