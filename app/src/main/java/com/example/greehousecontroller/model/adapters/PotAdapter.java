@@ -27,6 +27,10 @@ public class PotAdapter extends RecyclerView.Adapter<PotAdapter.ViewHolder> {
         this.pots = pots;
     }
 
+    public void setPots(List<Pot> pots) {
+        this.pots = pots;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
