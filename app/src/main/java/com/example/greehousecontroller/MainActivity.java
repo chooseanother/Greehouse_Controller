@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.greehousecontroller.Repository.UserRepository.UserRepository;
+import com.example.greehousecontroller.databinding.ActivityMainBinding;
+import com.example.greehousecontroller.ui.home.HomeFragment;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -20,13 +22,13 @@ import com.google.android.material.navigation.NavigationView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.greehousecontroller.databinding.ActivityMainBinding;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -43,10 +45,9 @@ public class MainActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 100;
     private FirebaseAuth mAuth;
     DrawerLayout drawer;
-    NavController navController;
+    public NavController navController;
     UserRepository userRepository;
     NavigationView navigationView;
-    FloatingActionButton fab;
     Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         initViews();
         setupNavigation();
-        fab = findViewById(R.id.fab);
         toolbar = findViewById(R.id.toolbar);
 
     }
@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
         else{
             navController.navigate(R.id.nav_login);
             toolbar.setVisibility(View.GONE);
-            fab.setVisibility(View.INVISIBLE);
             login();
         }
     }
@@ -85,12 +84,14 @@ public class MainActivity extends AppCompatActivity {
     {
         UserRepository.getInstance().signOut(getApplication());
         navController.navigate(R.id.nav_login);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setVisibility(View.INVISIBLE);
         toolbar.setVisibility(View.GONE);
         login();
     }
-
+    @Override
+    public void onBackPressed(){
+        
+        super.onBackPressed();
+    }
     private void initViews() {
         setSupportActionBar(binding.appBarMain.toolbar);
         drawer = binding.drawerLayout;
@@ -105,11 +106,8 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-        binding.appBarMain.fab.setOnClickListener(view -> {
-            navController.navigate(R.id.nav_add_pot);
-        });
-    }
 
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -155,7 +153,6 @@ public class MainActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             toolbar.setVisibility(View.VISIBLE);
-                            fab.setVisibility(View.VISIBLE);
                             navController.navigate(R.id.nav_home);
                         } else {
                             // If sign in fails, display a message to the user.
