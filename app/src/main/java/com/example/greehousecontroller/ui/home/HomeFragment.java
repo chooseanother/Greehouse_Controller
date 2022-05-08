@@ -9,15 +9,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.greehousecontroller.R;
-import com.example.greehousecontroller.adapters.HomeFragmentAdapter;
-import com.example.greehousecontroller.databinding.FragmentHomeBinding;
+import com.example.greehousecontroller.model.adapters.PotAdapter;
 import com.example.greehousecontroller.model.GreenHouse;
 import com.example.greehousecontroller.model.Pot;
 import com.example.greehousecontroller.model.User;
@@ -27,7 +25,7 @@ import java.util.ArrayList;
 public class HomeFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private HomeFragmentAdapter adapter;
+    private PotAdapter adapter;
     private ArrayList<Pot> potArrayList;
     private HomeViewModel homeViewModel;
     private TextView temperatureTextView;
@@ -51,7 +49,7 @@ public class HomeFragment extends Fragment {
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         potArrayList = new ArrayList<>();
-        adapter = new HomeFragmentAdapter(potArrayList);
+        adapter = new PotAdapter(potArrayList);
         recyclerView.setAdapter(adapter);
         adapter.setOnClickListener(pot -> {
             //For now

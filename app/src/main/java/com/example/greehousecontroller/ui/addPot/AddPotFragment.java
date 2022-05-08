@@ -12,13 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.greehousecontroller.R;
-import com.example.greehousecontroller.adapters.HomeFragmentAdapter;
-
-import org.w3c.dom.Text;
 
 public class AddPotFragment extends Fragment {
 
