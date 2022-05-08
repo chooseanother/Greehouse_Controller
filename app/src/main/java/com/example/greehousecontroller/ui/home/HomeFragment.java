@@ -49,13 +49,13 @@ public class HomeFragment extends Fragment {
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         potArrayList = new ArrayList<>();
+        testingData(potArrayList);
         adapter = new PotAdapter(potArrayList);
         recyclerView.setAdapter(adapter);
         adapter.setOnClickListener(pot -> {
             //For now
             Toast.makeText(getContext(), pot.getName(), Toast.LENGTH_SHORT).show();
         });
-        testingData(potArrayList);
         observeData();
         initSwipeRefreshLayout();
         return root;

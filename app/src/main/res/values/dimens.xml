@@ -9,6 +9,6 @@
     <dimen name="margin_from_screen_edges">32dp</dimen>
     <dimen name="small_margin">16dp</dimen>
     <dimen name="medium_margin">32dp</dimen>
-
+    <dimen name="margin_from_screen_edge_to_recycler_view">263dp</dimen>
     <dimen name="medium_text_size">20sp</dimen>
 </resources>
