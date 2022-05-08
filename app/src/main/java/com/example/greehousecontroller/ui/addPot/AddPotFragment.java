@@ -15,23 +15,27 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.greehousecontroller.R;
+import com.example.greehousecontroller.databinding.FragmentAddPotBinding;
 
 public class AddPotFragment extends Fragment {
 
     private AddPotViewModel viewModel;
+    private FragmentAddPotBinding binding;
     private EditText namePotTextView;
     private EditText minimalHumidityTextView;
     private Button savePotButton;
     private Button cancelPotButton;
     private NavController navController;
-    View root;
+    private View root;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         viewModel =
                 new ViewModelProvider(this).get(AddPotViewModel.class);
-        root = inflater.inflate(R.layout.fragment_add_pot, container, false);
+
+        binding = FragmentAddPotBinding.inflate(inflater, container, false);
+        root = binding.getRoot();
         namePotTextView = root.findViewById(R.id.potNameTextView);
         minimalHumidityTextView = root.findViewById(R.id.minimalHumidityTextView);
         savePotButton = root.findViewById(R.id.saveAddPotButton);

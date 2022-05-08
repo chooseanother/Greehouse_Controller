@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.greehousecontroller.Repository.Measurements.ServiceGenerator;
 import com.example.greehousecontroller.model.Humidity;
+import com.example.greehousecontroller.model.Pot;
 
 import java.util.List;
 

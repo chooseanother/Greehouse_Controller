@@ -14,7 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.greehousecontroller.MainActivity;
 import com.example.greehousecontroller.R;
+import com.example.greehousecontroller.databinding.FragmentHomeBinding;
 import com.example.greehousecontroller.model.adapters.PotAdapter;
 import com.example.greehousecontroller.model.GreenHouse;
 import com.example.greehousecontroller.model.Pot;
@@ -28,14 +30,15 @@ public class HomeFragment extends Fragment {
     private PotAdapter adapter;
     private ArrayList<Pot> potArrayList;
     private HomeViewModel homeViewModel;
+    private FragmentHomeBinding binding;
     private TextView temperatureTextView;
     private TextView co2TextView;
     private TextView humidityTextView;
     private TextView luminosityTextView;
     private TextView welcomingTextView;
     private TextView dayDescriptionTextView;
-    SwipeRefreshLayout swipeRefreshLayout;
-    View root;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private View root;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -43,7 +46,8 @@ public class HomeFragment extends Fragment {
                 new ViewModelProvider(this).get(HomeViewModel.class);
         homeViewModel.getAllPots().observe(getViewLifecycleOwner(), pots -> potArrayList.addAll(pots));
 
-        root = inflater.inflate(R.layout.fragment_home, container, false);
+        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        root = binding.getRoot();
         settingOfTextViews();
         recyclerView = root.findViewById(R.id.listOfPotsRecycleView);
         recyclerView.hasFixedSize();
@@ -53,8 +57,11 @@ public class HomeFragment extends Fragment {
         adapter = new PotAdapter(potArrayList);
         recyclerView.setAdapter(adapter);
         adapter.setOnClickListener(pot -> {
-            //For now
-            Toast.makeText(getContext(), pot.getName(), Toast.LENGTH_SHORT).show();
+            Fragment fragment = new Fragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("name", pot.getName());
+            fragment.setArguments(bundle);
+            ((MainActivity)getActivity()).navController.navigate(R.id.nav_edit_pot, bundle);
         });
         observeData();
         initSwipeRefreshLayout();
