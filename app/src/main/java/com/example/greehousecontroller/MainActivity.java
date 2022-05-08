@@ -14,9 +14,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -44,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     UserRepository userRepository;
     NavigationView navigationView;
     FloatingActionButton fab;
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
         initViews();
         setupNavigation();
         fab = findViewById(R.id.fab);
+        toolbar = findViewById(R.id.toolbar);
+
     }
     @Override
     public void onStart() {
@@ -70,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
             navController.navigate(R.id.nav_login);
-            FloatingActionButton fab = findViewById(R.id.fab);
+            toolbar.setVisibility(View.GONE);
             fab.setVisibility(View.INVISIBLE);
             login();
         }
@@ -79,9 +85,9 @@ public class MainActivity extends AppCompatActivity {
     {
         UserRepository.getInstance().signOut(getApplication());
         navController.navigate(R.id.nav_login);
-
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setVisibility(View.INVISIBLE);
+        toolbar.setVisibility(View.GONE);
         login();
     }
 
@@ -148,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            toolbar.setVisibility(View.VISIBLE);
                             fab.setVisibility(View.VISIBLE);
                             navController.navigate(R.id.nav_home);
                         } else {
