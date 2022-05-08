@@ -1,5 +1,6 @@
 package com.example.greehousecontroller.model;
 
+import com.example.greehousecontroller.model.adapters.TemperatureJsonAdapter;
 import com.google.gson.annotations.JsonAdapter;
 
 import java.util.Date;

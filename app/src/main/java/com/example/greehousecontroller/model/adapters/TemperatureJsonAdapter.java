@@ -1,5 +1,6 @@
-package com.example.greehousecontroller.model;
+package com.example.greehousecontroller.model.adapters;
 
+import com.example.greehousecontroller.model.Temperature;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;

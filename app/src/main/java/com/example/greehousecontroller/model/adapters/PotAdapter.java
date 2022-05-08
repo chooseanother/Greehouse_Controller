@@ -1,4 +1,4 @@
-package com.example.greehousecontroller.adapters;
+package com.example.greehousecontroller.model.adapters;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
@@ -15,7 +15,7 @@ import com.example.greehousecontroller.model.Pot;
 
 import java.util.List;
 
-public class HomeFragmentAdapter extends RecyclerView.Adapter<HomeFragmentAdapter.ViewHolder> {
+public class PotAdapter extends RecyclerView.Adapter<PotAdapter.ViewHolder> {
     List<Pot> pots;
     private OnClickListener listener;
 
@@ -23,7 +23,7 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter<HomeFragmentAdapte
         this.listener = listener;
     }
 
-    public HomeFragmentAdapter(List<Pot> pots) {
+    public PotAdapter(List<Pot> pots) {
         this.pots = pots;
     }
 
