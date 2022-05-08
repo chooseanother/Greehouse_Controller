@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.greehousecontroller.R;
 import com.example.greehousecontroller.adapters.HomeFragmentAdapter;
@@ -35,6 +36,7 @@ public class HomeFragment extends Fragment {
     private TextView luminosityTextView;
     private TextView welcomingTextView;
     private TextView dayDescriptionTextView;
+    SwipeRefreshLayout swipeRefreshLayout;
     View root;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -57,6 +59,7 @@ public class HomeFragment extends Fragment {
         });
         testingData(potArrayList);
         observeData();
+        initSwipeRefreshLayout();
         return root;
     }
 
@@ -78,10 +81,24 @@ public class HomeFragment extends Fragment {
         super.onDestroyView();
     }
 
+    private void initSwipeRefreshLayout(){
+        swipeRefreshLayout = root.findViewById(R.id.homeRefreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            updateLatestMeasurements();
+
+            // TODO: figure out where to place this so it stops when it gets data from API
+            //  maybe with callback, or inside observe data
+            // swipeRefreshLayout.setRefreshing(false);
+        });
+    }
+
     private void observeData(){
         homeViewModel.getLatestTemperature().observe(getViewLifecycleOwner(),temperature -> {
             String readings = temperature.getTemperature() + " °C";
             temperatureTextView.setText(readings);
+
+            // TODO: Maybe here?
+            swipeRefreshLayout.setRefreshing(false);
 
             // TODO: Remove this when testing is done
             String show = "Date: "+temperature.getTime()+" T: "+temperature.getTemperature()+" °C";
@@ -132,6 +149,11 @@ public class HomeFragment extends Fragment {
     public void testingData(ArrayList<Pot> pots){
         pots.add(new Pot("Cactus", 60, 50));
         pots.add(new Pot("Weed", 59, 30));
+        pots.add(new Pot("More weed", 0, 0));
+        pots.add(new Pot("More weed", 0, 0));
+        pots.add(new Pot("More weed", 0, 0));
+        pots.add(new Pot("More weed", 0, 0));
+        pots.add(new Pot("More weed", 0, 0));
         pots.add(new Pot("More weed", 0, 0));
     }
 
