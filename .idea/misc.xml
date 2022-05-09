@@ -10,7 +10,7 @@
         <entry key="..\:/Users/jakub/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/add_pot_fragment.xml" value="0.33" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/app_bar_main.xml" value="0.33" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/fragment_add_pot.xml" value="0.5" />
-        <entry key="..\:/Users/jakub/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/fragment_home.xml" value="0.5" />
+        <entry key="..\:/Users/jakub/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/fragment_home.xml" value="0.5071609098567817" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/fragment_pots.xml" value="0.358695652173913" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/pot_item.xml" value="0.25" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/menu/activity_main_drawer.xml" value="0.36666666666666664" />
@@ -29,16 +29,13 @@
         <entry key="..\:/Users/micha/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/pot_item.xml" value="0.27853260869565216" />
         <entry key="..\:/Users/micha/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/menu/activity_main_drawer.xml" value="0.3625" />
         <entry key="..\:/Users/micha/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/menu/main.xml" value="0.3625" />
-        <entry key="app/src/main/res/layout-port/test_layout.xml" value="0.375" />
         <entry key="app/src/main/res/layout/.xml" value="0.375" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.375" />
         <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_add_pot.xml" value="0.1953125" />
         <entry key="app/src/main/res/layout/fragment_gallery.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_graphs.xml" value="0.2544987146529563" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.5" />
-        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.1953125" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.2544987146529563" />
         <entry key="app/src/main/res/layout/fragment_pots.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_slideshow.xml" value="0.375" />

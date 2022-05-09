@@ -52,6 +52,7 @@ public class HomeFragment extends Fragment {
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         potArrayList = new ArrayList<>();
+        testingData(potArrayList);
         adapter = new PotAdapter(potArrayList);
         recyclerView.setAdapter(adapter);
         floatingActionButton.setOnClickListener(clicked->{
@@ -61,7 +62,6 @@ public class HomeFragment extends Fragment {
             //For now
             Toast.makeText(getContext(), pot.getName(), Toast.LENGTH_SHORT).show();
         });
-        testingData(potArrayList);
         observeData();
         initSwipeRefreshLayout();
         return root;
@@ -154,14 +154,14 @@ public class HomeFragment extends Fragment {
     }
 
     public void testingData(ArrayList<Pot> pots){
-        pots.add(new Pot("Cactus", 60, 50));
-        pots.add(new Pot("Weed", 59, 30));
+        pots.add(new Pot("Cactus", 60, 20));
+        pots.add(new Pot("Flower", 59, 50));
+        pots.add(new Pot("Tomato", 0, 0));
+        pots.add(new Pot("Potato", 0, 0));
+        pots.add(new Pot("Weed", 0, 0));
         pots.add(new Pot("More weed", 0, 0));
-        pots.add(new Pot("More weed", 0, 0));
-        pots.add(new Pot("More weed", 0, 0));
-        pots.add(new Pot("More weed", 0, 0));
-        pots.add(new Pot("More weed", 0, 0));
-        pots.add(new Pot("More weed", 0, 0));
+        pots.add(new Pot("More more weed", 0, 0));
+        pots.add(new Pot("More more more weed", 0, 0));
     }
 
     private void updateLatestMeasurements(){
