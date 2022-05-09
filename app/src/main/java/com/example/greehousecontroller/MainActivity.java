@@ -89,8 +89,9 @@ public class MainActivity extends AppCompatActivity {
     }
     @Override
     public void onBackPressed(){
-        
-        super.onBackPressed();
+        if(navController.getCurrentDestination().getId() != R.id.nav_home && navController.getCurrentDestination().getId() != R.id.nav_login) {
+            super.onBackPressed();
+        }
     }
     private void initViews() {
         setSupportActionBar(binding.appBarMain.toolbar);
