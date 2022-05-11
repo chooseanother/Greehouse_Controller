@@ -14,11 +14,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.greehousecontroller.MainActivity;
 import com.example.greehousecontroller.R;
 import com.example.greehousecontroller.model.adapters.PotAdapter;
 import com.example.greehousecontroller.model.GreenHouse;
 import com.example.greehousecontroller.model.Pot;
 import com.example.greehousecontroller.model.User;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -36,7 +38,7 @@ public class HomeFragment extends Fragment {
     private TextView dayDescriptionTextView;
     SwipeRefreshLayout swipeRefreshLayout;
     View root;
-
+    FloatingActionButton floatingActionButton;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
@@ -46,12 +48,16 @@ public class HomeFragment extends Fragment {
         root = inflater.inflate(R.layout.fragment_home, container, false);
         settingOfTextViews();
         recyclerView = root.findViewById(R.id.listOfPotsRecycleView);
+        floatingActionButton = root.findViewById(R.id.fab);
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         potArrayList = new ArrayList<>();
         testingData(potArrayList);
         adapter = new PotAdapter(potArrayList);
         recyclerView.setAdapter(adapter);
+        floatingActionButton.setOnClickListener(clicked->{
+            ((MainActivity)getActivity()).navController.navigate(R.id.nav_add_pot);
+        });
         adapter.setOnClickListener(pot -> {
             //For now
             Toast.makeText(getContext(), pot.getName(), Toast.LENGTH_SHORT).show();
@@ -77,6 +83,9 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+    public void callParentMethod(){
+        getActivity().onBackPressed();
     }
 
     private void initSwipeRefreshLayout(){
