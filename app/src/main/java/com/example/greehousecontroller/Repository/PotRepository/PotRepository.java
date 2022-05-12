@@ -1,13 +1,22 @@
 package com.example.greehousecontroller.Repository.PotRepository;
 
-import android.app.Application;
+import android.util.Log;
 
+import androidx.lifecycle.MutableLiveData;
+
+import com.example.greehousecontroller.Repository.Measurements.ServiceGenerator;
+import com.example.greehousecontroller.model.Pot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class PotRepository {
-    private PotLiveData currentPot;
+    private MutableLiveData<Pot> currentPot;
     private static PotRepository instance;
+    private boolean result;
     FirebaseDatabase database;
     DatabaseReference reference;
 
@@ -21,19 +30,68 @@ public class PotRepository {
         return  instance;
     }
 
-    public void init(String name){
-        //accessing DB to get current pot details
+    public void init(String greenHouseId, int potId){
+        PotAPI potAPI = ServiceGenerator.getPotAPI();
+        Call<Pot> call = potAPI.getPotDetailsById(greenHouseId, potId);
+        call.enqueue(new Callback<Pot>() {
+            @Override
+            public void onResponse(Call<Pot> call, Response<Pot> response) {
+                if(response.isSuccessful()){
+                    Log.i("Api-hum-ulm", response.body().toString());
+                    currentPot.setValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Pot> call, Throwable t) {
+                Log.e("Api-hum-ulm",t.getMessage());
+            }
+        });
     }
 
-    public PotLiveData getCurrentPot() {
+    public MutableLiveData<Pot> getCurrentPot() {
         return currentPot;
     }
 
-    public void deleteCurrentPot() {
-        //accessing DB to delete current pot
+    public boolean updateCurrentPot(String greenHouseId, int potId, String name, String minimumThreshold) {
+        PotAPI potAPI = ServiceGenerator.getPotAPI();
+        Call call = potAPI.updatePotDetailsById(greenHouseId, potId, name, minimumThreshold);
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                if(response.isSuccessful()) {
+                    Log.i("Api-hum-ulm", response.body().toString());
+                    result = true;
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                result = false;
+            }
+        });
+        return result;
     }
 
-    public boolean updateCurrentPot(String name, String minimumThreshold) {
-        return false;
+    public boolean addPot(String greenhouseId, String name, String minimumHumidity) {
+       PotAPI potAPI = ServiceGenerator.getPotAPI();
+       Pot pot = new Pot(name, 0, Integer.valueOf(minimumHumidity));
+       Call call = potAPI.addPotDetailsById(greenhouseId, pot);
+       call.enqueue(new Callback() {
+           @Override
+           public void onResponse(Call call, Response response) {
+               if(response.isSuccessful()) {
+                   Log.i("Api-hum-ulm", response.body().toString());
+                   result = true;
+               }
+           }
+
+           @Override
+           public void onFailure(Call call, Throwable t) {
+               result = false;
+           }
+       });
+        return result;
     }
+
 }

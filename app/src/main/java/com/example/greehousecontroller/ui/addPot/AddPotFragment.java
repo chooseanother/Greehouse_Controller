@@ -46,7 +46,7 @@ public class AddPotFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //Should include sensor in the future
-                String result = viewModel.validInput(namePotTextView.getText().toString(),
+                String result = viewModel.validInput("test", namePotTextView.getText().toString(),
                         minimalHumidityTextView.getText().toString());
                 if(result == null){
                     navController.navigate(R.id.nav_home);

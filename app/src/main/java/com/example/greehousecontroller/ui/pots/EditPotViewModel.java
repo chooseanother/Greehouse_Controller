@@ -16,19 +16,15 @@ public class EditPotViewModel extends AndroidViewModel {
         potRepository = PotRepository.getInstance();
     }
 
-    public void init(String name) {
-        potRepository.init(name);
+    public void init(String greenhouseId, int id) {
+        potRepository.init(greenhouseId, id);
     }
 
     public Pot getCurrentPot() {
         return potRepository.getCurrentPot().getValue();
     }
 
-    public void deleteCurrentPot() {
-        potRepository.deleteCurrentPot();
-    }
-
-    public boolean updateCurrentPot(String name, String minimumThreshold) {
-        return potRepository.updateCurrentPot(name, minimumThreshold);
+    public boolean updateCurrentPot(String greenhouseId, int id, String name, String minimumThreshold) {
+        return potRepository.updateCurrentPot(greenhouseId, id, name, minimumThreshold);
     }
 }

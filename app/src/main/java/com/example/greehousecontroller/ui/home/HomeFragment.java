@@ -17,10 +17,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.greehousecontroller.MainActivity;
 import com.example.greehousecontroller.R;
 import com.example.greehousecontroller.databinding.FragmentHomeBinding;
-import com.example.greehousecontroller.model.adapters.PotAdapter;
 import com.example.greehousecontroller.model.GreenHouse;
 import com.example.greehousecontroller.model.Pot;
 import com.example.greehousecontroller.model.User;
+import com.example.greehousecontroller.model.adapters.PotAdapter;
 
 import java.util.ArrayList;
 
@@ -59,7 +59,7 @@ public class HomeFragment extends Fragment {
         adapter.setOnClickListener(pot -> {
             Fragment fragment = new Fragment();
             Bundle bundle = new Bundle();
-            bundle.putString("name", pot.getName());
+            bundle.putString("id", String.valueOf(pot.getId()));
             fragment.setArguments(bundle);
             ((MainActivity)getActivity()).navController.navigate(R.id.nav_edit_pot, bundle);
         });
@@ -152,14 +152,14 @@ public class HomeFragment extends Fragment {
     }
 
     public void testingData(ArrayList<Pot> pots){
-        pots.add(new Pot("Cactus", 60, 20));
-        pots.add(new Pot("Flower", 59, 50));
-        pots.add(new Pot("Tomato", 0, 0));
-        pots.add(new Pot("Potato", 0, 0));
-        pots.add(new Pot("Weed", 0, 0));
-        pots.add(new Pot("More weed", 0, 0));
-        pots.add(new Pot("More more weed", 0, 0));
-        pots.add(new Pot("More more more weed", 0, 0));
+        pots.add(new Pot(1, "Cactus", 60, 20));
+        pots.add(new Pot(2, "Flower", 59, 50));
+        pots.add(new Pot(3, "Tomato", 0, 0));
+        pots.add(new Pot(4,"Potato", 0, 0));
+        pots.add(new Pot(5, "Weed", 0, 0));
+        pots.add(new Pot(6, "More weed", 0, 0));
+        pots.add(new Pot(7, "More more weed", 0, 0));
+        pots.add(new Pot(8, "More more more weed", 0, 0));
     }
 
     private void updateLatestMeasurements(){

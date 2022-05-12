@@ -30,7 +30,8 @@ public class EditPotFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         viewModel =
                 new ViewModelProvider(this).get(EditPotViewModel.class);
-        viewModel.init(getArguments().getString("name"));
+        //"test" should be replaced by actual id in the future
+        viewModel.init("test", Integer.valueOf(getArguments().getString("id")));
         Pot pot = viewModel.getCurrentPot();
         binding = FragmentEditPotBinding.inflate(inflater, container, false);
         root = binding.getRoot();
@@ -45,18 +46,17 @@ public class EditPotFragment extends Fragment {
             @Override
             public void onClick(View view) {
             //calling viewModel to check for input and updating pot in the DB
-                if(viewModel.updateCurrentPot(potName.getText().toString(), minimalThreshold.getText().toString())){
+                if(viewModel.updateCurrentPot("test", pot.getId(), potName.getText().toString(), minimalThreshold.getText().toString())){
                 ((MainActivity)getActivity()).navController.navigate(R.id.nav_home);
                 }
             }
         });
 
-        deleteButton = root.findViewById(R.id.delete_pot_button);
+        deleteButton = root.findViewById(R.id.cancel_edit_pot_button);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
             //calling viewModel to delete pot from the DB
-                viewModel.deleteCurrentPot();
                 ((MainActivity)getActivity()).navController.navigate(R.id.nav_home);
             }
         });
