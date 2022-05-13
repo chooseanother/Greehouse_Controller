@@ -7,41 +7,41 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.greehousecontroller.ui.home.HomeFragment"
+        android:name="com.example.greehousecontroller.ui.view.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_status"
-        android:name="com.example.greehousecontroller.ui.status.StatusFragment"
+        android:name="com.example.greehousecontroller.ui.view.StatusFragment"
         android:label="@string/menu_status"
         tools:layout="@layout/fragment_status" />
 
     <fragment
         android:id="@+id/nav_graphs"
-        android:name="com.example.greehousecontroller.ui.graphs.GraphsFragment"
+        android:name="com.example.greehousecontroller.ui.view.GraphsFragment"
         android:label="@string/menu_graphs"
         tools:layout="@layout/fragment_graphs" />
 
     <fragment
         android:id="@+id/nav_edit_pot"
-        android:name="com.example.greehousecontroller.ui.pots.EditPotFragment"
+        android:name="com.example.greehousecontroller.ui.view.EditPotFragment"
         android:label="@string/menu_pots"
         tools:layout="@layout/fragment_edit_pot" />
 
     <fragment
         android:id="@+id/nav_settings"
-        android:name="com.example.greehousecontroller.ui.settings.SettingsFragment"
+        android:name="com.example.greehousecontroller.ui.view.SettingsFragment"
         android:label="@string/menu_settings"
         tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/nav_add_pot"
-        android:name="com.example.greehousecontroller.ui.addPot.AddPotFragment"
+        android:name="com.example.greehousecontroller.ui.view.AddPotFragment"
         android:label="fragment_add_pot_pot"
         tools:layout="@layout/fragment_add_pot" />
     <fragment
         android:id="@+id/nav_login"
-        android:name="com.example.greehousecontroller.ui.login_register.LoginFragment"
+        android:name="com.example.greehousecontroller.ui.view.LoginFragment"
         android:label="Login"
         tools:layout="@layout/fragment_login" />
 </navigation>
