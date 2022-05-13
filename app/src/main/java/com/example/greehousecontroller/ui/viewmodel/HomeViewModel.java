@@ -5,13 +5,13 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.greehousecontroller.data.repository.Measurements.Humidity.HumidityRepository;
-import com.example.greehousecontroller.data.repository.Measurements.Temperature.TemperatureRepository;
+import com.example.greehousecontroller.data.repository.HumidityRepository;
 import com.example.greehousecontroller.data.model.GreenHouse;
 import com.example.greehousecontroller.data.model.Humidity;
 import com.example.greehousecontroller.data.model.Pot;
 import com.example.greehousecontroller.data.model.Temperature;
 import com.example.greehousecontroller.data.model.User;
+import com.example.greehousecontroller.data.repository.TemperatureRepository;
 
 import java.util.ArrayList;
 

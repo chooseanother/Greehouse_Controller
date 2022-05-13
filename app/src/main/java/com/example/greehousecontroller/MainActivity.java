@@ -6,7 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 
-import com.example.greehousecontroller.data.repository.UserRepository.UserRepository;
+import com.example.greehousecontroller.data.repository.UserRepository;
 import com.example.greehousecontroller.databinding.ActivityMainBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;

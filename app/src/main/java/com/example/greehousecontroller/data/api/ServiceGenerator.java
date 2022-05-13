@@ -1,8 +1,6 @@
 package com.example.greehousecontroller.data.api;
 
-import com.example.greehousecontroller.data.api.HumidityApi;
-import com.example.greehousecontroller.data.api.TemperatureApi;
-import com.example.greehousecontroller.data.api.PotAPI;
+
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

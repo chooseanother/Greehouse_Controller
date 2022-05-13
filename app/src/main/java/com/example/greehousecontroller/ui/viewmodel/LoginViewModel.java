@@ -4,7 +4,7 @@ import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
 
-import com.example.greehousecontroller.data.repository.UserRepository.UserRepository;
+import com.example.greehousecontroller.data.repository.UserRepository;
 
 public class LoginViewModel extends AndroidViewModel {
     private final UserRepository userRepository;

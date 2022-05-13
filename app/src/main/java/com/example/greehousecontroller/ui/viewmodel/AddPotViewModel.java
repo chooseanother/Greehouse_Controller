@@ -4,7 +4,7 @@ import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
 
-import com.example.greehousecontroller.data.repository.PotRepository.PotRepository;
+import com.example.greehousecontroller.data.repository.PotRepository;
 
 public class AddPotViewModel extends AndroidViewModel {
 
