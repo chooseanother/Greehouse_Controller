@@ -44,6 +44,12 @@ public class PotAdapter extends RecyclerView.Adapter<PotAdapter.ViewHolder> {
         holder.name.setText(pots.get(position).getName());
         holder.currentHumidity.setText(pots.get(position).getCurrentHumidity() + " %");
         holder.minimalHumidity.setText(pots.get(position).getMinimalHumidity() + " %");
+        holder.editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.OnClick(pots.get(holder.getAdapterPosition()));
+            }
+        });
     }
 
     @Override
@@ -66,7 +72,7 @@ public class PotAdapter extends RecyclerView.Adapter<PotAdapter.ViewHolder> {
             minimalHumidity = itemView.findViewById(R.id.minimalHumidityTextView);
             editButton = itemView.findViewById(R.id.humidityEditButton);
             editButton.setOnClickListener(v ->{
-                listener.OnClick(pots.get(getAdapterPosition()));
+                //listener.OnClick(pots.get(getAdapterPosition()));
             });
         }
     }

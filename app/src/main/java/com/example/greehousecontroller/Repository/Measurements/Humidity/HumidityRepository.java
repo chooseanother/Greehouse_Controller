@@ -37,7 +37,7 @@ public class HumidityRepository {
     }
 
     public void updateLatestMeasurement(String greenhouseId){
-        HumidityApi humidityApi = ServiceGenerator.getHumidityApiAPI();
+        HumidityApi humidityApi = ServiceGenerator.getHumidityAPI();
         Call<List<Humidity>> call = humidityApi.getLatestHumidity(greenhouseId);
         call.enqueue(new Callback<List<Humidity>>() {
             @EverythingIsNonNull

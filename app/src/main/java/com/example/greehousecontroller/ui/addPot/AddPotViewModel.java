@@ -1,32 +1,37 @@
 package com.example.greehousecontroller.ui.addPot;
 
+import android.app.Application;
+
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class AddPotViewModel extends ViewModel {
+import com.example.greehousecontroller.Repository.PotRepository.PotRepository;
 
-    private final MutableLiveData<String> mText;
+public class AddPotViewModel extends AndroidViewModel {
 
-    public AddPotViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is pots fragment");
+    private final PotRepository potRepository;
+
+    public AddPotViewModel(Application application) {
+        super(application);
+        potRepository = PotRepository.getInstance();
     }
 
-    public LiveData<String> getText() {
-        return mText;
-    }
-
-    public String validInput(String name, String minimumHumidity){
-        //Accessing repository in the future
+    public String validInput(String greenhouseId, String name, String minimumHumidity){
         if(name.equals("")|| name == null){
            return "Please insert name";
         }
         else if(minimumHumidity.equals("") || minimumHumidity == null){
-            return "Please insert minimum humidity";
+            return "Please insert minimum moisture";
         }
         else{
+            addPot(greenhouseId, name, minimumHumidity);
             return null;
         }
+    }
+
+    public boolean addPot(String greenhouseId, String name, String minimumHumidity){
+        return potRepository.addPot(greenhouseId, name, minimumHumidity);
     }
 }

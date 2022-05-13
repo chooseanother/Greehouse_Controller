@@ -34,6 +34,6 @@
     <string name="save_button">Save</string>
 
     <!--Add pot-->
-    <string name="add_pot_minimal_humidity">Minimal humidity:</string>
+    <string name="add_pot_minimal_humidity">Minimal moisture:</string>
     <string name="add_pot_name">Name:</string>
 </resources>

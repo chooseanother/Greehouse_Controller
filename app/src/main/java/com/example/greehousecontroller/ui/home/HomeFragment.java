@@ -16,10 +16,11 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.greehousecontroller.MainActivity;
 import com.example.greehousecontroller.R;
-import com.example.greehousecontroller.model.adapters.PotAdapter;
+import com.example.greehousecontroller.databinding.FragmentHomeBinding;
 import com.example.greehousecontroller.model.GreenHouse;
 import com.example.greehousecontroller.model.Pot;
 import com.example.greehousecontroller.model.User;
+import com.example.greehousecontroller.model.adapters.PotAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -30,22 +31,25 @@ public class HomeFragment extends Fragment {
     private PotAdapter adapter;
     private ArrayList<Pot> potArrayList;
     private HomeViewModel homeViewModel;
+    private FragmentHomeBinding binding;
     private TextView temperatureTextView;
     private TextView co2TextView;
     private TextView humidityTextView;
     private TextView luminosityTextView;
     private TextView welcomingTextView;
     private TextView dayDescriptionTextView;
-    SwipeRefreshLayout swipeRefreshLayout;
-    View root;
-    FloatingActionButton floatingActionButton;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private View root;
+    private FloatingActionButton floatingActionButton;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
         homeViewModel.getAllPots().observe(getViewLifecycleOwner(), pots -> potArrayList.addAll(pots));
 
-        root = inflater.inflate(R.layout.fragment_home, container, false);
+        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        root = binding.getRoot();
         settingOfTextViews();
         recyclerView = root.findViewById(R.id.listOfPotsRecycleView);
         floatingActionButton = root.findViewById(R.id.fab);
@@ -59,8 +63,11 @@ public class HomeFragment extends Fragment {
             ((MainActivity)getActivity()).navController.navigate(R.id.nav_add_pot);
         });
         adapter.setOnClickListener(pot -> {
-            //For now
-            Toast.makeText(getContext(), pot.getName(), Toast.LENGTH_SHORT).show();
+            Fragment fragment = new Fragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("id", String.valueOf(pot.getId()));
+            fragment.setArguments(bundle);
+            ((MainActivity)getActivity()).navController.navigate(R.id.nav_edit_pot, bundle);
         });
         observeData();
         initSwipeRefreshLayout();
@@ -154,14 +161,14 @@ public class HomeFragment extends Fragment {
     }
 
     public void testingData(ArrayList<Pot> pots){
-        pots.add(new Pot("Cactus", 60, 20));
-        pots.add(new Pot("Flower", 59, 50));
-        pots.add(new Pot("Tomato", 0, 0));
-        pots.add(new Pot("Potato", 0, 0));
-        pots.add(new Pot("Weed", 0, 0));
-        pots.add(new Pot("More weed", 0, 0));
-        pots.add(new Pot("More more weed", 0, 0));
-        pots.add(new Pot("More more more weed", 0, 0));
+        pots.add(new Pot(1, "Cactus", 60, 20));
+        pots.add(new Pot(2, "Flower", 59, 50));
+        pots.add(new Pot(3, "Tomato", 0, 0));
+        pots.add(new Pot(4,"Potato", 0, 0));
+        pots.add(new Pot(5, "Weed", 0, 0));
+        pots.add(new Pot(6, "More weed", 0, 0));
+        pots.add(new Pot(7, "More more weed", 0, 0));
+        pots.add(new Pot(8, "More more more weed", 0, 0));
     }
 
     private void updateLatestMeasurements(){

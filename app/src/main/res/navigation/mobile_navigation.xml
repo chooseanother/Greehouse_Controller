@@ -24,10 +24,10 @@
         tools:layout="@layout/fragment_graphs" />
 
     <fragment
-        android:id="@+id/nav_pots"
-        android:name="com.example.greehousecontroller.ui.pots.PotsFragment"
+        android:id="@+id/nav_edit_pot"
+        android:name="com.example.greehousecontroller.ui.pots.EditPotFragment"
         android:label="@string/menu_pots"
-        tools:layout="@layout/fragment_pots" />
+        tools:layout="@layout/fragment_edit_pot" />
 
     <fragment
         android:id="@+id/nav_settings"
