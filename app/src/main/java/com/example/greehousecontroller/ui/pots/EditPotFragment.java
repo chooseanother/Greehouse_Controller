@@ -39,7 +39,8 @@ public class EditPotFragment extends Fragment {
         potName.setText(pot.getName());
 
         minimalThreshold = root.findViewById(R.id.minimum_threshold_edit_text);
-        minimalThreshold.setText(pot.getMinimalHumidity());
+        String minimalHumidity = pot.getMinimalHumidity()+"%";
+        minimalThreshold.setText(minimalHumidity);
 
         saveButton = root.findViewById(R.id.save_pot_button);
         saveButton.setOnClickListener(new View.OnClickListener() {

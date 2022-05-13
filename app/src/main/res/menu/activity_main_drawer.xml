@@ -16,10 +16,7 @@
             android:id="@+id/nav_graphs"
             android:icon="@drawable/ic_baseline_show_chart_24"
             android:title="@string/graphs" />
-        <item
-            android:id="@+id/nav_edit_pot"
-            android:icon="@drawable/ic_baseline_grass_24"
-            android:title="@string/pots" />
+
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_baseline_settings_24"
