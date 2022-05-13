@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Jakub/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/drawable/fully_round_layout_bg.xml" value="0.1875" />
+        <entry key="..\:/Users/Jakub/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/activity_main.xml" value="0.18432971014492755" />
+        <entry key="..\:/Users/Jakub/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/content_main.xml" value="0.18432971014492755" />
+        <entry key="..\:/Users/Jakub/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/fragment_home.xml" value="0.33" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/drawable/fully_round_layout_bg.xml" value="0.3545" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/drawable/home_bg.xml" value="0.3545" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/drawable/round_layout_bg.xml" value="0.3545" />

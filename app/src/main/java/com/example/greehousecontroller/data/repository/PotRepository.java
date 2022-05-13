@@ -10,12 +10,14 @@ import com.example.greehousecontroller.data.model.Pot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PotRepository {
-    private MutableLiveData<Pot> currentPot;
+    private MutableLiveData<ArrayList<Pot>> pots;
     private static PotRepository instance;
     private boolean result;
     FirebaseDatabase database;
@@ -39,7 +41,9 @@ public class PotRepository {
             public void onResponse(Call<Pot> call, Response<Pot> response) {
                 if(response.isSuccessful()){
                     Log.i("Api-hum-ulm", response.body().toString());
-                    currentPot.setValue(response.body());
+                    ArrayList<Pot> currentPot = new ArrayList<>();
+                    currentPot.add(response.body());
+                    pots.setValue(currentPot);
                 }
             }
 
@@ -50,11 +54,31 @@ public class PotRepository {
         });
     }
 
-    public MutableLiveData<Pot> getCurrentPot() {
-        return currentPot;
+    public MutableLiveData<ArrayList<Pot>> getPots() {
+        return pots;
     }
 
-    public boolean updateCurrentPot(String greenHouseId, int potId, String name, String minimumThreshold) {
+    public MutableLiveData<ArrayList<Pot>> getAllPots(String greenHouseId){
+        PotAPI potAPI = ServiceGenerator.getPotAPI();
+        Call<ArrayList<Pot>> call = potAPI.getAllPotsByGreenhouseId(greenHouseId);
+        call.enqueue(new Callback<ArrayList<Pot>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Pot>> call, Response<ArrayList<Pot>> response) {
+                if(response.isSuccessful()){
+                    Log.i("Api-hum-ulm", response.body().toString());
+                    pots.setValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Pot>> call, Throwable t) {
+
+            }
+        });
+        return pots;
+    }
+
+    public boolean updateCurrentPot(String greenHouseId, int potId, String name, float minimumThreshold) {
         PotAPI potAPI = ServiceGenerator.getPotAPI();
         Call call = potAPI.updatePotDetailsById(greenHouseId, potId, name, minimumThreshold);
         call.enqueue(new Callback() {
@@ -94,5 +118,4 @@ public class PotRepository {
        });
         return result;
     }
-
 }

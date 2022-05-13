@@ -11,47 +11,29 @@ import com.example.greehousecontroller.data.model.Humidity;
 import com.example.greehousecontroller.data.model.Pot;
 import com.example.greehousecontroller.data.model.Temperature;
 import com.example.greehousecontroller.data.model.User;
+import com.example.greehousecontroller.data.repository.PotRepository;
 import com.example.greehousecontroller.data.repository.TemperatureRepository;
+import com.example.greehousecontroller.data.repository.UserRepository;
 
 import java.util.ArrayList;
 
 public class HomeViewModel extends AndroidViewModel {
 
-    private final MutableLiveData<ArrayList<Pot>> pots;
-    private final MutableLiveData<GreenHouse> greenHouseData;
-    private final MutableLiveData<User> user;
     private TemperatureRepository temperatureRepository;
     private HumidityRepository humidityRepository;
+    private PotRepository potRepository;
+    private UserRepository userRepository;
 
     public HomeViewModel(Application application) {
         super(application);
         temperatureRepository = TemperatureRepository.getInstance(application);
         humidityRepository = HumidityRepository.getInstance(application);
-        //Getting data from repository in the future
-        pots = new MutableLiveData<>();
-        greenHouseData = new MutableLiveData<>();
-        user = new MutableLiveData<>();
-        ArrayList<Pot> newList = new ArrayList<>();
-        pots.setValue(newList);
-
+        potRepository = PotRepository.getInstance();
+        userRepository = UserRepository.getInstance();
     }
 
-    public MutableLiveData<ArrayList<Pot>> getAllPots() {
-        return pots;
-    }
-
-    public void addPot(Pot pot){
-        ArrayList<Pot> currentPots = pots.getValue();
-        currentPots.add(pot);
-        pots.setValue(currentPots);
-    }
-
-    public MutableLiveData<GreenHouse> getGreenHouseData() {
-        return greenHouseData;
-    }
-
-    public MutableLiveData<User> getUser() {
-        return user;
+    public MutableLiveData<ArrayList<Pot>> getAllPots(String greenhouseId) {
+            return potRepository.getAllPots(greenhouseId);
     }
 
     public MutableLiveData<Temperature> getLatestTemperature() {
@@ -65,5 +47,9 @@ public class HomeViewModel extends AndroidViewModel {
     public void updateLatestMeasurements(String greenhouseId){
         temperatureRepository.updateLatestMeasurement(greenhouseId);
         humidityRepository.updateLatestMeasurement(greenhouseId);
+    }
+
+    public String getUser(){
+        return userRepository.getCurrentUser().getValue();
     }
 }

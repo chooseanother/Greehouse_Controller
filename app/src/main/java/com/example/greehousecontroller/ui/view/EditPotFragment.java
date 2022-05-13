@@ -48,7 +48,7 @@ public class EditPotFragment extends Fragment {
             @Override
             public void onClick(View view) {
             //calling viewModel to check for input and updating pot in the DB
-                if(viewModel.updateCurrentPot("test", pot.getId(), potName.getText().toString(), minimalThreshold.getText().toString())){
+                if(viewModel.updateCurrentPot("test", pot.getId(), potName.getText().toString(), Float.valueOf(minimalThreshold.getText().toString()))){
                 ((MainActivity)getActivity()).navController.navigate(R.id.nav_home);
                 }
             }

@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     DrawerLayout drawer;
     public NavController navController;
-    UserRepository userRepository;
     NavigationView navigationView;
     Toolbar toolbar;
     @Override

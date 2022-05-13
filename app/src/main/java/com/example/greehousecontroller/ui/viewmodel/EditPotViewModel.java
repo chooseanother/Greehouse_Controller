@@ -22,10 +22,10 @@ public class EditPotViewModel extends AndroidViewModel {
     }
 
     public Pot getCurrentPot() {
-        return potRepository.getCurrentPot().getValue();
+        return potRepository.getPots().getValue().get(0);
     }
 
-    public boolean updateCurrentPot(String greenhouseId, int id, String name, String minimumThreshold) {
+    public boolean updateCurrentPot(String greenhouseId, int id, String name, float minimumThreshold) {
         return potRepository.updateCurrentPot(greenhouseId, id, name, minimumThreshold);
     }
 }
