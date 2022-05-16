@@ -69,8 +69,9 @@ public class GraphsFragment extends Fragment {
         xAxis.setCenterAxisLabels(true);
         xAxis.setGranularity(1f); // one hour
         xAxis.setValueFormatter(new MyAxisFormatter());
-
         for(int i = Objects.requireNonNull(graphsViewModel.getTemperatureHistoryData().getValue()).size()-1; i > 1; i--){
+            System.out.println(graphsViewModel.getTemperatureHistoryData().getValue().get(i).getTime().getTime());
+
             long now = TimeUnit.MILLISECONDS.toMinutes(graphsViewModel.getTemperatureHistoryData().getValue().get(i).getTime().getTime());
             yVals1.add(new Entry(now,(float)graphsViewModel.getTemperatureHistoryData().getValue().get(i).getTemperature()));
         }
@@ -90,7 +91,7 @@ public class GraphsFragment extends Fragment {
         graphsViewModel.updateTemperatureHistoryData("test");
     }
     private static class MyAxisFormatter extends ValueFormatter {
-        private final SimpleDateFormat mFormat = new SimpleDateFormat("dd MMM HH:mm", Locale.ENGLISH);
+        private final SimpleDateFormat mFormat = new SimpleDateFormat("dd MMM HH:mm:ss", Locale.ENGLISH);
 
         @Override
         public String getFormattedValue(float value) {
