@@ -36,7 +36,6 @@ public class HomeFragment extends Fragment {
     private TextView temperatureTextView;
     private TextView co2TextView;
     private TextView humidityTextView;
-    private TextView luminosityTextView;
     private TextView welcomingTextView;
     private TextView dayDescriptionTextView;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -132,20 +131,17 @@ public class HomeFragment extends Fragment {
         humidityTextView = root.findViewById(R.id.humidityMeasurementTextView);
         temperatureTextView = root.findViewById(R.id.temperatureMeasurementTextView);
         co2TextView = root.findViewById(R.id.co2measurementTextView);
-        luminosityTextView = root.findViewById(R.id.luminosityMeasurementTextView);
 
         GreenHouse greenHouse = homeViewModel.getGreenHouseData().getValue();
         if(greenHouse != null){
 //            humidityTextView.setText(greenHouse.getHumidity() + " %");
 //            temperatureTextView.setText(greenHouse.getTemperature() + " °C");
             co2TextView.setText(greenHouse.getCo2() + " grams");
-            luminosityTextView.setText(greenHouse.getLuminosity() + " lum");
         }
         else{
 //            humidityTextView.setText("Unkown" + " %");
 //            temperatureTextView.setText("Unknown" + " °C");
             co2TextView.setText("Unknown" + " grams");
-            luminosityTextView.setText("Unknown" + " lum");
         }
         //Header
         welcomingTextView = root.findViewById(R.id.welcomingTextView);

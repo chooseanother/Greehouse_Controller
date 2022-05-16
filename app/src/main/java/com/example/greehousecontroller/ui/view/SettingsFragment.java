@@ -22,20 +22,22 @@ import com.example.greehousecontroller.ui.viewmodel.SettingsViewModel;
 public class SettingsFragment extends Fragment {
 
     private FragmentSettingsBinding binding;
-    Button sign_out;
+    //Button sign_out;
+
+
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         SettingsViewModel settingsViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
 
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        sign_out = root.findViewById(R.id.sign_out_button);
+        //sign_out = root.findViewById(R.id.sign_out_button);
 
-        final TextView textView = binding.textSettings;
-        settingsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-        sign_out.setOnClickListener(v->{
+        //final TextView textView = binding.textSettings;
+        //settingsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        /*sign_out.setOnClickListener(v->{
             ((MainActivity)getActivity()).signOut();
-        });
+        });*/
         return root;
     }
 

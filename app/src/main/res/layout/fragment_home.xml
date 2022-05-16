@@ -69,9 +69,9 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout"
                 android:layout_width="match_parent"
-                android:layout_height="151dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_from_screen_edges"
-                android:layout_marginTop="112dp"
+                android:layout_marginTop="120dp"
                 android:layout_marginRight="@dimen/margin_from_screen_edges"
                 android:background="@drawable/round_layout_bg"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -79,149 +79,65 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/temperatureMeasurementTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="C"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@+id/textView8"
-                    app:layout_constraintStart_toEndOf="@+id/imageView2" />
-
-                <TextView
-                    android:id="@+id/co2measurementTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="grams"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@+id/textView10"
-                    app:layout_constraintStart_toEndOf="@+id/imageView3" />
-
-                <TextView
                     android:id="@+id/textView4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:text="Your green house"
-                    android:textStyle="bold"
+                    android:text="@string/home_your_greenhouse"
+                    android:textSize="@dimen/medium_text_size"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <ImageView
+                    android:id="@+id/home_temperature_ic"
+                    android:layout_width="@dimen/home_circle_image_size"
+                    android:layout_height="@dimen/home_circle_image_size"
+                    android:src="@drawable/ic_home_temperature"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView4"
+                    app:layout_constraintEnd_toStartOf="@id/home_moisture_ic"
+                    android:layout_marginTop="@dimen/medium_margin"/>
+
+                <ImageView
+                    android:id="@+id/home_moisture_ic"
+                    android:layout_width="@dimen/home_circle_image_size"
+                    android:layout_height="@dimen/home_circle_image_size"
+                    android:src="@drawable/ic_home_moisture"
+                    app:layout_constraintStart_toEndOf="@+id/home_temperature_ic"
+                    app:layout_constraintTop_toBottomOf="@+id/textView4"
+                    app:layout_constraintEnd_toStartOf="@id/home_co2_ic"
+                    android:layout_marginTop="@dimen/medium_margin"/>
+
+                <ImageView
+                    android:id="@+id/home_co2_ic"
+                    android:layout_width="@dimen/home_circle_image_size"
+                    android:layout_height="@dimen/home_circle_image_size"
+                    android:src="@drawable/ic_home_co2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/home_moisture_ic"
+                    app:layout_constraintTop_toBottomOf="@+id/textView4"
+                    android:layout_marginTop="@dimen/medium_margin"/>
 
                 <TextView
                     android:id="@+id/humidityMeasurementTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="%"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@+id/textView11"
-                    app:layout_constraintStart_toEndOf="@+id/imageView4" />
-
+                    app:layout_constraintTop_toBottomOf="@+id/home_moisture_ic"
+                    app:layout_constraintStart_toEndOf="@id/temperatureMeasurementTextView"
+                    app:layout_constraintEnd_toStartOf="@+id/co2measurementTextView"/>
                 <TextView
-                    android:id="@+id/luminosityMeasurementTextView"
+                    android:id="@+id/temperatureMeasurementTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="Lum"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@+id/textView12"
-                    app:layout_constraintStart_toEndOf="@+id/imageView5" />
-
-                <TextView
-                    android:id="@+id/textView8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="68dp"
-                    android:layout_marginBottom="68dp"
-                    android:text="Temperature"
-                    android:textSize="10sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <TextView
-                    android:id="@+id/textView12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="50dp"
-                    android:layout_marginBottom="20dp"
-                    android:text="Luminosity"
-                    android:textSize="10sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
-
-                <TextView
-                    android:id="@+id/textView10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="68dp"
-                    android:layout_marginBottom="20dp"
-                    android:text="CO2"
-                    android:textSize="10sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <TextView
-                    android:id="@+id/textView11"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="59dp"
-                    android:layout_marginBottom="68dp"
-                    android:text="Humidity"
-                    android:textSize="10sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
-
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="36dp"
-                    android:layout_height="28dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginBottom="80dp"
-                    app:circularflow_radiusInDP="60sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    tools:src="@tools:sample/avatars" />
-
-                <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="36dp"
-                    android:layout_height="28dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginBottom="32dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:src="@tools:sample/avatars" />
-
-                <ImageView
-                    android:id="@+id/imageView4"
-                    android:layout_width="36dp"
-                    android:layout_height="28dp"
-                    android:layout_marginStart="192dp"
-                    android:layout_marginBottom="80dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:srcCompat="@drawable/moisture_logo"
-                    tools:src="@drawable/moisture_logo" />
-
-                <ImageView
-                    android:id="@+id/imageView5"
-                    android:layout_width="36dp"
-                    android:layout_height="28dp"
-                    android:layout_marginStart="192dp"
-                    android:layout_marginBottom="32dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:src="@tools:sample/avatars" />
+                    app:layout_constraintTop_toBottomOf="@+id/home_temperature_ic"
+                    app:layout_constraintEnd_toStartOf="@id/humidityMeasurementTextView"/>
+                <TextView
+                    android:id="@+id/co2measurementTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/humidityMeasurementTextView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/home_co2_ic"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -235,5 +151,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_input_add" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

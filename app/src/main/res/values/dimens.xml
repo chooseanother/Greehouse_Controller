@@ -7,8 +7,15 @@
 
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="margin_from_screen_edges">32dp</dimen>
+
+    <dimen name="mini_margin">6dp</dimen>
     <dimen name="small_margin">16dp</dimen>
     <dimen name="medium_margin">32dp</dimen>
     <dimen name="margin_from_screen_edge_to_recycler_view">263dp</dimen>
+
+    <string name="small_text_size">12sp</string>
     <dimen name="medium_text_size">20sp</dimen>
+
+    <dimen name="home_circle_image_size">55dp</dimen>
+    <dimen name="home_edit_image_size">30dp</dimen>
 </resources>
