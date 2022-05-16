@@ -14,6 +14,7 @@
     <color name="pastel_green">#CCD99C</color>
     <color name="basic_green">#93A603</color>
     <color name="light_green">#D4D943</color>
+    <color name="light_gray">#778899</color>
 
     <color name="grey_background">#66827A7A</color>
     <color name="red_button_cancel">#FFD1D1</color>
