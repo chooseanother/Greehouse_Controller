@@ -44,8 +44,8 @@
             </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
 
-        <TextView
-                android:id="@+id/welcomingTextView"
+        <!--<TextView
+                android:id="@+id/dayDescriptionTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_from_screen_edges"
@@ -53,100 +53,107 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/medium_text_size"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent" />-->
+
+        <TextView
+            android:id="@+id/welcomingTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_from_screen_edges"
+            android:textColor="@color/white"
+            android:textSize="@dimen/medium_text_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/margin_from_screen_edges"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_from_screen_edges"
+            android:layout_marginRight="@dimen/margin_from_screen_edges"
+            android:background="@drawable/round_layout_bg"
+            android:paddingBottom="@dimen/medium_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/medium_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/welcomingTextView">
 
             <TextView
-                android:id="@+id/dayDescriptionTextView"
+                android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_from_screen_edges"
+                android:layout_marginLeft="@dimen/small_margin"
                 android:layout_marginTop="@dimen/small_margin"
-                android:textColor="@color/white"
+                android:text="@string/home_your_greenhouse"
                 android:textSize="@dimen/medium_text_size"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/welcomingTextView" />
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_from_screen_edges"
-                android:layout_marginTop="120dp"
-                android:layout_marginRight="@dimen/margin_from_screen_edges"
-                android:background="@drawable/round_layout_bg"
-                app:layout_constraintEnd_toEndOf="parent"
+            <ImageView
+                android:id="@+id/home_temperature_ic"
+                android:layout_width="@dimen/home_circle_image_size"
+                android:layout_height="@dimen/home_circle_image_size"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:src="@drawable/ic_home_temperature"
+                app:layout_constraintEnd_toStartOf="@id/home_moisture_ic"
+                app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/home_your_greenhouse"
-                    android:textSize="@dimen/medium_text_size"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+            <ImageView
+                android:id="@+id/home_moisture_ic"
+                android:layout_width="@dimen/home_circle_image_size"
+                android:layout_height="@dimen/home_circle_image_size"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:src="@drawable/ic_home_moisture"
+                app:layout_constraintEnd_toStartOf="@id/home_co2_ic"
+                app:layout_constraintStart_toEndOf="@+id/home_temperature_ic"
+                app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
-                <ImageView
-                    android:id="@+id/home_temperature_ic"
-                    android:layout_width="@dimen/home_circle_image_size"
-                    android:layout_height="@dimen/home_circle_image_size"
-                    android:src="@drawable/ic_home_temperature"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView4"
-                    app:layout_constraintEnd_toStartOf="@id/home_moisture_ic"
-                    android:layout_marginTop="@dimen/medium_margin"/>
+            <ImageView
+                android:id="@+id/home_co2_ic"
+                android:layout_width="@dimen/home_circle_image_size"
+                android:layout_height="@dimen/home_circle_image_size"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:src="@drawable/ic_home_co2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/home_moisture_ic"
+                app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
-                <ImageView
-                    android:id="@+id/home_moisture_ic"
-                    android:layout_width="@dimen/home_circle_image_size"
-                    android:layout_height="@dimen/home_circle_image_size"
-                    android:src="@drawable/ic_home_moisture"
-                    app:layout_constraintStart_toEndOf="@+id/home_temperature_ic"
-                    app:layout_constraintTop_toBottomOf="@+id/textView4"
-                    app:layout_constraintEnd_toStartOf="@id/home_co2_ic"
-                    android:layout_marginTop="@dimen/medium_margin"/>
+            <TextView
+                android:id="@+id/humidityMeasurementTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="@+id/home_moisture_ic"
+                app:layout_constraintStart_toStartOf="@+id/home_moisture_ic"
+                app:layout_constraintTop_toBottomOf="@+id/home_moisture_ic" />
 
-                <ImageView
-                    android:id="@+id/home_co2_ic"
-                    android:layout_width="@dimen/home_circle_image_size"
-                    android:layout_height="@dimen/home_circle_image_size"
-                    android:src="@drawable/ic_home_co2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/home_moisture_ic"
-                    app:layout_constraintTop_toBottomOf="@+id/textView4"
-                    android:layout_marginTop="@dimen/medium_margin"/>
+            <TextView
+                android:id="@+id/temperatureMeasurementTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="@+id/home_temperature_ic"
+                app:layout_constraintStart_toStartOf="@+id/home_temperature_ic"
+                app:layout_constraintTop_toBottomOf="@+id/home_temperature_ic" />
 
-                <TextView
-                    android:id="@+id/humidityMeasurementTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/home_moisture_ic"
-                    app:layout_constraintStart_toEndOf="@id/temperatureMeasurementTextView"
-                    app:layout_constraintEnd_toStartOf="@+id/co2measurementTextView"/>
-                <TextView
-                    android:id="@+id/temperatureMeasurementTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/home_temperature_ic"
-                    app:layout_constraintEnd_toStartOf="@id/humidityMeasurementTextView"/>
-                <TextView
-                    android:id="@+id/co2measurementTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toEndOf="@id/humidityMeasurementTextView"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/home_co2_ic"/>
+            <TextView
+                android:id="@+id/co2measurementTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="@+id/home_co2_ic"
+                app:layout_constraintStart_toStartOf="@+id/home_co2_ic"
+                app:layout_constraintTop_toBottomOf="@id/home_co2_ic" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="@dimen/margin_from_screen_edges"
+        android:layout_marginBottom="@dimen/margin_from_screen_edges"
         app:backgroundTint="@color/dark_green"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

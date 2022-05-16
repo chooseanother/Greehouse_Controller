@@ -145,7 +145,7 @@ public class HomeFragment extends Fragment {
         }
         //Header
         welcomingTextView = root.findViewById(R.id.welcomingTextView);
-        dayDescriptionTextView = root.findViewById(R.id.dayDescriptionTextView);
+        //dayDescriptionTextView = root.findViewById(R.id.dayDescriptionTextView);
         User user = homeViewModel.getUser().getValue();
         if(user != null){
             welcomingTextView.setText("Hello, " + homeViewModel.getUser().getValue().getName() + "!");
@@ -154,7 +154,7 @@ public class HomeFragment extends Fragment {
             welcomingTextView.setText("Hello!");
         }
         //For now
-        dayDescriptionTextView.setText("It's a sunny day!");
+        //dayDescriptionTextView.setText("It's a sunny day!");
     }
 
     public void testingData(ArrayList<Pot> pots){
