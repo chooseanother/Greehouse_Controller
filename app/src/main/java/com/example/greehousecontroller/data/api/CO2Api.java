@@ -9,6 +9,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 public interface CO2Api {
-    @GET("co2/{greenhouseId}?latest=true")
+    @GET("DioxideCarbon/{greenhouseId}?latest=true")
     Call<List<CO2>> getLatestCO2(@Path("greenhouseId") String greenhouseId);
 }

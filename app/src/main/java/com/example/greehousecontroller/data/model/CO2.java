@@ -1,7 +1,7 @@
 package com.example.greehousecontroller.data.model;
 
 public class CO2 {
-    private double CO2;
+    private double dioxideCarbon;
     private long time;
     private String greenhouseId;
     // TODO: Implement JsonAdapterClass to handle converting to Date from seconds
@@ -9,18 +9,18 @@ public class CO2 {
     public CO2() {
     }
 
-    public CO2(double CO2, long time, String greenhouseId) {
-        this.CO2 = CO2;
+    public CO2(double dioxideCarbon, long time, String greenhouseId) {
+        this.dioxideCarbon = dioxideCarbon;
         this.time = time;
         this.greenhouseId = greenhouseId;
     }
 
     public double getCO2() {
-        return CO2;
+        return dioxideCarbon;
     }
 
-    public void setCO2(double CO2) {
-        this.CO2 = CO2;
+    public void setCO2(double dioxideCarbon) {
+        this.dioxideCarbon = dioxideCarbon;
     }
 
     public long getTime() {
@@ -42,7 +42,7 @@ public class CO2 {
     @Override
     public String toString() {
         return "CO2{" +
-                "CO2=" + CO2 +
+                "CO2=" + dioxideCarbon +
                 ", time=" + time +
                 ", greenhouseId='" + greenhouseId + '\'' +
                 '}';
