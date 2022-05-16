@@ -17,6 +17,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -34,66 +36,35 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
-    private GoogleSignInClient mGoogleSignInClient;
-    private static final String TAG = "GoogleActivity";
-    private static final int RC_SIGN_IN = 100;
-    private FirebaseAuth mAuth;
-    DrawerLayout drawer;
     public NavController navController;
-    UserRepository userRepository;
-    NavigationView navigationView;
-    Toolbar toolbar;
+    private MainActivityViewModel viewModel;
+
+    private DrawerLayout drawer;
+    private NavigationView navigationView;
+    private Toolbar toolbar;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+        checkIfSignedIn();
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         initViews();
         setupNavigation();
-        toolbar = findViewById(R.id.toolbar);
+        bindLogOutMenu();
+        toolbar = binding.appBarMain.toolbar;
 
     }
-    @Override
-    public void onStart() {
-        super.onStart();
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-        mAuth = FirebaseAuth.getInstance();
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-            navController.navigate(R.id.nav_home);
-        }
-        else{
-            navController.navigate(R.id.nav_login);
-            toolbar.setVisibility(View.GONE);
-            login();
-        }
-    }
-    public void signOut()
-    {
-        UserRepository.getInstance().signOut(getApplication());
-        navController.navigate(R.id.nav_login);
-        toolbar.setVisibility(View.GONE);
-        login();
-    }
-    @Override
-    public void onBackPressed(){
-        if(navController.getCurrentDestination().getId() != R.id.nav_home && navController.getCurrentDestination().getId() != R.id.nav_login) {
-            super.onBackPressed();
-        }
-    }
     private void initViews() {
         setSupportActionBar(binding.appBarMain.toolbar);
         drawer = binding.drawerLayout;
         navigationView = binding.navView;
     }
-    private void setupNavigation()
-    {
+
+    private void setupNavigation() {
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_status, R.id.nav_graphs, R.id.nav_settings)
                 .setOpenableLayout(drawer)
@@ -117,47 +88,30 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
-
-            try {
-                Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-                firebaseAuthWithGoogle(task.getResult().getIdToken());
-
-            }catch (Exception e)
-            {
-                System.out.println(e);
+    private void checkIfSignedIn(){
+        LiveData<FirebaseUser> currentUser = viewModel.getCurrentUser();
+        currentUser.observe(this, user -> {
+            if (user != null){
+                // Do some checks or init menu with user info
+            } else {
+                startLoginActivity();
             }
-        }
+        });
     }
 
-    private void firebaseAuthWithGoogle(String idToken) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            toolbar.setVisibility(View.VISIBLE);
-                            navController.navigate(R.id.nav_home);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
-                        }
-                    }
-                });
+
+    private void bindLogOutMenu(){
+        binding.menuLogOut.setOnClickListener(view -> {
+            logOut();
+        });
     }
-    public void login() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
+
+    private void startLoginActivity() {
+        startActivity(new Intent(this, LogInActivity.class));
+        finish();
+    }
+
+    private void logOut() {
+        viewModel.logOut();
     }
 }
