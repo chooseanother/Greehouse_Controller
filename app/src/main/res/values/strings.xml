@@ -54,5 +54,6 @@
     <string name="settings_temperature_celsius">°C</string>
     <string name="settings_co2_ppm">ppm</string>
     <string name="settings_humidity_percentage">%</string>
+    <string name="settings_dummy_value_temperature_humidity">00,0</string>
 
 </resources>
