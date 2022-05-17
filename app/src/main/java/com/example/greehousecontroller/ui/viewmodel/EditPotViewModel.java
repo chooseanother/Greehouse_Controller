@@ -3,6 +3,7 @@ package com.example.greehousecontroller.ui.viewmodel;
 import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.MutableLiveData;
 
 
 import com.example.greehousecontroller.data.model.Pot;
@@ -14,18 +15,18 @@ public class EditPotViewModel extends AndroidViewModel {
 
     public EditPotViewModel(Application application) {
         super(application);
-        potRepository = PotRepository.getInstance();
+        potRepository = PotRepository.getInstance(application);
     }
 
     public void init(String greenhouseId, int id) {
         potRepository.init(greenhouseId, id);
     }
 
-    public Pot getCurrentPot() {
-        return potRepository.getPots().getValue().get(0);
+    public MutableLiveData<Pot> getCurrentPot() {
+        return potRepository.getCurrentPot();
     }
 
-    public boolean updateCurrentPot(String greenhouseId, int id, String name, float minimumThreshold) {
+    public boolean updateCurrentPot(String greenhouseId, int id, String name, double minimumThreshold) {
         return potRepository.updateCurrentPot(greenhouseId, id, name, minimumThreshold);
     }
 }

@@ -18,20 +18,22 @@ import com.example.greehousecontroller.MainActivity;
 import com.example.greehousecontroller.R;
 import com.example.greehousecontroller.data.model.Temperature;
 import com.example.greehousecontroller.databinding.FragmentHomeBinding;
-import com.example.greehousecontroller.data.model.GreenHouse;
 import com.example.greehousecontroller.data.model.Pot;
-import com.example.greehousecontroller.data.model.User;
 import com.example.greehousecontroller.ui.adapter.PotAdapter;
 import com.example.greehousecontroller.ui.viewmodel.HomeViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 public class HomeFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private PotAdapter adapter;
-    private ArrayList<Pot> potArrayList;
+    private List<Pot> potArrayList;
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
     private TextView temperatureTextView;
@@ -47,29 +49,15 @@ public class HomeFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
-        potArrayList = homeViewModel.getAllPots("test").getValue();
-        adapter = new PotAdapter(potArrayList);
-        homeViewModel.getAllPots("test").observe(getViewLifecycleOwner(), pots -> potArrayList.addAll(pots));
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         root = binding.getRoot();
         settingOfTextViews();
         recyclerView = root.findViewById(R.id.listOfPotsRecycleView);
         floatingActionButton = root.findViewById(R.id.fab);
-        recyclerView.hasFixedSize();
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(adapter);
-        floatingActionButton.setOnClickListener(clicked->{
-            ((MainActivity)getActivity()).navController.navigate(R.id.nav_add_pot);
-        });
-        adapter.setOnClickListener(pot -> {
-            Fragment fragment = new Fragment();
-            Bundle bundle = new Bundle();
-            bundle.putString("id", String.valueOf(pot.getId()));
-            fragment.setArguments(bundle);
-            ((MainActivity)getActivity()).navController.navigate(R.id.nav_edit_pot, bundle);
-        });
+        settingOfAdapter();
         observeData();
+        setOnClickListeners();
         initSwipeRefreshLayout();
         return root;
     }
@@ -91,6 +79,7 @@ public class HomeFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
     }
+
     public void callParentMethod(){
         getActivity().onBackPressed();
     }
@@ -119,11 +108,15 @@ public class HomeFragment extends Fragment {
             Toast.makeText(getContext(), show, Toast.LENGTH_SHORT).show();
 
         });
+
         homeViewModel.getLatestHumidity().observe(getViewLifecycleOwner(),humidity -> {
             String readings = humidity.getHumidity() + " %";
             humidityTextView.setText(readings);
         });
 
+        homeViewModel.getLatestPots().observe(getViewLifecycleOwner(), pots -> {
+        adapter.setPots(pots);
+        });
     }
 
     public void settingOfTextViews(){
@@ -146,7 +139,7 @@ public class HomeFragment extends Fragment {
         //Header
         welcomingTextView = root.findViewById(R.id.welcomingTextView);
         dayDescriptionTextView = root.findViewById(R.id.dayDescriptionTextView);
-        String user = homeViewModel.getUser();
+        FirebaseUser user = homeViewModel.getUser();
         if(user != null){
             welcomingTextView.setText("Hello, " + homeViewModel.getUser() + "!");
         }
@@ -160,5 +153,27 @@ public class HomeFragment extends Fragment {
     private void updateLatestMeasurements(){
         // TODO: Figure out how to handle greenhouseId
         homeViewModel.updateLatestMeasurements("test");
+    }
+
+    private void setOnClickListeners(){
+        floatingActionButton.setOnClickListener(clicked->{
+            ((MainActivity)getActivity()).navController.navigate(R.id.nav_add_pot);
+        });
+
+        adapter.setOnClickListener(pot -> {
+            Fragment fragment = new Fragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("id", String.valueOf(pot.getId()));
+            fragment.setArguments(bundle);
+            ((MainActivity)getActivity()).navController.navigate(R.id.nav_edit_pot, bundle);
+        });
+    }
+
+    private void settingOfAdapter(){
+        recyclerView.hasFixedSize();
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        //potArrayList = potArrayList == null ? new ArrayList<>() : potArrayList;
+        adapter = new PotAdapter(new ArrayList<>());
+        recyclerView.setAdapter(adapter);
     }
 }

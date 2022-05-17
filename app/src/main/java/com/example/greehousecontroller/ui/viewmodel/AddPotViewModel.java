@@ -12,7 +12,7 @@ public class AddPotViewModel extends AndroidViewModel {
 
     public AddPotViewModel(Application application) {
         super(application);
-        potRepository = PotRepository.getInstance();
+        potRepository = PotRepository.getInstance(application);
     }
 
     public String validInput(String greenhouseId, String name, String minimumHumidity){

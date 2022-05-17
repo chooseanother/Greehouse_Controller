@@ -6,16 +6,16 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.greehousecontroller.data.repository.HumidityRepository;
-import com.example.greehousecontroller.data.model.GreenHouse;
 import com.example.greehousecontroller.data.model.Humidity;
 import com.example.greehousecontroller.data.model.Pot;
 import com.example.greehousecontroller.data.model.Temperature;
-import com.example.greehousecontroller.data.model.User;
 import com.example.greehousecontroller.data.repository.PotRepository;
 import com.example.greehousecontroller.data.repository.TemperatureRepository;
 import com.example.greehousecontroller.data.repository.UserRepository;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomeViewModel extends AndroidViewModel {
 
@@ -28,12 +28,12 @@ public class HomeViewModel extends AndroidViewModel {
         super(application);
         temperatureRepository = TemperatureRepository.getInstance(application);
         humidityRepository = HumidityRepository.getInstance(application);
-        potRepository = PotRepository.getInstance();
-        userRepository = UserRepository.getInstance();
+        potRepository = PotRepository.getInstance(application);
+        userRepository = UserRepository.getInstance(application);
     }
 
-    public MutableLiveData<ArrayList<Pot>> getAllPots(String greenhouseId) {
-            return potRepository.getAllPots(greenhouseId);
+    public MutableLiveData<List<Pot>> getLatestPots() {
+        return potRepository.getPots();
     }
 
     public MutableLiveData<Temperature> getLatestTemperature() {
@@ -47,9 +47,10 @@ public class HomeViewModel extends AndroidViewModel {
     public void updateLatestMeasurements(String greenhouseId){
         temperatureRepository.updateLatestMeasurement(greenhouseId);
         humidityRepository.updateLatestMeasurement(greenhouseId);
+        potRepository.updateLatestMeasurement(greenhouseId);
     }
 
-    public String getUser(){
+    public FirebaseUser getUser(){
         return userRepository.getCurrentUser().getValue();
     }
 }
