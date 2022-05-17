@@ -9,6 +9,7 @@ public class ServiceGenerator {
     private static TemperatureApi temperatureApi;
     private static HumidityApi humidityApi;
     private static PotAPI potAPI;
+    private static CO2Api co2Api;
 
     public static TemperatureApi getTemperatureAPI() {
         if (temperatureApi == null) {
@@ -41,6 +42,16 @@ public class ServiceGenerator {
                     .create(PotAPI.class);
         }
         return potAPI;
+    }
+    public static CO2Api getCO2Api(){
+        if (co2Api == null){
+            co2Api = new Retrofit.Builder()
+                    .baseUrl("http://sepdemo2-env.eba-n9rqip8w.eu-central-1.elasticbeanstalk.com")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
+                    .create(CO2Api.class);
+        }
+        return co2Api;
     }
 }
 
