@@ -10,6 +10,9 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.example.greehousecontroller.R;
 import com.example.greehousecontroller.data.model.Temperature;
@@ -40,12 +43,17 @@ public class GraphsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         graphsViewModel = new ViewModelProvider(this).get(GraphsViewModel.class);
-
         binding = FragmentGraphsBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+        Spinner timespanSpinner = view.findViewById(R.id.dates_spinner);
+        ArrayAdapter<CharSequence>adapter=ArrayAdapter.createFromResource(view.getContext(), R.array.timespans, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        timespanSpinner.setAdapter(adapter);
+
         lineChart = view.findViewById(R.id.temperature_lineChart);
         updateMeasurements();
         loadTemperatureChartData(100,100);

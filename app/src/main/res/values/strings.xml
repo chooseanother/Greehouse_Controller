@@ -37,4 +37,12 @@
     <!--Add pot-->
     <string name="add_pot_minimal_humidity">Minimal moisture:</string>
     <string name="add_pot_name">Name:</string>
+
+    <string-array name="timespans">
+        <item>Minutes</item>
+        <item>Hours</item>
+        <item>Days</item>
+        <item>Weeks</item>
+        <item>Months</item>
+    </string-array>
 </resources>
