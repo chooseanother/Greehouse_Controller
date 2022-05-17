@@ -26,7 +26,7 @@ public class EditPotViewModel extends AndroidViewModel {
         return potRepository.getCurrentPot();
     }
 
-    public boolean updateCurrentPot(String greenhouseId, int id, String name, double minimumThreshold) {
-        return potRepository.updateCurrentPot(greenhouseId, id, name, minimumThreshold);
+    public void updateCurrentPot(String greenhouseId, int id, String name, double minimumThreshold) {
+        potRepository.updateCurrentPot(greenhouseId, id, name, minimumThreshold);
     }
 }

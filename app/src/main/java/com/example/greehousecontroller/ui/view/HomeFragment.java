@@ -25,15 +25,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private PotAdapter adapter;
-    private List<Pot> potArrayList;
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
     private TextView temperatureTextView;
@@ -53,12 +50,11 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         root = binding.getRoot();
         settingOfTextViews();
-        recyclerView = root.findViewById(R.id.listOfPotsRecycleView);
-        floatingActionButton = root.findViewById(R.id.fab);
-        settingOfAdapter();
+        fabHandle();
+        recyclerViewHandle();
         observeData();
-        setOnClickListeners();
         initSwipeRefreshLayout();
+        recyclerView.setAdapter(adapter);
         return root;
     }
 
@@ -114,9 +110,6 @@ public class HomeFragment extends Fragment {
             humidityTextView.setText(readings);
         });
 
-        homeViewModel.getLatestPots().observe(getViewLifecycleOwner(), pots -> {
-        adapter.setPots(pots);
-        });
     }
 
     public void settingOfTextViews(){
@@ -155,25 +148,26 @@ public class HomeFragment extends Fragment {
         homeViewModel.updateLatestMeasurements("test");
     }
 
-    private void setOnClickListeners(){
+    private void fabHandle(){
+        floatingActionButton = root.findViewById(R.id.fab);
         floatingActionButton.setOnClickListener(clicked->{
             ((MainActivity)getActivity()).navController.navigate(R.id.nav_add_pot);
         });
+    }
+
+    private void recyclerViewHandle(){
+        recyclerView = root.findViewById(R.id.listOfPotsRecycleView);
+        recyclerView.hasFixedSize();
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new PotAdapter(new ArrayList<>());
+        homeViewModel.getLatestPots().observe(getViewLifecycleOwner(), pots -> {
+            adapter.setPots(pots);
+        });
 
         adapter.setOnClickListener(pot -> {
-            Fragment fragment = new Fragment();
-            Bundle bundle = new Bundle();
-            bundle.putString("id", String.valueOf(pot.getId()));
-            fragment.setArguments(bundle);
+            Bundle bundle = homeViewModel.getPotBundle(pot);
             ((MainActivity)getActivity()).navController.navigate(R.id.nav_edit_pot, bundle);
         });
     }
 
-    private void settingOfAdapter(){
-        recyclerView.hasFixedSize();
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        //potArrayList = potArrayList == null ? new ArrayList<>() : potArrayList;
-        adapter = new PotAdapter(new ArrayList<>());
-        recyclerView.setAdapter(adapter);
-    }
 }

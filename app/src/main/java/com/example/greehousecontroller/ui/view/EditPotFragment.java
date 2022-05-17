@@ -49,18 +49,18 @@ public class EditPotFragment extends Fragment {
             if(currentPot != null){
                 potName.setText(pot.getValue().getName());
                 DecimalFormat df = new DecimalFormat("0.00");
-                minimalThreshold.setText(df.format(pot.getValue().getLowerMoistureThreshold()) + " %");
+                minimalThreshold.setText(df.format(pot.getValue().getLowerMoistureThreshold()));
             }
         });
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
             //calling viewModel to check for input and updating pot in the DB
-                if(viewModel.updateCurrentPot("test", pot.getValue().getId(), potName.getText().toString(), Double.parseDouble(minimalThreshold.getText().toString()))){
+                viewModel.updateCurrentPot("test", pot.getValue().getId(), potName.getText().toString(), Double.parseDouble(minimalThreshold.getText().toString()));
                 ((MainActivity)getActivity()).navController.navigate(R.id.nav_home);
                 }
             }
-        });
+        );
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override

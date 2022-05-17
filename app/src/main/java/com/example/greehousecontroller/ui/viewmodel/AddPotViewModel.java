@@ -28,7 +28,7 @@ public class AddPotViewModel extends AndroidViewModel {
         }
     }
 
-    public boolean addPot(String greenhouseId, String name, String minimumHumidity){
-        return potRepository.addPot(greenhouseId, name, minimumHumidity);
+    public void addPot(String greenhouseId, String name, String minimumHumidity){
+        potRepository.addPot(greenhouseId, name, minimumHumidity);
     }
 }

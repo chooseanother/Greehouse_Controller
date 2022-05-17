@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupNavigation() {
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_status, R.id.nav_graphs, R.id.nav_settings)
                 .setOpenableLayout(drawer)
@@ -69,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }

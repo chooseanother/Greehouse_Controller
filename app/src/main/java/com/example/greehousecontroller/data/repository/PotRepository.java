@@ -11,7 +11,6 @@ import com.example.greehousecontroller.data.model.Pot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -24,8 +23,6 @@ public class PotRepository {
     private static PotRepository instance;
     private final Application app;
     private boolean result;
-    FirebaseDatabase database;
-    DatabaseReference reference;
 
     private PotRepository(Application app){
         this.app = app;
@@ -48,7 +45,6 @@ public class PotRepository {
             public void onResponse(Call<Pot> call, Response<Pot> response) {
                 if(response.isSuccessful()){
                     Log.i("Api-pot-ulm", response.body().toString());
-                    Log.i("Current pot", response.body().getName());
                     currentPot.setValue(response.body());
                 }
             }
@@ -68,46 +64,42 @@ public class PotRepository {
         return currentPot;
     }
 
-    public boolean updateCurrentPot(String greenHouseId, int potId, String name, double minimumThreshold) {
+    public void updateCurrentPot(String greenHouseId, int potId, String name, double minimumThreshold) {
         PotAPI potAPI = ServiceGenerator.getPotAPI();
-        Call call = potAPI.updatePotDetailsById(greenHouseId, potId, name, minimumThreshold);
-        call.enqueue(new Callback() {
+        Pot pot = new Pot(potId, name, minimumThreshold);
+        Call<Pot> call = potAPI.updatePotDetailsById(greenHouseId, potId, pot);
+        call.enqueue(new Callback<Pot>() {
             @Override
-            public void onResponse(Call call, Response response) {
+            public void onResponse(Call<Pot> call, Response<Pot> response) {
                 if(response.isSuccessful()) {
                     Log.i("Api-pot-ulm", response.body().toString());
-                    result = true;
                 }
             }
 
             @Override
-            public void onFailure(Call call, Throwable t) {
+            public void onFailure(Call<Pot> call, Throwable t) {
                 Log.e("Api-pot-ulm",t.getMessage());
-                result = false;
             }
         });
-        return result;
+        System.out.println("THE RESULT IS : " + result);
     }
 
-    public boolean addPot(String greenhouseId, String name, String minimumMoistureThreshold) {
+    public void addPot(String greenhouseId, String name, String minimumMoistureThreshold) {
        PotAPI potAPI = ServiceGenerator.getPotAPI();
        Pot pot = new Pot(name, 0, Double.valueOf(minimumMoistureThreshold));
-       Call call = potAPI.addPotDetailsById(greenhouseId, pot);
-       call.enqueue(new Callback() {
+       Call<Pot> call = potAPI.addPotDetailsById(greenhouseId, pot);
+       call.enqueue(new Callback<Pot>() {
            @Override
-           public void onResponse(Call call, Response response) {
-               if(response.isSuccessful()) {
+           public void onResponse(Call<Pot> call, Response<Pot> response) {
                    Log.i("Api-hum-ulm", response.body().toString());
                    result = true;
-               }
            }
 
            @Override
-           public void onFailure(Call call, Throwable t) {
-               result = false;
+           public void onFailure(Call<Pot> call, Throwable t) {
+               Log.e("Api-pot-ulm",t.getMessage());
            }
        });
-        return result;
     }
 
     public void updateLatestMeasurement(String greenhouseId) {

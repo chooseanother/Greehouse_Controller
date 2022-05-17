@@ -1,7 +1,9 @@
 package com.example.greehousecontroller.ui.viewmodel;
 
 import android.app.Application;
+import android.os.Bundle;
 
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
@@ -52,5 +54,13 @@ public class HomeViewModel extends AndroidViewModel {
 
     public FirebaseUser getUser(){
         return userRepository.getCurrentUser().getValue();
+    }
+
+    public Bundle getPotBundle(Pot pot){
+        Fragment fragment = new Fragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("id", String.valueOf(pot.getId()));
+        fragment.setArguments(bundle);
+        return bundle;
     }
 }
