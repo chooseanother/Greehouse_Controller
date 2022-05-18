@@ -41,10 +41,6 @@
     <string name="cancel_button">Cancel</string>
     <string name="save_button">Save</string>
 
-    <!--ADD POT-->
-    <string name="add_pot_minimal_humidity">Minimal moisture:</string>
-    <string name="add_pot_name">Name:</string>
-
     <!--THRESHOLD SETTINGS-->
     <string name="settings_temperature">Temperature</string>
     <string name="settings_co2">CO2</string>
@@ -59,4 +55,13 @@
     <string name="settings_wrong_number_format_temperature_exception">Temperature threshold must be a number. </string>
     <string name="settings_wrong_number_format_co2_exception">Temperature threshold must be a number. </string>
     <string name="settings_wrong_number_format_humidity_exception">Temperature threshold must be a number. </string>
+
+    <!--Add pot-->
+    <string name="add_pot_fragment_title">Add pot</string>
+    <string name="add_pot_minimal_moisture">Minimal moisture:</string>
+    <string name="add_pot_name">Name:</string>
+
+    <!--Edit pot-->
+    <string name="edit_pot_fragment_title">Edit pot</string>
+
 </resources>
