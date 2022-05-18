@@ -26,7 +26,7 @@
     <fragment
         android:id="@+id/nav_edit_pot"
         android:name="com.example.greehousecontroller.ui.view.EditPotFragment"
-        android:label="@string/menu_pots"
+        android:label="@string/edit_pot_fragment_title"
         tools:layout="@layout/fragment_edit_pot" />
 
     <fragment
@@ -37,7 +37,7 @@
     <fragment
         android:id="@+id/nav_add_pot"
         android:name="com.example.greehousecontroller.ui.view.AddPotFragment"
-        android:label="fragment_add_pot_pot"
+        android:label="@string/add_pot_fragment_title"
         tools:layout="@layout/fragment_add_pot" />
 
 </navigation>
