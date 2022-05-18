@@ -4,24 +4,283 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.view.SettingsFragment">
+    tools:context=".ui.view.SettingsFragment"
+    android:background="@color/pastel_green"
+    android:padding="@dimen/margin_from_screen_edges">
 
-    <TextView
-        android:id="@+id/text_settings"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_layout_temperature"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="test"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="@dimen/small_margin"
+        android:background="@drawable/round_layout_bg"
+        android:backgroundTint="@color/grey_background">
 
-    <Button
+        <TextView
+            android:id="@+id/settings_temperature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_temperature"
+            android:textSize="@dimen/text_size_heading_three"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/settings_temperature_upper_t"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/medium_text_size"
+            app:layout_constraintTop_toBottomOf="@id/settings_temperature"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/settings_upper_threshold"
+            android:padding="@dimen/small_margin"/>
+        <TextView
+            android:id="@+id/settings_temperature_lower_t"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/medium_text_size"
+            app:layout_constraintTop_toBottomOf="@id/settings_temperature_upper_t"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/settings_lower_threshold"
+            android:padding="@dimen/small_margin"/>
+
+        <EditText
+            android:id="@+id/settings_temperature_upper_t_edit_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/medium_text_size"
+            android:hint="@string/settings_dummy_value_temperature_humidity"
+            android:textColorHint="#00FFFFFF"
+            app:layout_constraintStart_toEndOf="@id/settings_temperature_upper_t"
+            app:layout_constraintTop_toBottomOf="@id/settings_temperature"
+            android:padding="@dimen/small_margin"/>
+
+        <EditText
+            android:id="@+id/settings_temperature_lower_t_edit_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/medium_text_size"
+            android:hint="@string/settings_dummy_value_temperature_humidity"
+            android:textColorHint="#00FFFFFF"
+            app:layout_constraintStart_toEndOf="@id/settings_temperature_lower_t"
+            app:layout_constraintTop_toBottomOf="@id/settings_temperature_upper_t_edit_text"
+            android:padding="@dimen/small_margin"/>
+        <TextView
+            android:id="@+id/settings_temperature_upper_t_celsius"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_temperature_celsius"
+            app:layout_constraintStart_toEndOf="@id/settings_temperature_upper_t_edit_text"
+            app:layout_constraintTop_toBottomOf="@id/settings_temperature"
+            android:textSize="@dimen/medium_text_size"
+            android:padding="@dimen/small_margin"/>
+        <TextView
+            android:id="@+id/settings_temperature_lower_t_celsius"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_temperature_celsius"
+            app:layout_constraintStart_toEndOf="@id/settings_temperature_lower_t_edit_text"
+            app:layout_constraintTop_toBottomOf="@id/settings_temperature_upper_t_celsius"
+            android:textSize="@dimen/medium_text_size"
+            android:padding="@dimen/small_margin"/>
+
+        <ImageView
+            android:id="@+id/settings_temperature_save"
+            android:layout_width="@dimen/home_edit_image_size"
+            android:layout_height="@dimen/home_edit_image_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/ic_settings_save"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_layout_co2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:background="@drawable/round_layout_bg"
+        android:backgroundTint="@color/grey_background"
+        android:padding="@dimen/small_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/constraint_layout_temperature">
+
+        <TextView
+            android:id="@+id/settings_co2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_co2"
+            android:textSize="@dimen/text_size_heading_three"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/settings_co2_upper_t"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/small_margin"
+            android:text="@string/settings_upper_threshold"
+            android:textSize="@dimen/medium_text_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/settings_co2" />
+
+        <TextView
+            android:id="@+id/settings_co2_lower_t"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/small_margin"
+            android:text="@string/settings_lower_threshold"
+            android:textSize="@dimen/medium_text_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/settings_co2_upper_t" />
+
+        <EditText
+            android:id="@+id/settings_co2_upper_t_edit_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/settings_dummy_value_temperature_humidity"
+            android:padding="@dimen/small_margin"
+            android:textColorHint="#00FFFFFF"
+            android:textSize="@dimen/medium_text_size"
+            app:layout_constraintStart_toEndOf="@id/settings_co2_upper_t"
+            app:layout_constraintTop_toBottomOf="@id/settings_co2" />
+
+        <EditText
+            android:id="@+id/settings_co2_lower_t_edit_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/settings_dummy_value_temperature_humidity"
+            android:padding="@dimen/small_margin"
+            android:textColorHint="#00FFFFFF"
+            android:textSize="@dimen/medium_text_size"
+            app:layout_constraintStart_toEndOf="@id/settings_co2_lower_t"
+            app:layout_constraintTop_toBottomOf="@id/settings_co2_upper_t_edit_text" />
+
+        <TextView
+            android:id="@+id/settings_co2_upper_t_celsius"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/small_margin"
+            android:text="@string/settings_temperature_celsius"
+            android:textSize="@dimen/medium_text_size"
+            app:layout_constraintStart_toEndOf="@id/settings_co2_upper_t_edit_text"
+            app:layout_constraintTop_toBottomOf="@id/settings_co2" />
+
+        <TextView
+            android:id="@+id/settings_co2_lower_t_celsius"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/small_margin"
+            android:text="@string/settings_temperature_celsius"
+            android:textSize="@dimen/medium_text_size"
+            app:layout_constraintStart_toEndOf="@id/settings_co2_lower_t_edit_text"
+            app:layout_constraintTop_toBottomOf="@id/settings_co2_upper_t_celsius" />
+
+        <ImageView
+            android:id="@+id/settings_co2_save"
+            android:layout_width="@dimen/home_edit_image_size"
+            android:layout_height="@dimen/home_edit_image_size"
+            android:src="@drawable/ic_settings_save"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_layout_humidity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:background="@drawable/round_layout_bg"
+        android:backgroundTint="@color/grey_background"
+        android:padding="@dimen/small_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/constraint_layout_co2">
+
+        <TextView
+            android:id="@+id/settings_humidity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_humidity"
+            android:textSize="@dimen/text_size_heading_three"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/settings_humidity_upper_t"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/small_margin"
+            android:text="@string/settings_upper_threshold"
+            android:textSize="@dimen/medium_text_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/settings_humidity" />
+
+        <TextView
+            android:id="@+id/settings_humidity_lower_t"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/small_margin"
+            android:text="@string/settings_lower_threshold"
+            android:textSize="@dimen/medium_text_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/settings_humidity_upper_t" />
+
+        <EditText
+            android:id="@+id/settings_humidity_upper_t_edit_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/settings_dummy_value_temperature_humidity"
+            android:padding="@dimen/small_margin"
+            android:textColorHint="#00FFFFFF"
+            android:textSize="@dimen/medium_text_size"
+            app:layout_constraintStart_toEndOf="@id/settings_humidity_upper_t"
+            app:layout_constraintTop_toBottomOf="@id/settings_humidity" />
+
+        <EditText
+            android:id="@+id/settings_humidity_lower_t_edit_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/settings_dummy_value_temperature_humidity"
+            android:padding="@dimen/small_margin"
+            android:textColorHint="#00FFFFFF"
+            android:textSize="@dimen/medium_text_size"
+            app:layout_constraintStart_toEndOf="@id/settings_humidity_lower_t"
+            app:layout_constraintTop_toBottomOf="@id/settings_humidity_upper_t_edit_text" />
+
+        <TextView
+            android:id="@+id/settings_humidity_upper_t_celsius"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/small_margin"
+            android:text="@string/settings_temperature_celsius"
+            android:textSize="@dimen/medium_text_size"
+            app:layout_constraintStart_toEndOf="@id/settings_humidity_upper_t_edit_text"
+            app:layout_constraintTop_toBottomOf="@id/settings_humidity" />
+
+        <TextView
+            android:id="@+id/settings_humidity_lower_t_celsius"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/small_margin"
+            android:text="@string/settings_temperature_celsius"
+            android:textSize="@dimen/medium_text_size"
+            app:layout_constraintStart_toEndOf="@id/settings_humidity_lower_t_edit_text"
+            app:layout_constraintTop_toBottomOf="@id/settings_humidity_upper_t_celsius" />
+
+        <ImageView
+            android:id="@+id/settings_humidity_save"
+            android:layout_width="@dimen/home_edit_image_size"
+            android:layout_height="@dimen/home_edit_image_size"
+            android:src="@drawable/ic_settings_save"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--<Button
         android:id="@+id/sign_out_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,5 +291,5 @@
         android:text="Sign Out"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
+-->
 </androidx.constraintlayout.widget.ConstraintLayout>
