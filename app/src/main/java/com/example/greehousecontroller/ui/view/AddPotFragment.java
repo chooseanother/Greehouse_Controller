@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,7 @@ public class AddPotFragment extends Fragment {
         root = binding.getRoot();
         namePotTextView = root.findViewById(R.id.potNameTextView);
         minimalHumidityTextView = root.findViewById(R.id.minimalHumidityTextView);
+        minimalHumidityTextView.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         savePotButton = root.findViewById(R.id.saveAddPotButton);
         cancelPotButton = root.findViewById(R.id.cancelPotButton);
         navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment_content_main);
@@ -48,12 +50,12 @@ public class AddPotFragment extends Fragment {
             public void onClick(View view) {
                 //Should include sensor in the future
                 String result = viewModel.validInput("test", namePotTextView.getText().toString(),
-                        minimalHumidityTextView.getText().toString());
-                if(result == null){
+                        Double.parseDouble(minimalHumidityTextView.getText().toString()));
+                if(result.equals("")){
                     navController.navigate(R.id.nav_home);
                 }
                 else{
-                    Toast.makeText(getContext(), ""+result, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), ""+ result, Toast.LENGTH_SHORT).show();
                 }
             }
         });
