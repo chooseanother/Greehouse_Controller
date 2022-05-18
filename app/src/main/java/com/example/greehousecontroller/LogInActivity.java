@@ -54,8 +54,14 @@ public class LogInActivity extends AppCompatActivity {
     }
 
     private void goToMainActivity() {
-        startActivity(new Intent(LogInActivity.this, MainActivity.class));
-        finish();
+        if(viewModel.checkGreenHouseID()) {
+            startActivity(new Intent(LogInActivity.this, MainActivity.class));
+            finish();
+        }
+        else{
+            startActivity(new Intent(LogInActivity.this, GreenHouseIdActivity.class));
+            finish();
+        }
     }
 
     private void goToEnterGreenhouseCode() {
