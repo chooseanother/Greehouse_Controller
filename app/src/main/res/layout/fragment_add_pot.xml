@@ -31,11 +31,11 @@
         <EditText
             android:id="@+id/potNameTextView"
             android:layout_width="250dp"
-            android:layout_height="42dp"
-            android:layout_marginTop="@dimen/small_margin"
+            android:layout_height="@dimen/edit_text_height"
             android:layout_marginStart="@dimen/small_margin"
+            android:layout_marginTop="@dimen/small_margin"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView5"/>
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
         <TextView
             android:id="@+id/textView7"
@@ -77,9 +77,9 @@
         <EditText
             android:id="@+id/minimalHumidityTextView"
             android:layout_width="50dp"
-            android:layout_height="@dimen/medium_text_size"
-            android:layout_marginTop="@dimen/small_margin"
+            android:layout_height="@dimen/edit_text_height"
             android:layout_marginStart="@dimen/small_margin"
+            android:layout_marginTop="@dimen/small_margin"
             app:layout_constraintStart_toEndOf="@+id/textView7"
             app:layout_constraintTop_toBottomOf="@+id/potNameTextView" />
 

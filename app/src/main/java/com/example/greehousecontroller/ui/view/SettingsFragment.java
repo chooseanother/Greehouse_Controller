@@ -34,7 +34,7 @@ public class SettingsFragment extends Fragment {
         final TextView textView = binding.textSettings;
         settingsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         sign_out.setOnClickListener(v->{
-            ((MainActivity)getActivity()).signOut();
+            ((MainActivity)getActivity()).logOut();
         });
         return root;
     }

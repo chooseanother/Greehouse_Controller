@@ -3,6 +3,7 @@ package com.example.greehousecontroller.ui.viewmodel;
 import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.MutableLiveData;
 
 
 import com.example.greehousecontroller.data.model.Pot;
@@ -14,18 +15,43 @@ public class EditPotViewModel extends AndroidViewModel {
 
     public EditPotViewModel(Application application) {
         super(application);
-        potRepository = PotRepository.getInstance();
+        potRepository = PotRepository.getInstance(application);
     }
 
-    public void init(String greenhouseId, int id) {
-        potRepository.init(greenhouseId, id);
+    public String init(String greenhouseId, int id) {
+        return potRepository.init(greenhouseId, id);
     }
 
-    public Pot getCurrentPot() {
-        return potRepository.getCurrentPot().getValue();
+    public MutableLiveData<Pot> getCurrentPot() {
+        return potRepository.getCurrentPot();
     }
 
-    public boolean updateCurrentPot(String greenhouseId, int id, String name, String minimumThreshold) {
-        return potRepository.updateCurrentPot(greenhouseId, id, name, minimumThreshold);
+    public String updateCurrentPot(String greenhouseId, int id, String name, double minimumThreshold) {
+        if(checkForThresholdInput(minimumThreshold) && checkForNameInput(name)){
+            String response = potRepository.updateCurrentPot(greenhouseId, id, name, minimumThreshold);
+            return response;
+        }
+        else
+        {
+            return "Check the input";
+        }
+    }
+
+    private boolean checkForThresholdInput(double minimumThreshold){
+        if(minimumThreshold <= 100.0 && minimumThreshold >= 0.0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    private boolean checkForNameInput(String name){
+        if(name.length() > 100 || name.equals("") || name == null){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 }
