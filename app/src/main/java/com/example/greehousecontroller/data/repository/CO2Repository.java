@@ -7,7 +7,9 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.greehousecontroller.data.api.CO2Api;
 import com.example.greehousecontroller.data.api.ServiceGenerator;
+import com.example.greehousecontroller.data.api.TemperatureApi;
 import com.example.greehousecontroller.data.model.CO2;
+import com.example.greehousecontroller.data.model.Threshold;
 
 import java.util.List;
 
@@ -17,13 +19,15 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CO2Repository {
-    private static com.example.greehousecontroller.data.repository.CO2Repository instance;
+    private static CO2Repository instance;
     private final Application app;
     private MutableLiveData<CO2> latest;
+    private MutableLiveData<Threshold> threshold;
 
     private CO2Repository(Application app){
         this.app = app;
         latest = new MutableLiveData<>(new CO2());
+        threshold = new MutableLiveData<>(new Threshold());
     }
 
     public static com.example.greehousecontroller.data.repository.CO2Repository getInstance(Application app){
@@ -35,6 +39,10 @@ public class CO2Repository {
 
     public MutableLiveData<CO2> getLatest() {
         return latest;
+    }
+
+    public MutableLiveData<Threshold> getThreshold(){
+        return threshold;
     }
 
     public void updateLatestMeasurement(String greenhouseId){
@@ -53,6 +61,46 @@ public class CO2Repository {
             @Override
             public void onFailure(Call<List<CO2>> call, Throwable t) {
                 Log.e("Api-co2-ulm",t.getMessage());
+            }
+        });
+    }
+
+    public void updateThreshold(String greenhouseId){
+        CO2Api co2Api = ServiceGenerator.getCO2Api();
+        Call<Threshold> call = co2Api.getCo2Thresholds(greenhouseId);
+        call.enqueue(new Callback<Threshold>() {
+            @retrofit2.internal.EverythingIsNonNull
+            @Override
+            public void onResponse(Call<Threshold> call, Response<Threshold> response) {
+                if (response.isSuccessful()){
+                    Log.i("Api-co2-ut", response.body().toString());
+                    threshold.setValue(response.body());
+                }
+            }
+            @retrofit2.internal.EverythingIsNonNull
+            @Override
+            public void onFailure(Call<Threshold> call, Throwable t) {
+                Log.e("Api-co2-ut",t.getMessage());
+            }
+        });
+    }
+
+    public void setThreshold(String greenhouseId, Threshold newThreshold){
+        CO2Api co2Api = ServiceGenerator.getCO2Api();
+        Call<Threshold> call = co2Api.setCo2Thresholds(greenhouseId, newThreshold);
+        call.enqueue(new Callback<Threshold>() {
+            @retrofit2.internal.EverythingIsNonNull
+            @Override
+            public void onResponse(Call<Threshold> call, Response<Threshold> response) {
+                if (response.isSuccessful()){
+                    Log.i("Api-co2-st", response.body().toString());
+                    threshold.setValue(response.body());
+                }
+            }
+            @retrofit2.internal.EverythingIsNonNull
+            @Override
+            public void onFailure(Call<Threshold> call, Throwable t) {
+                Log.e("Api-co2-st",t.getMessage());
             }
         });
     }

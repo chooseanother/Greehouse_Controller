@@ -53,13 +53,10 @@ public class PotAdapter extends RecyclerView.Adapter<PotAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.name.setText(pots.get(position).getName());
-        holder.currentHumidity.setText(pots.get(position).getCurrentHumidity() + " %");
-        holder.minimalHumidity.setText(pots.get(position).getMinimalHumidity() + " %");
-        holder.edit.setOnClickListener(new View.OnClickListener() {
         DecimalFormat df = new DecimalFormat("0.0");
         holder.currentHumidity.setText(pots.get(position).getCurrentMoisture() + " %");
         holder.minimalHumidity.setText(df.format(pots.get(position).getLowerMoistureThreshold()) + " %");
-        holder.editButton.setOnClickListener(new View.OnClickListener() {
+        holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 callBack.OnClick(pots.get(holder.getAdapterPosition()));
@@ -86,10 +83,8 @@ public class PotAdapter extends RecyclerView.Adapter<PotAdapter.ViewHolder> {
             currentHumidity = itemView.findViewById(R.id.currentHumidityTextView);
             minimalHumidity = itemView.findViewById(R.id.minimalHumidityTextView);
             edit = itemView.findViewById(R.id.potMoistureEdit);
-            edit.setOnClickListener(v ->{
+            edit.setOnClickListener(v -> {
                 //listener.OnClick(pots.get(getAdapterPosition()));
-            editButton = itemView.findViewById(R.id.humidityEditButton);
-            editButton.setOnClickListener(v ->{
             });
         }
     }
