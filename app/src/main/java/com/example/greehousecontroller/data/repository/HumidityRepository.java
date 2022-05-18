@@ -7,7 +7,9 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.greehousecontroller.data.api.ServiceGenerator;
 import com.example.greehousecontroller.data.api.HumidityApi;
+import com.example.greehousecontroller.data.api.TemperatureApi;
 import com.example.greehousecontroller.data.model.Humidity;
+import com.example.greehousecontroller.data.model.Threshold;
 
 import java.util.List;
 
@@ -20,10 +22,12 @@ public class HumidityRepository {
     private static HumidityRepository instance;
     private final Application app;
     private MutableLiveData<Humidity> latest;
+    private MutableLiveData<Threshold> threshold;
 
     private HumidityRepository(Application app){
         this.app = app;
         latest = new MutableLiveData<>(new Humidity());
+        threshold = new MutableLiveData<>(new Threshold());
     }
 
     public static HumidityRepository getInstance(Application app){
@@ -35,6 +39,11 @@ public class HumidityRepository {
 
     public MutableLiveData<Humidity> getLatest() {
         return latest;
+    }
+
+
+    public MutableLiveData<Threshold> getThreshold(){
+        return threshold;
     }
 
     public void updateLatestMeasurement(String greenhouseId){
@@ -53,6 +62,49 @@ public class HumidityRepository {
             @Override
             public void onFailure(Call<List<Humidity>> call, Throwable t) {
                 Log.e("Api-hum-ulm",t.getMessage());
+            }
+        });
+    }
+
+    public void updateThreshold(String greenhouseId){
+        HumidityApi humidityApi = ServiceGenerator.getHumidityAPI();
+        Call<Threshold> call = humidityApi.getHumidityThresholds(greenhouseId);
+        call.enqueue(new Callback<Threshold>() {
+            @EverythingIsNonNull
+            @Override
+            public void onResponse(Call<Threshold> call, Response<Threshold> response) {
+                if (response.isSuccessful()){
+                    Log.i("Api-hum-ut", response.body().toString());
+                    threshold.setValue(response.body());
+                }
+                else{
+                    Log.i("Api-hum-ut", response.toString());
+                }
+            }
+            @EverythingIsNonNull
+            @Override
+            public void onFailure(Call<Threshold> call, Throwable t) {
+                Log.e("Api-hum-ut",t.getMessage());
+            }
+        });
+    }
+
+    public void setThreshold(String greenhouseId, Threshold newThreshold){
+        HumidityApi humidityApi = ServiceGenerator.getHumidityAPI();
+        Call<Threshold> call = humidityApi.setHumidityThresholds(greenhouseId, newThreshold);
+        call.enqueue(new Callback<Threshold>() {
+            @EverythingIsNonNull
+            @Override
+            public void onResponse(Call<Threshold> call, Response<Threshold> response) {
+                if (response.isSuccessful()){
+                    Log.i("Api-hum-st", response.body().toString());
+                    threshold.setValue(response.body());
+                }
+            }
+            @EverythingIsNonNull
+            @Override
+            public void onFailure(Call<Threshold> call, Throwable t) {
+                Log.e("Api-hum-st",t.getMessage());
             }
         });
     }

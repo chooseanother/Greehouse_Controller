@@ -17,6 +17,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.greehousecontroller.MainActivity;
 import com.example.greehousecontroller.R;
 import com.example.greehousecontroller.data.model.Temperature;
+import com.example.greehousecontroller.data.model.User;
 import com.example.greehousecontroller.databinding.FragmentHomeBinding;
 import com.example.greehousecontroller.data.model.Pot;
 import com.example.greehousecontroller.ui.adapter.PotAdapter;
@@ -120,27 +121,27 @@ public class HomeFragment extends Fragment {
 
         Temperature temperature = homeViewModel.getLatestTemperature().getValue();
         if(temperature != null){
-//            humidityTextView.setText(greenHouse.getHumidity() + " %");
+           // co2TextView.setText(greenHouse.getCo2() + " grams");
+            co2TextView.setText("unknown");
             temperatureTextView.setText(temperature.getTemperature() + " °C");
-            //co2TextView.setText(greenHouse.getCo2() + " grams");
         }
         else{
-//            humidityTextView.setText("Unkown" + " %");
-//            temperatureTextView.setText("Unknown" + " °C");
+            temperatureTextView.setText("0.0" + " °C");
             co2TextView.setText("Unknown" + " grams");
         }
         //Header
         welcomingTextView = root.findViewById(R.id.welcomingTextView);
-        dayDescriptionTextView = root.findViewById(R.id.dayDescriptionTextView);
+        //dayDescriptionTextView = root.findViewById(R.id.dayDescriptionTextView);
         FirebaseUser user = homeViewModel.getUser();
         if(user != null){
-            welcomingTextView.setText("Hello, " + homeViewModel.getUser() + "!");
+            String welcomeMessage = "Hello, " + homeViewModel.getUser().getDisplayName() + "!";
+            welcomingTextView.setText(welcomeMessage);
         }
         else{
             welcomingTextView.setText("Hello!");
         }
         //For now
-        dayDescriptionTextView.setText("It's a sunny day!");
+        //dayDescriptionTextView.setText("It's a sunny day!");
     }
 
     private void updateLatestMeasurements(){

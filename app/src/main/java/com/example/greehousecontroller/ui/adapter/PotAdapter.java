@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -55,7 +56,7 @@ public class PotAdapter extends RecyclerView.Adapter<PotAdapter.ViewHolder> {
         DecimalFormat df = new DecimalFormat("0.0");
         holder.currentHumidity.setText(pots.get(position).getCurrentMoisture() + " %");
         holder.minimalHumidity.setText(df.format(pots.get(position).getLowerMoistureThreshold()) + " %");
-        holder.editButton.setOnClickListener(new View.OnClickListener() {
+        holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 callBack.OnClick(pots.get(holder.getAdapterPosition()));
@@ -73,7 +74,7 @@ public class PotAdapter extends RecyclerView.Adapter<PotAdapter.ViewHolder> {
         private TextView name;
         private TextView currentHumidity;
         private TextView minimalHumidity;
-        private Button editButton;
+        private ImageView edit;
 
 
         ViewHolder(View itemView){
@@ -81,8 +82,9 @@ public class PotAdapter extends RecyclerView.Adapter<PotAdapter.ViewHolder> {
             name = itemView.findViewById(R.id.potNameTextView);
             currentHumidity = itemView.findViewById(R.id.currentHumidityTextView);
             minimalHumidity = itemView.findViewById(R.id.minimalHumidityTextView);
-            editButton = itemView.findViewById(R.id.humidityEditButton);
-            editButton.setOnClickListener(v ->{
+            edit = itemView.findViewById(R.id.potMoistureEdit);
+            edit.setOnClickListener(v -> {
+                //listener.OnClick(pots.get(getAdapterPosition()));
             });
         }
     }
