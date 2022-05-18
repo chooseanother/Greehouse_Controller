@@ -83,7 +83,7 @@ public class HomeFragment extends Fragment {
     private void initSwipeRefreshLayout(){
         swipeRefreshLayout = root.findViewById(R.id.homeRefreshLayout);
         swipeRefreshLayout.setOnRefreshListener(() -> {
-            updateLatestMeasurements();
+         updateLatestMeasurements();
 
             // TODO: figure out where to place this so it stops when it gets data from API
             //  maybe with callback, or inside observe data
@@ -145,7 +145,10 @@ public class HomeFragment extends Fragment {
 
     private void updateLatestMeasurements(){
         // TODO: Figure out how to handle greenhouseId
-        homeViewModel.updateLatestMeasurements("test");
+        String response = homeViewModel.updateLatestMeasurements("test");
+        if(response.equals("Failed to retrieve pots")){
+            Toast.makeText(getContext(), response, Toast.LENGTH_SHORT);
+        }
     }
 
     private void fabHandle(){
@@ -169,5 +172,4 @@ public class HomeFragment extends Fragment {
             ((MainActivity)getActivity()).navController.navigate(R.id.nav_edit_pot, bundle);
         });
     }
-
 }

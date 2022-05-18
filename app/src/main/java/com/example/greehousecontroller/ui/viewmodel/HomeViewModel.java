@@ -46,10 +46,10 @@ public class HomeViewModel extends AndroidViewModel {
         return humidityRepository.getLatest();
     }
 
-    public void updateLatestMeasurements(String greenhouseId){
+    public String updateLatestMeasurements(String greenhouseId){
         temperatureRepository.updateLatestMeasurement(greenhouseId);
         humidityRepository.updateLatestMeasurement(greenhouseId);
-        potRepository.updateLatestMeasurement(greenhouseId);
+        return potRepository.updateLatestMeasurement(greenhouseId);
     }
 
     public FirebaseUser getUser(){

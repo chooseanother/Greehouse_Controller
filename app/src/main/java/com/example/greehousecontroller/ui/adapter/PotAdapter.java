@@ -16,6 +16,7 @@ import com.example.greehousecontroller.data.model.Pot;
 import com.example.greehousecontroller.utils.PotCallBack;
 import com.example.greehousecontroller.utils.PotClickCallBack;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,8 +52,9 @@ public class PotAdapter extends RecyclerView.Adapter<PotAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.name.setText(pots.get(position).getName());
+        DecimalFormat df = new DecimalFormat("0.0");
         holder.currentHumidity.setText(pots.get(position).getCurrentMoisture() + " %");
-        holder.minimalHumidity.setText(pots.get(position).getLowerMoistureThreshold() + " %");
+        holder.minimalHumidity.setText(df.format(pots.get(position).getLowerMoistureThreshold()) + " %");
         holder.editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
