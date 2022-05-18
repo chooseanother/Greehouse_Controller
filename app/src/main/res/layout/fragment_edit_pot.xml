@@ -34,8 +34,8 @@
 
         <EditText
             android:id="@+id/minimum_threshold_edit_text"
-            android:layout_width="50dp"
-            android:layout_height="@dimen/medium_text_size"
+            android:layout_width="62dp"
+            android:layout_height="@dimen/edit_text_height"
             android:layout_marginStart="@dimen/small_margin"
             android:layout_marginTop="@dimen/small_margin"
             android:textAlignment="center"
@@ -46,7 +46,7 @@
         <EditText
             android:id="@+id/pot_name_edit_text"
             android:layout_width="250dp"
-            android:layout_height="42dp"
+            android:layout_height="@dimen/edit_text_height"
             android:layout_marginStart="@dimen/small_margin"
             android:layout_marginTop="@dimen/small_margin"
             android:textAlignment="center"

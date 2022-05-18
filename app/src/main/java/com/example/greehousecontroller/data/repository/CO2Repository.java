@@ -5,106 +5,102 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.greehousecontroller.data.api.CO2Api;
 import com.example.greehousecontroller.data.api.ServiceGenerator;
-import com.example.greehousecontroller.data.api.HumidityApi;
 import com.example.greehousecontroller.data.api.TemperatureApi;
-import com.example.greehousecontroller.data.model.Humidity;
+import com.example.greehousecontroller.data.model.CO2;
 import com.example.greehousecontroller.data.model.Threshold;
 
 import java.util.List;
 
+import okhttp3.internal.annotations.EverythingIsNonNull;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.internal.EverythingIsNonNull;
 
-public class HumidityRepository {
-    private static HumidityRepository instance;
+public class CO2Repository {
+    private static CO2Repository instance;
     private final Application app;
-    private MutableLiveData<Humidity> latest;
+    private MutableLiveData<CO2> latest;
     private MutableLiveData<Threshold> threshold;
 
-    private HumidityRepository(Application app){
+    private CO2Repository(Application app){
         this.app = app;
-        latest = new MutableLiveData<>(new Humidity());
+        latest = new MutableLiveData<>(new CO2());
         threshold = new MutableLiveData<>(new Threshold());
     }
 
-    public static HumidityRepository getInstance(Application app){
+    public static com.example.greehousecontroller.data.repository.CO2Repository getInstance(Application app){
         if (instance == null){
-            instance = new HumidityRepository(app);
+            instance = new com.example.greehousecontroller.data.repository.CO2Repository(app);
         }
         return instance;
     }
 
-    public MutableLiveData<Humidity> getLatest() {
+    public MutableLiveData<CO2> getLatest() {
         return latest;
     }
-
 
     public MutableLiveData<Threshold> getThreshold(){
         return threshold;
     }
 
     public void updateLatestMeasurement(String greenhouseId){
-        HumidityApi humidityApi = ServiceGenerator.getHumidityAPI();
-        Call<List<Humidity>> call = humidityApi.getLatestHumidity(greenhouseId);
-        call.enqueue(new Callback<List<Humidity>>() {
+        CO2Api co2Api = ServiceGenerator.getCO2Api();
+        Call<List<CO2>> call = co2Api.getLatestCO2(greenhouseId);
+        call.enqueue(new Callback<List<CO2>>() {
             @EverythingIsNonNull
             @Override
-            public void onResponse(Call<List<Humidity>> call, Response<List<Humidity>> response) {
+            public void onResponse(Call<List<CO2>> call, Response<List<CO2>> response) {
                 if (response.isSuccessful()){
-                    Log.i("Api-hum-ulm", response.body().toString());
+                    Log.i("Api-co2-ulm", response.body().toString());
                     latest.setValue(response.body().get(0));
                 }
             }
             @EverythingIsNonNull
             @Override
-            public void onFailure(Call<List<Humidity>> call, Throwable t) {
-                Log.e("Api-hum-ulm",t.getMessage());
+            public void onFailure(Call<List<CO2>> call, Throwable t) {
+                Log.e("Api-co2-ulm",t.getMessage());
             }
         });
     }
 
     public void updateThreshold(String greenhouseId){
-        HumidityApi humidityApi = ServiceGenerator.getHumidityAPI();
-        Call<Threshold> call = humidityApi.getHumidityThresholds(greenhouseId);
+        CO2Api co2Api = ServiceGenerator.getCO2Api();
+        Call<Threshold> call = co2Api.getCo2Thresholds(greenhouseId);
         call.enqueue(new Callback<Threshold>() {
-            @EverythingIsNonNull
+            @retrofit2.internal.EverythingIsNonNull
             @Override
             public void onResponse(Call<Threshold> call, Response<Threshold> response) {
                 if (response.isSuccessful()){
-                    Log.i("Api-hum-ut", response.body().toString());
+                    Log.i("Api-co2-ut", response.body().toString());
                     threshold.setValue(response.body());
                 }
-                else{
-                    Log.i("Api-hum-ut", response.toString());
-                }
             }
-            @EverythingIsNonNull
+            @retrofit2.internal.EverythingIsNonNull
             @Override
             public void onFailure(Call<Threshold> call, Throwable t) {
-                Log.e("Api-hum-ut",t.getMessage());
+                Log.e("Api-co2-ut",t.getMessage());
             }
         });
     }
 
     public void setThreshold(String greenhouseId, Threshold newThreshold){
-        HumidityApi humidityApi = ServiceGenerator.getHumidityAPI();
-        Call<Threshold> call = humidityApi.setHumidityThresholds(greenhouseId, newThreshold);
+        CO2Api co2Api = ServiceGenerator.getCO2Api();
+        Call<Threshold> call = co2Api.setCo2Thresholds(greenhouseId, newThreshold);
         call.enqueue(new Callback<Threshold>() {
-            @EverythingIsNonNull
+            @retrofit2.internal.EverythingIsNonNull
             @Override
             public void onResponse(Call<Threshold> call, Response<Threshold> response) {
                 if (response.isSuccessful()){
-                    Log.i("Api-hum-st", response.body().toString());
+                    Log.i("Api-co2-st", response.body().toString());
                     threshold.setValue(response.body());
                 }
             }
-            @EverythingIsNonNull
+            @retrofit2.internal.EverythingIsNonNull
             @Override
             public void onFailure(Call<Threshold> call, Throwable t) {
-                Log.e("Api-hum-st",t.getMessage());
+                Log.e("Api-co2-st",t.getMessage());
             }
         });
     }
