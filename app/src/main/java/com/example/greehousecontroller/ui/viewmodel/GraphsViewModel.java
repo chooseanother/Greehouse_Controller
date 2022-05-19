@@ -3,6 +3,7 @@ package com.example.greehousecontroller.ui.viewmodel;
 import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -22,7 +23,7 @@ public class GraphsViewModel extends AndroidViewModel {
         mText = new MutableLiveData<>();
         mText.setValue("This is graphs fragment");
     }
-    public MutableLiveData<ArrayList<Temperature>> getTemperatureHistoryData() {
+    public LiveData<ArrayList<Temperature>> getTemperatureHistoryData() {
         return temperatureRepository.getTemperatureHistoryData();
     }
 

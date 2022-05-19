@@ -29,7 +29,7 @@ public class TemperatureRepository {
         this.app = app;
         latest = new MutableLiveData<>(new Temperature());
         threshold = new MutableLiveData<>(new Threshold());
-        historical = new MutableLiveData<>(new ArrayList<Temperature>());
+        historical = new MutableLiveData<>(new ArrayList<>());
         // TODO: Store latest measurement in phones storage
         //  so that if connection fails, latest received date is shown
     }
@@ -44,6 +44,7 @@ public class TemperatureRepository {
     public MutableLiveData<Temperature> getLatest() {
         return latest;
     }
+
     public MutableLiveData<ArrayList<Temperature>> getTemperatureHistoryData() {
         return historical;
     }

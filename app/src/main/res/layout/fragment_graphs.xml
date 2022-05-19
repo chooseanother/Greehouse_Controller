@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.graphs.GraphsFragment">
+    tools:context=".ui.view.GraphsFragment">
 
     <ImageView
         android:id="@+id/imageView8"
@@ -21,30 +21,24 @@
         android:scaleType="centerCrop"
         app:srcCompat="@drawable/background_image" />
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/temperature_lineChart"
+    <ProgressBar
+        android:id="@+id/progressBar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
-        android:layout_height="450dp"
-        android:alpha="0.6"
-        android:background="@color/light_gray"
-        android:elevation="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.354">
+        android:layout_height="match_parent" />
 
-    </com.github.mikephil.charting.charts.LineChart>
-
-    <Spinner
-        android:id="@+id/dates_spinner"
-        android:layout_width="409dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <com.anychart.AnyChartView
+        android:id="@+id/any_chart_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/temperature_lineChart" />
+        android:background="@color/fui_transparent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+
+    </com.anychart.AnyChartView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
