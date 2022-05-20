@@ -63,12 +63,5 @@
     <!--Edit pot-->
     <string name="edit_pot_fragment_title">Edit pot</string>
 
-    <!--Time Stamps-->
-    <string-array name="timespans">
-        <item>Minutes</item>
-        <item>Hours</item>
-        <item>Days</item>
-        <item>Weeks</item>
-        <item>Months</item>
-    </string-array>
+
 </resources>
