@@ -26,7 +26,7 @@ import com.example.greehousecontroller.ui.viewmodel.GraphsViewModel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
+
 
 public class GraphsFragment extends Fragment {
 
@@ -36,8 +36,6 @@ public class GraphsFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         graphsViewModel = new ViewModelProvider(this).get(GraphsViewModel.class);
         binding = FragmentGraphsBinding.inflate(inflater, container, false);
-
-
         return binding.getRoot();
     }
     @Override
@@ -55,7 +53,7 @@ public class GraphsFragment extends Fragment {
             @Override
             public void onChanged(@Nullable ArrayList<Temperature> temperatures) {
                 for (int i = 0; i < 1; i++) {
-                    data.add(new OHCLDataEntry((long) 1652729377000L, 0.1, 0.1, 0.1, 0.1));
+                    data.add(new OHCLDataEntry((long) Objects.requireNonNull(graphsViewModel.getLatestTemperature().getValue()).getTime().getTime(), 0.1, 0.1, 0.1, Objects.requireNonNull(graphsViewModel.getLatestTemperature().getValue()).getTemperature()));
                 }
                 for (Temperature temperature : temperatures) {
                     System.out.println(temperature.getTime().getTime());
@@ -78,19 +76,9 @@ public class GraphsFragment extends Fragment {
         });
     }
 
-        private void updateMeasurements(){
+    private void updateMeasurements(){
         // TODO: Figure out how to handle greenhouseId
         graphsViewModel.updateTemperatureHistoryData("test");
-    }
-
-    private List<DataEntry> getData() {
-        List<DataEntry> data = new ArrayList<>();
-        ArrayList<Temperature> temp = graphsViewModel.getTemperatureHistoryData().getValue();
-        for (int i = 0; i < temp.size(); i++) {
-            data.add(new OHCLDataEntry(temp.get(i).getTime().getTime(), 0.1, 0.1, 0.1, temp.get(i).getTemperature()));
-        }
-
-        return data;
     }
 
     private static class OHCLDataEntry extends HighLowDataEntry {

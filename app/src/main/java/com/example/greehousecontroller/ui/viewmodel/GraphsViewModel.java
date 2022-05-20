@@ -31,6 +31,11 @@ public class GraphsViewModel extends AndroidViewModel {
         return mText;
     }
 
+    public MutableLiveData<Temperature> getLatestTemperature(){
+        return temperatureRepository.getLatest();
+    }
+
+
     public void updateTemperatureHistoryData(String greenHouseId)
     {
         temperatureRepository.updateHistoricalMeasurement(greenHouseId);
