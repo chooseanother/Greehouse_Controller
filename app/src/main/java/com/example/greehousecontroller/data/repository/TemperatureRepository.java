@@ -11,6 +11,7 @@ import com.example.greehousecontroller.data.api.ServiceGenerator;
 import com.example.greehousecontroller.data.model.Threshold;
 
 import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -22,14 +23,15 @@ public class TemperatureRepository {
     private static TemperatureRepository instance;
     private final Application app;
     private MutableLiveData<Temperature> latest;
-    private MutableLiveData<Threshold> threshold;
     private MutableLiveData<ArrayList<Temperature>> historical;
+    private MutableLiveData<Threshold> threshold;
 
     private TemperatureRepository(Application app){
         this.app = app;
         latest = new MutableLiveData<>(new Temperature());
         threshold = new MutableLiveData<>(new Threshold());
-        historical = new MutableLiveData<>(new ArrayList<>());
+        historical = new MutableLiveData<>(new ArrayList<Temperature>());
+
         // TODO: Store latest measurement in phones storage
         //  so that if connection fails, latest received date is shown
     }
@@ -44,7 +46,6 @@ public class TemperatureRepository {
     public MutableLiveData<Temperature> getLatest() {
         return latest;
     }
-
     public MutableLiveData<ArrayList<Temperature>> getTemperatureHistoryData() {
         return historical;
     }
