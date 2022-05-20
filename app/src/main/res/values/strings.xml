@@ -1,5 +1,4 @@
 <resources>
-    <!--whole app-->
     <string name="app_name">Greehouse Controller</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -63,5 +62,6 @@
 
     <!--Edit pot-->
     <string name="edit_pot_fragment_title">Edit pot</string>
+
 
 </resources>
