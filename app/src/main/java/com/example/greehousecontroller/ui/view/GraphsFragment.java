@@ -55,9 +55,10 @@ public class GraphsFragment extends Fragment {
             @Override
             public void onChanged(@Nullable ArrayList<Temperature> temperatures) {
                 for (int i = 0; i < 1; i++) {
-                    data.add(new OHCLDataEntry((long) i, 0.1, 0.1, 0.1, (double) i));
+                    data.add(new OHCLDataEntry((long) 1652729377000L, 0.1, 0.1, 0.1, 0.1));
                 }
                 for (Temperature temperature : temperatures) {
+                    System.out.println(temperature.getTime().getTime());
                     data.add(new OHCLDataEntry(temperature.getTime().getTime(), temperature.getTemperature(), temperature.getTemperature(), temperature.getTemperature(), temperature.getTemperature()));
                 }
 
@@ -70,6 +71,8 @@ public class GraphsFragment extends Fragment {
 
                 plot.ema(table.mapAs("{value: 'close'}"), 1d, StockSeriesType.LINE);
 
+                plot.title().enabled(true);
+                plot.title().text("Temperature");
                 anyChartView.setChart(stock);
             }
         });
