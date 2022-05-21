@@ -63,5 +63,9 @@
     <!--Edit pot-->
     <string name="edit_pot_fragment_title">Edit pot</string>
 
-
+    <string-array name="Graphs">
+        <item>Temperature</item>
+        <item>CO2</item>
+        <item>Humidity</item>
+    </string-array>
 </resources>

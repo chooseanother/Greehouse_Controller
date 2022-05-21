@@ -49,7 +49,7 @@ public class TemperatureRepository {
     public MutableLiveData<ArrayList<Temperature>> getTemperatureHistoryData() {
         return historical;
     }
-    public void updateHistoricalMeasurement(String greenhouseId){
+    public void updateHistoricalData(String greenhouseId){
         TemperatureApi temperatureApi = ServiceGenerator.getTemperatureAPI();
         Call<ArrayList<Temperature>> call = temperatureApi.getHistoricalTemperature(greenhouseId);
         call.enqueue(new Callback<ArrayList<Temperature>>() {
