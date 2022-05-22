@@ -3,6 +3,7 @@ package com.example.greehousecontroller;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -82,8 +83,28 @@ public class MainActivity extends AppCompatActivity {
         LiveData<FirebaseUser> currentUser = viewModel.getCurrentUser();
         currentUser.observe(this, user -> {
             if (user != null){
-                // Do some checks or init menu with user info
+                // Init menu with user info
                 setUpMenuUserInfo();
+
+                viewModel.initUserInfo();
+
+                viewModel.getCurrentUserInfo().observe(this, userInfo -> {
+                    // If for some reason user info is deleted from database when application is
+                    //  running, then this will prevent a crash.
+                    if (userInfo == null){
+                        startGreenhouseActivity();
+                        finish();
+                    }
+
+                    if (userInfo.getGreenhouseID() == null) {
+                        startGreenhouseActivity();
+                        finish();
+                    } else if (userInfo.getGreenhouseID().equals("")) {
+                        startGreenhouseActivity();
+                        finish();
+                    }
+
+                });
             } else {
                 startLoginActivity();
             }
@@ -99,6 +120,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void startLoginActivity() {
         startActivity(new Intent(this, LogInActivity.class));
+        finish();
+    }
+
+    private void startGreenhouseActivity(){
+        startActivity(new Intent(this, GreenHouseIdActivity.class));
         finish();
     }
 
