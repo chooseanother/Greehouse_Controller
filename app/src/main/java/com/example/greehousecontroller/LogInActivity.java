@@ -54,18 +54,12 @@ public class LogInActivity extends AppCompatActivity {
     }
 
     private void goToMainActivity() {
-        if(viewModel.checkGreenHouseID()) {
-            startActivity(new Intent(LogInActivity.this, MainActivity.class));
-            finish();
-        }
-        else{
-            startActivity(new Intent(LogInActivity.this, GreenHouseIdActivity.class));
-            finish();
-        }
+        startActivity(new Intent(LogInActivity.this, MainActivity.class));
+        finish();
     }
 
     private void goToEnterGreenhouseCode() {
-        //startActivity(new Intent(LogInActivity.this, EnterGreenhouseCode.class));
+        startActivity(new Intent(LogInActivity.this, GreenHouseIdActivity.class));
         finish();
     }
 
@@ -82,30 +76,16 @@ public class LogInActivity extends AppCompatActivity {
 
     private void handleResult(String name){
         // get user info from firebase to check if they have greenhouseId/Code registered
-        goToMainActivity();
-
-        // might need this later
-        /*viewModel.initUserInfo();
+        viewModel.initUserInfo();
 
         viewModel.getCurrentUserInfo().observe(this, userInfo -> {
             if (userInfo == null){
-                //String name = currentUser.getValue().getDisplayName();
-                viewModel.saveUserInfo(name, "", "");
-
+                goToEnterGreenhouseCode();
             }
             else {
-                String householdId = userInfo.getHouseholdId();
-                Log.d("signIn", "Household " + householdId);
-                if (householdId == null) {
-
-                } else if (householdId.equals("")) {
-                    goToEnterGreenhouseCode();
-                } else {
-                    // navigate to mainActivity
-                    goToMainActivity();
-                }
+                goToMainActivity();
             }
-        });*/
+        });
     }
 
     private void signIn() {

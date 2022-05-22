@@ -2,6 +2,7 @@ package com.example.greehousecontroller;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 
 import com.example.greehousecontroller.databinding.ActivityMainBinding;
@@ -79,6 +80,20 @@ public class MainActivity extends AppCompatActivity {
         currentUser.observe(this, user -> {
             if (user != null){
                 // Do some checks or init menu with user info
+
+                // TODO: Check if greenhouse Id exists, else navigate to enter greenhouse id
+                viewModel.initUserInfo();
+
+                viewModel.getCurrentUserInfo().observe(this, userInfo -> {
+                    Log.i("main-userinfo", userInfo.toString());
+                    if (userInfo == null){
+                        //Navigate to enter greenhouse id
+                    } else if (userInfo.getGreenhouseID() == null){
+                        //Navigate to enter greenhouse id
+                    } else if (userInfo.getGreenhouseID().equals("")){
+                        //Navigate to enter greenhouse id
+                    }
+                });
             } else {
                 startLoginActivity();
             }

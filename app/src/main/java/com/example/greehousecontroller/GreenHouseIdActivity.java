@@ -17,45 +17,50 @@ import com.google.firebase.auth.FirebaseUser;
 public class GreenHouseIdActivity extends AppCompatActivity {
     private ActivityGreenhouseIdBinding binding;
     private GreenHouseIdActivityViewModel viewModel;
-    TextView id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(this).get(GreenHouseIdActivityViewModel.class);
         checkIfSignedIn();
-        setContentView(R.layout.activity_log_in);
         binding = ActivityGreenhouseIdBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        id = binding.GreenHouseIDEditText;
+        setupBindings();
+    }
+
+    private void setupBindings(){
         bindLogOutButton();
         bindSaveIdButton();
     }
+
     private void bindSaveIdButton(){
         binding.SaveGreenHouseID.setOnClickListener(view -> {
-            viewModel.saveGreenHouseId(viewModel.getCurrentUser().getValue().getEmail(),id.getText().toString());
+            viewModel.saveGreenHouseId(binding.GreenHouseIDEditText.getText().toString());
             startActivity(new Intent(this, MainActivity.class));
             finish();
         });
     }
+
     private void bindLogOutButton(){
         binding.signOutGreenhouseid.setOnClickListener(view -> {
             logOut();
         });
     }
+
     public void logOut() {
         viewModel.logOut();
-
     }
-    private void checkIfSignedIn(){
-        LiveData<FirebaseUser> currentUser = viewModel.getCurrentUser();
-        currentUser.observe(this, user -> {
-            if (user != null){
 
+    private void checkIfSignedIn(){
+        viewModel.getCurrentUser().observe(this, user -> {
+            if (user != null){
+                viewModel.initUserInfo();
             } else {
                 startLoginActivity();
             }
         });
     }
+
     private void startLoginActivity() {
         startActivity(new Intent(this, LogInActivity.class));
         finish();
