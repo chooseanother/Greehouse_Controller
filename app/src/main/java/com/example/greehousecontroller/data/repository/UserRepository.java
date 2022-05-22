@@ -23,15 +23,12 @@ public class UserRepository {
     private final UserLiveData currentUser;
     private final Application app;
     private static UserRepository instance;
-    FirebaseDatabase database;
-    DatabaseReference reference;
 
     private UserRepository(Application app) {
         this.app = app;
         currentUser = new UserLiveData();
-        database = FirebaseDatabase.getInstance(Config.firebase_db);
-        reference = database.getReference("users");
     }
+
     public static synchronized UserRepository getInstance(Application app) {
         if (instance == null) {
             instance = new UserRepository(app);
@@ -46,13 +43,4 @@ public class UserRepository {
     public void signOut() {
         AuthUI.getInstance().signOut(app.getApplicationContext());
     }
-    public void saveGreenHouseId(String email,String id)
-    {
-        reference.child(getSafeEmail(email)).child("GreenHouseID").setValue(id);
-    }
-    public String getSafeEmail(String email)
-    {
-        return email.replace('.','-');
-    }
-
 }
