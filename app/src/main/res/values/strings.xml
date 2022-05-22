@@ -65,10 +65,8 @@
     <string name="enter_your_greenhouse_id">Enter your greenhouse ID</string>
     <string name="greenhouse_id">Greenhouse ID</string>
     <string name="save">Save</string>
+    <string name="temperature">Temperature</string>
+    <string name="humidity">Humidity</string>
+    <string name="co2">CO2</string>
 
-    <string-array name="Graphs">
-        <item>Temperature</item>
-        <item>CO2</item>
-        <item>Humidity</item>
-    </string-array>
 </resources>

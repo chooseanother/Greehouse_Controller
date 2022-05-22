@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_temperature"
+        android:title="@string/temperature" />
+    <item
+        android:id="@+id/navigation_humidity"
+        android:title="@string/humidity" />
+    <item
+        android:id="@+id/navigation_co2"
+        android:title="@string/co2" />
+</menu>
