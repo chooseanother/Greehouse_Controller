@@ -1,5 +1,4 @@
 <resources>
-    <!--whole app-->
     <string name="app_name">Greehouse Controller</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -66,5 +65,6 @@
     <string name="enter_your_greenhouse_id">Enter your greenhouse ID</string>
     <string name="greenhouse_id">Greenhouse ID</string>
     <string name="save">Save</string>
+
 
 </resources>

@@ -1,101 +1,93 @@
 package com.example.greehousecontroller.ui.view;
 
-import android.graphics.Color;
-import android.os.Bundle;
 
+import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.example.greehousecontroller.R;
+import com.anychart.AnyChart;
+import com.anychart.AnyChartView;
+import com.anychart.chart.common.dataentry.DataEntry;
+import com.anychart.chart.common.dataentry.HighLowDataEntry;
+import com.anychart.charts.Stock;
+import com.anychart.core.stock.Plot;
+import com.anychart.data.Table;
+import com.anychart.enums.StockSeriesType;
 import com.example.greehousecontroller.data.model.Temperature;
 import com.example.greehousecontroller.databinding.FragmentGraphsBinding;
 import com.example.greehousecontroller.ui.viewmodel.GraphsViewModel;
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.ValueFormatter;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
+import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
+
 
 public class GraphsFragment extends Fragment {
 
     private FragmentGraphsBinding binding;
-    LineChart lineChart;
     GraphsViewModel graphsViewModel;
-    private final SimpleDateFormat mFormat = new SimpleDateFormat("dd MMM HH:mm", Locale.ENGLISH);
-
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         graphsViewModel = new ViewModelProvider(this).get(GraphsViewModel.class);
-
         binding = FragmentGraphsBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        lineChart = view.findViewById(R.id.temperature_lineChart);
+        super.onViewCreated(view, savedInstanceState);
+        AnyChartView anyChartView = binding.anyChartView;
         updateMeasurements();
-        loadTemperatureChartData(100,100);
-        lineChart.animate();
-    }
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
-    private void loadTemperatureChartData(int count,int range ) {
-        ArrayList<Entry> yVals1 = new ArrayList<>();
-        LineDataSet set1 ;
-        XAxis xAxis = lineChart.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.TOP_INSIDE);
-        xAxis.setTextSize(10f);
-        xAxis.setTextColor(Color.WHITE);
-        xAxis.setDrawAxisLine(false);
-        xAxis.setDrawGridLines(true);
-        xAxis.setTextColor(Color.rgb(255, 192, 56));
-        xAxis.setCenterAxisLabels(true);
-        xAxis.setGranularity(1f); // one hour
-        xAxis.setValueFormatter(new MyAxisFormatter());
+        Table table = Table.instantiate("x");
 
-        for(int i = Objects.requireNonNull(graphsViewModel.getTemperatureHistoryData().getValue()).size()-1; i > 1; i--){
-            long now = TimeUnit.MILLISECONDS.toMinutes(graphsViewModel.getTemperatureHistoryData().getValue().get(i).getTime().getTime());
-            yVals1.add(new Entry(now,(float)graphsViewModel.getTemperatureHistoryData().getValue().get(i).getTemperature()));
-        }
-        set1 = new LineDataSet(yVals1,"Temperature");
-        set1.setDrawValues(false);
-        set1.setDrawCircles(false);
-        set1.setDrawHorizontalHighlightIndicator(false);
-        set1.setDrawVerticalHighlightIndicator(false);
-        set1.setColor(0xFFFF0000);
+        List<DataEntry> data = new ArrayList<>();
+        anyChartView.setProgressBar(binding.progressBar);
 
-        LineData data = new LineData(set1);
 
-        lineChart.setData(data);
+        graphsViewModel.getTemperatureHistoryData().observe(getViewLifecycleOwner(), new Observer<ArrayList<Temperature>>() {
+            @Override
+            public void onChanged(@Nullable ArrayList<Temperature> temperatures) {
+                for (int i = 0; i < 1; i++) {
+                    data.add(new OHCLDataEntry((long) Objects.requireNonNull(graphsViewModel.getLatestTemperature().getValue()).getTime().getTime(), 0.1, 0.1, 0.1, Objects.requireNonNull(graphsViewModel.getLatestTemperature().getValue()).getTemperature()));
+                }
+                for (Temperature temperature : temperatures) {
+                    System.out.println(temperature.getTime().getTime());
+                    data.add(new OHCLDataEntry(temperature.getTime().getTime(), temperature.getTemperature(), temperature.getTemperature(), temperature.getTemperature(), temperature.getTemperature()));
+                }
+
+                table.addData(data);
+
+
+                Stock stock = AnyChart.stock();
+
+                Plot plot = stock.plot(0);
+
+                plot.ema(table.mapAs("{value: 'close'}"), 1d, StockSeriesType.LINE);
+
+                plot.title().enabled(true);
+                plot.title().text("Temperature");
+                anyChartView.setChart(stock);
+            }
+        });
     }
+
     private void updateMeasurements(){
         // TODO: Figure out how to handle greenhouseId
         graphsViewModel.updateTemperatureHistoryData("test");
     }
-    private static class MyAxisFormatter extends ValueFormatter {
-        private final SimpleDateFormat mFormat = new SimpleDateFormat("dd MMM HH:mm", Locale.ENGLISH);
 
-        @Override
-        public String getFormattedValue(float value) {
-            long millis = TimeUnit.HOURS.toMillis((long) value);
-            return mFormat.format(new Date(millis));
+    private static class OHCLDataEntry extends HighLowDataEntry {
+        OHCLDataEntry(Long x, Double open, Double high, Double low, Double close) {
+            super(x, high, low);
+            setValue("open", open);
+            setValue("close", close);
         }
     }
+
+
 }

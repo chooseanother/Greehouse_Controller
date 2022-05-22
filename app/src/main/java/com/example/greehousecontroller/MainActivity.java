@@ -1,10 +1,14 @@
 package com.example.greehousecontroller;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.greehousecontroller.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
 import androidx.appcompat.widget.Toolbar;
@@ -79,9 +83,9 @@ public class MainActivity extends AppCompatActivity {
         LiveData<FirebaseUser> currentUser = viewModel.getCurrentUser();
         currentUser.observe(this, user -> {
             if (user != null){
-                // Do some checks or init menu with user info
+                // Init menu with user info
+                setUpMenuUserInfo();
 
-                // TODO: Check if greenhouse Id exists, else navigate to enter greenhouse id
                 viewModel.initUserInfo();
 
                 viewModel.getCurrentUserInfo().observe(this, userInfo -> {
@@ -126,5 +130,16 @@ public class MainActivity extends AppCompatActivity {
 
     public void logOut() {
         viewModel.logOut();
+    }
+
+    private void setUpMenuUserInfo(){
+        FirebaseUser user = viewModel.getCurrentUser().getValue();
+        TextView username = binding.navView.getHeaderView(0).findViewById(R.id.menu_user_name);
+        username.setText(user.getDisplayName());
+        TextView email = binding.navView.getHeaderView(0).findViewById(R.id.menu_user_email);
+        email.setText(user.getEmail());
+        ImageView image = binding.navView.getHeaderView(0).findViewById(R.id.menu_user_image);
+        Uri photoUrl = user.getPhotoUrl();
+        Glide.with(MainActivity.this).load(photoUrl).into(image);
     }
 }
