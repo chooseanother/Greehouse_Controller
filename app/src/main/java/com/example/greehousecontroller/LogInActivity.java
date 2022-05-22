@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.widget.Toast;
 
 import com.example.greehousecontroller.databinding.ActivityLogInBinding;
@@ -53,13 +52,13 @@ public class LogInActivity extends AppCompatActivity {
         }
     }
 
-    private void goToMainActivity() {
+    private void startMainActivity() {
         startActivity(new Intent(LogInActivity.this, MainActivity.class));
         finish();
     }
 
-    private void goToEnterGreenhouseCode() {
-        //startActivity(new Intent(LogInActivity.this, EnterGreenhouseCode.class));
+    private void startGreenhouseActivity() {
+        startActivity(new Intent(LogInActivity.this, GreenHouseIdActivity.class));
         finish();
     }
 
@@ -76,30 +75,16 @@ public class LogInActivity extends AppCompatActivity {
 
     private void handleResult(String name){
         // get user info from firebase to check if they have greenhouseId/Code registered
-        goToMainActivity();
-
-        // might need this later
-        /*viewModel.initUserInfo();
+        viewModel.initUserInfo();
 
         viewModel.getCurrentUserInfo().observe(this, userInfo -> {
             if (userInfo == null){
-                //String name = currentUser.getValue().getDisplayName();
-                viewModel.saveUserInfo(name, "", "");
-
+                startGreenhouseActivity();
             }
             else {
-                String householdId = userInfo.getHouseholdId();
-                Log.d("signIn", "Household " + householdId);
-                if (householdId == null) {
-
-                } else if (householdId.equals("")) {
-                    goToEnterGreenhouseCode();
-                } else {
-                    // navigate to mainActivity
-                    goToMainActivity();
-                }
+                startMainActivity();
             }
-        });*/
+        });
     }
 
     private void signIn() {

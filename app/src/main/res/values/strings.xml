@@ -62,6 +62,9 @@
 
     <!--Edit pot-->
     <string name="edit_pot_fragment_title">Edit pot</string>
+    <string name="enter_your_greenhouse_id">Enter your greenhouse ID</string>
+    <string name="greenhouse_id">Greenhouse ID</string>
+    <string name="save">Save</string>
 
     <string-array name="Graphs">
         <item>Temperature</item>
