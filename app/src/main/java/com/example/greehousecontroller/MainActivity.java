@@ -85,10 +85,19 @@ public class MainActivity extends AppCompatActivity {
                 viewModel.initUserInfo();
 
                 viewModel.getCurrentUserInfo().observe(this, userInfo -> {
+                    // If for some reason user info is deleted from database when application is
+                    //  running, then this will prevent a crash.
+                    if (userInfo == null){
+                        startGreenhouseActivity();
+                        finish();
+                    }
+
                     if (userInfo.getGreenhouseID() == null) {
                         startGreenhouseActivity();
+                        finish();
                     } else if (userInfo.getGreenhouseID().equals("")) {
                         startGreenhouseActivity();
+                        finish();
                     }
 
                 });
