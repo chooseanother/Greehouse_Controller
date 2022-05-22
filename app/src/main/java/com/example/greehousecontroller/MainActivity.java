@@ -85,14 +85,12 @@ public class MainActivity extends AppCompatActivity {
                 viewModel.initUserInfo();
 
                 viewModel.getCurrentUserInfo().observe(this, userInfo -> {
-                    Log.i("main-userinfo", userInfo.toString());
-                    if (userInfo == null){
-                        //Navigate to enter greenhouse id
-                    } else if (userInfo.getGreenhouseID() == null){
-                        //Navigate to enter greenhouse id
-                    } else if (userInfo.getGreenhouseID().equals("")){
-                        //Navigate to enter greenhouse id
+                    if (userInfo.getGreenhouseID() == null) {
+                        startGreenhouseActivity();
+                    } else if (userInfo.getGreenhouseID().equals("")) {
+                        startGreenhouseActivity();
                     }
+
                 });
             } else {
                 startLoginActivity();
@@ -109,6 +107,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void startLoginActivity() {
         startActivity(new Intent(this, LogInActivity.class));
+        finish();
+    }
+
+    private void startGreenhouseActivity(){
+        startActivity(new Intent(this, GreenHouseIdActivity.class));
         finish();
     }
 

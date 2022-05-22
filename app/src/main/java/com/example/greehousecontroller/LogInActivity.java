@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.widget.Toast;
 
 import com.example.greehousecontroller.databinding.ActivityLogInBinding;
@@ -53,12 +52,12 @@ public class LogInActivity extends AppCompatActivity {
         }
     }
 
-    private void goToMainActivity() {
+    private void startMainActivity() {
         startActivity(new Intent(LogInActivity.this, MainActivity.class));
         finish();
     }
 
-    private void goToEnterGreenhouseCode() {
+    private void startGreenhouseActivity() {
         startActivity(new Intent(LogInActivity.this, GreenHouseIdActivity.class));
         finish();
     }
@@ -80,10 +79,10 @@ public class LogInActivity extends AppCompatActivity {
 
         viewModel.getCurrentUserInfo().observe(this, userInfo -> {
             if (userInfo == null){
-                goToEnterGreenhouseCode();
+                startGreenhouseActivity();
             }
             else {
-                goToMainActivity();
+                startMainActivity();
             }
         });
     }
