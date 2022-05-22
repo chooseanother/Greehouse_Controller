@@ -11,8 +11,12 @@ import com.example.greehousecontroller.data.model.Temperature;
 import com.example.greehousecontroller.data.repository.CO2Repository;
 import com.example.greehousecontroller.data.repository.HumidityRepository;
 import com.example.greehousecontroller.data.repository.TemperatureRepository;
+import com.example.greehousecontroller.data.repository.UserInfoRepository;
+import com.example.greehousecontroller.data.repository.UserRepository;
+import com.firebase.ui.auth.data.model.User;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class GraphsViewModel extends AndroidViewModel {
 
@@ -20,13 +24,20 @@ public class GraphsViewModel extends AndroidViewModel {
     private TemperatureRepository temperatureRepository;
     private CO2Repository co2Repository;
     private HumidityRepository humidityRepository;
+    private UserInfoRepository userInfoRepository;
+    private UserRepository userRepository;
 
     public GraphsViewModel(Application application){
         super(application);
         temperatureRepository = TemperatureRepository.getInstance(application);
         co2Repository = CO2Repository.getInstance(application);
         humidityRepository = HumidityRepository.getInstance(application);
+        userInfoRepository = UserInfoRepository.getInstance();
+        userRepository = UserRepository.getInstance(application);
+
+
         mText = new MutableLiveData<>();
+
         mText.setValue("This is graphs fragment");
     }
     public LiveData<ArrayList<Temperature>> getTemperatureHistoryData() {
@@ -55,10 +66,10 @@ public class GraphsViewModel extends AndroidViewModel {
         return humidityRepository.getHistoricalData();
     }
 
-    public void updateHistoryData(String greenHouseId)
+    public void updateHistoryData()
     {
-        temperatureRepository.updateHistoricalData(greenHouseId);
-        co2Repository.updateHistoricalData(greenHouseId);
-        humidityRepository.updateHistoricalData(greenHouseId);
+        temperatureRepository.updateHistoricalData("0004A30B00E7E7C1");
+        co2Repository.updateHistoricalData("0004A30B00E7E7C1");
+        humidityRepository.updateHistoricalData("0004A30B00E7E7C1");
     }
 }

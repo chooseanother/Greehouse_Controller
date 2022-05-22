@@ -55,6 +55,7 @@ public class GraphsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         super.onViewCreated(view, savedInstanceState);
+        graphsViewModel = new ViewModelProvider(this).get(GraphsViewModel.class);
         temperatureChart = binding.temperatureChart;
         co2Chart = binding.co2Chart;
         humidityChart = binding.humidityChart;
@@ -181,7 +182,7 @@ public class GraphsFragment extends Fragment {
 
     private void updateMeasurements(){
         // TODO: Figure out how to handle greenhouseId
-        graphsViewModel.updateHistoryData("0004A30B00E7E7C1");
+        graphsViewModel.updateHistoryData();
     }
 
     private static class OHCLDataEntry extends HighLowDataEntry {
