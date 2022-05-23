@@ -21,8 +21,6 @@
         <entry key="..\:/Users/jakub/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/fragment_pots.xml" value="0.358695652173913" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/pot_item.xml" value="0.25" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/menu/activity_main_drawer.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/micha/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/activity_greenhouse_id.xml" value="0.33" />
-        <entry key="..\:/Users/micha/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/activity_log_in.xml" value="0.18541666666666667" />
         <entry key="..\:/Users/micha/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/activity_main.xml" value="0.18541666666666667" />
         <entry key="..\:/Users/micha/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/app_bar_main.xml" value="0.18541666666666667" />
         <entry key="..\:/Users/micha/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/content_main.xml" value="0.18541666666666667" />
@@ -56,6 +54,8 @@
         <entry key="app/src/main/res/layout/fragment_status.xml" value="0.2544987146529563" />
         <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.25" />
         <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.1" />
+        <entry key="app/src/main/res/menu/main.xml" value="0.33" />
+        <entry key="app/src/main/res/menu/bottom_navigation_graphs.xml" value="0.375" />
         <entry key="app/src/main/res/menu/main.xml" value="0.33" />
       </map>
     </option>

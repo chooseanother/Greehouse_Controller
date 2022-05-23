@@ -153,6 +153,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // When you need to retrieve the current token
+    // For sending test notifications to a specific device, we aren't using it anywhere else
+    // when done doing development and testing this should be removed
     public void getCurrentToken(){
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
             if (!task.isSuccessful()) {
