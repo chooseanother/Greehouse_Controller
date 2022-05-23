@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.view.SettingsFragment"
+    tools:context=".ui.view.ThresholdSettingsFragment"
     android:background="@color/pastel_green"
     android:padding="@dimen/margin_from_screen_edges">
 
@@ -35,7 +35,8 @@
             app:layout_constraintTop_toBottomOf="@id/settings_temperature"
             app:layout_constraintStart_toStartOf="parent"
             android:text="@string/settings_upper_threshold"
-            android:padding="@dimen/small_margin"/>
+            android:padding="@dimen/small_margin"
+            android:paddingEnd="@dimen/mini_margin"/>
         <TextView
             android:id="@+id/settings_temperature_lower_t"
             android:layout_width="wrap_content"
@@ -44,47 +45,56 @@
             app:layout_constraintTop_toBottomOf="@id/settings_temperature_upper_t"
             app:layout_constraintStart_toStartOf="parent"
             android:text="@string/settings_lower_threshold"
-            android:padding="@dimen/small_margin"/>
+            android:padding="@dimen/small_margin"
+            android:paddingEnd="@dimen/mini_margin"/>
 
         <EditText
             android:id="@+id/settings_temperature_upper_t_edit_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/medium_text_size"
             android:hint="@string/settings_dummy_value_temperature_humidity"
+            android:maxLength="4"
+            android:padding="@dimen/small_margin"
             android:textColorHint="#00FFFFFF"
+            android:textSize="@dimen/medium_text_size"
+            app:layout_constraintEnd_toStartOf="@+id/settings_temperature_upper_t_celsius"
             app:layout_constraintStart_toEndOf="@id/settings_temperature_upper_t"
-            app:layout_constraintTop_toBottomOf="@id/settings_temperature"
-            android:padding="@dimen/small_margin"/>
+            app:layout_constraintTop_toBottomOf="@id/settings_temperature" />
 
         <EditText
             android:id="@+id/settings_temperature_lower_t_edit_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/medium_text_size"
             android:hint="@string/settings_dummy_value_temperature_humidity"
+            android:padding="@dimen/small_margin"
+            android:maxLength="4"
             android:textColorHint="#00FFFFFF"
+            android:textSize="@dimen/medium_text_size"
+            app:layout_constraintEnd_toStartOf="@+id/settings_temperature_lower_t_celsius"
             app:layout_constraintStart_toEndOf="@id/settings_temperature_lower_t"
-            app:layout_constraintTop_toBottomOf="@id/settings_temperature_upper_t_edit_text"
-            android:padding="@dimen/small_margin"/>
+            app:layout_constraintTop_toBottomOf="@id/settings_temperature_upper_t_edit_text" />
+
         <TextView
             android:id="@+id/settings_temperature_upper_t_celsius"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="@dimen/small_margin"
+            android:paddingStart="@dimen/mini_margin"
             android:text="@string/settings_temperature_celsius"
-            app:layout_constraintStart_toEndOf="@id/settings_temperature_upper_t_edit_text"
-            app:layout_constraintTop_toBottomOf="@id/settings_temperature"
             android:textSize="@dimen/medium_text_size"
-            android:padding="@dimen/small_margin"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/settings_temperature" />
+
         <TextView
             android:id="@+id/settings_temperature_lower_t_celsius"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="@dimen/small_margin"
+            android:paddingStart="@dimen/mini_margin"
             android:text="@string/settings_temperature_celsius"
-            app:layout_constraintStart_toEndOf="@id/settings_temperature_lower_t_edit_text"
-            app:layout_constraintTop_toBottomOf="@id/settings_temperature_upper_t_celsius"
             android:textSize="@dimen/medium_text_size"
-            android:padding="@dimen/small_margin"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/settings_temperature_upper_t_celsius" />
 
         <ImageView
             android:id="@+id/settings_temperature_save"
@@ -121,6 +131,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/small_margin"
+            android:paddingEnd="@dimen/mini_margin"
             android:text="@string/settings_upper_threshold"
             android:textSize="@dimen/medium_text_size"
             app:layout_constraintStart_toStartOf="parent"
@@ -131,6 +142,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/small_margin"
+            android:paddingEnd="@dimen/mini_margin"
             android:text="@string/settings_lower_threshold"
             android:textSize="@dimen/medium_text_size"
             app:layout_constraintStart_toStartOf="parent"
@@ -142,8 +154,10 @@
             android:layout_height="wrap_content"
             android:hint="@string/settings_dummy_value_temperature_humidity"
             android:padding="@dimen/small_margin"
+            android:maxLength="4"
             android:textColorHint="#00FFFFFF"
             android:textSize="@dimen/medium_text_size"
+            app:layout_constraintEnd_toStartOf="@+id/settings_co2_upper_t_celsius"
             app:layout_constraintStart_toEndOf="@id/settings_co2_upper_t"
             app:layout_constraintTop_toBottomOf="@id/settings_co2" />
 
@@ -153,8 +167,10 @@
             android:layout_height="wrap_content"
             android:hint="@string/settings_dummy_value_temperature_humidity"
             android:padding="@dimen/small_margin"
+            android:maxLength="4"
             android:textColorHint="#00FFFFFF"
             android:textSize="@dimen/medium_text_size"
+            app:layout_constraintEnd_toStartOf="@+id/settings_co2_lower_t_celsius"
             app:layout_constraintStart_toEndOf="@id/settings_co2_lower_t"
             app:layout_constraintTop_toBottomOf="@id/settings_co2_upper_t_edit_text" />
 
@@ -163,9 +179,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/small_margin"
-            android:text="@string/settings_temperature_celsius"
+            android:paddingStart="@dimen/mini_margin"
+            android:text="@string/settings_co2_ppm"
             android:textSize="@dimen/medium_text_size"
-            app:layout_constraintStart_toEndOf="@id/settings_co2_upper_t_edit_text"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/settings_co2" />
 
         <TextView
@@ -173,9 +190,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/small_margin"
-            android:text="@string/settings_temperature_celsius"
+            android:paddingStart="@dimen/mini_margin"
+            android:text="@string/settings_co2_ppm"
             android:textSize="@dimen/medium_text_size"
-            app:layout_constraintStart_toEndOf="@id/settings_co2_lower_t_edit_text"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/settings_co2_upper_t_celsius" />
 
         <ImageView
@@ -214,6 +232,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/small_margin"
+            android:paddingEnd="@dimen/mini_margin"
             android:text="@string/settings_upper_threshold"
             android:textSize="@dimen/medium_text_size"
             app:layout_constraintStart_toStartOf="parent"
@@ -224,6 +243,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/small_margin"
+            android:paddingEnd="@dimen/mini_margin"
             android:text="@string/settings_lower_threshold"
             android:textSize="@dimen/medium_text_size"
             app:layout_constraintStart_toStartOf="parent"
@@ -235,8 +255,10 @@
             android:layout_height="wrap_content"
             android:hint="@string/settings_dummy_value_temperature_humidity"
             android:padding="@dimen/small_margin"
+            android:maxLength="4"
             android:textColorHint="#00FFFFFF"
             android:textSize="@dimen/medium_text_size"
+            app:layout_constraintEnd_toStartOf="@+id/settings_humidity_upper_t_celsius"
             app:layout_constraintStart_toEndOf="@id/settings_humidity_upper_t"
             app:layout_constraintTop_toBottomOf="@id/settings_humidity" />
 
@@ -247,7 +269,9 @@
             android:hint="@string/settings_dummy_value_temperature_humidity"
             android:padding="@dimen/small_margin"
             android:textColorHint="#00FFFFFF"
+            android:maxLength="4"
             android:textSize="@dimen/medium_text_size"
+            app:layout_constraintEnd_toStartOf="@+id/settings_humidity_lower_t_celsius"
             app:layout_constraintStart_toEndOf="@id/settings_humidity_lower_t"
             app:layout_constraintTop_toBottomOf="@id/settings_humidity_upper_t_edit_text" />
 
@@ -256,9 +280,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/small_margin"
-            android:text="@string/settings_temperature_celsius"
+            android:paddingStart="@dimen/mini_margin"
+            android:text="@string/settings_humidity_percentage"
             android:textSize="@dimen/medium_text_size"
-            app:layout_constraintStart_toEndOf="@id/settings_humidity_upper_t_edit_text"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/settings_humidity" />
 
         <TextView
@@ -266,9 +291,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/small_margin"
-            android:text="@string/settings_temperature_celsius"
+            android:paddingStart="@dimen/mini_margin"
+            android:text="@string/settings_humidity_percentage"
             android:textSize="@dimen/medium_text_size"
-            app:layout_constraintStart_toEndOf="@id/settings_humidity_lower_t_edit_text"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/settings_humidity_upper_t_celsius" />
 
         <ImageView
@@ -279,17 +305,4 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!--<Button
-        android:id="@+id/sign_out_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="160dp"
-        android:layout_marginBottom="196dp"
-        android:background="@drawable/round_layout_bg"
-        android:backgroundTint="@color/pastel_green"
-        android:text="Sign Out"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
--->
 </androidx.constraintlayout.widget.ConstraintLayout>

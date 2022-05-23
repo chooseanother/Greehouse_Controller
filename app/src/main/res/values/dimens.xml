@@ -21,7 +21,7 @@
     <dimen name="text_size_heading_two">38sp</dimen>
     <dimen name="text_size_heading_three">30sp</dimen>
 
-    <dimen name="edit_text_width_three_digits">12dp</dimen>
+    <dimen name="edit_text_width_three_digits">24dp</dimen>
 
     <dimen name="home_circle_image_size">55dp</dimen>
     <dimen name="home_edit_image_size">30dp</dimen>
