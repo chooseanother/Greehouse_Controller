@@ -2,15 +2,16 @@ package com.example.greehousecontroller.data.repository;
 
 import android.app.Application;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.greehousecontroller.R;
+import com.example.greehousecontroller.data.api.ServiceGenerator;
 import com.example.greehousecontroller.data.api.TemperatureApi;
 import com.example.greehousecontroller.data.model.Temperature;
-import com.example.greehousecontroller.data.api.ServiceGenerator;
 import com.example.greehousecontroller.data.model.Threshold;
 
-import java.util.ArrayList;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,9 +47,11 @@ public class TemperatureRepository {
     public MutableLiveData<Temperature> getLatest() {
         return latest;
     }
+
     public MutableLiveData<ArrayList<Temperature>> getTemperatureHistoryData() {
         return historical;
     }
+
     public void updateHistoricalMeasurement(String greenhouseId){
         TemperatureApi temperatureApi = ServiceGenerator.getTemperatureAPI();
         Call<ArrayList<Temperature>> call = temperatureApi.getHistoricalTemperature(greenhouseId);
@@ -60,11 +63,16 @@ public class TemperatureRepository {
                     Log.i("Api-temp-ulm", response.body().toString());
                     historical.setValue(response.body());
                 }
+
+                if(!response.isSuccessful()){
+                    Toast.makeText(app.getApplicationContext(), R.string.unable_to_retrieve_measurements, Toast.LENGTH_SHORT);
+                }
             }
             @EverythingIsNonNull
             @Override
             public void onFailure(Call<ArrayList<Temperature>> call, Throwable t) {
                 Log.e("Api-temp-ulm",t.getMessage());
+                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT);
             }
         });
     }
@@ -84,11 +92,16 @@ public class TemperatureRepository {
                     Log.i("Api-temp-ulm", response.body().toString());
                     latest.setValue(response.body().get(0));
                 }
+
+                if(!response.isSuccessful()){
+                    Toast.makeText(app.getApplicationContext(), R.string.unable_to_retrieve_measurements, Toast.LENGTH_SHORT);
+                }
             }
             @EverythingIsNonNull
             @Override
             public void onFailure(Call<List<Temperature>> call, Throwable t) {
                 Log.e("Api-temp-ulm",t.getMessage());
+                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT);
             }
         });
     }
@@ -104,11 +117,16 @@ public class TemperatureRepository {
                     Log.i("Api-temp-ut", response.body().toString());
                     threshold.setValue(response.body());
                 }
+
+                if(!response.isSuccessful()){
+                    Toast.makeText(app.getApplicationContext(), R.string.unable_to_retrieve_threshold, Toast.LENGTH_SHORT);
+                }
             }
             @EverythingIsNonNull
             @Override
             public void onFailure(Call<Threshold> call, Throwable t) {
                 Log.e("Api-temp-ut",t.getMessage());
+                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT);
             }
         });
     }
@@ -124,11 +142,16 @@ public class TemperatureRepository {
                     Log.i("Api-temp-st", response.body().toString());
                     threshold.setValue(response.body());
                 }
+
+                if(!response.isSuccessful()){
+                    Toast.makeText(app.getApplicationContext(), R.string.unable_to_access_server, Toast.LENGTH_SHORT);
+                }
             }
             @EverythingIsNonNull
             @Override
             public void onFailure(Call<Threshold> call, Throwable t) {
                 Log.e("Api-temp-st",t.getMessage());
+                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT);
             }
         });
     }

@@ -2,12 +2,13 @@ package com.example.greehousecontroller.data.repository;
 
 import android.app.Application;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.greehousecontroller.R;
 import com.example.greehousecontroller.data.api.CO2Api;
 import com.example.greehousecontroller.data.api.ServiceGenerator;
-import com.example.greehousecontroller.data.api.TemperatureApi;
 import com.example.greehousecontroller.data.model.CO2;
 import com.example.greehousecontroller.data.model.Threshold;
 
@@ -53,14 +54,21 @@ public class CO2Repository {
             @Override
             public void onResponse(Call<List<CO2>> call, Response<List<CO2>> response) {
                 if (response.isSuccessful()){
-                    Log.i("Api-co2-ulm", response.body().toString());
-                    latest.setValue(response.body().get(0));
+                    if(response.body() != null){
+                        Log.i("Api-co2-ulm", response.body().toString());
+                        latest.setValue(response.body().get(0));
+                    }
+                }
+
+                if(!response.isSuccessful()){
+                        Toast.makeText(app.getApplicationContext(), R.string.unable_to_retrieve_measurements, Toast.LENGTH_SHORT);
                 }
             }
             @EverythingIsNonNull
             @Override
             public void onFailure(Call<List<CO2>> call, Throwable t) {
                 Log.e("Api-co2-ulm",t.getMessage());
+                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT);
             }
         });
     }
@@ -73,14 +81,21 @@ public class CO2Repository {
             @Override
             public void onResponse(Call<Threshold> call, Response<Threshold> response) {
                 if (response.isSuccessful()){
-                    Log.i("Api-co2-ut", response.body().toString());
-                    threshold.setValue(response.body());
+                    if(response.body() != null){
+                        Log.i("Api-co2-ut", response.body().toString());
+                        threshold.setValue(response.body());
+                    }
                 }
-            }
+
+                if(!response.isSuccessful()){
+                        Toast.makeText(app.getApplicationContext(), R.string.unable_to_retrieve_threshold, Toast.LENGTH_SHORT);
+                    }
+                }
             @retrofit2.internal.EverythingIsNonNull
             @Override
             public void onFailure(Call<Threshold> call, Throwable t) {
                 Log.e("Api-co2-ut",t.getMessage());
+                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT);
             }
         });
     }
@@ -93,14 +108,21 @@ public class CO2Repository {
             @Override
             public void onResponse(Call<Threshold> call, Response<Threshold> response) {
                 if (response.isSuccessful()){
-                    Log.i("Api-co2-st", response.body().toString());
-                    threshold.setValue(response.body());
+                    if(response.body() != null){
+                        Log.i("Api-co2-st", response.body().toString());
+                        threshold.setValue(response.body());
+                    }
                 }
+
+                if(!response.isSuccessful()){
+                        Toast.makeText(app.getApplicationContext(), R.string.unable_to_access_server, Toast.LENGTH_SHORT);
+                    }
             }
             @retrofit2.internal.EverythingIsNonNull
             @Override
             public void onFailure(Call<Threshold> call, Throwable t) {
                 Log.e("Api-co2-st",t.getMessage());
+                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT);
             }
         });
     }

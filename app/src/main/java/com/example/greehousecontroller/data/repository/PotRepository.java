@@ -2,9 +2,11 @@ package com.example.greehousecontroller.data.repository;
 
 import android.app.Application;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.greehousecontroller.R;
 import com.example.greehousecontroller.data.api.ServiceGenerator;
 import com.example.greehousecontroller.data.api.PotAPI;
 import com.example.greehousecontroller.data.model.Pot;
@@ -20,13 +22,11 @@ public class PotRepository {
     private MutableLiveData<Pot> currentPot;
     private static PotRepository instance;
     private final Application app;
-    String responseFromAPI;
 
     private PotRepository(Application app){
         this.app = app;
         pots = new MutableLiveData<>();
         currentPot = new MutableLiveData<>();
-        responseFromAPI = "";
     }
 
     public static synchronized PotRepository getInstance(Application app){
@@ -36,31 +36,30 @@ public class PotRepository {
         return  instance;
     }
 
-    public String init(String greenHouseId, int potId){
+    public void init(String greenHouseId, int potId){
         PotAPI potAPI = ServiceGenerator.getPotAPI();
         Call<Pot> call = potAPI.getPotDetailsById(greenHouseId, potId);
         call.enqueue(new Callback<Pot>() {
             @Override
             public void onResponse(Call<Pot> call, Response<Pot> response) {
                 if(response.isSuccessful()){
-                    Log.i("Api-pot-ulm", response.body().toString());
-                    if(response.body() == null){
-                        responseFromAPI = "Failed to retrieve details";
-                    }
-                    else{
+                    if(response.body() != null){
+                        Log.i("Api-pot-ulm", response.body().toString());
                         currentPot.setValue(response.body());
-                        responseFromAPI = "";
                     }
+                }
+
+                if(!response.isSuccessful()){
+                        Toast.makeText(app.getApplicationContext(), R.string.unable_to_retrieve_pot_details, Toast.LENGTH_SHORT);
                 }
             }
 
             @Override
             public void onFailure(Call<Pot> call, Throwable t) {
                 Log.e("Api-pot-ulm",t.getMessage());
-                responseFromAPI = "Failed to retrieve details";
+                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT);
             }
         });
-       return responseFromAPI;
     }
 
     public MutableLiveData<List<Pot>> getPots() {
@@ -71,7 +70,7 @@ public class PotRepository {
         return currentPot;
     }
 
-    public String updateCurrentPot(String greenHouseId, int potId, String name, double minimumThreshold) {
+    public void updateCurrentPot(String greenHouseId, int potId, String name, double minimumThreshold) {
         PotAPI potAPI = ServiceGenerator.getPotAPI();
         Pot pot = new Pot(potId, name, minimumThreshold);
         Call<Pot> call = potAPI.updatePotDetailsById(greenHouseId, potId, pot);
@@ -79,51 +78,52 @@ public class PotRepository {
             @Override
             public void onResponse(Call<Pot> call, Response<Pot> response) {
                 if(response.isSuccessful()) {
-                    Log.i("Api-pot-ulm", response.body().toString());
-                    if(response.body() == null){
-                        responseFromAPI = "Failed to update pot";
+                    if(response.body() != null){
+                        Log.i("Api-pot-ulm", response.body().toString());
+                        //currentPot.setValue(response.body());
                     }
-                    else{
-                        responseFromAPI = "";
-                    }
+                }
+
+                if(!response.isSuccessful()){
+                    Toast.makeText(app.getApplicationContext(), R.string.unable_to_access_server, Toast.LENGTH_SHORT);
                 }
             }
 
             @Override
             public void onFailure(Call<Pot> call, Throwable t) {
                 Log.e("Api-pot-ulm",t.getMessage());
-                responseFromAPI = "Failed to update pot";
+                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT);
             }
         });
-        return responseFromAPI;
     }
 
-    public String addPot(String greenhouseId, String name, double minimumMoistureThreshold) {
+    public void addPot(String greenhouseId, String name, double minimumMoistureThreshold) {
        PotAPI potAPI = ServiceGenerator.getPotAPI();
        Pot pot = new Pot(name, 0, minimumMoistureThreshold);
        Call<Pot> call = potAPI.addPotDetailsById(greenhouseId, pot);
        call.enqueue(new Callback<Pot>() {
            @Override
            public void onResponse(Call<Pot> call, Response<Pot> response) {
-               Log.i("Api-hum-ulm", response.body().toString());
-               if(response.body() == null){
-                   responseFromAPI = "Failed to add pot.";
+               if(response.isSuccessful()){
+                   if(response.body() != null){
+                       Log.i("Api-hum-ulm", response.body().toString());
+                   }
                }
-               else{
-                   responseFromAPI = "";
+
+               if(!response.isSuccessful()){
+                   Toast.makeText(app.getApplicationContext(), R.string.unable_to_access_server, Toast.LENGTH_SHORT);
                }
            }
 
            @Override
            public void onFailure(Call<Pot> call, Throwable t) {
                Log.e("Api-pot-ulm",t.getMessage());
-               responseFromAPI = "Failed to add pot.";
+               Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT);
            }
        });
-       return responseFromAPI;
     }
 
-    public String updateLatestMeasurement(String greenhouseId) {
+    public void updateLatestMeasurement(String greenhouseId) {
         PotAPI potAPI = ServiceGenerator.getPotAPI();
         Call<List<Pot>> call = potAPI.getAllPotsByGreenhouseId(greenhouseId);
         call.enqueue(new Callback<List<Pot>>() {
@@ -131,22 +131,19 @@ public class PotRepository {
             public void onResponse(Call<List<Pot>> call, Response<List<Pot>> response) {
                 if(response.isSuccessful()){
                     Log.i("Api-pot-ulm", response.body().toString());
-                    if(response.body() == null){
-                        responseFromAPI = "Failed to retrieve pots";
-                    }
-                    else{
                         pots.setValue(response.body());
-                        responseFromAPI = "";
                     }
+
+                if(!response.isSuccessful()){
+                    Toast.makeText(app.getApplicationContext(), R.string.unable_to_retrieve_measurements, Toast.LENGTH_SHORT);
                 }
             }
 
             @Override
             public void onFailure(Call<List<Pot>> call, Throwable t) {
                 Log.e("Api-pot-ulm",t.getMessage());
-                responseFromAPI = "Failed to retrieve pots";
+                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT);
             }
         });
-        return responseFromAPI;
     }
 }

@@ -2,12 +2,13 @@ package com.example.greehousecontroller.data.repository;
 
 import android.app.Application;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.greehousecontroller.data.api.ServiceGenerator;
+import com.example.greehousecontroller.R;
 import com.example.greehousecontroller.data.api.HumidityApi;
-import com.example.greehousecontroller.data.api.TemperatureApi;
+import com.example.greehousecontroller.data.api.ServiceGenerator;
 import com.example.greehousecontroller.data.model.Humidity;
 import com.example.greehousecontroller.data.model.Threshold;
 
@@ -54,14 +55,21 @@ public class HumidityRepository {
             @Override
             public void onResponse(Call<List<Humidity>> call, Response<List<Humidity>> response) {
                 if (response.isSuccessful()){
-                    Log.i("Api-hum-ulm", response.body().toString());
-                    latest.setValue(response.body().get(0));
+                    if(response.body() != null){
+                        Log.i("Api-hum-ulm", response.body().toString());
+                        latest.setValue(response.body().get(0));
+                    }
+                }
+
+                if(!response.isSuccessful()){
+                        Toast.makeText(app.getApplicationContext(), R.string.unable_to_retrieve_measurements, Toast.LENGTH_SHORT);
                 }
             }
             @EverythingIsNonNull
             @Override
             public void onFailure(Call<List<Humidity>> call, Throwable t) {
                 Log.e("Api-hum-ulm",t.getMessage());
+                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT);
             }
         });
     }
@@ -74,17 +82,21 @@ public class HumidityRepository {
             @Override
             public void onResponse(Call<Threshold> call, Response<Threshold> response) {
                 if (response.isSuccessful()){
-                    Log.i("Api-hum-ut", response.body().toString());
-                    threshold.setValue(response.body());
+                    if(response.body() != null){
+                        Log.i("Api-hum-ut", response.body().toString());
+                        threshold.setValue(response.body());
+                    }
                 }
-                else{
-                    Log.i("Api-hum-ut", response.toString());
+
+                if(!response.isSuccessful()){
+                    Toast.makeText(app.getApplicationContext(), R.string.unable_to_retrieve_threshold, Toast.LENGTH_SHORT);
                 }
             }
             @EverythingIsNonNull
             @Override
             public void onFailure(Call<Threshold> call, Throwable t) {
                 Log.e("Api-hum-ut",t.getMessage());
+                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT);
             }
         });
     }
@@ -97,14 +109,21 @@ public class HumidityRepository {
             @Override
             public void onResponse(Call<Threshold> call, Response<Threshold> response) {
                 if (response.isSuccessful()){
-                    Log.i("Api-hum-st", response.body().toString());
-                    threshold.setValue(response.body());
+                    if(response.body() != null){
+                        Log.i("Api-hum-st", response.body().toString());
+                        threshold.setValue(response.body());
+                    }
+                }
+
+                if(!response.isSuccessful()){
+                    Toast.makeText(app.getApplicationContext(), R.string.unable_to_access_server, Toast.LENGTH_SHORT);
                 }
             }
             @EverythingIsNonNull
             @Override
             public void onFailure(Call<Threshold> call, Throwable t) {
                 Log.e("Api-hum-st",t.getMessage());
+                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT);
             }
         });
     }

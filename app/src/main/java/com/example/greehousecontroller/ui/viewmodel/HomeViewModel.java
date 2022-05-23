@@ -7,22 +7,24 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.greehousecontroller.data.repository.HumidityRepository;
+import com.example.greehousecontroller.data.model.CO2;
 import com.example.greehousecontroller.data.model.Humidity;
 import com.example.greehousecontroller.data.model.Pot;
 import com.example.greehousecontroller.data.model.Temperature;
+import com.example.greehousecontroller.data.repository.CO2Repository;
+import com.example.greehousecontroller.data.repository.HumidityRepository;
 import com.example.greehousecontroller.data.repository.PotRepository;
 import com.example.greehousecontroller.data.repository.TemperatureRepository;
 import com.example.greehousecontroller.data.repository.UserRepository;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HomeViewModel extends AndroidViewModel {
 
     private TemperatureRepository temperatureRepository;
     private HumidityRepository humidityRepository;
+    private CO2Repository co2Repository;
     private PotRepository potRepository;
     private UserRepository userRepository;
 
@@ -31,6 +33,7 @@ public class HomeViewModel extends AndroidViewModel {
         temperatureRepository = TemperatureRepository.getInstance(application);
         humidityRepository = HumidityRepository.getInstance(application);
         potRepository = PotRepository.getInstance(application);
+        co2Repository = CO2Repository.getInstance(application);
         userRepository = UserRepository.getInstance(application);
     }
 
@@ -46,10 +49,11 @@ public class HomeViewModel extends AndroidViewModel {
         return humidityRepository.getLatest();
     }
 
-    public String updateLatestMeasurements(String greenhouseId){
+    public void updateLatestMeasurements(String greenhouseId){
         temperatureRepository.updateLatestMeasurement(greenhouseId);
         humidityRepository.updateLatestMeasurement(greenhouseId);
-        return potRepository.updateLatestMeasurement(greenhouseId);
+        co2Repository.updateLatestMeasurement(greenhouseId);
+        potRepository.updateLatestMeasurement(greenhouseId);
     }
 
     public FirebaseUser getUser(){
@@ -62,5 +66,9 @@ public class HomeViewModel extends AndroidViewModel {
         bundle.putString("id", String.valueOf(pot.getId()));
         fragment.setArguments(bundle);
         return bundle;
+    }
+
+    public MutableLiveData<CO2> getLatestCO2() {
+        return co2Repository.getLatest();
     }
 }
