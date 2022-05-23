@@ -1,9 +1,12 @@
 package com.example.greehousecontroller.data.repository;
 
 import android.app.Application;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.core.os.HandlerCompat;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.greehousecontroller.R;
@@ -33,20 +36,40 @@ public class TemperatureRepository {
     private MutableLiveData<Temperature> latest;
     private MutableLiveData<ArrayList<Temperature>> historical;
     private MutableLiveData<Threshold> threshold;
+
     private final ExecutorService executorService;
+    private Handler handler;
 
     private TemperatureRepository(Application app){
         this.app = app;
         AppDatabase appDatabase = AppDatabase.getInstance(app);
         executorService = Executors.newFixedThreadPool(2);
+        handler = HandlerCompat.createAsync(Looper.getMainLooper());
         temperatureDAO = appDatabase.temperatureDAO();
         thresholdDAO = appDatabase.thresholdDAO();
-        latest = new MutableLiveData<>(temperatureDAO.getAll().get(0));
-        threshold = new MutableLiveData<>(new Threshold());
-        historical = new MutableLiveData<>(temperatureDAO.getAll());
 
-        // TODO: Store latest measurement in phones storage
-        //  so that if connection fails, latest received date is shown
+        executorService.execute(()->{
+            if(temperatureDAO.getAll() == null || temperatureDAO.getAll().isEmpty()){
+                latest = new MutableLiveData<>();
+            }
+            else{
+                latest = new MutableLiveData<>(temperatureDAO.getAll().get(temperatureDAO.getAll().size() - 1));
+            }
+
+            if(thresholdDAO.getThreshold("Temperature") == null){
+                threshold = new MutableLiveData<>(new Threshold("Temperature",0,0));
+            }
+            else{
+                threshold = new MutableLiveData<>(thresholdDAO.getThreshold("Temperature"));
+            }
+
+            if(temperatureDAO.getAll() == null){
+                historical = new MutableLiveData<>();
+            }
+            else{
+                historical = new MutableLiveData<>((ArrayList<Temperature>) temperatureDAO.getAll());
+            }
+        });
     }
 
     public static TemperatureRepository getInstance(Application app){
@@ -74,7 +97,14 @@ public class TemperatureRepository {
                 if (response.isSuccessful()){
                     Log.i("Api-temp-ulm", response.body().toString());
                     historical.setValue(response.body());
-                    executorService.execute(()->temperatureDAO.update(response.body()));
+                    executorService.execute(()-> {
+                        if(temperatureDAO.getAll() == null || temperatureDAO.getAll().isEmpty()){
+                            temperatureDAO.insert(response.body());
+                        }
+                        else {
+                            temperatureDAO.update(response.body());
+                        }
+                    });
                 }
 
                 if(!response.isSuccessful()){
@@ -104,7 +134,14 @@ public class TemperatureRepository {
                 if (response.isSuccessful()){
                     Log.i("Api-temp-ulm", response.body().toString());
                     latest.setValue(response.body().get(0));
-                    executorService.execute(()->temperatureDAO.update((ArrayList<Temperature>) response.body()));
+                    executorService.execute(()-> {
+                        if(temperatureDAO.getAll() == null || temperatureDAO.getAll().isEmpty()){
+                            temperatureDAO.insert((ArrayList<Temperature>)response.body());
+                        }
+                        else{
+                            temperatureDAO.update((ArrayList<Temperature>) response.body());
+                        }
+                    });
                 }
 
                 if(!response.isSuccessful()){
@@ -130,8 +167,15 @@ public class TemperatureRepository {
                 if (response.isSuccessful()){
                     Log.i("Api-temp-ut", response.body().toString());
                     threshold.setValue(response.body());
-                    executorService.execute(()-> thresholdDAO.update(response.body()));
-                }
+                    executorService.execute(()-> {
+                        if(thresholdDAO.getThreshold("Temperature") == null){
+                            Threshold threshold = new Threshold("Temperature",response.body().getUpperThreshold(), response.body().getLowerThreshold());
+                            thresholdDAO.insert(threshold);
+                        }
+                        else{
+                            thresholdDAO.update("Temperature", response.body().getUpperThreshold(), response.body().getLowerThreshold());
+                        }
+                    });                }
 
                 if(!response.isSuccessful()){
                     Toast.makeText(app.getApplicationContext(), R.string.unable_to_retrieve_threshold, Toast.LENGTH_SHORT);
@@ -156,7 +200,15 @@ public class TemperatureRepository {
                 if (response.isSuccessful()){
                     Log.i("Api-temp-st", response.body().toString());
                     threshold.setValue(response.body());
-                    executorService.execute(()-> thresholdDAO.update(response.body()));
+                    executorService.execute(()-> {
+                        if(thresholdDAO.getThreshold("Temperature") == null){
+                            Threshold threshold = new Threshold("Temperature",response.body().getUpperThreshold(), response.body().getLowerThreshold());
+                            thresholdDAO.insert(threshold);
+                        }
+                        else{
+                            thresholdDAO.update("Temperature", response.body().getUpperThreshold(), response.body().getLowerThreshold());
+                        }
+                    });
                 }
 
                 if(!response.isSuccessful()){

@@ -1,13 +1,15 @@
 package com.example.greehousecontroller.data.model;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity
 public class Threshold {
-    @PrimaryKey(autoGenerate = true)
-    private int id;
+    @PrimaryKey
+    @NonNull
+    private String type;
     private double upperThreshold;
     private double lowerThreshold;
 
@@ -15,17 +17,24 @@ public class Threshold {
     public Threshold(){
     }
 
+    @Ignore
     public Threshold(double upperThreshold, double lowerThreshold){
         this.upperThreshold = upperThreshold;
         this.lowerThreshold = lowerThreshold;
     }
 
-    public int getId() {
-        return id;
+    public Threshold(String type, double upperThreshold, double lowerThreshold){
+        this.type = type;
+        this.upperThreshold = upperThreshold;
+        this.lowerThreshold = lowerThreshold;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public double getUpperThreshold() {

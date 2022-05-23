@@ -39,8 +39,23 @@ public class CO2Repository {
         executorService = Executors.newFixedThreadPool(2);
         co2DAO = database.co2DAO();
         thresholdDAO = database.thresholdDAO();
-        latest = new MutableLiveData<>(co2DAO.getAll().get(0));
-        threshold = new MutableLiveData<>(new Threshold());
+
+        executorService.execute(()->{
+            if(co2DAO.getAll() == null || co2DAO.getAll().isEmpty()){
+                latest = new MutableLiveData<>();
+            }
+            else
+            {
+                latest = new MutableLiveData<>(co2DAO.getAll().get(co2DAO.getAll().size() -1));
+            }
+            if(thresholdDAO.getThreshold("CO2") == null){
+                threshold = new MutableLiveData<>(new Threshold("CO2", 0, 0));
+            }
+            else
+            {
+                threshold = new MutableLiveData<>(thresholdDAO.getThreshold("CO2"));
+            }
+        });
     }
 
     public static com.example.greehousecontroller.data.repository.CO2Repository getInstance(Application app){
@@ -69,7 +84,14 @@ public class CO2Repository {
                     if(response.body() != null){
                         Log.i("Api-co2-ulm", response.body().toString());
                         latest.setValue(response.body().get(0));
-                        executorService.execute(()->co2DAO.update(response.body().get(0)));
+                        executorService.execute(()-> {
+                            if(co2DAO.getAll().isEmpty() || co2DAO.getAll() == null){
+                                co2DAO.insert(response.body().get(0));
+                            }
+                            else{
+                                co2DAO.update(response.body().get(0));
+                            }
+                        });
                     }
                 }
 
@@ -97,7 +119,15 @@ public class CO2Repository {
                     if(response.body() != null){
                         Log.i("Api-co2-ut", response.body().toString());
                         threshold.setValue(response.body());
-                        executorService.execute(()-> thresholdDAO.update(response.body()));
+                        executorService.execute(()-> {
+                            if(thresholdDAO.getThreshold("CO2") == null){
+                                Threshold threshold = new Threshold("CO2",response.body().getUpperThreshold(), response.body().getLowerThreshold());
+                            thresholdDAO.insert(threshold);
+                            }
+                            else{
+                                thresholdDAO.update("CO2", response.body().getUpperThreshold(), response.body().getLowerThreshold());
+                            }
+                        });
                     }
                 }
 
@@ -125,7 +155,15 @@ public class CO2Repository {
                     if(response.body() != null){
                         Log.i("Api-co2-st", response.body().toString());
                         threshold.setValue(response.body());
-                        executorService.execute(()-> thresholdDAO.update(response.body()));
+                        executorService.execute(()-> {
+                            if(thresholdDAO.getThreshold("CO2") == null){
+                                Threshold threshold = new Threshold("CO2",response.body().getUpperThreshold(), response.body().getLowerThreshold());
+                                thresholdDAO.insert(threshold);
+                            }
+                            else{
+                                thresholdDAO.update("CO2", response.body().getUpperThreshold(), response.body().getLowerThreshold());
+                            }
+                        });
                     }
                 }
 

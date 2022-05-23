@@ -4,24 +4,18 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import com.example.greehousecontroller.utils.TemperatureJsonAdapter;
-import com.google.gson.annotations.JsonAdapter;
-
-import java.util.Date;
-
 @Entity
-@JsonAdapter(TemperatureJsonAdapter.class)
 public class Temperature {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private double temperature;
-    private Date time;
+    private long time;
 
     @Ignore
     public Temperature() {
     }
 
-    public Temperature(double temperature, Date time) {
+    public Temperature(double temperature, long time) {
         this.temperature = temperature;
         this.time = time;
     }
@@ -42,11 +36,11 @@ public class Temperature {
         this.temperature = temperature;
     }
 
-    public Date getTime() {
+    public long getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(long time) {
         this.time = time;
     }
 

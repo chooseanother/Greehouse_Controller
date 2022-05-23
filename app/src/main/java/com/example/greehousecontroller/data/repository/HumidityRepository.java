@@ -39,8 +39,21 @@ public class HumidityRepository {
         executorService = Executors.newFixedThreadPool(2);
         humidityDAO = database.humidityDAO();
         thresholdDAO = database.thresholdDAO();
-        latest = new MutableLiveData<>(humidityDAO.getAll().get(0));
-        threshold = new MutableLiveData<>(new Threshold());
+
+        executorService.execute(()->{
+            if(humidityDAO.getAll() == null || humidityDAO.getAll().isEmpty()){
+                latest = new MutableLiveData<>();
+            }
+            else{
+                latest = new MutableLiveData<>(humidityDAO.getAll().get(humidityDAO.getAll().size() -1));
+            }
+            if(thresholdDAO.getThreshold("Humidity") == null){
+                threshold = new MutableLiveData<>(new Threshold("Humidity", 0,0));
+            }
+            else{
+                threshold = new MutableLiveData<>(thresholdDAO.getThreshold("Humidity"));
+            }
+        });
     }
 
     public static HumidityRepository getInstance(Application app){
@@ -70,7 +83,14 @@ public class HumidityRepository {
                     if(response.body() != null){
                         Log.i("Api-hum-ulm", response.body().toString());
                         latest.setValue(response.body().get(0));
-                        executorService.execute(()->humidityDAO.update(response.body().get(0)));
+                        executorService.execute(()-> {
+                            if(humidityDAO.getAll() == null || humidityDAO.getAll().isEmpty()){
+                                humidityDAO.insert(response.body().get(0));
+                            }
+                            else{
+                                humidityDAO.update(response.body().get(0));
+                            }
+                        });
                     }
                 }
 
@@ -98,7 +118,15 @@ public class HumidityRepository {
                     if(response.body() != null){
                         Log.i("Api-hum-ut", response.body().toString());
                         threshold.setValue(response.body());
-                        executorService.execute(()-> thresholdDAO.update(response.body()));
+                        executorService.execute(()-> {
+                            if(thresholdDAO.getThreshold("Humidity") == null){
+                                Threshold threshold = new Threshold("Humidity",response.body().getUpperThreshold(), response.body().getLowerThreshold());
+                                thresholdDAO.insert(threshold);
+                            }
+                            else{
+                                thresholdDAO.update("Humidity", response.body().getUpperThreshold(), response.body().getLowerThreshold());
+                            }
+                        });
                     }
                 }
 
@@ -126,7 +154,15 @@ public class HumidityRepository {
                     if(response.body() != null){
                         Log.i("Api-hum-st", response.body().toString());
                         threshold.setValue(response.body());
-                        executorService.execute(()-> thresholdDAO.update(response.body()));
+                        executorService.execute(()-> {
+                            if(thresholdDAO.getThreshold("Humidity") == null){
+                                Threshold threshold = new Threshold("Humidity",response.body().getUpperThreshold(), response.body().getLowerThreshold());
+                                thresholdDAO.insert(threshold);
+                            }
+                            else{
+                                thresholdDAO.update("Humidity", response.body().getUpperThreshold(), response.body().getLowerThreshold());
+                            }
+                        });
                     }
                 }
 

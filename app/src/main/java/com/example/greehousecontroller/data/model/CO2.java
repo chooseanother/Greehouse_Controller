@@ -11,14 +11,13 @@ public class CO2 {
     private double co2Measurement;
     private long time;
     private String greenhouseId;
-    // TODO: Implement JsonAdapterClass to handle converting to Date from seconds
 
     @Ignore
     public CO2() {
     }
 
-    public CO2(double dioxideCarbon, long time, String greenhouseId) {
-        this.co2Measurement = dioxideCarbon;
+    public CO2(double co2Measurement, long time, String greenhouseId) {
+        this.co2Measurement = co2Measurement;
         this.time = time;
         this.greenhouseId = greenhouseId;
     }

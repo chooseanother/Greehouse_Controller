@@ -2,16 +2,16 @@ package com.example.greehousecontroller.ui.view;
 
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.os.Handler;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
 import com.anychart.chart.common.dataentry.DataEntry;
@@ -23,6 +23,7 @@ import com.anychart.enums.StockSeriesType;
 import com.example.greehousecontroller.data.model.Temperature;
 import com.example.greehousecontroller.databinding.FragmentGraphsBinding;
 import com.example.greehousecontroller.ui.viewmodel.GraphsViewModel;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -53,11 +54,11 @@ public class GraphsFragment extends Fragment {
             @Override
             public void onChanged(@Nullable ArrayList<Temperature> temperatures) {
                 for (int i = 0; i < 1; i++) {
-                    data.add(new OHCLDataEntry((long) Objects.requireNonNull(graphsViewModel.getLatestTemperature().getValue()).getTime().getTime(), 0.1, 0.1, 0.1, Objects.requireNonNull(graphsViewModel.getLatestTemperature().getValue()).getTemperature()));
+                    data.add(new OHCLDataEntry((long) Objects.requireNonNull(graphsViewModel.getLatestTemperature().getValue()).getTime(), 0.1, 0.1, 0.1, Objects.requireNonNull(graphsViewModel.getLatestTemperature().getValue()).getTemperature()));
                 }
                 for (Temperature temperature : temperatures) {
-                    System.out.println(temperature.getTime().getTime());
-                    data.add(new OHCLDataEntry(temperature.getTime().getTime(), temperature.getTemperature(), temperature.getTemperature(), temperature.getTemperature(), temperature.getTemperature()));
+                    System.out.println(temperature.getTime());
+                    data.add(new OHCLDataEntry(temperature.getTime(), temperature.getTemperature(), temperature.getTemperature(), temperature.getTemperature(), temperature.getTemperature()));
                 }
 
                 table.addData(data);

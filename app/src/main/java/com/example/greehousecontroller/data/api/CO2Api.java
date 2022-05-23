@@ -18,6 +18,7 @@ public interface CO2Api {
     //thresholds
     @GET("threshold/{greenhouseid}/co2")
     Call<Threshold> getCo2Thresholds(@Path("greenhouseid") String greenhouseId);
+
     @PATCH("threshold/{greenhouseid}/co2")
     Call<Threshold> setCo2Thresholds(@Path("greenhouseid") String greenhouseId, @Body Threshold threshold);
 

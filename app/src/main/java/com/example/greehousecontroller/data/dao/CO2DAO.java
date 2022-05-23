@@ -1,6 +1,8 @@
 package com.example.greehousecontroller.data.dao;
 
 import androidx.room.Dao;
+import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -15,4 +17,7 @@ public interface CO2DAO {
 
     @Update
     void update(CO2 co2);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(CO2 co2);
 }

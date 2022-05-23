@@ -16,7 +16,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.greehousecontroller.MainActivity;
 import com.example.greehousecontroller.R;
-import com.example.greehousecontroller.data.model.Temperature;
 import com.example.greehousecontroller.databinding.FragmentHomeBinding;
 import com.example.greehousecontroller.ui.adapter.PotAdapter;
 import com.example.greehousecontroller.ui.viewmodel.HomeViewModel;
@@ -24,6 +23,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class HomeFragment extends Fragment {
 
@@ -98,7 +98,8 @@ public class HomeFragment extends Fragment {
             swipeRefreshLayout.setRefreshing(false);
 
             // TODO: Remove this when testing is done
-            String show = "Date: "+temperature.getTime()+" T: "+temperature.getTemperature()+" °C";
+            Date date = new Date(temperature.getTime()* 1000);
+            String show = "Date: "+ date +" T: "+temperature.getTemperature()+" °C";
             Toast.makeText(getContext(), show, Toast.LENGTH_SHORT).show();
 
         });
@@ -121,7 +122,7 @@ public class HomeFragment extends Fragment {
         temperatureTextView = root.findViewById(R.id.temperatureMeasurementTextView);
         co2TextView = root.findViewById(R.id.co2measurementTextView);
 
-        Temperature temperature = homeViewModel.getLatestTemperature().getValue();
+        /*Temperature temperature = homeViewModel.getLatestTemperature().getValue();
         if(temperature != null){
            // co2TextView.setText(greenHouse.getCo2() + " grams");
             co2TextView.setText("unknown");
@@ -130,7 +131,7 @@ public class HomeFragment extends Fragment {
         else{
             temperatureTextView.setText("0.0" + " °C");
             co2TextView.setText("Unknown" + " grams");
-        }
+        }*/
         //Header
         welcomingTextView = root.findViewById(R.id.welcomingTextView);
         //dayDescriptionTextView = root.findViewById(R.id.dayDescriptionTextView);
