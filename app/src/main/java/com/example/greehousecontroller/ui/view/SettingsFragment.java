@@ -51,6 +51,7 @@ public class SettingsFragment extends Fragment {
         root = binding.getRoot();
 
         setUpBindingThresholdsEditText();
+        setUpEditTextNumberOnly();
         setUpBindingThresholdsSave();
         initializeObserve();
 
@@ -84,43 +85,19 @@ public class SettingsFragment extends Fragment {
         //temperature
         saveTemperatureThreshold = binding.settingsTemperatureSave;
         saveTemperatureThreshold.setOnClickListener(view -> {
-            //viewmodel checks if the entered value is double
-            if(!viewModel.setTemperatureThreshold(greenhouseId, temperatureUpperThreshold.getText().toString(), temperatureLowerThreshold.getText().toString())){
-                //it is not double
-                Toast.makeText(getContext(), R.string.settings_wrong_number_format_temperature_exception, Toast.LENGTH_SHORT).show();
-            }
-            else{
-                //it is double, changes saved
-                Toast.makeText(getContext(), R.string.settings_changes_saved, Toast.LENGTH_SHORT).show();
-            }
+            viewModel.setTemperatureThreshold(greenhouseId, temperatureUpperThreshold.getText().toString(), temperatureLowerThreshold.getText().toString());
         });
 
         //co2
         saveCo2Threshold = binding.settingsCo2Save;
         saveCo2Threshold.setOnClickListener(view -> {
-            //viewmodel checks if the entered value is double
-            if(!viewModel.setCo2Threshold(greenhouseId, co2UpperThreshold.getText().toString(), co2UpperThreshold.getText().toString())){
-                //it is not double
-                Toast.makeText(getContext(), R.string.settings_wrong_number_format_co2_exception, Toast.LENGTH_SHORT).show();
-            }
-            else{
-                //it is double, changes saved
-                Toast.makeText(getContext(), R.string.settings_changes_saved, Toast.LENGTH_SHORT).show();
-            }
+            viewModel.setCo2Threshold(greenhouseId, co2UpperThreshold.getText().toString(), co2UpperThreshold.getText().toString());
         });
 
         //humidity
         saveHumidityThreshold = binding.settingsHumiditySave;
         saveHumidityThreshold.setOnClickListener(view -> {
-            //viewmodel checks if the entered value is double
-            if(!viewModel.setHumidityThreshold(greenhouseId, humidityUpperThreshold.getText().toString(), humidityLowerThreshold.getText().toString())){
-                //it is not double
-                Toast.makeText(getContext(), R.string.settings_wrong_number_format_humidity_exception, Toast.LENGTH_SHORT).show();
-            }
-            else{
-                //it is double, changes saved
-                Toast.makeText(getContext(), R.string.settings_changes_saved, Toast.LENGTH_SHORT).show();
-            }
+            viewModel.setHumidityThreshold(greenhouseId, humidityUpperThreshold.getText().toString(), humidityLowerThreshold.getText().toString());
         });
     }
 
@@ -151,7 +128,7 @@ public class SettingsFragment extends Fragment {
         temperatureUpperThreshold.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         humidityLowerThreshold.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         humidityUpperThreshold.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-        co2LowerThreshold.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-        co2UpperThreshold.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        co2LowerThreshold.setInputType(InputType.TYPE_CLASS_NUMBER);
+        co2UpperThreshold.setInputType(InputType.TYPE_CLASS_NUMBER);
     }
 }
