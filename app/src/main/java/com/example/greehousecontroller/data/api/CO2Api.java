@@ -3,6 +3,7 @@ package com.example.greehousecontroller.data.api;
 import com.example.greehousecontroller.data.model.CO2;
 import com.example.greehousecontroller.data.model.Threshold;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -21,4 +22,6 @@ public interface CO2Api {
     @PATCH("threshold/{greenhouseid}/co2")
     Call<Threshold> setCo2Thresholds(@Path("greenhouseid") String greenhouseId, @Body Threshold threshold);
 
+    @GET("DioxideCarbon/{greenhouseId}")
+    Call<ArrayList<CO2>> getHistoricalCO2(@Path("greenhouseId") String greenhouseId);
 }

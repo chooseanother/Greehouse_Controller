@@ -46,7 +46,7 @@
         <entry key="app/src/main/res/layout/content_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_edit_pot.xml" value="0.15534420289855072" />
         <entry key="app/src/main/res/layout/fragment_gallery.xml" value="0.375" />
-        <entry key="app/src/main/res/layout/fragment_graphs.xml" value="0.2544987146529563" />
+        <entry key="app/src/main/res/layout/fragment_graphs.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.2544987146529563" />
         <entry key="app/src/main/res/layout/fragment_pots.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.1" />

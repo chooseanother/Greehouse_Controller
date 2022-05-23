@@ -11,6 +11,7 @@ import com.example.greehousecontroller.data.api.TemperatureApi;
 import com.example.greehousecontroller.data.model.Humidity;
 import com.example.greehousecontroller.data.model.Threshold;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -23,11 +24,14 @@ public class HumidityRepository {
     private final Application app;
     private MutableLiveData<Humidity> latest;
     private MutableLiveData<Threshold> threshold;
+    private MutableLiveData<ArrayList<Humidity>> history;
+
 
     private HumidityRepository(Application app){
         this.app = app;
         latest = new MutableLiveData<>(new Humidity());
         threshold = new MutableLiveData<>(new Threshold());
+        history = new MutableLiveData<>(new ArrayList<>());
     }
 
     public static HumidityRepository getInstance(Application app){
@@ -44,6 +48,29 @@ public class HumidityRepository {
 
     public MutableLiveData<Threshold> getThreshold(){
         return threshold;
+    }
+
+    public MutableLiveData<ArrayList<Humidity>> getHistoricalData(){
+        return history;
+    }
+    public void updateHistoricalData(String greenhouseId) {
+        HumidityApi humidityApi = ServiceGenerator.getHumidityAPI();
+        Call<ArrayList<Humidity>> call = humidityApi.getHistoricalHumidity(greenhouseId);
+        call.enqueue(new Callback<ArrayList<Humidity>>() {
+            @EverythingIsNonNull
+            @Override
+            public void onResponse(Call<ArrayList<Humidity>> call, Response<ArrayList<Humidity>> response) {
+                if (response.isSuccessful()){
+                    Log.i("Api-hum-hist", response.body().toString());
+                    history.setValue(response.body());
+                }
+            }
+            @EverythingIsNonNull
+            @Override
+            public void onFailure(Call<ArrayList<Humidity>> call, Throwable t) {
+                Log.e("Api-hum-hist",t.getMessage());
+            }
+        });
     }
 
     public void updateLatestMeasurement(String greenhouseId){

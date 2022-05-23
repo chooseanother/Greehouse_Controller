@@ -63,5 +63,9 @@
     <string name="greenhouse_id">Greenhouse ID</string>
     <string name="save">Save</string>
 
+    <!--Graphs bottom navigation-->
+    <string name="graphs_bottom_navigation_temperature">Temperature</string>
+    <string name="graphs_bottom_navigation_humidity">Humidity</string>
+    <string name="graphs_bottom_navigation_co2">CO2</string>
 
 </resources>

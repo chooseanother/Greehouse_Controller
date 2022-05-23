@@ -3,9 +3,11 @@ package com.example.greehousecontroller.data.api;
 
 
 
+import com.example.greehousecontroller.data.model.CO2;
 import com.example.greehousecontroller.data.model.Humidity;
 import com.example.greehousecontroller.data.model.Threshold;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -24,4 +26,6 @@ public interface HumidityApi {
     @PATCH("threshold/{greenhouseid}/humidity")
     Call<Threshold> setHumidityThresholds(@Path("greenhouseid") String greenhouseId, @Body Threshold threshold);
 
+    @GET("Humidity/{greenhouseId}")
+    Call<ArrayList<Humidity>> getHistoricalHumidity(@Path("greenhouseId") String greenhouseId);
 }

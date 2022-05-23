@@ -5,40 +5,25 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.Observer;
 
+import com.example.greehousecontroller.data.model.CO2;
+import com.example.greehousecontroller.data.model.Humidity;
 import com.example.greehousecontroller.data.model.Temperature;
+import com.example.greehousecontroller.data.model.UserInfo;
+import com.example.greehousecontroller.data.repository.CO2Repository;
+import com.example.greehousecontroller.data.repository.HumidityRepository;
 import com.example.greehousecontroller.data.repository.TemperatureRepository;
+import com.example.greehousecontroller.data.repository.UserInfoRepository;
+import com.example.greehousecontroller.data.repository.UserRepository;
+import com.firebase.ui.auth.data.model.User;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class GraphsViewModel extends AndroidViewModel {
 
-    private MutableLiveData<String> mText;
-    private TemperatureRepository temperatureRepository;
-
     public GraphsViewModel(Application application){
         super(application);
-        temperatureRepository = TemperatureRepository.getInstance(application);
-        mText = new MutableLiveData<>();
-        mText.setValue("This is graphs fragment");
-    }
-    public LiveData<ArrayList<Temperature>> getTemperatureHistoryData() {
-        return temperatureRepository.getTemperatureHistoryData();
-    }
-
-    public MutableLiveData<String> getText() {
-        return mText;
-    }
-
-    public MutableLiveData<Temperature> getLatestTemperature(){
-        return temperatureRepository.getLatest();
-    }
-
-
-    public void updateTemperatureHistoryData(String greenHouseId)
-    {
-        temperatureRepository.updateHistoricalMeasurement(greenHouseId);
-
     }
 }
