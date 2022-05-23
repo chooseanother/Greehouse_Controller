@@ -14,20 +14,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.example.greehousecontroller.R;
-import com.example.greehousecontroller.data.model.Threshold;
-import com.example.greehousecontroller.databinding.FragmentSettingsBinding;
-import com.example.greehousecontroller.ui.viewmodel.SettingsViewModel;
+import com.example.greehousecontroller.databinding.FragmentThresholdSettingsBinding;
+import com.example.greehousecontroller.ui.viewmodel.ThresholdSettingsViewModel;
 
 import java.text.DecimalFormat;
 
-public class SettingsFragment extends Fragment {
+public class ThresholdSettingsFragment extends Fragment {
 
-    private FragmentSettingsBinding binding;
+    private FragmentThresholdSettingsBinding binding;
     private View root;
-    private SettingsViewModel viewModel;
+    private ThresholdSettingsViewModel viewModel;
     //todo REPLACE TEST BY ACTUAL
     private String greenhouseId = "test";
 
@@ -46,11 +43,12 @@ public class SettingsFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        viewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
-        binding = FragmentSettingsBinding.inflate(inflater, container, false);
+        viewModel = new ViewModelProvider(this).get(ThresholdSettingsViewModel.class);
+        binding = FragmentThresholdSettingsBinding.inflate(inflater, container, false);
         root = binding.getRoot();
 
         setUpBindingThresholdsEditText();
+        setUpEditTextNumberOnly();
         setUpBindingThresholdsSave();
         initializeObserve();
 
@@ -84,43 +82,19 @@ public class SettingsFragment extends Fragment {
         //temperature
         saveTemperatureThreshold = binding.settingsTemperatureSave;
         saveTemperatureThreshold.setOnClickListener(view -> {
-            //viewmodel checks if the entered value is double
-            if(!viewModel.setTemperatureThreshold(greenhouseId, temperatureUpperThreshold.getText().toString(), temperatureLowerThreshold.getText().toString())){
-                //it is not double
-                Toast.makeText(getContext(), R.string.settings_wrong_number_format_temperature_exception, Toast.LENGTH_SHORT).show();
-            }
-            else{
-                //it is double, changes saved
-                Toast.makeText(getContext(), R.string.settings_changes_saved, Toast.LENGTH_SHORT).show();
-            }
+            viewModel.setTemperatureThreshold(greenhouseId, temperatureUpperThreshold.getText().toString(), temperatureLowerThreshold.getText().toString());
         });
 
         //co2
         saveCo2Threshold = binding.settingsCo2Save;
         saveCo2Threshold.setOnClickListener(view -> {
-            //viewmodel checks if the entered value is double
-            if(!viewModel.setCo2Threshold(greenhouseId, co2UpperThreshold.getText().toString(), co2UpperThreshold.getText().toString())){
-                //it is not double
-                Toast.makeText(getContext(), R.string.settings_wrong_number_format_co2_exception, Toast.LENGTH_SHORT).show();
-            }
-            else{
-                //it is double, changes saved
-                Toast.makeText(getContext(), R.string.settings_changes_saved, Toast.LENGTH_SHORT).show();
-            }
+            viewModel.setCo2Threshold(greenhouseId, co2UpperThreshold.getText().toString(), co2UpperThreshold.getText().toString());
         });
 
         //humidity
         saveHumidityThreshold = binding.settingsHumiditySave;
         saveHumidityThreshold.setOnClickListener(view -> {
-            //viewmodel checks if the entered value is double
-            if(!viewModel.setHumidityThreshold(greenhouseId, humidityUpperThreshold.getText().toString(), humidityLowerThreshold.getText().toString())){
-                //it is not double
-                Toast.makeText(getContext(), R.string.settings_wrong_number_format_humidity_exception, Toast.LENGTH_SHORT).show();
-            }
-            else{
-                //it is double, changes saved
-                Toast.makeText(getContext(), R.string.settings_changes_saved, Toast.LENGTH_SHORT).show();
-            }
+            viewModel.setHumidityThreshold(greenhouseId, humidityUpperThreshold.getText().toString(), humidityLowerThreshold.getText().toString());
         });
     }
 
@@ -151,7 +125,7 @@ public class SettingsFragment extends Fragment {
         temperatureUpperThreshold.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         humidityLowerThreshold.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         humidityUpperThreshold.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-        co2LowerThreshold.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-        co2UpperThreshold.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        co2LowerThreshold.setInputType(InputType.TYPE_CLASS_NUMBER);
+        co2UpperThreshold.setInputType(InputType.TYPE_CLASS_NUMBER);
     }
 }
