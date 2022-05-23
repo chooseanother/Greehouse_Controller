@@ -13,6 +13,8 @@
     <dimen name="medium_margin">32dp</dimen>
     <dimen name="margin_from_screen_edge_to_recycler_view">263dp</dimen>
 
+    <dimen name="graphs_bottom_nav_padding">13dp</dimen>
+
     <dimen name="small_text_size">12sp</dimen>
     <dimen name="medium_small_text_size">16sp</dimen>
     <dimen name="medium_text_size">20sp</dimen>

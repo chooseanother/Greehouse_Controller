@@ -21,33 +21,31 @@
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/background_image" />
 
-    <ScrollView
+
+    <fragment
+        android:id="@+id/nav_host_fragment_graphs"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        app:defaultNavHost="true"
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/graphs_navigation" />
 
-            <fragment
-                android:id="@+id/nav_host_fragment_graphs"
-                android:name="androidx.navigation.fragment.NavHostFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:defaultNavHost="true"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:navGraph="@navigation/graphs_navigation" />
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation_graphs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:backgroundTint="@color/basic_green"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:paddingTop="@dimen/graphs_bottom_nav_padding"
+        android:paddingBottom="@dimen/graphs_bottom_nav_padding"
+        app:menu="@menu/bottom_navigation_graphs" />
 
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/bottom_navigation_graphs"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                app:backgroundTint="@color/basic_green"
-                app:menu="@menu/bottom_navigation_graphs" />
 
-        </LinearLayout>
-    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
