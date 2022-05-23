@@ -53,8 +53,7 @@
         <entry key="app/src/main/res/layout/fragment_slideshow.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_status.xml" value="0.2544987146529563" />
         <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.25" />
-        <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.1" />
-        <entry key="app/src/main/res/menu/main.xml" value="0.33" />
+        <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.9" />
         <entry key="app/src/main/res/menu/bottom_navigation_graphs.xml" value="0.375" />
         <entry key="app/src/main/res/menu/main.xml" value="0.33" />
       </map>
