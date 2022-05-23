@@ -109,7 +109,7 @@ public class HomeFragment extends Fragment {
         });
 
         homeViewModel.getLatestCO2().observe(getViewLifecycleOwner(), co2 -> {
-            String readings = (int)co2.getCO2() + " ppm";
+            String readings = (int)co2.getCo2Measurement() + " ppm";
             co2TextView.setText(readings);
         });
 

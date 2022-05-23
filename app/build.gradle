@@ -48,6 +48,9 @@ dependencies {
 
     implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
 
+    //Room
+    implementation "androidx.room:room-runtime:2.3.0"
+    annotationProcessor "androidx.room:room-compiler:2.3.0"
 
     implementation 'com.google.android.gms:play-services-auth:20.2.0'
     implementation 'com.google.firebase:firebase-auth:21.0.3'

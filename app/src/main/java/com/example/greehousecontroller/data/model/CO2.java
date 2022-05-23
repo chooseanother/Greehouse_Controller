@@ -1,11 +1,19 @@
 package com.example.greehousecontroller.data.model;
 
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class CO2 {
+    @PrimaryKey(autoGenerate = true)
+    private int id;
     private double co2Measurement;
     private long time;
     private String greenhouseId;
     // TODO: Implement JsonAdapterClass to handle converting to Date from seconds
 
+    @Ignore
     public CO2() {
     }
 
@@ -15,12 +23,20 @@ public class CO2 {
         this.greenhouseId = greenhouseId;
     }
 
-    public double getCO2() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public double getCo2Measurement() {
         return co2Measurement;
     }
 
-    public void setCO2(double dioxideCarbon) {
-        this.co2Measurement = dioxideCarbon;
+    public void setCo2Measurement(double co2Measurement) {
+        this.co2Measurement = co2Measurement;
     }
 
     public long getTime() {

@@ -9,9 +9,13 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.greehousecontroller.R;
 import com.example.greehousecontroller.data.api.ServiceGenerator;
 import com.example.greehousecontroller.data.api.PotAPI;
+import com.example.greehousecontroller.data.dao.PotDAO;
+import com.example.greehousecontroller.data.database.AppDatabase;
 import com.example.greehousecontroller.data.model.Pot;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -20,12 +24,17 @@ import retrofit2.Response;
 public class PotRepository {
     private MutableLiveData<List<Pot>> pots;
     private MutableLiveData<Pot> currentPot;
+    private final PotDAO potDAO;
     private static PotRepository instance;
     private final Application app;
+    private final ExecutorService executorService;
 
     private PotRepository(Application app){
         this.app = app;
-        pots = new MutableLiveData<>();
+        AppDatabase appDatabase = AppDatabase.getInstance(app);
+        executorService = Executors.newFixedThreadPool(2);
+        potDAO = appDatabase.potDAO();
+        pots = new MutableLiveData<>(potDAO.getAll());
         currentPot = new MutableLiveData<>();
     }
 
@@ -80,7 +89,6 @@ public class PotRepository {
                 if(response.isSuccessful()) {
                     if(response.body() != null){
                         Log.i("Api-pot-ulm", response.body().toString());
-                        //currentPot.setValue(response.body());
                     }
                 }
 
@@ -129,10 +137,13 @@ public class PotRepository {
         call.enqueue(new Callback<List<Pot>>() {
             @Override
             public void onResponse(Call<List<Pot>> call, Response<List<Pot>> response) {
-                if(response.isSuccessful()){
-                    Log.i("Api-pot-ulm", response.body().toString());
+                if(response.isSuccessful()) {
+                    if (response.body() != null) {
+                        Log.i("Api-pot-ulm", response.body().toString());
                         pots.setValue(response.body());
+                        executorService.execute(() -> potDAO.update(response.body()));
                     }
+                }
 
                 if(!response.isSuccessful()){
                     Toast.makeText(app.getApplicationContext(), R.string.unable_to_retrieve_measurements, Toast.LENGTH_SHORT);

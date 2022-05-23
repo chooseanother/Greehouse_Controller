@@ -9,10 +9,15 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.greehousecontroller.R;
 import com.example.greehousecontroller.data.api.HumidityApi;
 import com.example.greehousecontroller.data.api.ServiceGenerator;
+import com.example.greehousecontroller.data.dao.HumidityDAO;
+import com.example.greehousecontroller.data.dao.ThresholdDAO;
+import com.example.greehousecontroller.data.database.AppDatabase;
 import com.example.greehousecontroller.data.model.Humidity;
 import com.example.greehousecontroller.data.model.Threshold;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -22,12 +27,19 @@ import retrofit2.internal.EverythingIsNonNull;
 public class HumidityRepository {
     private static HumidityRepository instance;
     private final Application app;
+    private final HumidityDAO humidityDAO;
+    private final ThresholdDAO thresholdDAO;
     private MutableLiveData<Humidity> latest;
     private MutableLiveData<Threshold> threshold;
+    private final ExecutorService executorService;
 
     private HumidityRepository(Application app){
         this.app = app;
-        latest = new MutableLiveData<>(new Humidity());
+        AppDatabase database = AppDatabase.getInstance(app);
+        executorService = Executors.newFixedThreadPool(2);
+        humidityDAO = database.humidityDAO();
+        thresholdDAO = database.thresholdDAO();
+        latest = new MutableLiveData<>(humidityDAO.getAll().get(0));
         threshold = new MutableLiveData<>(new Threshold());
     }
 
@@ -58,6 +70,7 @@ public class HumidityRepository {
                     if(response.body() != null){
                         Log.i("Api-hum-ulm", response.body().toString());
                         latest.setValue(response.body().get(0));
+                        executorService.execute(()->humidityDAO.update(response.body().get(0)));
                     }
                 }
 
@@ -85,6 +98,7 @@ public class HumidityRepository {
                     if(response.body() != null){
                         Log.i("Api-hum-ut", response.body().toString());
                         threshold.setValue(response.body());
+                        executorService.execute(()-> thresholdDAO.update(response.body()));
                     }
                 }
 
@@ -112,6 +126,7 @@ public class HumidityRepository {
                     if(response.body() != null){
                         Log.i("Api-hum-st", response.body().toString());
                         threshold.setValue(response.body());
+                        executorService.execute(()-> thresholdDAO.update(response.body()));
                     }
                 }
 

@@ -1,11 +1,19 @@
 package com.example.greehousecontroller.data.model;
 
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Humidity {
+    @PrimaryKey(autoGenerate = true)
+    private int id;
     private double humidity;
     // TODO: Implement JsonAdapterClass to handle converting to Date from seconds
     private long time;
     private String greenhouseId;
 
+    @Ignore
     public Humidity() {
     }
 
@@ -13,6 +21,14 @@ public class Humidity {
         this.humidity = humidity;
         this.time = time;
         this.greenhouseId = greenhouseId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public double getHumidity() {
