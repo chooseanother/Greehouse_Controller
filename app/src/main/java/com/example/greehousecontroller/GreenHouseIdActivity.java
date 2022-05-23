@@ -47,7 +47,7 @@ public class GreenHouseIdActivity extends AppCompatActivity {
         binding.SaveGreenHouseID.setOnClickListener(view -> {
             String greenhouseID = greenhouseIDText.getText().toString();
             viewModel.saveGreenHouseId(greenhouseID);
-            subscribeToGreenhouse(greenhouseID);
+            viewModel.subscribeToGreenhouse(greenhouseID);
             startActivity(new Intent(this, MainActivity.class));
             finish();
         });
@@ -76,10 +76,6 @@ public class GreenHouseIdActivity extends AppCompatActivity {
     private void startLoginActivity() {
         startActivity(new Intent(this, LogInActivity.class));
         finish();
-    }
-
-    private void subscribeToGreenhouse(String greenhouseID){
-        viewModel.subscribeToGreenhouse(greenhouseID);
     }
 }
 
