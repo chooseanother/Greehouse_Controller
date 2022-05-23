@@ -42,12 +42,14 @@ public class HomeFragment extends Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     private View root;
     private FloatingActionButton floatingActionButton;
+    private String greenhouseid;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
-
+        getGreenhouseID();
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         root = binding.getRoot();
         settingOfTextViews();
@@ -89,6 +91,13 @@ public class HomeFragment extends Fragment {
             // TODO: figure out where to place this so it stops when it gets data from API
             //  maybe with callback, or inside observe data
             // swipeRefreshLayout.setRefreshing(false);
+        });
+    }
+
+    private void getGreenhouseID(){
+        homeViewModel.initUserInfo();
+        homeViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
+            greenhouseid = userInfo.getGreenhouseID();
         });
     }
 
@@ -146,7 +155,7 @@ public class HomeFragment extends Fragment {
 
     private void updateLatestMeasurements(){
         // TODO: Figure out how to handle greenhouseId
-        String response = homeViewModel.updateLatestMeasurements("test");
+        String response = homeViewModel.updateLatestMeasurements(greenhouseid);
         if(response.equals("Failed to retrieve pots")){
             Toast.makeText(getContext(), response, Toast.LENGTH_SHORT);
         }

@@ -59,6 +59,7 @@ public class TemperatureRepository {
                 if (response.isSuccessful()){
                     Log.i("Api-temp-ulm", response.body().toString());
                     historical.setValue(response.body());
+
                 }
             }
             @EverythingIsNonNull
@@ -81,7 +82,7 @@ public class TemperatureRepository {
             @Override
             public void onResponse(Call<List<Temperature>> call, Response<List<Temperature>> response) {
                 if (response.isSuccessful()){
-                    Log.i("Api-temp-ulm", response.body().toString());
+                    Log.i("Api-temp-ulm", String.valueOf(response.body()));
                     latest.setValue(response.body().get(0));
                 }
             }

@@ -34,6 +34,8 @@ public class TemperatureGraphFragment extends Fragment {
         binding = TemperatureGraphBinding.inflate(inflater, container, false);
         temperatureChart = binding.temperatureChart;
         temperatureGraphViewModel = new ViewModelProvider(this).get(TemperatureGraphViewModel.class);
+        updateMeasurements();
+        initTemperatureChart();
         return binding.getRoot();
     }
 
@@ -53,6 +55,7 @@ public class TemperatureGraphFragment extends Fragment {
             public void onChanged(@Nullable ArrayList<Temperature> temperatures) {
                 if (temperatures.size() > 0) {
                     for (int i = 0; i < 1; i++) {
+                        System.out.println("===========================");
                         data.add(new GraphsFragment.OHCLDataEntry((long) Objects.requireNonNull(temperatureGraphViewModel.getLatestTemperature().getValue()).getTime().getTime(), 0.1, 0.1, 0.1, Objects.requireNonNull(temperatureGraphViewModel.getLatestTemperature().getValue()).getTemperature()));
                     }
                     for (Temperature temperature : temperatures) {
