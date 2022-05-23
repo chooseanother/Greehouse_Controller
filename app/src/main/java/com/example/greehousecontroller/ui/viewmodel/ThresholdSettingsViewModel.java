@@ -12,7 +12,7 @@ import com.example.greehousecontroller.data.repository.CO2Repository;
 import com.example.greehousecontroller.data.repository.HumidityRepository;
 import com.example.greehousecontroller.data.repository.TemperatureRepository;
 
-public class SettingsViewModel extends AndroidViewModel {
+public class ThresholdSettingsViewModel extends AndroidViewModel {
     Application application;
     private TemperatureRepository temperatureRepository;
     private HumidityRepository humidityRepository;
@@ -24,7 +24,7 @@ public class SettingsViewModel extends AndroidViewModel {
     private double maxUpperThresholdCo2 = 5000;
     private double minLowerThresholdCo2 = 0;
 
-    public SettingsViewModel(Application application){
+    public ThresholdSettingsViewModel(Application application){
         super(application);
         this.application = application;
         temperatureRepository = TemperatureRepository.getInstance(application);

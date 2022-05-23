@@ -14,20 +14,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.example.greehousecontroller.R;
-import com.example.greehousecontroller.data.model.Threshold;
-import com.example.greehousecontroller.databinding.FragmentSettingsBinding;
-import com.example.greehousecontroller.ui.viewmodel.SettingsViewModel;
+import com.example.greehousecontroller.databinding.FragmentThresholdSettingsBinding;
+import com.example.greehousecontroller.ui.viewmodel.ThresholdSettingsViewModel;
 
 import java.text.DecimalFormat;
 
-public class SettingsFragment extends Fragment {
+public class ThresholdSettingsFragment extends Fragment {
 
-    private FragmentSettingsBinding binding;
+    private FragmentThresholdSettingsBinding binding;
     private View root;
-    private SettingsViewModel viewModel;
+    private ThresholdSettingsViewModel viewModel;
     //todo REPLACE TEST BY ACTUAL
     private String greenhouseId = "test";
 
@@ -46,8 +43,8 @@ public class SettingsFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        viewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
-        binding = FragmentSettingsBinding.inflate(inflater, container, false);
+        viewModel = new ViewModelProvider(this).get(ThresholdSettingsViewModel.class);
+        binding = FragmentThresholdSettingsBinding.inflate(inflater, container, false);
         root = binding.getRoot();
 
         setUpBindingThresholdsEditText();
