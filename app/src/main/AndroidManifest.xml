@@ -53,7 +53,7 @@
              notification message. See README(https://goo.gl/6BKBk7) for more. -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/colorAccent" />
+            android:resource="@color/dark_green" />
         <!-- https://firebase.google.com/docs/cloud-messaging/android/client#manifest
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
