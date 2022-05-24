@@ -4,13 +4,17 @@ import android.app.Application;
 import android.widget.Toast;
 
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.greehousecontroller.R;
 import com.example.greehousecontroller.data.model.Threshold;
+import com.example.greehousecontroller.data.model.UserInfo;
 import com.example.greehousecontroller.data.repository.CO2Repository;
 import com.example.greehousecontroller.data.repository.HumidityRepository;
 import com.example.greehousecontroller.data.repository.TemperatureRepository;
+import com.example.greehousecontroller.data.repository.UserInfoRepository;
+import com.example.greehousecontroller.data.repository.UserRepository;
 
 public class ThresholdSettingsViewModel extends AndroidViewModel {
     Application application;
@@ -23,6 +27,8 @@ public class ThresholdSettingsViewModel extends AndroidViewModel {
     private double minLowerThresholdHumidity = 0;
     private double maxUpperThresholdCo2 = 5000;
     private double minLowerThresholdCo2 = 0;
+    private UserRepository userRepository;
+    private final UserInfoRepository userInfoRepository;
 
     public ThresholdSettingsViewModel(Application application){
         super(application);
@@ -30,12 +36,22 @@ public class ThresholdSettingsViewModel extends AndroidViewModel {
         temperatureRepository = TemperatureRepository.getInstance(application);
         humidityRepository = HumidityRepository.getInstance(application);
         co2Repository = CO2Repository.getInstance(application);
+        userRepository = UserRepository.getInstance(application);
+        userInfoRepository = UserInfoRepository.getInstance();
     }
 
     public void initializeData(String greenHouseId){
         temperatureRepository.updateThreshold(greenHouseId);
         humidityRepository.updateThreshold(greenHouseId);
         co2Repository.updateThreshold(greenHouseId);
+    }
+
+    public LiveData<UserInfo> getUserInfo(){
+        return userInfoRepository.getUserInfo();
+    }
+
+    public void initUserInfo(){
+        userInfoRepository.init(userRepository.getCurrentUser().getValue().getUid());
     }
 
     public MutableLiveData<Threshold> getTemperatureThreshold(){

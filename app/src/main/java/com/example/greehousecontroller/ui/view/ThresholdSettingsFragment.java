@@ -26,7 +26,7 @@ public class ThresholdSettingsFragment extends Fragment {
     private View root;
     private ThresholdSettingsViewModel viewModel;
     //todo REPLACE TEST BY ACTUAL
-    private String greenhouseId = "test";
+    private String greenhouseId;
 
     //VIEW
     //edit text for thresholds
@@ -44,6 +44,7 @@ public class ThresholdSettingsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         viewModel = new ViewModelProvider(this).get(ThresholdSettingsViewModel.class);
+        getGreenhouseID();
         binding = FragmentThresholdSettingsBinding.inflate(inflater, container, false);
         root = binding.getRoot();
 
@@ -53,6 +54,12 @@ public class ThresholdSettingsFragment extends Fragment {
         initializeObserve();
 
         return root;
+    }
+    private void getGreenhouseID(){
+        viewModel.initUserInfo();
+        viewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
+            greenhouseId = userInfo.getGreenhouseID();
+        });
     }
 
     @Override

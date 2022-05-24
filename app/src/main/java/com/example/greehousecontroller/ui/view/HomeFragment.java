@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -42,23 +43,32 @@ public class HomeFragment extends Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     private View root;
     private FloatingActionButton floatingActionButton;
+    private String greenhouseid;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         root = binding.getRoot();
-        settingOfTextViews();
-        fabHandle();
-        recyclerViewHandle();
-        observeData();
-        initSwipeRefreshLayout();
-        recyclerView.setAdapter(adapter);
+
         return root;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        homeViewModel =
+                new ViewModelProvider(this).get(HomeViewModel.class);
+        getGreenhouseID();
+        fabHandle();
+        recyclerViewHandle();
+        settingOfTextViews();
+        observeData();
+        initSwipeRefreshLayout();
+        recyclerView.setAdapter(adapter);
+
+    }
     @Override
     public void onStart() {
         super.onStart();
@@ -89,6 +99,16 @@ public class HomeFragment extends Fragment {
             // TODO: figure out where to place this so it stops when it gets data from API
             //  maybe with callback, or inside observe data
             // swipeRefreshLayout.setRefreshing(false);
+        });
+    }
+
+    private void getGreenhouseID(){
+        homeViewModel.initUserInfo();
+        homeViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
+            greenhouseid = userInfo.getGreenhouseID();
+            if(greenhouseid != null) {
+                updateLatestMeasurements();
+            }
         });
     }
 
@@ -146,9 +166,11 @@ public class HomeFragment extends Fragment {
 
     private void updateLatestMeasurements(){
         // TODO: Figure out how to handle greenhouseId
-        String response = homeViewModel.updateLatestMeasurements("test");
-        if(response.equals("Failed to retrieve pots")){
-            Toast.makeText(getContext(), response, Toast.LENGTH_SHORT);
+        if(greenhouseid != null) {
+            String response = homeViewModel.updateLatestMeasurements(greenhouseid);
+            if (response.equals("Failed to retrieve pots")) {
+                Toast.makeText(getContext(), response, Toast.LENGTH_SHORT);
+            }
         }
     }
 

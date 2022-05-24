@@ -32,13 +32,14 @@ public class EditPotFragment extends Fragment {
     private Button saveButton;
     private Button cancelButton;
     private View root;
+    private String greenhouseid;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         viewModel =
                 new ViewModelProvider(this).get(EditPotViewModel.class);
-        //"test" should be replaced by actual id in the future
-        String initializationResponse = viewModel.init("test", Integer.parseInt(getArguments().getString("id")));
+        getGreenhouseID();
+        String initializationResponse = viewModel.init(greenhouseid, Integer.parseInt(getArguments().getString("id")));
         if(initializationResponse.equals("Failed to retrieve details")){
             Toast.makeText(getContext(), initializationResponse, Toast.LENGTH_SHORT).show();
         }
@@ -60,17 +61,17 @@ public class EditPotFragment extends Fragment {
             }
         });
         saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            //calling viewModel to check for input and updating pot in the DB
-                String response = viewModel.updateCurrentPot("test", pot.getValue().getId(), potName.getText().toString(), Double.parseDouble(minimalThreshold.getText().toString()));
-                if(response.equals("")){
-                    ((MainActivity)getActivity()).navController.navigate(R.id.nav_home);
-                }
-                else
-                {
-                    Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
-                }
+                @Override
+                public void onClick(View view) {
+                //calling viewModel to check for input and updating pot in the DB
+                    String response = viewModel.updateCurrentPot(greenhouseid, pot.getValue().getId(), potName.getText().toString(), Double.parseDouble(minimalThreshold.getText().toString()));
+                    if(response.equals("")){
+                        ((MainActivity)getActivity()).navController.navigate(R.id.nav_home);
+                    }
+                    else
+                    {
+                        Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         );
@@ -82,6 +83,12 @@ public class EditPotFragment extends Fragment {
             }
         });
         return root;
+    }
+    private void getGreenhouseID(){
+        viewModel.initUserInfo();
+        viewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
+            greenhouseid = userInfo.getGreenhouseID();
+        });
     }
 
     @Override
