@@ -2,16 +2,23 @@ package com.example.greehousecontroller.data.repository;
 
 import android.app.Application;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.greehousecontroller.R;
 import com.example.greehousecontroller.data.api.ServiceGenerator;
 import com.example.greehousecontroller.data.api.TemperatureApi;
+import com.example.greehousecontroller.data.dao.TemperatureDAO;
+import com.example.greehousecontroller.data.dao.ThresholdDAO;
+import com.example.greehousecontroller.data.database.AppDatabase;
 import com.example.greehousecontroller.data.model.Temperature;
 import com.example.greehousecontroller.data.model.Threshold;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import retrofit2.Call;
 import retrofit2.Callback;

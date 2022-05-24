@@ -41,7 +41,6 @@
     <string name="settings_humidity">Humidity</string>
     <string name="settings_upper_threshold">Upper threshold</string>
     <string name="settings_lower_threshold">Lower threshold</string>
-    <string name="settings_changes_saved">Changes were saved successfully</string>
     <string name="settings_temperature_celsius">°C</string>
     <string name="settings_co2_ppm">ppm</string>
     <string name="settings_humidity_percentage">%</string>

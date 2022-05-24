@@ -9,7 +9,6 @@ public class Humidity {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private double humidity;
-    // TODO: Implement JsonAdapterClass to handle converting to Date from seconds
     private long time;
     private String greenhouseId;
 

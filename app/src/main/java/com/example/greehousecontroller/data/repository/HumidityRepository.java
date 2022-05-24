@@ -56,6 +56,12 @@ public class HumidityRepository {
             else{
                 threshold = new MutableLiveData<>(thresholdDAO.getThreshold("Humidity"));
             }
+            if(humidityDAO.getAll() == null){
+                history = new MutableLiveData<>();
+            }
+            else{
+                history = new MutableLiveData<>((ArrayList<Humidity>) humidityDAO.getAll());
+            }
         });
     }
 

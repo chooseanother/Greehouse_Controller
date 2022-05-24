@@ -57,6 +57,13 @@ public class CO2Repository {
             {
                 threshold = new MutableLiveData<>(thresholdDAO.getThreshold("CO2"));
             }
+
+            if(co2DAO.getAll() == null){
+                history = new MutableLiveData<>();
+            }
+            else{
+                history = new MutableLiveData<>((ArrayList<CO2>) co2DAO.getAll());
+            }
         });
     }
 

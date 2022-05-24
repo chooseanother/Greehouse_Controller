@@ -17,17 +17,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.greehousecontroller.MainActivity;
 import com.example.greehousecontroller.R;
-import com.example.greehousecontroller.data.model.Temperature;
-import com.example.greehousecontroller.data.model.User;
 import com.example.greehousecontroller.databinding.FragmentHomeBinding;
-import com.example.greehousecontroller.data.model.Pot;
 import com.example.greehousecontroller.ui.adapter.PotAdapter;
 import com.example.greehousecontroller.ui.viewmodel.HomeViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class HomeFragment extends Fragment {
 
@@ -48,7 +44,8 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
+        homeViewModel =
+                new ViewModelProvider(this).get(HomeViewModel.class);
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         root = binding.getRoot();
 
@@ -58,8 +55,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
         getGreenhouseID();
         fabHandle();
         recyclerViewHandle();
@@ -172,10 +167,7 @@ public class HomeFragment extends Fragment {
     private void updateLatestMeasurements(){
         // TODO: Figure out how to handle greenhouseId
         if(greenhouseid != null) {
-            String response = homeViewModel.updateLatestMeasurements(greenhouseid);
-            if (response.equals("Failed to retrieve pots")) {
-                Toast.makeText(getContext(), response, Toast.LENGTH_SHORT);
-            }
+            homeViewModel.updateLatestMeasurements(greenhouseid);
         }
     }
 
