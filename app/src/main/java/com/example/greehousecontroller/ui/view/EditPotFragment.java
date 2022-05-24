@@ -39,7 +39,6 @@ public class EditPotFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         viewModel =
                 new ViewModelProvider(this).get(EditPotViewModel.class);
-
         binding = FragmentEditPotBinding.inflate(inflater, container, false);
         root = binding.getRoot();
         potName = root.findViewById(R.id.pot_name_edit_text);
@@ -50,7 +49,6 @@ public class EditPotFragment extends Fragment {
         getGreenhouseID();
 
 
-
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,12 +57,7 @@ public class EditPotFragment extends Fragment {
         });
         return root;
     }
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
 
-        getGreenhouseID();
-    }
     private void getGreenhouseID(){
         viewModel.initUserInfo();
         viewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
