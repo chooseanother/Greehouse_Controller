@@ -29,7 +29,7 @@ public class AddPotFragment extends Fragment {
     private Button cancelPotButton;
     private NavController navController;
     private View root;
-
+    private String greenhouseid;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -38,6 +38,7 @@ public class AddPotFragment extends Fragment {
 
         binding = FragmentAddPotBinding.inflate(inflater, container, false);
         root = binding.getRoot();
+        getGreenhouseID();
         namePotTextView = root.findViewById(R.id.potNameTextView);
         minimalHumidityTextView = root.findViewById(R.id.minimalHumidityTextView);
         minimalHumidityTextView.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
@@ -49,7 +50,7 @@ public class AddPotFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //Should include sensor in the future
-                String result = viewModel.validInput("test", namePotTextView.getText().toString(),
+                String result = viewModel.validInput(greenhouseid, namePotTextView.getText().toString(),
                         Double.parseDouble(minimalHumidityTextView.getText().toString()));
                 if(result.equals("")){
                     navController.navigate(R.id.nav_home);
@@ -72,5 +73,11 @@ public class AddPotFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+    private void getGreenhouseID(){
+        viewModel.initUserInfo();
+        viewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
+            greenhouseid = userInfo.getGreenhouseID();
+        });
     }
 }
