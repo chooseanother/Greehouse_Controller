@@ -76,7 +76,6 @@ public class EditPotFragment extends Fragment {
             MutableLiveData<Pot> pot = viewModel.getCurrentPot();
             pot.observe(getViewLifecycleOwner(), currentPot -> {
                 if (currentPot != null) {
-                    System.out.println("===========================");
                     potName.setText(pot.getValue().getName());
                     DecimalFormat df = new DecimalFormat("0.0");
                     minimalThreshold.setText(df.format(pot.getValue().getLowerMoistureThreshold()));
