@@ -16,8 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:padding="@dimen/small_margin"
-        android:background="@drawable/round_layout_bg"
-        android:backgroundTint="@color/grey_background">
+        android:background="@drawable/round_layout_bg">
 
         <TextView
             android:id="@+id/settings_temperature"
@@ -111,7 +110,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/medium_margin"
         android:background="@drawable/round_layout_bg"
-        android:backgroundTint="@color/grey_background"
         android:padding="@dimen/small_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -212,7 +210,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/medium_margin"
         android:background="@drawable/round_layout_bg"
-        android:backgroundTint="@color/grey_background"
         android:padding="@dimen/small_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
