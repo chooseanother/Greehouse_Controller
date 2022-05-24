@@ -42,5 +42,6 @@ public class TemperatureGraphViewModel extends AndroidViewModel {
     public void updateHistoryData(String greenhouseId)
     {
         temperatureRepository.updateHistoricalData(greenhouseId);
+        temperatureRepository.updateLatestMeasurement(greenhouseId);
     }
 }

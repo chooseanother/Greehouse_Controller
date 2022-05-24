@@ -35,7 +35,6 @@ public class TemperatureGraphFragment extends Fragment {
         temperatureChart = binding.temperatureChart;
         temperatureGraphViewModel = new ViewModelProvider(this).get(TemperatureGraphViewModel.class);
         updateMeasurements();
-        initTemperatureChart();
         return binding.getRoot();
     }
 
@@ -43,7 +42,6 @@ public class TemperatureGraphFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         updateMeasurements();
-        initTemperatureChart();
     }
 
     public Table temperatureGraph()
@@ -55,7 +53,6 @@ public class TemperatureGraphFragment extends Fragment {
             public void onChanged(@Nullable ArrayList<Temperature> temperatures) {
                 if (temperatures.size() > 0) {
                     for (int i = 0; i < 1; i++) {
-                        System.out.println("===========================");
                         data.add(new GraphsFragment.OHCLDataEntry((long) Objects.requireNonNull(temperatureGraphViewModel.getLatestTemperature().getValue()).getTime().getTime(), 0.1, 0.1, 0.1, Objects.requireNonNull(temperatureGraphViewModel.getLatestTemperature().getValue()).getTemperature()));
                     }
                     for (Temperature temperature : temperatures) {
@@ -70,19 +67,27 @@ public class TemperatureGraphFragment extends Fragment {
 
     public void initTemperatureChart()
     {
-        APIlib.getInstance().setActiveAnyChartView(temperatureChart);
-        Stock stock4 = AnyChart.stock();
-        Plot plot4 = stock4.plot(0);
-        plot4.ema(temperatureGraph().mapAs("{value: 'close'}"), 1d, StockSeriesType.LINE);
-        plot4.yAxis(0).labels().format("{%Value} °C");
-        stock4.title().text("Temperature");
-        stock4.title().enabled(true);
-        temperatureChart.setChart(stock4);
+        if (temperatureGraphViewModel.getUserInfo().getValue() != null) {
+            if(temperatureGraphViewModel.getLatestTemperature() != null) {
+                APIlib.getInstance().setActiveAnyChartView(temperatureChart);
+                Stock stock4 = AnyChart.stock();
+                Plot plot4 = stock4.plot(0);
+                plot4.ema(temperatureGraph().mapAs("{value: 'close'}"), 1d, StockSeriesType.LINE);
+                plot4.yAxis(0).labels().format("{%Value} °C");
+                stock4.title().text("Temperature");
+                stock4.title().enabled(true);
+                temperatureChart.setChart(stock4);
+            }
+        }
     }
     private void updateMeasurements(){
         temperatureGraphViewModel.initUserInfo();
         temperatureGraphViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
             temperatureGraphViewModel.updateHistoryData(userInfo.getGreenhouseID());
+            if(userInfo.getGreenhouseID() != null)
+            {
+                initTemperatureChart();
+            }
         });
     }
 }
