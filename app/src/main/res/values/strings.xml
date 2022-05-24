@@ -15,11 +15,6 @@
     <string name="menu_pots">Pots</string>
     <string name="menu_settings">Threshold settings</string>
     <string name="menu_log_out">Log out</string>
-    <string name="home">Home</string>
-    <string name="status">Status</string>
-    <string name="graphs">Graphs</string>
-    <string name="pots">Pots</string>
-    <string name="settings">Settings</string>
 
 
     <!--HOME-->
@@ -51,9 +46,12 @@
     <string name="settings_co2_ppm">ppm</string>
     <string name="settings_humidity_percentage">%</string>
     <string name="settings_dummy_value_temperature_humidity">00,0</string>
-    <string name="settings_wrong_number_format_temperature_exception">Temperature threshold must be a number. </string>
-    <string name="settings_wrong_number_format_co2_exception">Temperature threshold must be a number. </string>
-    <string name="settings_wrong_number_format_humidity_exception">Temperature threshold must be a number. </string>
+    <string name="settings_out_of_bounds_temperature_exception">Temperature thresholds must be between -20 and 60. </string>
+    <string name="settings_out_of_bounds_co2_exception">CO2 thresholds must be between 0 and 5000. </string>
+    <string name="settings_out_of_bounds_humidity_exception">Humidity thresholds must be between 0 and 100. </string>
+    <string name="settings_lower_higher_than_upper_threshold_exception">Lower threshold cannot be higher than upper. </string>
+    <string name="settings_not_a_number_exception">Entered value must be of numerical value. </string>
+    <string name="settings_changes_saved">Changes were saved successfully</string>
 
     <!--Add pot-->
     <string name="add_pot_fragment_title">Add pot</string>
@@ -78,6 +76,10 @@
     <string name="unable_to_add_pot">Unable to add pot</string>
     <string name="unable_to_update_pot">Unable to update pot</string>
 
-    
+
+    <!--Graphs bottom navigation-->
+    <string name="graphs_bottom_navigation_temperature">Temperature</string>
+    <string name="graphs_bottom_navigation_humidity">Humidity</string>
+    <string name="graphs_bottom_navigation_co2">CO2</string>
 
 </resources>

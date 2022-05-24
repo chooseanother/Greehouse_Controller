@@ -15,6 +15,7 @@ import com.example.greehousecontroller.data.database.AppDatabase;
 import com.example.greehousecontroller.data.model.CO2;
 import com.example.greehousecontroller.data.model.Threshold;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -31,6 +32,7 @@ public class CO2Repository {
     private final ThresholdDAO thresholdDAO;
     private MutableLiveData<CO2> latest;
     private MutableLiveData<Threshold> threshold;
+    private MutableLiveData<ArrayList<CO2>> history;
     private final ExecutorService executorService;
 
     private CO2Repository(Application app){
@@ -107,7 +109,28 @@ public class CO2Repository {
             }
         });
     }
-
+    public MutableLiveData<ArrayList<CO2>> getCo2HistoryData(){
+        return history;
+    }
+    public void updateHistoricalData(String greenhouseId){
+        CO2Api co2Api = ServiceGenerator.getCO2Api();
+        Call<ArrayList<CO2>> call = co2Api.getHistoricalCO2(greenhouseId);
+        call.enqueue(new Callback<ArrayList<CO2>>() {
+            @EverythingIsNonNull
+            @Override
+            public void onResponse(Call<ArrayList   <CO2>> call, Response<ArrayList<CO2>> response) {
+                if (response.isSuccessful()){
+                    Log.i("Api-co2-hist", String.valueOf(response.body()));
+                    history.setValue(response.body());
+                }
+            }
+            @EverythingIsNonNull
+            @Override
+            public void onFailure(Call<ArrayList<CO2>> call, Throwable t) {
+                Log.e("Api-co2-hist",t.getMessage());
+            }
+        });
+    }
     public void updateThreshold(String greenhouseId){
         CO2Api co2Api = ServiceGenerator.getCO2Api();
         Call<Threshold> call = co2Api.getCo2Thresholds(greenhouseId);

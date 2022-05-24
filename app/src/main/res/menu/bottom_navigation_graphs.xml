@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_temperature"
+        android:title="@string/graphs_bottom_navigation_temperature"
+        android:enabled="true"
+        android:icon="@drawable/ic_home_temperature"/>
+    <item
+        android:id="@+id/navigation_humidity"
+        android:title="@string/graphs_bottom_navigation_humidity"
+        android:enabled="true"
+        android:icon="@drawable/ic_graphs_bottom_nav_humidity"/>
+    <item
+        android:id="@+id/navigation_co2"
+        android:title="@string/graphs_bottom_navigation_co2"
+        android:enabled="true"
+        android:icon="@drawable/ic_home_co2"/>
+</menu>

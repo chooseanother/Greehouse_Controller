@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,14 +17,17 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.greehousecontroller.MainActivity;
 import com.example.greehousecontroller.R;
+import com.example.greehousecontroller.data.model.Temperature;
+import com.example.greehousecontroller.data.model.User;
 import com.example.greehousecontroller.databinding.FragmentHomeBinding;
+import com.example.greehousecontroller.data.model.Pot;
 import com.example.greehousecontroller.ui.adapter.PotAdapter;
 import com.example.greehousecontroller.ui.viewmodel.HomeViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 
 public class HomeFragment extends Fragment {
 
@@ -39,23 +43,32 @@ public class HomeFragment extends Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     private View root;
     private FloatingActionButton floatingActionButton;
+    private String greenhouseid;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         root = binding.getRoot();
-        settingOfTextViews();
-        fabHandle();
-        recyclerViewHandle();
-        observeData();
-        initSwipeRefreshLayout();
-        recyclerView.setAdapter(adapter);
+
         return root;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        homeViewModel =
+                new ViewModelProvider(this).get(HomeViewModel.class);
+        getGreenhouseID();
+        fabHandle();
+        recyclerViewHandle();
+        settingOfTextViews();
+        observeData();
+        initSwipeRefreshLayout();
+        recyclerView.setAdapter(adapter);
+
+    }
     @Override
     public void onStart() {
         super.onStart();
@@ -89,6 +102,16 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    private void getGreenhouseID(){
+        homeViewModel.initUserInfo();
+        homeViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
+            greenhouseid = userInfo.getGreenhouseID();
+            if(greenhouseid != null) {
+                updateLatestMeasurements();
+            }
+        });
+    }
+
     private void observeData(){
         homeViewModel.getLatestTemperature().observe(getViewLifecycleOwner(),temperature -> {
             String readings = temperature.getTemperature() + " °C";
@@ -98,8 +121,7 @@ public class HomeFragment extends Fragment {
             swipeRefreshLayout.setRefreshing(false);
 
             // TODO: Remove this when testing is done
-            Date date = new Date(temperature.getTime()* 1000);
-            String show = "Date: "+ date +" T: "+temperature.getTemperature()+" °C";
+            String show = "Date: "+temperature.getTime()+" T: "+temperature.getTemperature()+" °C";
             Toast.makeText(getContext(), show, Toast.LENGTH_SHORT).show();
 
         });
@@ -149,7 +171,12 @@ public class HomeFragment extends Fragment {
 
     private void updateLatestMeasurements(){
         // TODO: Figure out how to handle greenhouseId
-        homeViewModel.updateLatestMeasurements("test");
+        if(greenhouseid != null) {
+            String response = homeViewModel.updateLatestMeasurements(greenhouseid);
+            if (response.equals("Failed to retrieve pots")) {
+                Toast.makeText(getContext(), response, Toast.LENGTH_SHORT);
+            }
+        }
     }
 
     private void fabHandle(){

@@ -1,27 +1,17 @@
 package com.example.greehousecontroller.data.repository;
 
 import android.app.Application;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
-import android.widget.Toast;
 
-import androidx.core.os.HandlerCompat;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.greehousecontroller.R;
 import com.example.greehousecontroller.data.api.ServiceGenerator;
 import com.example.greehousecontroller.data.api.TemperatureApi;
-import com.example.greehousecontroller.data.dao.TemperatureDAO;
-import com.example.greehousecontroller.data.dao.ThresholdDAO;
-import com.example.greehousecontroller.data.database.AppDatabase;
 import com.example.greehousecontroller.data.model.Temperature;
 import com.example.greehousecontroller.data.model.Threshold;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -130,7 +120,7 @@ public class TemperatureRepository {
             @Override
             public void onResponse(Call<List<Temperature>> call, Response<List<Temperature>> response) {
                 if (response.isSuccessful()){
-                    Log.i("Api-temp-ulm", response.body().toString());
+                    Log.i("Api-temp-ulm", String.valueOf(response.body()));
                     latest.setValue(response.body().get(0));
                     executorService.execute(()-> {
                         if(temperatureDAO.getAll() == null || temperatureDAO.getAll().isEmpty()){
