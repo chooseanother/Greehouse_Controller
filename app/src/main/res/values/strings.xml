@@ -55,7 +55,8 @@
     <!--Add pot-->
     <string name="add_pot_fragment_title">Add pot</string>
     <string name="add_pot_minimal_moisture">Minimal moisture:</string>
-    <string name="add_pot_name">Name:</string>
+    <string name="add_pot_name">Name: </string>
+    <string name="add_pot_sensor">Sensor: </string>
 
     <!--Edit pot-->
     <string name="edit_pot_fragment_title">Edit pot</string>

@@ -37,4 +37,7 @@
 
     <!--GRAPHS-->
     <dimen name="graphs_bottom_nav_padding">8dp</dimen>
+
+    <!--ADD POT-->
+    <dimen name="add_pot_spinner_width">120dp</dimen>
 </resources>
