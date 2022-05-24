@@ -15,7 +15,14 @@ public class Temperature {
     public Temperature() {
     }
 
+    @Ignore
     public Temperature(double temperature, long time) {
+        this.temperature = temperature;
+        this.time = time;
+    }
+
+    public Temperature(int id, double temperature, long time) {
+        this.id = id;
         this.temperature = temperature;
         this.time = time;
     }
@@ -47,9 +54,9 @@ public class Temperature {
     @Override
     public String toString() {
         return "Temperature{" +
-                "temperature=" + temperature +
+                "id=" + id +
+                ", temperature=" + temperature +
                 ", time=" + time +
-                 '\'' +
                 '}';
     }
 }

@@ -2,7 +2,6 @@ package com.example.greehousecontroller.ui.view;
 
 import android.os.Bundle;
 import android.text.InputType;
-import android.text.method.DigitsKeyListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +16,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.greehousecontroller.MainActivity;
 import com.example.greehousecontroller.R;
-import com.example.greehousecontroller.databinding.FragmentEditPotBinding;
 import com.example.greehousecontroller.data.model.Pot;
+import com.example.greehousecontroller.databinding.FragmentEditPotBinding;
 import com.example.greehousecontroller.ui.viewmodel.EditPotViewModel;
 
 import java.text.DecimalFormat;
@@ -64,10 +63,7 @@ public class EditPotFragment extends Fragment {
         viewModel.initUserInfo();
         viewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
             greenhouseid = userInfo.getGreenhouseID();
-            String initializationResponse = viewModel.init(greenhouseid, Integer.parseInt(getArguments().getString("id")));
-            if (initializationResponse.equals("Failed to retrieve details")) {
-                Toast.makeText(getContext(), initializationResponse, Toast.LENGTH_SHORT).show();
-            }
+            viewModel.init(greenhouseid, Integer.parseInt(getArguments().getString("id")));
             MutableLiveData<Pot> pot = viewModel.getCurrentPot();
             pot.observe(getViewLifecycleOwner(), currentPot -> {
                 if (currentPot != null) {

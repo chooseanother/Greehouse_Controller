@@ -62,9 +62,9 @@ public class CO2GraphFragment extends Fragment {
         Table table = Table.instantiate("x");
 
         List<DataEntry> data = new ArrayList<>();
-        co2GraphViewModel.getCo2HistoryData().observe(getViewLifecycleOwner(), new Observer<ArrayList<CO2>>() {
+        co2GraphViewModel.getCo2HistoryData().observe(getViewLifecycleOwner(), new Observer<List<CO2>>() {
             @Override
-            public void onChanged(@Nullable ArrayList<CO2> co2s) {
+            public void onChanged(@Nullable List<CO2> co2s) {
                 if (co2s.size() > 0) {
                     for (int i = 0; i < 1; i++) {
                         data.add(new GraphsFragment.OHCLDataEntry((long) Objects.requireNonNull(co2GraphViewModel.getLatestCO2().getValue()).getTime(), 0.1, 0.1, 0.1, Objects.requireNonNull(co2GraphViewModel.getLatestCO2().getValue()).getCo2Measurement()));

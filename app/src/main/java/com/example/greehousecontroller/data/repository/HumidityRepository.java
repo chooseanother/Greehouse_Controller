@@ -32,14 +32,14 @@ public class HumidityRepository {
     private final ThresholdDAO thresholdDAO;
     private MutableLiveData<Humidity> latest;
     private MutableLiveData<Threshold> threshold;
-    private MutableLiveData<ArrayList<Humidity>> history;
+    private MutableLiveData<List<Humidity>> history;
 
     private final ExecutorService executorService;
 
     private HumidityRepository(Application app){
         this.app = app;
         AppDatabase database = AppDatabase.getInstance(app);
-        executorService = Executors.newFixedThreadPool(2);
+        executorService = Executors.newFixedThreadPool(4);
         humidityDAO = database.humidityDAO();
         thresholdDAO = database.thresholdDAO();
 
@@ -50,16 +50,23 @@ public class HumidityRepository {
             else{
                 latest = new MutableLiveData<>(humidityDAO.getAll().get(humidityDAO.getAll().size() -1));
             }
+        });
+
+        executorService.execute(()->{
             if(thresholdDAO.getThreshold("Humidity") == null){
                 threshold = new MutableLiveData<>(new Threshold("Humidity", 0,0));
             }
             else{
                 threshold = new MutableLiveData<>(thresholdDAO.getThreshold("Humidity"));
             }
+        });
+
+        executorService.execute(()->{
             if(humidityDAO.getAll() == null){
                 history = new MutableLiveData<>();
             }
             else{
+                Log.i("History Humidity: ",humidityDAO.getAll().toString());
                 history = new MutableLiveData<>((ArrayList<Humidity>) humidityDAO.getAll());
             }
         });
@@ -81,24 +88,35 @@ public class HumidityRepository {
         return threshold;
     }
 
-    public MutableLiveData<ArrayList<Humidity>> getHistoricalData(){
+    public MutableLiveData<List<Humidity>> getHistoricalData(){
         return history;
     }
     public void updateHistoricalData(String greenhouseId) {
         HumidityApi humidityApi = ServiceGenerator.getHumidityAPI();
-        Call<ArrayList<Humidity>> call = humidityApi.getHistoricalHumidity(greenhouseId);
-        call.enqueue(new Callback<ArrayList<Humidity>>() {
+        Call<List<Humidity>> call = humidityApi.getHistoricalHumidity(greenhouseId);
+        call.enqueue(new Callback<List<Humidity>>() {
             @EverythingIsNonNull
             @Override
-            public void onResponse(Call<ArrayList<Humidity>> call, Response<ArrayList<Humidity>> response) {
+            public void onResponse(Call<List<Humidity>> call, Response<List<Humidity>> response) {
                 if (response.isSuccessful()){
                     Log.i("Api-hum-hist", response.body().toString());
                     history.setValue(response.body());
+                    executorService.execute(()->{
+                        ArrayList<Humidity> result = (ArrayList<Humidity>) response.body();
+                            if(result.size() < 2000){
+                                humidityDAO.delete();
+                                humidityDAO.insert(response.body());
+                            }
+                            else{
+                                humidityDAO.delete();
+                                humidityDAO.insert(response.body().subList(0, 1999));
+                            }
+                    });
                 }
             }
             @EverythingIsNonNull
             @Override
-            public void onFailure(Call<ArrayList<Humidity>> call, Throwable t) {
+            public void onFailure(Call<List<Humidity>> call, Throwable t) {
                 Log.e("Api-hum-hist",t.getMessage());
             }
         });
@@ -114,14 +132,10 @@ public class HumidityRepository {
                 if (response.isSuccessful()){
                     if(response.body() != null){
                         Log.i("Api-hum-ulm", response.body().toString());
-                        latest.setValue(response.body().get(0));
-                        executorService.execute(()-> {
-                            if(humidityDAO.getAll() == null || humidityDAO.getAll().isEmpty()){
-                                humidityDAO.insert(response.body().get(0));
-                            }
-                            else{
-                                humidityDAO.update(response.body().get(0));
-                            }
+                        Humidity result = response.body().get(0);
+                        latest.setValue(result);
+                        executorService.execute(()->{
+                          humidityDAO.insert(response.body());
                         });
                     }
                 }

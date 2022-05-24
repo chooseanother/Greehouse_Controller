@@ -31,7 +31,7 @@ public class TemperatureRepository {
     private final TemperatureDAO temperatureDAO;
     private final ThresholdDAO thresholdDAO;
     private MutableLiveData<Temperature> latest;
-    private MutableLiveData<ArrayList<Temperature>> historical;
+    private MutableLiveData<List<Temperature>> historical;
     private MutableLiveData<Threshold> threshold;
 
     private final ExecutorService executorService;
@@ -39,7 +39,7 @@ public class TemperatureRepository {
     private TemperatureRepository(Application app){
         this.app = app;
         AppDatabase appDatabase = AppDatabase.getInstance(app);
-        executorService = Executors.newFixedThreadPool(2);
+        executorService = Executors.newFixedThreadPool(4);
         temperatureDAO = appDatabase.temperatureDAO();
         thresholdDAO = appDatabase.thresholdDAO();
 
@@ -48,21 +48,26 @@ public class TemperatureRepository {
                 latest = new MutableLiveData<>();
             }
             else{
-                latest = new MutableLiveData<>(temperatureDAO.getAll().get(temperatureDAO.getAll().size() - 1));
+                latest = new MutableLiveData<>(temperatureDAO.getAll().get(0));
             }
+        });
 
+        executorService.execute(()->{
             if(thresholdDAO.getThreshold("Temperature") == null){
                 threshold = new MutableLiveData<>(new Threshold("Temperature",0,0));
             }
             else{
                 threshold = new MutableLiveData<>(thresholdDAO.getThreshold("Temperature"));
             }
+        });
 
-            if(temperatureDAO.getAll() == null){
+        executorService.execute(()->{
+            if(temperatureDAO.getAll() == null || temperatureDAO.getAll().isEmpty()){
                 historical = new MutableLiveData<>();
             }
             else{
-                historical = new MutableLiveData<>((ArrayList<Temperature>) temperatureDAO.getAll());
+                Log.i("History Temperature: ",temperatureDAO.getAll().toString());
+                historical = new MutableLiveData<>(temperatureDAO.getAll());
             }
         });
     }
@@ -78,27 +83,30 @@ public class TemperatureRepository {
         return latest;
     }
 
-    public MutableLiveData<ArrayList<Temperature>> getTemperatureHistoryData() {
+    public MutableLiveData<List<Temperature>> getTemperatureHistoryData() {
         return historical;
     }
 
     public void updateHistoricalMeasurement(String greenhouseId){
         TemperatureApi temperatureApi = ServiceGenerator.getTemperatureAPI();
-        Call<ArrayList<Temperature>> call = temperatureApi.getHistoricalTemperature(greenhouseId);
-        call.enqueue(new Callback<ArrayList<Temperature>>() {
+        Call<List<Temperature>> call = temperatureApi.getHistoricalTemperature(greenhouseId);
+        call.enqueue(new Callback<List<Temperature>>() {
             @EverythingIsNonNull
             @Override
-            public void onResponse(Call<ArrayList<Temperature>> call, Response<ArrayList<Temperature>> response) {
+            public void onResponse(Call<List<Temperature>> call, Response<List<Temperature>> response) {
                 if (response.isSuccessful()){
                     Log.i("Api-temp-ulm", response.body().toString());
                     historical.setValue(response.body());
-                    executorService.execute(()-> {
-                        if(temperatureDAO.getAll() == null || temperatureDAO.getAll().isEmpty()){
-                            temperatureDAO.insert(response.body());
-                        }
-                        else {
-                            temperatureDAO.update(response.body());
-                        }
+                    executorService.execute(()->{
+                        ArrayList<Temperature> result = (ArrayList<Temperature>) response.body();
+                            if(result.size() < 2000){
+                                temperatureDAO.delete();
+                                temperatureDAO.insert(response.body());
+                            }
+                            else{
+                                temperatureDAO.delete();
+                                temperatureDAO.insert(response.body().subList(0, 1999));
+                            }
                     });
                 }
 
@@ -108,7 +116,7 @@ public class TemperatureRepository {
             }
             @EverythingIsNonNull
             @Override
-            public void onFailure(Call<ArrayList<Temperature>> call, Throwable t) {
+            public void onFailure(Call<List<Temperature>> call, Throwable t) {
                 Log.e("Api-temp-ulm",t.getMessage());
                 Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT);
             }
@@ -128,15 +136,12 @@ public class TemperatureRepository {
             public void onResponse(Call<List<Temperature>> call, Response<List<Temperature>> response) {
                 if (response.isSuccessful()){
                     Log.i("Api-temp-ulm", String.valueOf(response.body()));
-                    latest.setValue(response.body().get(0));
-                    executorService.execute(()-> {
-                        if(temperatureDAO.getAll() == null || temperatureDAO.getAll().isEmpty()){
-                            temperatureDAO.insert((ArrayList<Temperature>)response.body());
-                        }
-                        else{
-                            temperatureDAO.update((ArrayList<Temperature>) response.body());
-                        }
-                    });
+                    Temperature result = response.body().get(0);
+                    latest.setValue(result);
+                     executorService.execute(()->{
+                         temperatureDAO.insert(response.body());
+                         Log.i("Temp allUpdated: ", temperatureDAO.getAll().toString());
+                     });
                 }
 
                 if(!response.isSuccessful()){

@@ -12,7 +12,7 @@ import com.example.greehousecontroller.data.repository.CO2Repository;
 import com.example.greehousecontroller.data.repository.UserInfoRepository;
 import com.example.greehousecontroller.data.repository.UserRepository;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class CO2GraphViewModel extends AndroidViewModel {
     private CO2Repository co2Repository;
@@ -26,7 +26,7 @@ public class CO2GraphViewModel extends AndroidViewModel {
         userRepository = UserRepository.getInstance(application);
 
     }
-    public LiveData<ArrayList<CO2>> getCo2HistoryData() {
+    public LiveData<List<CO2>> getCo2HistoryData() {
         return co2Repository.getCo2HistoryData();
     }
     public MutableLiveData<CO2> getLatestCO2(){

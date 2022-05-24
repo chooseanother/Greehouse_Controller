@@ -66,7 +66,6 @@ public class PotRepository {
                 }
 
                 if (!response.isSuccessful()) {
-                    System.out.println(1);
                     Toast.makeText(app.getApplicationContext(), R.string.unable_to_retrieve_pot_details, Toast.LENGTH_SHORT);
                 }
             }

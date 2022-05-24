@@ -4,19 +4,18 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-import androidx.room.Update;
 
 import com.example.greehousecontroller.data.model.Humidity;
 
 import java.util.List;
 @Dao
 public interface HumidityDAO {
-    @Query("SELECT * FROM Humidity")
+    @Query("SELECT * FROM Humidity ORDER BY time DESC")
     List<Humidity> getAll();
 
-    @Update
-    void update(Humidity humidity);
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Humidity humidity);
+    void insert(List<Humidity> humidity);
+
+    @Query("DELETE FROM Temperature")
+    void delete();
 }
