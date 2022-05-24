@@ -168,7 +168,7 @@ public class CO2Repository {
                 }
 
                 if(!response.isSuccessful()){
-                        Toast.makeText(app.getApplicationContext(), R.string.unable_to_access_server, Toast.LENGTH_SHORT);
+                        Toast.makeText(app.getApplicationContext(), R.string.unable_to_update_threshold, Toast.LENGTH_SHORT);
                     }
             }
             @retrofit2.internal.EverythingIsNonNull

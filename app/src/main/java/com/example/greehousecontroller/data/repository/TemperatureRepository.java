@@ -38,13 +38,11 @@ public class TemperatureRepository {
     private MutableLiveData<Threshold> threshold;
 
     private final ExecutorService executorService;
-    private Handler handler;
 
     private TemperatureRepository(Application app){
         this.app = app;
         AppDatabase appDatabase = AppDatabase.getInstance(app);
         executorService = Executors.newFixedThreadPool(2);
-        handler = HandlerCompat.createAsync(Looper.getMainLooper());
         temperatureDAO = appDatabase.temperatureDAO();
         thresholdDAO = appDatabase.thresholdDAO();
 
@@ -212,7 +210,7 @@ public class TemperatureRepository {
                 }
 
                 if(!response.isSuccessful()){
-                    Toast.makeText(app.getApplicationContext(), R.string.unable_to_access_server, Toast.LENGTH_SHORT);
+                    Toast.makeText(app.getApplicationContext(), R.string.unable_to_update_threshold, Toast.LENGTH_SHORT);
                 }
             }
             @EverythingIsNonNull

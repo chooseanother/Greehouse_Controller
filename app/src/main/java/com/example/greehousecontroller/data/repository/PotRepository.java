@@ -100,7 +100,7 @@ public class PotRepository {
                 }
 
                 if (!response.isSuccessful()) {
-                    Toast.makeText(app.getApplicationContext(), R.string.unable_to_access_server, Toast.LENGTH_SHORT);
+                    Toast.makeText(app.getApplicationContext(), R.string.unable_to_update_pot, Toast.LENGTH_SHORT);
                 }
             }
 
@@ -126,7 +126,7 @@ public class PotRepository {
                 }
 
                 if (!response.isSuccessful()) {
-                    Toast.makeText(app.getApplicationContext(), R.string.unable_to_access_server, Toast.LENGTH_SHORT);
+                    Toast.makeText(app.getApplicationContext(), R.string.unable_to_add_pot, Toast.LENGTH_SHORT);
                 }
             }
 

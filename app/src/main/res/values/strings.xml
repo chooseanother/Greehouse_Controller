@@ -74,6 +74,10 @@
     <string name="unable_to_retrieve_threshold">Unable to retrieve latest threshold</string>
     <string name="unable_to_access_server">Unable to access server</string>
     <string name="unable_to_retrieve_pot_details">Unable to retrieve pot details</string>
+    <string name="unable_to_update_threshold">Unable to update threshold</string>
+    <string name="unable_to_add_pot">Unable to add pot</string>
+    <string name="unable_to_update_pot">Unable to update pot</string>
+
     
 
 </resources>

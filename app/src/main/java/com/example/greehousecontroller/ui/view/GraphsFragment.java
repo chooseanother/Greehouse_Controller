@@ -57,10 +57,8 @@ public class GraphsFragment extends Fragment {
                     data.add(new OHCLDataEntry((long) Objects.requireNonNull(graphsViewModel.getLatestTemperature().getValue()).getTime(), 0.1, 0.1, 0.1, Objects.requireNonNull(graphsViewModel.getLatestTemperature().getValue()).getTemperature()));
                 }
                 for (Temperature temperature : temperatures) {
-                    System.out.println(temperature.getTime());
                     data.add(new OHCLDataEntry(temperature.getTime(), temperature.getTemperature(), temperature.getTemperature(), temperature.getTemperature(), temperature.getTemperature()));
                 }
-
                 table.addData(data);
 
 
