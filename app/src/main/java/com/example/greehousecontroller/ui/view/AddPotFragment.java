@@ -1,19 +1,17 @@
 package com.example.greehousecontroller.ui.view;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.greehousecontroller.R;
 import com.example.greehousecontroller.databinding.FragmentAddPotBinding;
@@ -50,13 +48,10 @@ public class AddPotFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //Should include sensor in the future
-                String result = viewModel.validInput(greenhouseid, namePotTextView.getText().toString(),
-                        Double.parseDouble(minimalHumidityTextView.getText().toString()));
-                if(result.equals("")){
+                boolean result = viewModel.validInput(greenhouseid, namePotTextView.getText().toString(),
+                        minimalHumidityTextView.getText().toString());
+                if(result){
                     navController.navigate(R.id.nav_home);
-                }
-                else{
-                    Toast.makeText(getContext(), ""+ result, Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -78,11 +77,9 @@ public class EditPotFragment extends Fragment {
                 public void onClick(View view) {
                     //calling viewModel to check for input and updating pot in the D
                     if (pot.getValue() != null) {
-                        String response = viewModel.updateCurrentPot(greenhouseid, pot.getValue().getId(), potName.getText().toString(), Double.parseDouble(minimalThreshold.getText().toString()));
-                        if (response.equals("")) {
+                        boolean response = viewModel.updateCurrentPot(greenhouseid, pot.getValue().getId(), potName.getText().toString(), minimalThreshold.getText().toString());
+                        if (response) {
                             ((MainActivity) getActivity()).navController.navigate(R.id.nav_home);
-                        } else {
-                            Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                         }
                     }
 
