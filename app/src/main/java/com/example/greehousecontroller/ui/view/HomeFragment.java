@@ -103,12 +103,6 @@ public class HomeFragment extends Fragment {
 
             // TODO: Maybe here?
             swipeRefreshLayout.setRefreshing(false);
-
-            // TODO: Remove this when testing is done
-            Date date = new Date(temperature.getTime());
-            String show = "Date: "+date+" T: "+temperature.getTemperature()+" °C";
-            Toast.makeText(getContext(), show, Toast.LENGTH_SHORT).show();
-
         });
 
         homeViewModel.getLatestHumidity().observe(getViewLifecycleOwner(),humidity -> {
