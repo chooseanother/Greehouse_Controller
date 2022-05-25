@@ -22,6 +22,7 @@
     <string name="home_pot_current_moisture">Current moisture: </string>
     <string name="home_pot_minimal_moisture">Minimal moisture: </string>
     <string name="home_your_greenhouse">Your greenhouse</string>
+    <string name="home_hello_message">"Hello</string>
 
     <!--LOG IN, REGISTER-->
     <string name="login">Login</string>
