@@ -105,7 +105,7 @@ public class HomeFragment extends Fragment {
             swipeRefreshLayout.setRefreshing(false);
 
             // TODO: Remove this when testing is done
-            Date date = new Date(temperature.getTime()*1000);
+            Date date = new Date(temperature.getTime());
             String show = "Date: "+date+" T: "+temperature.getTemperature()+" °C";
             Toast.makeText(getContext(), show, Toast.LENGTH_SHORT).show();
 
@@ -134,11 +134,12 @@ public class HomeFragment extends Fragment {
 
         FirebaseUser user = homeViewModel.getUser();
         if(user != null){
-            String welcomeMessage = "Hello, " + homeViewModel.getUser().getDisplayName() + "!";
+            String welcomeMessage = getString(R.string.home_hello_message) + ", " + homeViewModel.getUser().getDisplayName() + "!";
             welcomingTextView.setText(welcomeMessage);
         }
         else{
-            welcomingTextView.setText("Hello!");
+            String welcomeMessage = getString(R.string.home_hello_message) + "!";
+            welcomingTextView.setText(welcomeMessage);
         }
     }
 
