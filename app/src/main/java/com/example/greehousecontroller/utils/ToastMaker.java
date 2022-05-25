@@ -8,7 +8,7 @@ import java.util.Date;
 public class ToastMaker {
     private static ToastMaker instance;
     private Date lastToast;
-    private static final long TIME_BETWEEN_TOASTS = 1000; // 1 seconds
+    private static final long TIME_BETWEEN_TOASTS = 2000; // 2 seconds
 
     private ToastMaker(){
 
