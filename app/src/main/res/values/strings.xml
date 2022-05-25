@@ -14,6 +14,7 @@
     <string name="menu_graphs">Graphs</string>
     <string name="menu_pots">Pots</string>
     <string name="menu_settings">Threshold settings</string>
+    <string name="menu_edit_greenhouse_id">Edit greenhouse Id</string>
     <string name="menu_log_out">Log out</string>
 
 
@@ -71,7 +72,18 @@
     <string name="enter_your_greenhouse_id">Enter your greenhouse ID</string>
     <string name="greenhouse_id">Greenhouse ID</string>
 
+    <!-- Edit greenhouse id-->
+    <string name="edit_greenhouse_id_nav_label">Edit greenhouse Id</string>
+    <string name="edit_greenhouse_id_title">Greenhouse Id</string>
+    <string name="edit_greenhouse_id_current_title">Current Id</string>
+    <string name="edit_greenhouse_id_enter_title">Enter new Id</string>
+    <string name="edit_greenhouse_id_dummy_value">0004A30B00E7E7C1</string>
+
+
     <string name="add_pot_minimal_humidity">Minimum moisture threshold</string>
+
+    <!--Success messages-->
+    <string name="edit_greenhouse_id_success">Successfully updated Id</string>
 
     <!--Error messages-->
     <string name="connection_error">Connection error</string>
