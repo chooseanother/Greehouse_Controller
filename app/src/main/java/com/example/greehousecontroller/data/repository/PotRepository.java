@@ -66,14 +66,14 @@ public class PotRepository {
                 }
 
                 if (!response.isSuccessful()) {
-                    Toast.makeText(app.getApplicationContext(), R.string.unable_to_retrieve_pot_details, Toast.LENGTH_SHORT);
+                    Toast.makeText(app.getApplicationContext(), R.string.unable_to_retrieve_pot_details, Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Pot> call, Throwable t) {
                 Log.e("Api-pot-ulm", t.getMessage());
-                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT);
+                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -100,14 +100,14 @@ public class PotRepository {
                 }
 
                 if (!response.isSuccessful()) {
-                    Toast.makeText(app.getApplicationContext(), R.string.unable_to_update_pot, Toast.LENGTH_SHORT);
+                    Toast.makeText(app.getApplicationContext(), R.string.unable_to_update_pot, Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Pot> call, Throwable t) {
                 Log.e("Api-pot-ulm", t.getMessage());
-                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT);
+                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -126,14 +126,14 @@ public class PotRepository {
                 }
 
                 if (!response.isSuccessful()) {
-                    Toast.makeText(app.getApplicationContext(), R.string.unable_to_add_pot, Toast.LENGTH_SHORT);
+                    Toast.makeText(app.getApplicationContext(), R.string.unable_to_add_pot, Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Pot> call, Throwable t) {
                 Log.e("Api-pot-ulm", t.getMessage());
-                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT);
+                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -159,14 +159,14 @@ public class PotRepository {
                 }
 
                 if (!response.isSuccessful()) {
-                    Toast.makeText(app.getApplicationContext(), R.string.unable_to_retrieve_measurements, Toast.LENGTH_SHORT);
+                    Toast.makeText(app.getApplicationContext(), R.string.unable_to_retrieve_measurements, Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Pot>> call, Throwable t) {
                 Log.e("Api-pot-ulm", t.getMessage());
-                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT);
+                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT).show();
             }
         });
     }
