@@ -12,7 +12,7 @@ import com.example.greehousecontroller.data.repository.TemperatureRepository;
 import com.example.greehousecontroller.data.repository.UserInfoRepository;
 import com.example.greehousecontroller.data.repository.UserRepository;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class TemperatureGraphViewModel extends AndroidViewModel {
     private TemperatureRepository temperatureRepository;
@@ -25,7 +25,7 @@ public class TemperatureGraphViewModel extends AndroidViewModel {
         userInfoRepository = UserInfoRepository.getInstance();
         userRepository = UserRepository.getInstance(application);
     }
-    public LiveData<ArrayList<Temperature>> getTemperatureHistoryData() {
+    public LiveData<List<Temperature>> getTemperatureHistoryData() {
         return temperatureRepository.getTemperatureHistoryData();
     }
     public MutableLiveData<Temperature> getLatestTemperature(){
@@ -41,7 +41,7 @@ public class TemperatureGraphViewModel extends AndroidViewModel {
 
     public void updateHistoryData(String greenhouseId)
     {
-        temperatureRepository.updateHistoricalData(greenhouseId);
+        temperatureRepository.updateHistoricalMeasurement(greenhouseId);
         temperatureRepository.updateLatestMeasurement(greenhouseId);
     }
 }

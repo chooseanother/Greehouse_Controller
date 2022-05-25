@@ -54,6 +54,9 @@
 
     <!--Add pot-->
     <string name="add_pot_fragment_title">Add pot</string>
+    <string name="add_pot_minimal_moisture">Minimal moisture:</string>
+    <string name="add_pot_name">Name:</string>
+    <string name="add_pot_missing_name_exception">The name is missing</string>
     <string name="add_pot_sensor">Sensor: </string>
 
     <!--Edit pot-->
@@ -66,6 +69,19 @@
     <!--Enter greenhouse id-->
     <string name="enter_your_greenhouse_id">Enter your greenhouse ID</string>
     <string name="greenhouse_id">Greenhouse ID</string>
+
+    <string name="add_pot_minimal_humidity">Minimum moisture threshold</string>
+
+    <!--Error messages-->
+    <string name="connection_error">Connection error</string>
+    <string name="unable_to_retrieve_measurements">Unable to retrieve latest measurements</string>
+    <string name="unable_to_retrieve_threshold">Unable to retrieve latest threshold</string>
+    <string name="unable_to_access_server">Unable to access server</string>
+    <string name="unable_to_retrieve_pot_details">Unable to retrieve pot details</string>
+    <string name="unable_to_update_threshold">Unable to update threshold</string>
+    <string name="unable_to_add_pot">Unable to add pot</string>
+    <string name="unable_to_update_pot">Unable to update pot</string>
+
 
     <!--Graphs bottom navigation-->
     <string name="graphs_bottom_navigation_temperature">Temperature</string>

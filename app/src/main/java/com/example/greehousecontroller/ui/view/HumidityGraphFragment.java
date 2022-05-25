@@ -21,7 +21,6 @@ import com.anychart.data.Table;
 import com.anychart.enums.StockSeriesType;
 import com.example.greehousecontroller.data.model.Humidity;
 import com.example.greehousecontroller.databinding.HumidityGraphBinding;
-import com.example.greehousecontroller.ui.viewmodel.CO2GraphViewModel;
 import com.example.greehousecontroller.ui.viewmodel.HumidityGraphViewModel;
 
 import java.util.ArrayList;
@@ -51,9 +50,9 @@ public class HumidityGraphFragment extends Fragment {
     public Table humidityGraph(){
         Table table = Table.instantiate("x");
         List<DataEntry> data = new ArrayList<>();
-        humidityViewModel.getHumidityHistoryData().observe(getViewLifecycleOwner(), new Observer<ArrayList<Humidity>>() {
+        humidityViewModel.getHumidityHistoryData().observe(getViewLifecycleOwner(), new Observer<List<Humidity>>() {
             @Override
-            public void onChanged(@Nullable ArrayList<Humidity> humidities) {
+            public void onChanged(@Nullable List<Humidity> humidities) {
                 if (humidities.size() > 0) {
                     for (int i = 0; i < 1; i++) {
                         data.add(new GraphsFragment.OHCLDataEntry((long) Objects.requireNonNull(humidityViewModel.getLatestHumidity().getValue()).getTime(), 0.1, 0.1, 0.1, Objects.requireNonNull(humidityViewModel.getLatestHumidity().getValue()).getHumidity()));

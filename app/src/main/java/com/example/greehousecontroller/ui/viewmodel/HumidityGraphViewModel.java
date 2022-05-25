@@ -12,7 +12,7 @@ import com.example.greehousecontroller.data.repository.HumidityRepository;
 import com.example.greehousecontroller.data.repository.UserInfoRepository;
 import com.example.greehousecontroller.data.repository.UserRepository;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class HumidityGraphViewModel extends AndroidViewModel {
     private HumidityRepository humidityRepository;
@@ -28,7 +28,7 @@ public class HumidityGraphViewModel extends AndroidViewModel {
         return humidityRepository.getLatest();
     }
 
-    public LiveData<ArrayList<Humidity>> getHumidityHistoryData() {
+    public LiveData<List<Humidity>> getHumidityHistoryData() {
         return humidityRepository.getHistoricalData();
     }
     public LiveData<UserInfo> getUserInfo(){

@@ -2,17 +2,23 @@ package com.example.greehousecontroller.data.repository;
 
 import android.app.Application;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.greehousecontroller.data.api.ServiceGenerator;
+import com.example.greehousecontroller.R;
 import com.example.greehousecontroller.data.api.HumidityApi;
-import com.example.greehousecontroller.data.api.TemperatureApi;
+import com.example.greehousecontroller.data.api.ServiceGenerator;
+import com.example.greehousecontroller.data.dao.HumidityDAO;
+import com.example.greehousecontroller.data.dao.ThresholdDAO;
+import com.example.greehousecontroller.data.database.AppDatabase;
 import com.example.greehousecontroller.data.model.Humidity;
 import com.example.greehousecontroller.data.model.Threshold;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -22,16 +28,48 @@ import retrofit2.internal.EverythingIsNonNull;
 public class HumidityRepository {
     private static HumidityRepository instance;
     private final Application app;
+    private final HumidityDAO humidityDAO;
+    private final ThresholdDAO thresholdDAO;
     private MutableLiveData<Humidity> latest;
     private MutableLiveData<Threshold> threshold;
-    private MutableLiveData<ArrayList<Humidity>> history;
+    private MutableLiveData<List<Humidity>> history;
 
+    private final ExecutorService executorService;
 
     private HumidityRepository(Application app){
         this.app = app;
-        latest = new MutableLiveData<>(new Humidity());
-        threshold = new MutableLiveData<>(new Threshold());
-        history = new MutableLiveData<>(new ArrayList<>());
+        AppDatabase database = AppDatabase.getInstance(app);
+        executorService = Executors.newFixedThreadPool(4);
+        humidityDAO = database.humidityDAO();
+        thresholdDAO = database.thresholdDAO();
+
+        executorService.execute(()->{
+            if(humidityDAO.getAll() == null || humidityDAO.getAll().isEmpty()){
+                latest = new MutableLiveData<>();
+            }
+            else{
+                latest = new MutableLiveData<>(humidityDAO.getAll().get(humidityDAO.getAll().size() -1));
+            }
+        });
+
+        executorService.execute(()->{
+            if(thresholdDAO.getThreshold("Humidity") == null){
+                threshold = new MutableLiveData<>(new Threshold("Humidity", 0,0));
+            }
+            else{
+                threshold = new MutableLiveData<>(thresholdDAO.getThreshold("Humidity"));
+            }
+        });
+
+        executorService.execute(()->{
+            if(humidityDAO.getAll() == null){
+                history = new MutableLiveData<>();
+            }
+            else{
+                Log.i("History Humidity: ",humidityDAO.getAll().toString());
+                history = new MutableLiveData<>((ArrayList<Humidity>) humidityDAO.getAll());
+            }
+        });
     }
 
     public static HumidityRepository getInstance(Application app){
@@ -50,24 +88,35 @@ public class HumidityRepository {
         return threshold;
     }
 
-    public MutableLiveData<ArrayList<Humidity>> getHistoricalData(){
+    public MutableLiveData<List<Humidity>> getHistoricalData(){
         return history;
     }
     public void updateHistoricalData(String greenhouseId) {
         HumidityApi humidityApi = ServiceGenerator.getHumidityAPI();
-        Call<ArrayList<Humidity>> call = humidityApi.getHistoricalHumidity(greenhouseId);
-        call.enqueue(new Callback<ArrayList<Humidity>>() {
+        Call<List<Humidity>> call = humidityApi.getHistoricalHumidity(greenhouseId);
+        call.enqueue(new Callback<List<Humidity>>() {
             @EverythingIsNonNull
             @Override
-            public void onResponse(Call<ArrayList<Humidity>> call, Response<ArrayList<Humidity>> response) {
+            public void onResponse(Call<List<Humidity>> call, Response<List<Humidity>> response) {
                 if (response.isSuccessful()){
                     Log.i("Api-hum-hist", response.body().toString());
                     history.setValue(response.body());
+                    executorService.execute(()->{
+                        ArrayList<Humidity> result = (ArrayList<Humidity>) response.body();
+                            if(result.size() < 2000){
+                                humidityDAO.delete();
+                                humidityDAO.insert(response.body());
+                            }
+                            else{
+                                humidityDAO.delete();
+                                humidityDAO.insert(response.body().subList(0, 1999));
+                            }
+                    });
                 }
             }
             @EverythingIsNonNull
             @Override
-            public void onFailure(Call<ArrayList<Humidity>> call, Throwable t) {
+            public void onFailure(Call<List<Humidity>> call, Throwable t) {
                 Log.e("Api-hum-hist",t.getMessage());
             }
         });
@@ -81,14 +130,25 @@ public class HumidityRepository {
             @Override
             public void onResponse(Call<List<Humidity>> call, Response<List<Humidity>> response) {
                 if (response.isSuccessful()){
-                    Log.i("Api-hum-ulm", response.body().toString());
-                    latest.setValue(response.body().get(0));
+                    if(response.body() != null){
+                        Log.i("Api-hum-ulm", response.body().toString());
+                        Humidity result = response.body().get(0);
+                        latest.setValue(result);
+                        executorService.execute(()->{
+                          humidityDAO.insert(response.body());
+                        });
+                    }
+                }
+
+                if(!response.isSuccessful()){
+                        Toast.makeText(app.getApplicationContext(), R.string.unable_to_retrieve_measurements, Toast.LENGTH_SHORT);
                 }
             }
             @EverythingIsNonNull
             @Override
             public void onFailure(Call<List<Humidity>> call, Throwable t) {
                 Log.e("Api-hum-ulm",t.getMessage());
+                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT);
             }
         });
     }
@@ -101,17 +161,30 @@ public class HumidityRepository {
             @Override
             public void onResponse(Call<Threshold> call, Response<Threshold> response) {
                 if (response.isSuccessful()){
-                    Log.i("Api-hum-ut", response.body().toString());
-                    threshold.setValue(response.body());
+                    if(response.body() != null){
+                        Log.i("Api-hum-ut", response.body().toString());
+                        threshold.setValue(response.body());
+                        executorService.execute(()-> {
+                            if(thresholdDAO.getThreshold("Humidity") == null){
+                                Threshold threshold = new Threshold("Humidity",response.body().getUpperThreshold(), response.body().getLowerThreshold());
+                                thresholdDAO.insert(threshold);
+                            }
+                            else{
+                                thresholdDAO.update("Humidity", response.body().getUpperThreshold(), response.body().getLowerThreshold());
+                            }
+                        });
+                    }
                 }
-                else{
-                    Log.i("Api-hum-ut", response.toString());
+
+                if(!response.isSuccessful()){
+                    Toast.makeText(app.getApplicationContext(), R.string.unable_to_retrieve_threshold, Toast.LENGTH_SHORT);
                 }
             }
             @EverythingIsNonNull
             @Override
             public void onFailure(Call<Threshold> call, Throwable t) {
                 Log.e("Api-hum-ut",t.getMessage());
+                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT);
             }
         });
     }
@@ -124,14 +197,30 @@ public class HumidityRepository {
             @Override
             public void onResponse(Call<Threshold> call, Response<Threshold> response) {
                 if (response.isSuccessful()){
-                    Log.i("Api-hum-st", response.body().toString());
-                    threshold.setValue(response.body());
+                    if(response.body() != null){
+                        Log.i("Api-hum-st", response.body().toString());
+                        threshold.setValue(response.body());
+                        executorService.execute(()-> {
+                            if(thresholdDAO.getThreshold("Humidity") == null){
+                                Threshold threshold = new Threshold("Humidity",response.body().getUpperThreshold(), response.body().getLowerThreshold());
+                                thresholdDAO.insert(threshold);
+                            }
+                            else{
+                                thresholdDAO.update("Humidity", response.body().getUpperThreshold(), response.body().getLowerThreshold());
+                            }
+                        });
+                    }
+                }
+
+                if(!response.isSuccessful()){
+                    Toast.makeText(app.getApplicationContext(), R.string.unable_to_update_threshold, Toast.LENGTH_SHORT);
                 }
             }
             @EverythingIsNonNull
             @Override
             public void onFailure(Call<Threshold> call, Throwable t) {
                 Log.e("Api-hum-st",t.getMessage());
+                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT);
             }
         });
     }
