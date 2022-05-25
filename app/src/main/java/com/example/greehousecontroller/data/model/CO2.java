@@ -1,10 +1,15 @@
 package com.example.greehousecontroller.data.model;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import com.example.greehousecontroller.utils.CO2JsonAdapter;
+import com.google.gson.annotations.JsonAdapter;
+
 @Entity
+@JsonAdapter(CO2JsonAdapter.class)
 public class CO2 {
     @PrimaryKey(autoGenerate = true)
     private int id;
