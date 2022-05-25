@@ -10,16 +10,16 @@ public class Humidity {
     private int id;
     private double humidity;
     private long time;
-    private String greenhouseId;
+
 
     @Ignore
     public Humidity() {
     }
 
-    public Humidity(double humidity, long time, String greenhouseId) {
+    public Humidity(double humidity, long time) {
         this.humidity = humidity;
         this.time = time;
-        this.greenhouseId = greenhouseId;
+
     }
 
     public int getId() {
@@ -46,20 +46,12 @@ public class Humidity {
         this.time = time;
     }
 
-    public String getGreenhouseId() {
-        return greenhouseId;
-    }
-
-    public void setGreenhouseId(String greenhouseId) {
-        this.greenhouseId = greenhouseId;
-    }
-
     @Override
     public String toString() {
         return "Humidity{" +
-                "humidity=" + humidity +
+                "id=" + id +
+                ", humidity=" + humidity +
                 ", time=" + time +
-                ", greenhouseId='" + greenhouseId + '\'' +
                 '}';
     }
 }

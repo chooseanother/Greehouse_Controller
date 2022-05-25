@@ -10,16 +10,15 @@ public class CO2 {
     private int id;
     private double co2Measurement;
     private long time;
-    private String greenhouseId;
+
 
     @Ignore
     public CO2() {
     }
 
-    public CO2(double co2Measurement, long time, String greenhouseId) {
+    public CO2(double co2Measurement, long time) {
         this.co2Measurement = co2Measurement;
         this.time = time;
-        this.greenhouseId = greenhouseId;
     }
 
     public int getId() {
@@ -46,20 +45,12 @@ public class CO2 {
         this.time = time;
     }
 
-    public String getGreenhouseId() {
-        return greenhouseId;
-    }
-
-    public void setGreenhouseId(String greenhouseId) {
-        this.greenhouseId = greenhouseId;
-    }
-
     @Override
     public String toString() {
         return "CO2{" +
-                "CO2=" + co2Measurement +
+                "id=" + id +
+                ", co2Measurement=" + co2Measurement +
                 ", time=" + time +
-                ", greenhouseId='" + greenhouseId + '\'' +
                 '}';
     }
 }
