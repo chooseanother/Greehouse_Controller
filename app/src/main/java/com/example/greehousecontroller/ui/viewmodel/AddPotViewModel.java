@@ -24,8 +24,8 @@ public class AddPotViewModel extends AndroidViewModel {
 
     public String validInput(String greenhouseId, String name, double minimumHumidity){
             if(checkForNameInput(name) && checkForThresholdInput(minimumHumidity)){
-                String response = addPot(greenhouseId, name, minimumHumidity);
-                return response;
+                addPot(greenhouseId, name, minimumHumidity);
+                return "";
             }
             else
             {
@@ -33,8 +33,8 @@ public class AddPotViewModel extends AndroidViewModel {
             }
     }
 
-    public String addPot(String greenhouseId, String name, double minimumHumidity){
-        return potRepository.addPot(greenhouseId, name, minimumHumidity);
+    public void addPot(String greenhouseId, String name, double minimumHumidity){
+        potRepository.addPot(greenhouseId, name, minimumHumidity);
     }
 
     private boolean checkForThresholdInput(double minimumThreshold){

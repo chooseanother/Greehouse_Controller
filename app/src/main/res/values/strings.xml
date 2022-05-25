@@ -63,6 +63,19 @@
     <string name="greenhouse_id">Greenhouse ID</string>
     <string name="save">Save</string>
 
+    <string name="add_pot_minimal_humidity">Minimum moisture threshold</string>
+
+    <!--Error messages-->
+    <string name="connection_error">Connection error</string>
+    <string name="unable_to_retrieve_measurements">Unable to retrieve latest measurements</string>
+    <string name="unable_to_retrieve_threshold">Unable to retrieve latest threshold</string>
+    <string name="unable_to_access_server">Unable to access server</string>
+    <string name="unable_to_retrieve_pot_details">Unable to retrieve pot details</string>
+    <string name="unable_to_update_threshold">Unable to update threshold</string>
+    <string name="unable_to_add_pot">Unable to add pot</string>
+    <string name="unable_to_update_pot">Unable to update pot</string>
+
+
     <!--Graphs bottom navigation-->
     <string name="graphs_bottom_navigation_temperature">Temperature</string>
     <string name="graphs_bottom_navigation_humidity">Humidity</string>

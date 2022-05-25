@@ -17,17 +17,14 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.greehousecontroller.MainActivity;
 import com.example.greehousecontroller.R;
-import com.example.greehousecontroller.data.model.Temperature;
-import com.example.greehousecontroller.data.model.User;
 import com.example.greehousecontroller.databinding.FragmentHomeBinding;
-import com.example.greehousecontroller.data.model.Pot;
 import com.example.greehousecontroller.ui.adapter.PotAdapter;
 import com.example.greehousecontroller.ui.viewmodel.HomeViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 public class HomeFragment extends Fragment {
 
@@ -39,7 +36,6 @@ public class HomeFragment extends Fragment {
     private TextView co2TextView;
     private TextView humidityTextView;
     private TextView welcomingTextView;
-    private TextView dayDescriptionTextView;
     private SwipeRefreshLayout swipeRefreshLayout;
     private View root;
     private FloatingActionButton floatingActionButton;
@@ -48,27 +44,25 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
+        homeViewModel =
+                new ViewModelProvider(this).get(HomeViewModel.class);
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         root = binding.getRoot();
-
+        settingOfTextViews();
+        getGreenhouseID();
+        observeData();
         return root;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
-        getGreenhouseID();
         fabHandle();
         recyclerViewHandle();
-        settingOfTextViews();
-        observeData();
         initSwipeRefreshLayout();
         recyclerView.setAdapter(adapter);
-
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -87,19 +81,9 @@ public class HomeFragment extends Fragment {
         super.onDestroyView();
     }
 
-    public void callParentMethod(){
-        getActivity().onBackPressed();
-    }
-
     private void initSwipeRefreshLayout(){
-        swipeRefreshLayout = root.findViewById(R.id.homeRefreshLayout);
-        swipeRefreshLayout.setOnRefreshListener(() -> {
-         updateLatestMeasurements();
-
-            // TODO: figure out where to place this so it stops when it gets data from API
-            //  maybe with callback, or inside observe data
-            // swipeRefreshLayout.setRefreshing(false);
-        });
+        swipeRefreshLayout = binding.homeRefreshLayout;
+        swipeRefreshLayout.setOnRefreshListener(this::updateLatestMeasurements);
     }
 
     private void getGreenhouseID(){
@@ -121,7 +105,8 @@ public class HomeFragment extends Fragment {
             swipeRefreshLayout.setRefreshing(false);
 
             // TODO: Remove this when testing is done
-            String show = "Date: "+temperature.getTime()+" T: "+temperature.getTemperature()+" °C";
+            Date date = new Date(temperature.getTime()*1000);
+            String show = "Date: "+date+" T: "+temperature.getTemperature()+" °C";
             Toast.makeText(getContext(), show, Toast.LENGTH_SHORT).show();
 
         });
@@ -131,27 +116,22 @@ public class HomeFragment extends Fragment {
             humidityTextView.setText(readings);
         });
 
+        homeViewModel.getLatestCO2().observe(getViewLifecycleOwner(), co2 -> {
+            String readings = (int)co2.getCo2Measurement() + " ppm";
+            co2TextView.setText(readings);
+        });
+
     }
 
     public void settingOfTextViews(){
-        //GreenHouse section
-        humidityTextView = root.findViewById(R.id.humidityMeasurementTextView);
-        temperatureTextView = root.findViewById(R.id.temperatureMeasurementTextView);
-        co2TextView = root.findViewById(R.id.co2measurementTextView);
+        // Measurements
+        temperatureTextView = binding.temperatureMeasurementTextView;
+        co2TextView = binding.co2measurementTextView;
+        humidityTextView = binding.humidityMeasurementTextView;
 
-        Temperature temperature = homeViewModel.getLatestTemperature().getValue();
-        if(temperature != null){
-           // co2TextView.setText(greenHouse.getCo2() + " grams");
-            co2TextView.setText("unknown");
-            temperatureTextView.setText(temperature.getTemperature() + " °C");
-        }
-        else{
-            temperatureTextView.setText("0.0" + " °C");
-            co2TextView.setText("Unknown" + " grams");
-        }
         //Header
-        welcomingTextView = root.findViewById(R.id.welcomingTextView);
-        //dayDescriptionTextView = root.findViewById(R.id.dayDescriptionTextView);
+        welcomingTextView = binding.welcomingTextView;
+
         FirebaseUser user = homeViewModel.getUser();
         if(user != null){
             String welcomeMessage = "Hello, " + homeViewModel.getUser().getDisplayName() + "!";
@@ -160,29 +140,24 @@ public class HomeFragment extends Fragment {
         else{
             welcomingTextView.setText("Hello!");
         }
-        //For now
-        //dayDescriptionTextView.setText("It's a sunny day!");
     }
 
     private void updateLatestMeasurements(){
         // TODO: Figure out how to handle greenhouseId
         if(greenhouseid != null) {
-            String response = homeViewModel.updateLatestMeasurements(greenhouseid);
-            if (response.equals("Failed to retrieve pots")) {
-                Toast.makeText(getContext(), response, Toast.LENGTH_SHORT);
-            }
+            homeViewModel.updateLatestMeasurements(greenhouseid);
         }
     }
 
     private void fabHandle(){
-        floatingActionButton = root.findViewById(R.id.fab);
+        floatingActionButton = binding.fab;
         floatingActionButton.setOnClickListener(clicked->{
             ((MainActivity)getActivity()).navController.navigate(R.id.nav_add_pot);
         });
     }
 
     private void recyclerViewHandle(){
-        recyclerView = root.findViewById(R.id.listOfPotsRecycleView);
+        recyclerView = binding.listOfPotsRecycleView;
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new PotAdapter(new ArrayList<>());

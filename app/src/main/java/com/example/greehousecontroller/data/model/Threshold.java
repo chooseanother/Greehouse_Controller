@@ -1,16 +1,40 @@
 package com.example.greehousecontroller.data.model;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Threshold {
+    @PrimaryKey
+    @NonNull
+    private String type;
     private double upperThreshold;
     private double lowerThreshold;
 
+    @Ignore
     public Threshold(){
-
     }
 
+    @Ignore
     public Threshold(double upperThreshold, double lowerThreshold){
         this.upperThreshold = upperThreshold;
         this.lowerThreshold = lowerThreshold;
+    }
+
+    public Threshold(String type, double upperThreshold, double lowerThreshold){
+        this.type = type;
+        this.upperThreshold = upperThreshold;
+        this.lowerThreshold = lowerThreshold;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public double getUpperThreshold() {

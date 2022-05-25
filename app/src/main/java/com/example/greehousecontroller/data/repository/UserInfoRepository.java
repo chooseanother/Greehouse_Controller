@@ -2,7 +2,7 @@ package com.example.greehousecontroller.data.repository;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.greehousecontroller.Config;
+import com.example.greehousecontroller.utils.Config;
 import com.example.greehousecontroller.data.model.UserInfo;
 import com.example.greehousecontroller.data.model.UserInfoLiveData;
 import com.google.firebase.database.DatabaseReference;
@@ -23,7 +23,7 @@ public class UserInfoRepository {
     }
 
     public void init(String userId){
-        dbRef = FirebaseDatabase.getInstance(Config.firebase_db).getReference().child("users").child(userId);
+        dbRef = FirebaseDatabase.getInstance(Config.FIREBASE_DB_URL).getReference().child("users").child(userId);
         userInfo = new UserInfoLiveData(dbRef);
     }
 

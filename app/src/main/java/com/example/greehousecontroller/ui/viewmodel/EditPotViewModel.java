@@ -27,8 +27,8 @@ public class EditPotViewModel extends AndroidViewModel {
         userRepository = UserRepository.getInstance(application);
     }
 
-    public String init(String greenhouseId, int id) {
-        return potRepository.init(greenhouseId, id);
+    public void init(String greenhouseId, int id) {
+        potRepository.init(greenhouseId, id);
     }
 
     public MutableLiveData<Pot> getCurrentPot() {
@@ -37,8 +37,8 @@ public class EditPotViewModel extends AndroidViewModel {
 
     public String updateCurrentPot(String greenhouseId, int id, String name, double minimumThreshold) {
         if(checkForThresholdInput(minimumThreshold) && checkForNameInput(name)){
-            String response = potRepository.updateCurrentPot(greenhouseId, id, name, minimumThreshold);
-            return response;
+            potRepository.updateCurrentPot(greenhouseId, id, name, minimumThreshold);
+            return "";
         }
         else
         {

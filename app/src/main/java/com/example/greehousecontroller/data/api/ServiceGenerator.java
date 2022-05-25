@@ -2,6 +2,8 @@ package com.example.greehousecontroller.data.api;
 
 
 
+import com.example.greehousecontroller.utils.Config;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -14,7 +16,7 @@ public class ServiceGenerator {
     public static TemperatureApi getTemperatureAPI() {
         if (temperatureApi == null) {
             temperatureApi = new Retrofit.Builder()
-                    .baseUrl("http://sepdemo2-env.eba-n9rqip8w.eu-central-1.elasticbeanstalk.com")
+                    .baseUrl(Config.API_BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
                     .create(TemperatureApi.class);
@@ -25,7 +27,7 @@ public class ServiceGenerator {
     public static HumidityApi getHumidityAPI() {
         if (humidityApi == null) {
             humidityApi = new Retrofit.Builder()
-                    .baseUrl("http://sepdemo2-env.eba-n9rqip8w.eu-central-1.elasticbeanstalk.com")
+                    .baseUrl(Config.API_BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
                     .create(HumidityApi.class);
@@ -36,7 +38,7 @@ public class ServiceGenerator {
     public static PotAPI getPotAPI() {
         if (potAPI == null) {
             potAPI = new Retrofit.Builder()
-                    .baseUrl("http://sepdemo2-env.eba-n9rqip8w.eu-central-1.elasticbeanstalk.com")
+                    .baseUrl(Config.API_BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
                     .create(PotAPI.class);
@@ -46,7 +48,7 @@ public class ServiceGenerator {
     public static CO2Api getCO2Api(){
         if (co2Api == null){
             co2Api = new Retrofit.Builder()
-                    .baseUrl("http://sepdemo2-env.eba-n9rqip8w.eu-central-1.elasticbeanstalk.com")
+                    .baseUrl(Config.API_BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
                     .create(CO2Api.class);

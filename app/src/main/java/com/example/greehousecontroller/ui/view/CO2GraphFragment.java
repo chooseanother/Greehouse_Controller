@@ -22,7 +22,6 @@ import com.anychart.enums.StockSeriesType;
 import com.example.greehousecontroller.data.model.CO2;
 import com.example.greehousecontroller.databinding.Co2GraphBinding;
 import com.example.greehousecontroller.ui.viewmodel.CO2GraphViewModel;
-import com.example.greehousecontroller.ui.viewmodel.GraphsViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,15 +62,15 @@ public class CO2GraphFragment extends Fragment {
         Table table = Table.instantiate("x");
 
         List<DataEntry> data = new ArrayList<>();
-        co2GraphViewModel.getCo2HistoryData().observe(getViewLifecycleOwner(), new Observer<ArrayList<CO2>>() {
+        co2GraphViewModel.getCo2HistoryData().observe(getViewLifecycleOwner(), new Observer<List<CO2>>() {
             @Override
-            public void onChanged(@Nullable ArrayList<CO2> co2s) {
+            public void onChanged(@Nullable List<CO2> co2s) {
                 if (co2s.size() > 0) {
                     for (int i = 0; i < 1; i++) {
-                        data.add(new GraphsFragment.OHCLDataEntry((long) Objects.requireNonNull(co2GraphViewModel.getLatestCO2().getValue()).getTime(), 0.1, 0.1, 0.1, Objects.requireNonNull(co2GraphViewModel.getLatestCO2().getValue()).getCO2()));
+                        data.add(new GraphsFragment.OHCLDataEntry((long) Objects.requireNonNull(co2GraphViewModel.getLatestCO2().getValue()).getTime(), 0.1, 0.1, 0.1, Objects.requireNonNull(co2GraphViewModel.getLatestCO2().getValue()).getCo2Measurement()));
                     }
                     for (CO2 co2 : co2s) {
-                        data.add(new GraphsFragment.OHCLDataEntry(co2.getTime(), co2.getCO2(), co2.getCO2(), co2.getCO2(), co2.getCO2()));
+                        data.add(new GraphsFragment.OHCLDataEntry(co2.getTime(), co2.getCo2Measurement(), co2.getCo2Measurement(), co2.getCo2Measurement(), co2.getCo2Measurement()));
                     }
 
                     table.addData(data);

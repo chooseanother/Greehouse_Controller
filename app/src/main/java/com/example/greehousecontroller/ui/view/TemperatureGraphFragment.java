@@ -48,15 +48,15 @@ public class TemperatureGraphFragment extends Fragment {
     {
         Table table = Table.instantiate("x");
         List<DataEntry> data = new ArrayList<>();
-        temperatureGraphViewModel.getTemperatureHistoryData().observe(getViewLifecycleOwner(), new Observer<ArrayList<Temperature>>() {
+        temperatureGraphViewModel.getTemperatureHistoryData().observe(getViewLifecycleOwner(), new Observer<List<Temperature>>() {
             @Override
-            public void onChanged(@Nullable ArrayList<Temperature> temperatures) {
+            public void onChanged(List<Temperature> temperatures) {
                 if (temperatures.size() > 0) {
                     for (int i = 0; i < 1; i++) {
-                        data.add(new GraphsFragment.OHCLDataEntry((long) Objects.requireNonNull(temperatureGraphViewModel.getLatestTemperature().getValue()).getTime().getTime(), 0.1, 0.1, 0.1, Objects.requireNonNull(temperatureGraphViewModel.getLatestTemperature().getValue()).getTemperature()));
+                        data.add(new GraphsFragment.OHCLDataEntry((long) Objects.requireNonNull(temperatureGraphViewModel.getLatestTemperature().getValue()).getTime(), 0.1, 0.1, 0.1, Objects.requireNonNull(temperatureGraphViewModel.getLatestTemperature().getValue()).getTemperature()));
                     }
                     for (Temperature temperature : temperatures) {
-                        data.add(new GraphsFragment.OHCLDataEntry(temperature.getTime().getTime(), temperature.getTemperature(), temperature.getTemperature(), temperature.getTemperature(), temperature.getTemperature()));
+                        data.add(new GraphsFragment.OHCLDataEntry(temperature.getTime(), temperature.getTemperature(), temperature.getTemperature(), temperature.getTemperature(), temperature.getTemperature()));
                     }
                     table.addData(data);
                 }
@@ -64,6 +64,7 @@ public class TemperatureGraphFragment extends Fragment {
         });
         return table;
     }
+
 
     public void initTemperatureChart()
     {
