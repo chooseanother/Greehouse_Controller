@@ -5,29 +5,39 @@
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="nav_header_height">176dp</dimen>
 
-    <dimen name="fab_margin">16dp</dimen>
-    <dimen name="margin_from_screen_edges">32dp</dimen>
 
+    <!--MARGIN-->
     <dimen name="mini_margin">6dp</dimen>
     <dimen name="small_margin">16dp</dimen>
     <dimen name="medium_margin">32dp</dimen>
     <dimen name="margin_from_screen_edge_to_recycler_view">263dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="margin_from_screen_edges">32dp</dimen>
 
-    <dimen name="graphs_bottom_nav_padding">8dp</dimen>
-
+    <!--TEXT SIZE-->
     <dimen name="small_text_size">12sp</dimen>
     <dimen name="medium_small_text_size">16sp</dimen>
     <dimen name="medium_text_size">20sp</dimen>
-    <dimen name="edit_text_height">42dp</dimen>
-    <dimen name="text_size_heading_one">46sp</dimen>
-    <dimen name="text_size_heading_two">38sp</dimen>
-    <dimen name="text_size_heading_three">30sp</dimen>
+    <dimen name="heading_text_size">26sp</dimen>
 
+    <!--EDIT TEXT-->
+    <dimen name="edit_text_height">42dp</dimen>
     <dimen name="edit_text_width_three_digits">24dp</dimen>
 
+
+    <!--fragment specific-->
+
+    <!--HOME-->
     <dimen name="home_circle_image_size">55dp</dimen>
     <dimen name="home_edit_image_size">30dp</dimen>
 
+    <!--NAVIGATION-->
     <dimen name="nav_header_image_corner_radius">20dp</dimen>
     <dimen name="nav_header_main_image_top_margin">24dp</dimen>
+
+    <!--GRAPHS-->
+    <dimen name="graphs_bottom_nav_padding">8dp</dimen>
+
+    <!--ADD POT-->
+    <dimen name="add_pot_spinner_width">120dp</dimen>
 </resources>

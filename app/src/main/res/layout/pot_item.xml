@@ -6,19 +6,18 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/mini_margin"
     android:layout_marginBottom="@dimen/mini_margin"
-    android:background="@drawable/round_layout_bg">
+    android:background="@drawable/round_layout_bg"
+    android:padding="@dimen/small_margin">
 
     <ImageView
         android:id="@+id/imageView6"
         android:layout_width="@dimen/home_circle_image_size"
         android:layout_height="@dimen/home_circle_image_size"
-        android:layout_marginStart="@dimen/small_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/potNameTextView"
         app:srcCompat="@drawable/ic_home_moisture"
         tools:src="@drawable/ic_home_moisture"
-        android:layout_marginBottom="@dimen/small_margin"
         android:layout_marginTop="@dimen/small_margin"/>
 
     <TextView
@@ -68,11 +67,8 @@
         android:id="@+id/potNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/small_margin"
-        android:layout_marginStart="@dimen/small_margin"
         android:text="@string/home_pot"
-        android:textStyle="bold"
-        android:textSize="@dimen/medium_text_size"
+        android:textSize="@dimen/heading_text_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -82,8 +78,6 @@
         android:layout_height="@dimen/home_edit_image_size"
         android:src="@drawable/ic_home_edit_pot"
         android:onClick="handleEditHumidity"
-        android:layout_marginTop="@dimen/mini_margin"
-        android:layout_marginEnd="@dimen/mini_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

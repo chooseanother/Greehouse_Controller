@@ -57,12 +57,18 @@
     <string name="add_pot_minimal_moisture">Minimal moisture:</string>
     <string name="add_pot_name">Name:</string>
     <string name="add_pot_missing_name_exception">The name is missing</string>
+    <string name="add_pot_sensor">Sensor: </string>
 
     <!--Edit pot-->
     <string name="edit_pot_fragment_title">Edit pot</string>
+
+    <!--Add and edit pot-->
+    <string name="pot_minimal_moisture">Minimal moisture:</string>
+    <string name="pot_name">Name: </string>
+
+    <!--Enter greenhouse id-->
     <string name="enter_your_greenhouse_id">Enter your greenhouse ID</string>
     <string name="greenhouse_id">Greenhouse ID</string>
-    <string name="save">Save</string>
 
     <string name="add_pot_minimal_humidity">Minimum moisture threshold</string>
 
