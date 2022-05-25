@@ -14,6 +14,7 @@ import com.example.greehousecontroller.data.dao.ThresholdDAO;
 import com.example.greehousecontroller.data.database.AppDatabase;
 import com.example.greehousecontroller.data.model.Temperature;
 import com.example.greehousecontroller.data.model.Threshold;
+import com.example.greehousecontroller.utils.ToastMaker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,7 @@ public class TemperatureRepository {
     private MutableLiveData<Temperature> latest;
     private MutableLiveData<List<Temperature>> historical;
     private MutableLiveData<Threshold> threshold;
+    private ToastMaker toastMaker;
 
     private final ExecutorService executorService;
 
@@ -42,6 +44,7 @@ public class TemperatureRepository {
         executorService = Executors.newFixedThreadPool(4);
         temperatureDAO = appDatabase.temperatureDAO();
         thresholdDAO = appDatabase.thresholdDAO();
+        toastMaker = ToastMaker.getInstance();
 
         executorService.execute(()->{
             if(temperatureDAO.getAll() == null || temperatureDAO.getAll().isEmpty()){
@@ -111,14 +114,14 @@ public class TemperatureRepository {
                 }
 
                 if(!response.isSuccessful()){
-                    Toast.makeText(app.getApplicationContext(), R.string.unable_to_retrieve_measurements, Toast.LENGTH_SHORT).show();
+                    toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_retrieve_measurements));
                 }
             }
             @EverythingIsNonNull
             @Override
             public void onFailure(Call<List<Temperature>> call, Throwable t) {
                 Log.e("Api-temp-ulm",t.getMessage());
-                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT).show();
+                toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
             }
         });
     }
@@ -145,14 +148,14 @@ public class TemperatureRepository {
                 }
 
                 if(!response.isSuccessful()){
-                    Toast.makeText(app.getApplicationContext(), R.string.unable_to_retrieve_measurements, Toast.LENGTH_SHORT).show();
+                    toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_retrieve_measurements));
                 }
             }
             @EverythingIsNonNull
             @Override
             public void onFailure(Call<List<Temperature>> call, Throwable t) {
                 Log.e("Api-temp-ulm",t.getMessage());
-                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT).show();
+                toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
             }
         });
     }
@@ -178,14 +181,14 @@ public class TemperatureRepository {
                     });                }
 
                 if(!response.isSuccessful()){
-                    Toast.makeText(app.getApplicationContext(), R.string.unable_to_retrieve_threshold, Toast.LENGTH_SHORT).show();
+                    toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_retrieve_threshold));
                 }
             }
             @EverythingIsNonNull
             @Override
             public void onFailure(Call<Threshold> call, Throwable t) {
                 Log.e("Api-temp-ut",t.getMessage());
-                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT).show();
+                toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
             }
         });
     }
@@ -212,14 +215,14 @@ public class TemperatureRepository {
                 }
 
                 if(!response.isSuccessful()){
-                    Toast.makeText(app.getApplicationContext(), R.string.unable_to_update_threshold, Toast.LENGTH_SHORT).show();
+                    toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_update_threshold));
                 }
             }
             @EverythingIsNonNull
             @Override
             public void onFailure(Call<Threshold> call, Throwable t) {
                 Log.e("Api-temp-st",t.getMessage());
-                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT).show();
+                toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
             }
         });
     }
