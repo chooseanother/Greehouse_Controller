@@ -14,6 +14,7 @@ import com.example.greehousecontroller.data.dao.ThresholdDAO;
 import com.example.greehousecontroller.data.database.AppDatabase;
 import com.example.greehousecontroller.data.model.Humidity;
 import com.example.greehousecontroller.data.model.Threshold;
+import com.example.greehousecontroller.utils.ToastMaker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,7 @@ public class HumidityRepository {
     private MutableLiveData<Humidity> latest;
     private MutableLiveData<Threshold> threshold;
     private MutableLiveData<List<Humidity>> history;
-
+    private ToastMaker toastMaker;
     private final ExecutorService executorService;
 
     private HumidityRepository(Application app){
@@ -42,6 +43,7 @@ public class HumidityRepository {
         executorService = Executors.newFixedThreadPool(4);
         humidityDAO = database.humidityDAO();
         thresholdDAO = database.thresholdDAO();
+        toastMaker = ToastMaker.getInstance();
 
         executorService.execute(()->{
             if(humidityDAO.getAll() == null || humidityDAO.getAll().isEmpty()){
@@ -91,6 +93,7 @@ public class HumidityRepository {
     public MutableLiveData<List<Humidity>> getHistoricalData(){
         return history;
     }
+
     public void updateHistoricalData(String greenhouseId) {
         HumidityApi humidityApi = ServiceGenerator.getHumidityAPI();
         Call<List<Humidity>> call = humidityApi.getHistoricalHumidity(greenhouseId);
@@ -113,11 +116,16 @@ public class HumidityRepository {
                             }
                     });
                 }
+                if(!response.isSuccessful()){
+                    toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_retrieve_measurements));
+                }
+
             }
             @EverythingIsNonNull
             @Override
             public void onFailure(Call<List<Humidity>> call, Throwable t) {
                 Log.e("Api-hum-hist",t.getMessage());
+                toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
             }
         });
     }
@@ -141,14 +149,14 @@ public class HumidityRepository {
                 }
 
                 if(!response.isSuccessful()){
-                        Toast.makeText(app.getApplicationContext(), R.string.unable_to_retrieve_measurements, Toast.LENGTH_SHORT);
+                    toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_retrieve_measurements));
                 }
             }
             @EverythingIsNonNull
             @Override
             public void onFailure(Call<List<Humidity>> call, Throwable t) {
                 Log.e("Api-hum-ulm",t.getMessage());
-                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT);
+                toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
             }
         });
     }
@@ -177,14 +185,14 @@ public class HumidityRepository {
                 }
 
                 if(!response.isSuccessful()){
-                    Toast.makeText(app.getApplicationContext(), R.string.unable_to_retrieve_threshold, Toast.LENGTH_SHORT);
+                    toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_retrieve_threshold));
                 }
             }
             @EverythingIsNonNull
             @Override
             public void onFailure(Call<Threshold> call, Throwable t) {
                 Log.e("Api-hum-ut",t.getMessage());
-                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT);
+                toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
             }
         });
     }
@@ -213,14 +221,14 @@ public class HumidityRepository {
                 }
 
                 if(!response.isSuccessful()){
-                    Toast.makeText(app.getApplicationContext(), R.string.unable_to_update_threshold, Toast.LENGTH_SHORT);
+                    toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_update_threshold));
                 }
             }
             @EverythingIsNonNull
             @Override
             public void onFailure(Call<Threshold> call, Throwable t) {
                 Log.e("Api-hum-st",t.getMessage());
-                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT);
+                toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
             }
         });
     }
