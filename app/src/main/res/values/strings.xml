@@ -57,6 +57,7 @@
     <string name="add_pot_minimal_moisture">Minimal moisture:</string>
     <string name="add_pot_name">Name:</string>
     <string name="add_pot_missing_name_exception">The name is missing</string>
+    <string name="add_pot_missing_sensor_exception">Choose a sensor</string>
 
     <!--Edit pot-->
     <string name="edit_pot_fragment_title">Edit pot</string>

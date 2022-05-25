@@ -151,9 +151,11 @@ public class HomeFragment extends Fragment {
 
     private void fabHandle(){
         floatingActionButton = binding.fab;
-        floatingActionButton.setOnClickListener(clicked->{
-            ((MainActivity)getActivity()).navController.navigate(R.id.nav_add_pot);
-        });
+        if(homeViewModel.getLatestPots().getValue().size() < 6){
+            floatingActionButton.setOnClickListener(clicked->{
+                ((MainActivity)getActivity()).navController.navigate(R.id.nav_add_pot);
+            });
+        }
     }
 
     private void recyclerViewHandle(){

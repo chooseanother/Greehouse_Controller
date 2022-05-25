@@ -7,10 +7,14 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.greehousecontroller.R;
+import com.example.greehousecontroller.data.model.Pot;
 import com.example.greehousecontroller.data.model.UserInfo;
 import com.example.greehousecontroller.data.repository.PotRepository;
 import com.example.greehousecontroller.data.repository.UserInfoRepository;
 import com.example.greehousecontroller.data.repository.UserRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddPotViewModel extends AndroidViewModel {
 
@@ -27,7 +31,7 @@ public class AddPotViewModel extends AndroidViewModel {
         userRepository = UserRepository.getInstance(application);
     }
 
-    public boolean validInput(String greenhouseId, String name, String minimumHumidity) {
+    public boolean validInput(String greenhouseId, String sensorId, String name, String minimumHumidity) {
         if (!checkForNameInput(name)) {
             Toast.makeText(application, R.string.add_pot_missing_name_exception, Toast.LENGTH_SHORT).show();
             return false;
@@ -39,14 +43,28 @@ public class AddPotViewModel extends AndroidViewModel {
         if (!checkForThresholdNumberSize(minimumHumidity)) {
             Toast.makeText(application, R.string.settings_out_of_bounds_humidity_exception, Toast.LENGTH_SHORT).show();
             return false;
-        } else {
-            addPot(greenhouseId, name, Double.parseDouble(minimumHumidity));
+        }
+        if(!checkForSensorSelection(sensorId)){
+            Toast.makeText(application, R.string.add_pot_missing_sensor_exception, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else {
+            addPot(greenhouseId, Integer.parseInt(sensorId), name, Double.parseDouble(minimumHumidity));
             return true;
         }
     }
 
-    public void addPot(String greenhouseId, String name, double minimumHumidity) {
-        potRepository.addPot(greenhouseId, name, minimumHumidity);
+    private boolean checkForSensorSelection(String sensorId) {
+        if(sensorId == null){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    public void addPot(String greenhouseId, int sensorId, String name, double minimumHumidity) {
+        potRepository.addPot(greenhouseId, sensorId, name, minimumHumidity);
     }
 
     private boolean checkForThresholdNumberSize(String minimumThreshold) {
@@ -84,5 +102,16 @@ public class AddPotViewModel extends AndroidViewModel {
         } else {
             return true;
         }
+    }
+
+    public List<String> getAvailableSensors() {
+        List<Pot> temp = potRepository.getPots().getValue();
+        ArrayList<String> temp2 = new ArrayList<>();
+        for(int i= 0; i< temp.size(); i++){
+            temp2.add(String.valueOf(temp.get(i).getSensorId()));
+        }
+
+        ArrayList<String> result = new ArrayList<>();
+        return result;
     }
 }
