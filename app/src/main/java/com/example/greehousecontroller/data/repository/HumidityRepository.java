@@ -235,4 +235,10 @@ public class HumidityRepository {
             }
         });
     }
+
+    public void resetLiveData(){
+        latest = new MutableLiveData<>();
+        threshold = new MutableLiveData<>(new Threshold("Humidity",0,0));
+        history = new MutableLiveData<>();
+    }
 }

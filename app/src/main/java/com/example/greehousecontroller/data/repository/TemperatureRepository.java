@@ -230,4 +230,10 @@ public class TemperatureRepository {
             }
         });
     }
+
+    public void resetLiveData(){
+        latest = new MutableLiveData<>();
+        threshold = new MutableLiveData<>(new Threshold("Temperature",0,0));
+        historical = new MutableLiveData<>();
+    }
 }

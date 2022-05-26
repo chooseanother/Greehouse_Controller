@@ -50,7 +50,7 @@ public class CO2Repository {
 
     public static com.example.greehousecontroller.data.repository.CO2Repository getInstance(Application app){
         if (instance == null){
-            instance = new com.example.greehousecontroller.data.repository.CO2Repository(app);
+            instance = new CO2Repository(app);
         }
         return instance;
     }
@@ -231,5 +231,11 @@ public class CO2Repository {
                 toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
             }
         });
+    }
+
+    public void resetLiveData(){
+        latest = new MutableLiveData<>();
+        threshold = new MutableLiveData<>(new Threshold("CO2",0,0));
+        history = new MutableLiveData<>();
     }
 }

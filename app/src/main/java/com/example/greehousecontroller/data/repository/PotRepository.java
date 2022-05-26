@@ -178,4 +178,8 @@ public class PotRepository {
             }
         });
     }
+
+    public void resetLiveData(){
+        pots = new MutableLiveData<>();
+    }
 }

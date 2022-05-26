@@ -7,17 +7,18 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.room.RoomDatabase;
 
 import com.example.greehousecontroller.R;
 import com.example.greehousecontroller.data.database.AppDatabase;
 import com.example.greehousecontroller.data.model.UserInfo;
+import com.example.greehousecontroller.data.repository.CO2Repository;
+import com.example.greehousecontroller.data.repository.HumidityRepository;
+import com.example.greehousecontroller.data.repository.PotRepository;
+import com.example.greehousecontroller.data.repository.TemperatureRepository;
 import com.example.greehousecontroller.data.repository.UserInfoRepository;
 import com.example.greehousecontroller.data.repository.UserRepository;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.messaging.FirebaseMessaging;
 
-import java.io.File;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -27,6 +28,10 @@ public class EditGreenhouseIdViewModel extends AndroidViewModel {
     private Application app;
     private AppDatabase database;
     private final ExecutorService executorService;
+    private TemperatureRepository temperatureRepository;
+    private HumidityRepository humidityRepository;
+    private CO2Repository co2Repository;
+    private PotRepository potRepository;
 
     public EditGreenhouseIdViewModel(@NonNull Application application) {
         super(application);
@@ -35,6 +40,11 @@ public class EditGreenhouseIdViewModel extends AndroidViewModel {
         userRepository = UserRepository.getInstance(application);
         userInfoRepository = UserInfoRepository.getInstance();
         executorService = Executors.newFixedThreadPool(2);
+
+        temperatureRepository = TemperatureRepository.getInstance(app);
+        humidityRepository = HumidityRepository.getInstance(app);
+        co2Repository = CO2Repository.getInstance(app);
+        potRepository = PotRepository.getInstance(app);
     }
 
     public void initUserInfo(){
@@ -80,5 +90,9 @@ public class EditGreenhouseIdViewModel extends AndroidViewModel {
 
     public void clearCachedDate(){
         executorService.execute(() -> database.clearAllTables());
+        temperatureRepository.resetLiveData();
+        humidityRepository.resetLiveData();
+        co2Repository.resetLiveData();
+        potRepository.resetLiveData();
     }
 }
