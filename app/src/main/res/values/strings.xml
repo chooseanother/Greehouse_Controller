@@ -89,4 +89,6 @@
     <string name="graphs_bottom_navigation_humidity">Humidity</string>
     <string name="graphs_bottom_navigation_co2">CO2</string>
 
+    <!--Status-->
+
 </resources>
