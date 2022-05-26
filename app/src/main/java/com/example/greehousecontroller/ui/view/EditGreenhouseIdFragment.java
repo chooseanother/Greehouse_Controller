@@ -5,12 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.greehousecontroller.R;
 import com.example.greehousecontroller.databinding.FragmentEditGreenhouseIdBinding;
 import com.example.greehousecontroller.ui.viewmodel.EditGreenhouseIdViewModel;
 
@@ -45,11 +47,16 @@ public class EditGreenhouseIdFragment extends Fragment {
         binding.editGreenhouseIdSave.setOnClickListener(view -> {
             String oldGreenhouseId = greenhouseId;
             String newGreenhouseId = newIdText.getText().toString();
-            viewModel.unsubscribeFromGreenhouse(oldGreenhouseId);
-            viewModel.saveGreenHouseId(newGreenhouseId);
-            viewModel.subscribeToGreenhouse(newGreenhouseId);
-            newIdText.setText("");
-            viewModel.clearCachedDate();
+            if (oldGreenhouseId.equals(newGreenhouseId)) {
+                Toast.makeText(getContext(), R.string.edit_greenhouse_id_notify_same_id, Toast.LENGTH_SHORT).show();
+            }
+            else {
+                viewModel.unsubscribeFromGreenhouse(oldGreenhouseId);
+                viewModel.saveGreenHouseId(newGreenhouseId);
+                viewModel.subscribeToGreenhouse(newGreenhouseId);
+                newIdText.setText("");
+                viewModel.clearCachedDate();
+            }
         });
     }
 

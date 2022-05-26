@@ -78,6 +78,7 @@
     <string name="edit_greenhouse_id_current_title">Current Id</string>
     <string name="edit_greenhouse_id_enter_title">Enter new Id</string>
     <string name="edit_greenhouse_id_dummy_value">0004A30B00E7E7C1</string>
+    <string name="edit_greenhouse_id_notify_same_id">Same greenhouse Id entered</string>
 
 
     <string name="add_pot_minimal_humidity">Minimum moisture threshold</string>
