@@ -12,6 +12,7 @@ public class ServiceGenerator {
     private static HumidityApi humidityApi;
     private static PotAPI potAPI;
     private static CO2Api co2Api;
+    private static MoistureApi moistureApi;
 
     public static TemperatureApi getTemperatureAPI() {
         if (temperatureApi == null) {
@@ -33,6 +34,17 @@ public class ServiceGenerator {
                     .create(HumidityApi.class);
         }
         return humidityApi;
+    }
+
+    public static MoistureApi getMoistureAPI() {
+        if (moistureApi == null) {
+            moistureApi = new Retrofit.Builder()
+                    .baseUrl(Config.API_BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
+                    .create(MoistureApi.class);
+        }
+        return moistureApi;
     }
 
     public static PotAPI getPotAPI() {

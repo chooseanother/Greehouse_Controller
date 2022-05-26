@@ -48,6 +48,9 @@ public class GraphsFragment extends Fragment {
                 case R.id.navigation_co2:
                         navController.navigate(R.id.navigation_co2_graph);
                     return true;
+                case R.id.navigation_moisture:
+                    navController.navigate(R.id.navigation_moisture_graph);
+                    return true;
             }
             return false;
         });
