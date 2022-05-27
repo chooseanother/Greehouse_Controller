@@ -31,7 +31,7 @@
     <string name="login_login">Login</string>
     <string name="login_email_address">Email Address</string>
     <string name="login_password">Password</string>
-    <string name="login_background_image">BackgroundImage</string>
+    <string name="login_background_image">Background Image</string>
     <string name="login_register">Register</string>
     <string name="login_confirm_password">Confirm Password</string>
 

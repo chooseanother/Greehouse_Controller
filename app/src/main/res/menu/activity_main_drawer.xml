@@ -19,12 +19,12 @@
 
         <item
             android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_nav_settings"
+            android:icon="@drawable/ic_nav_threshold_settings"
             android:title="@string/menu_settings" />
 
         <item
             android:id="@+id/nav_edit_id"
-            android:icon="@drawable/ic_nav_edit"
+            android:icon="@drawable/ic_nav_edit_greenhouse_id"
             android:title="@string/menu_edit_greenhouse_id" />
     </group>
 </menu>

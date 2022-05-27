@@ -36,7 +36,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_logout"
+                app:srcCompat="@drawable/ic_nav_logout"
                 android:layout_marginEnd="@dimen/nav_header_vertical_spacing"/>
 
             <TextView
