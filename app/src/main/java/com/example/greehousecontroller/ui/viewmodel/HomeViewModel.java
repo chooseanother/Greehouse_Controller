@@ -57,7 +57,7 @@ public class HomeViewModel extends AndroidViewModel {
     public void updateLatestMeasurements(String greenhouseId){
         temperatureRepository.updateLatestMeasurement(greenhouseId);
         humidityRepository.updateLatestMeasurement(greenhouseId);
-        potRepository.updateLatestMeasurement(greenhouseId);
+        //potRepository.updateLatestMeasurement(greenhouseId);
         co2Repository.updateLatestMeasurement(greenhouseId);
     }
 

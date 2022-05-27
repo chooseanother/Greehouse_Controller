@@ -22,6 +22,7 @@ public class AddPotViewModel extends AndroidViewModel {
     private UserInfoRepository userInfoRepository;
     private UserRepository userRepository;
     private Application application;
+    private List<String> listOfSensors;
 
     public AddPotViewModel(Application application) {
         super(application);
@@ -29,6 +30,7 @@ public class AddPotViewModel extends AndroidViewModel {
         potRepository = PotRepository.getInstance(application);
         userInfoRepository = UserInfoRepository.getInstance();
         userRepository = UserRepository.getInstance(application);
+        listOfSensors = new ArrayList<>();
     }
 
     public boolean validInput(String greenhouseId, String sensorId, String name, String minimumHumidity) {
@@ -49,7 +51,7 @@ public class AddPotViewModel extends AndroidViewModel {
             return false;
         }
         else {
-            addPot(greenhouseId, Integer.parseInt(sensorId), name, Double.parseDouble(minimumHumidity));
+            addPot(greenhouseId, Integer.parseInt(sensorId)-1, name, Double.parseDouble(minimumHumidity));
             return true;
         }
     }
@@ -106,12 +108,30 @@ public class AddPotViewModel extends AndroidViewModel {
 
     public List<String> getAvailableSensors() {
         List<Pot> temp = potRepository.getPots().getValue();
-        ArrayList<String> temp2 = new ArrayList<>();
-        for(int i= 0; i< temp.size(); i++){
-            temp2.add(String.valueOf(temp.get(i).getSensorId()));
-        }
 
-        ArrayList<String> result = new ArrayList<>();
-        return result;
+        if(temp == null || temp.isEmpty()){
+            listOfSensors.add("1");
+            listOfSensors.add("2");
+            listOfSensors.add("3");
+            listOfSensors.add("4");
+            listOfSensors.add("5");
+            listOfSensors.add("6");
+        }
+        else
+        {
+            ArrayList<String> temp2 = new ArrayList<>();
+
+            for(int i= 0; i< temp.size(); i++){
+                temp2.add(String.valueOf(temp.get(i).getSensorId()));
+            }
+
+            for(int i= 0; i< 6; i++){
+                if(!temp2.contains(String.valueOf(i))){
+                    listOfSensors.add(String.valueOf(i+1));
+                }
+            }
+
+        }
+        return listOfSensors;
     }
 }

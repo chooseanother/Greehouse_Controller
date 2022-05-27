@@ -13,6 +13,7 @@ import com.example.greehousecontroller.data.dao.PotDAO;
 import com.example.greehousecontroller.data.database.AppDatabase;
 import com.example.greehousecontroller.data.model.Pot;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -37,7 +38,7 @@ public class PotRepository {
 
         executorService.execute(() -> {
             if (potDAO.getAll() == null || potDAO.getAll().isEmpty()) {
-                pots = new MutableLiveData<>();
+                pots = new MutableLiveData<>(new ArrayList<>());
             } else {
                 pots = new MutableLiveData<>(potDAO.getAll());
             }
