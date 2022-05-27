@@ -52,7 +52,7 @@ public class SensorRepository {
                     sensors.setValue(response.body());
                 }
                 if(!response.isSuccessful()){
-                    toastMaker.makeToast(application.getApplicationContext(), application.getString(R.string.unable_to_retrieve_measurements));
+                    toastMaker.makeToast(application.getApplicationContext(), application.getString(R.string.unable_to_retrieve_sensor_status));
                 }
             }
 
