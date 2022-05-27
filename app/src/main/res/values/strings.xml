@@ -8,7 +8,9 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <!--MENU-->
+    <!--VIEW SPECIFIC-->
+
+    <!--menu-->
     <string name="menu_home">Home</string>
     <string name="menu_status">Status</string>
     <string name="menu_graphs">Graphs</string>
@@ -17,8 +19,7 @@
     <string name="menu_edit_greenhouse_id">Edit greenhouse Id</string>
     <string name="menu_log_out">Log out</string>
 
-
-    <!--HOME-->
+    <!--home-->
     <string name="home_pot">Pot</string>
     <string name="home_pot_current_moisture">Current moisture: </string>
     <string name="home_pot_minimal_moisture">Minimal moisture: </string>
@@ -26,19 +27,15 @@
     <string name="home_hello_message">"Hello</string>
     <string name="home_pot_limit_reached_toast_message">Limit of 6 pots reached, can\'t add more</string>
 
-    <!--LOG IN, REGISTER-->
-    <string name="login">Login</string>
-    <string name="email_address">Email Address</string>
-    <string name="password">Password</string>
-    <string name="backgroundimage">BackgroundImage</string>
-    <string name="register">Register</string>
-    <string name="confirm_password">Confirm Password</string>
+    <!--log in, register-->
+    <string name="login_login">Login</string>
+    <string name="login_email_address">Email Address</string>
+    <string name="login_password">Password</string>
+    <string name="login_background_image">BackgroundImage</string>
+    <string name="login_register">Register</string>
+    <string name="login_confirm_password">Confirm Password</string>
 
-    <!--Buttons for the whole app-->
-    <string name="cancel_button">Cancel</string>
-    <string name="save_button">Save</string>
-
-    <!--THRESHOLD SETTINGS-->
+    <!--threshold settings-->
     <string name="settings_temperature">Temperature</string>
     <string name="settings_co2">CO2</string>
     <string name="settings_humidity">Humidity</string>
@@ -55,7 +52,7 @@
     <string name="settings_not_a_number_exception">Entered value must be of numerical value. </string>
     <string name="settings_changes_saved">Changes were saved successfully</string>
 
-    <!--Add pot-->
+    <!--add pot-->
     <string name="add_pot_fragment_title">Add pot</string>
     <string name="add_pot_minimal_moisture">Minimal moisture:</string>
     <string name="add_pot_name">Name:</string>
@@ -63,19 +60,19 @@
     <string name="add_pot_missing_sensor_exception">Choose a sensor</string>
     <string name="add_pot_sensor">Sensor: </string>
 
-    <!--Edit pot-->
+    <!--edit pot-->
     <string name="edit_pot_fragment_title">Edit pot</string>
 
-    <!--Add and edit pot-->
+    <!--add and edit pot-->
     <string name="pot_minimal_moisture">Minimal moisture:</string>
     <string name="pot_name">Name: </string>
 
-    <!--Enter greenhouse id-->
-    <string name="enter_your_greenhouse_id">Enter your greenhouse ID</string>
-    <string name="greenhouse_id">Greenhouse ID</string>
-    <string name="save">Save</string>
+    <!--greenhouse id-->
+    <string name="greenhouse_id_enter_your_greenhouse_id">Enter your greenhouse ID</string>
+    <string name="greenhouse_id_greenhouse_id">Greenhouse ID</string>
+    <string name="greenhouse_id_save">Save</string>
 
-    <!-- Edit greenhouse id-->
+    <!-- edit greenhouse id-->
     <string name="edit_greenhouse_id_nav_label">Edit greenhouse Id</string>
     <string name="edit_greenhouse_id_title">Greenhouse Id</string>
     <string name="edit_greenhouse_id_current_title">Current Id</string>
@@ -83,8 +80,14 @@
     <string name="edit_greenhouse_id_dummy_value">0004A30B00E7E7C1</string>
     <string name="edit_greenhouse_id_notify_same_id">Same greenhouse Id entered</string>
 
+    <!--graphs bottom navigation-->
+    <string name="graphs_bottom_navigation_temperature">Temperature</string>
+    <string name="graphs_bottom_navigation_humidity">Humidity</string>
+    <string name="graphs_bottom_navigation_co2">CO2</string>
 
-    <string name="add_pot_minimal_humidity">Minimum moisture threshold</string>
+
+
+    <!--NOT VIEW SPECIFIC-->
 
     <!--Success messages-->
     <string name="edit_greenhouse_id_success">Successfully updated Id</string>
@@ -100,12 +103,8 @@
     <string name="unable_to_add_pot">Unable to add pot</string>
     <string name="unable_to_update_pot">Unable to update pot</string>
 
-
-    <!--Graphs bottom navigation-->
-    <string name="graphs_bottom_navigation_temperature">Temperature</string>
-    <string name="graphs_bottom_navigation_humidity">Humidity</string>
-    <string name="graphs_bottom_navigation_co2">CO2</string>
-
-    <!--Status-->
+    <!--Buttons for the whole app-->
+    <string name="cancel_button">Cancel</string>
+    <string name="save_button">Save</string>
 
 </resources>
