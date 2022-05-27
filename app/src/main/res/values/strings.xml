@@ -103,6 +103,15 @@
     <string name="unable_to_add_pot">Unable to add pot</string>
     <string name="unable_to_update_pot">Unable to update pot</string>
 
+
+    <!--Graphs bottom navigation-->
+    <string name="graphs_bottom_navigation_temperature">Temperature</string>
+    <string name="graphs_bottom_navigation_humidity">Humidity</string>
+    <string name="graphs_bottom_navigation_co2">CO2</string>
+    <string name="graphs_bottom_navigation_moisture">Moisture</string>
+
+
+    <!--Status-->
     <!--Buttons for the whole app-->
     <string name="cancel_button">Cancel</string>
     <string name="save_button">Save</string>

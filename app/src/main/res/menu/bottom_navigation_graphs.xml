@@ -16,4 +16,9 @@
         android:title="@string/graphs_bottom_navigation_co2"
         android:enabled="true"
         android:icon="@drawable/ic_home_co2"/>
+    <item
+        android:id="@+id/navigation_moisture"
+        android:title="@string/graphs_bottom_navigation_moisture"
+        android:enabled="true"
+        android:icon="@drawable/ic_graphs_bottom_nav_humidity"/>
 </menu>

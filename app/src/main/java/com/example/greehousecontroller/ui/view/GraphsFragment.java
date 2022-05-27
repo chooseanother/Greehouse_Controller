@@ -1,5 +1,6 @@
 package com.example.greehousecontroller.ui.view;
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -8,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +24,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class GraphsFragment extends Fragment {
     private FragmentGraphsBinding binding;
     GraphsViewModel graphsViewModel;
+    BottomNavigationView bottomAppBar;
+    NavController navController;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    public String greenhouseid;
+
     private BottomNavigationView bottomAppBar;
     private NavController navController;
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -28,6 +36,10 @@ public class GraphsFragment extends Fragment {
         graphsViewModel = new ViewModelProvider(this).get(GraphsViewModel.class);
         binding = FragmentGraphsBinding.inflate(inflater, container, false);
         bottomAppBar = binding.graphsBottomNavigation;
+        bottomAppBar = binding.bottomNavigationGraphs;
+        updateMeasurements();
+        initSwipeRefreshLayout();
+        observeData();
         return binding.getRoot();
     }
 
@@ -49,10 +61,39 @@ public class GraphsFragment extends Fragment {
                 case R.id.navigation_co2:
                         navController.navigate(R.id.navigation_co2_graph);
                     return true;
+                case R.id.navigation_moisture:
+                    navController.navigate(R.id.navigation_moisture_graph);
+                    return true;
             }
             return false;
         });
     }
+
+    private void initSwipeRefreshLayout(){
+        swipeRefreshLayout = binding.swipeRefreshLayout;
+        swipeRefreshLayout.setOnRefreshListener(this::updateLatestMeasurements);
+    }
+    private void updateMeasurements(){
+
+        graphsViewModel.initUserInfo();
+        graphsViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
+            greenhouseid = userInfo.getGreenhouseID();
+        });
+    }
+
+    private void updateLatestMeasurements(){
+        // TODO: Figure out how to handle greenhouseId
+        if(greenhouseid != null) {
+            graphsViewModel.updateHistoryData(greenhouseid);
+        }
+    }
+
+    private void observeData(){
+        graphsViewModel.getTemperatureHistoryData().observe(getViewLifecycleOwner(),temperature -> {
+            swipeRefreshLayout.setRefreshing(false);
+        });
+    }
+
 
     static class OHCLDataEntry extends HighLowDataEntry {
         OHCLDataEntry(Long x, Double open, Double high, Double low, Double close) {

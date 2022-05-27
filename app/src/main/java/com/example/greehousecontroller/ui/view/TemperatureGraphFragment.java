@@ -1,5 +1,6 @@
 package com.example.greehousecontroller.ui.view;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,8 @@ public class TemperatureGraphFragment extends Fragment {
 
     private TemperatureGraphBinding binding;
     private AnyChartView temperatureChart;
+    ProgressDialog progress;
+
     private TemperatureGraphViewModel temperatureGraphViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -40,13 +43,13 @@ public class TemperatureGraphFragment extends Fragment {
         temperatureChart = binding.temperatureChart;
         temperatureGraphViewModel = new ViewModelProvider(this).get(TemperatureGraphViewModel.class);
         updateMeasurements();
+        loadingScreen();
         return binding.getRoot();
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        updateMeasurements();
+    private void loadingScreen()
+    {
+        progress = ProgressDialog.show(getContext(), "Temperature graph", "Loading...", true);
     }
 
     public Table temperatureGraph()
@@ -95,6 +98,7 @@ public class TemperatureGraphFragment extends Fragment {
             if(userInfo.getGreenhouseID() != null)
             {
                 initTemperatureChart();
+                progress.dismiss();
             }
         });
     }

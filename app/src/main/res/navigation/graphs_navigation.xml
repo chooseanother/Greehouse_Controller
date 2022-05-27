@@ -23,4 +23,9 @@
         android:label="CO2"
         tools:layout="@layout/co2_graph" />
 
+    <fragment
+        android:id="@+id/navigation_moisture_graph"
+        android:name="com.example.greehousecontroller.ui.view.MoistureGraphFragment"
+        android:label="Moisture"
+        tools:layout="@layout/fragment_moisture_pots_graphs" />
 </navigation>
