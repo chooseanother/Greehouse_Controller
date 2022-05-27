@@ -32,6 +32,7 @@ public class MoistureJsonAdapter extends TypeAdapter<Moisture> {
                 case "time":
                     time = in.nextLong()*1000L;
                     break;
+
             }
         }
         in.endObject();

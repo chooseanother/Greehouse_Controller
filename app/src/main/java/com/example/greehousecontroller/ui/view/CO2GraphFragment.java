@@ -1,5 +1,6 @@
 package com.example.greehousecontroller.ui.view;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +32,7 @@ public class CO2GraphFragment extends Fragment {
     private Co2GraphBinding binding;
     private AnyChartView co2Chart;
     private CO2GraphViewModel co2GraphViewModel;
+    ProgressDialog progress;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -40,6 +42,10 @@ public class CO2GraphFragment extends Fragment {
         return binding.getRoot();
     }
 
+    private void loadingScreen()
+    {
+        progress = ProgressDialog.show(getContext(), "CO2 graph", "Loading...", true);
+    }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -48,6 +54,7 @@ public class CO2GraphFragment extends Fragment {
     }
     public void initCO2Chart()
     {
+        loadingScreen();
         APIlib.getInstance().setActiveAnyChartView(co2Chart);
         Stock stock3 = AnyChart.stock();
         Plot plot3 = stock3.plot(0);
@@ -57,12 +64,14 @@ public class CO2GraphFragment extends Fragment {
         stock3.title().enabled(true);
         co2Chart.setChart(stock3);
     }
+
     public Table co2Graph()
     {
         Table table = Table.instantiate("x");
 
         List<DataEntry> data = new ArrayList<>();
         co2GraphViewModel.getCo2HistoryData().observe(getViewLifecycleOwner(), new Observer<List<CO2>>() {
+
             @Override
             public void onChanged(@Nullable List<CO2> co2s) {
                 if (co2s.size() > 0) {
@@ -79,10 +88,12 @@ public class CO2GraphFragment extends Fragment {
         });
         return table;
     }
+
     private void updateMeasurements(){
         co2GraphViewModel.initUserInfo();
         co2GraphViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
             co2GraphViewModel.updateHistoryData(userInfo.getGreenhouseID());
+            progress.dismiss();
         });
     }
 }

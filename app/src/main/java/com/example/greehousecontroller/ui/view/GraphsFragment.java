@@ -1,5 +1,6 @@
 package com.example.greehousecontroller.ui.view;
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -7,6 +8,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +25,17 @@ public class GraphsFragment extends Fragment {
     GraphsViewModel graphsViewModel;
     BottomNavigationView bottomAppBar;
     NavController navController;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    public String greenhouseid;
+
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         graphsViewModel = new ViewModelProvider(this).get(GraphsViewModel.class);
         binding = FragmentGraphsBinding.inflate(inflater, container, false);
         bottomAppBar = binding.bottomNavigationGraphs;
+        updateMeasurements();
+        initSwipeRefreshLayout();
+        observeData();
         return binding.getRoot();
     }
 
@@ -53,6 +62,31 @@ public class GraphsFragment extends Fragment {
                     return true;
             }
             return false;
+        });
+    }
+
+    private void initSwipeRefreshLayout(){
+        swipeRefreshLayout = binding.swipeRefreshLayout;
+        swipeRefreshLayout.setOnRefreshListener(this::updateLatestMeasurements);
+    }
+    private void updateMeasurements(){
+
+        graphsViewModel.initUserInfo();
+        graphsViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
+            greenhouseid = userInfo.getGreenhouseID();
+        });
+    }
+
+    private void updateLatestMeasurements(){
+        // TODO: Figure out how to handle greenhouseId
+        if(greenhouseid != null) {
+            graphsViewModel.updateHistoryData(greenhouseid);
+        }
+    }
+
+    private void observeData(){
+        graphsViewModel.getTemperatureHistoryData().observe(getViewLifecycleOwner(),temperature -> {
+            swipeRefreshLayout.setRefreshing(false);
         });
     }
 

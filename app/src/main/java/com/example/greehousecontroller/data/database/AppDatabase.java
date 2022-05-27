@@ -8,16 +8,18 @@ import androidx.room.RoomDatabase;
 
 import com.example.greehousecontroller.data.dao.CO2DAO;
 import com.example.greehousecontroller.data.dao.HumidityDAO;
+import com.example.greehousecontroller.data.dao.MoistureDAO;
 import com.example.greehousecontroller.data.dao.PotDAO;
 import com.example.greehousecontroller.data.dao.TemperatureDAO;
 import com.example.greehousecontroller.data.dao.ThresholdDAO;
 import com.example.greehousecontroller.data.model.CO2;
 import com.example.greehousecontroller.data.model.Humidity;
+import com.example.greehousecontroller.data.model.Moisture;
 import com.example.greehousecontroller.data.model.Pot;
 import com.example.greehousecontroller.data.model.Temperature;
 import com.example.greehousecontroller.data.model.Threshold;
 
-@Database(entities = {CO2.class, Humidity.class, Pot.class, Temperature.class, Threshold.class}, version = 2)
+@Database(entities = {CO2.class, Humidity.class, Pot.class, Temperature.class, Threshold.class, Moisture.class}, version = 4)
 public abstract class AppDatabase extends RoomDatabase {
 
     public static AppDatabase instance;
@@ -27,6 +29,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract PotDAO potDAO();
     public abstract TemperatureDAO temperatureDAO();
     public abstract ThresholdDAO thresholdDAO();
+    public abstract MoistureDAO moistureDAO();
 
     public static synchronized AppDatabase getInstance(Context context){
         if(instance == null){

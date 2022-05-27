@@ -1,5 +1,6 @@
 package com.example.greehousecontroller.ui.view;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,6 +48,7 @@ public class MoistureGraphFragment extends Fragment {
     private Spinner spinner;
     private List<PotSpinner> spinnerList;
     NavController navController;
+    ProgressDialog progress;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -59,10 +61,13 @@ public class MoistureGraphFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        loadingScreen();
         updateMeasurements();
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                loadingScreen();
                 updateMeasurements();
                 navController = Navigation.findNavController(getActivity(),R.id.moisture_swap_fragment);
                 if(navController.getCurrentDestination().getId() == R.id.moisture_swap_fragment) {
@@ -71,12 +76,16 @@ public class MoistureGraphFragment extends Fragment {
                 else {
                     navController.navigate(R.id.moisture_graph2);
                 }
-
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
+    }
+
+    private void loadingScreen()
+    {
+        progress = ProgressDialog.show(getContext(),"Moisture graph","Loading...",  true);
     }
 
     public void initSpinner()
@@ -102,6 +111,8 @@ public class MoistureGraphFragment extends Fragment {
         moistureViewModel.initUserInfo();
         moistureViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
             moistureViewModel.updateHistoryData(userInfo.getGreenhouseID(), spinnerList.get(spinner.getSelectedItemPosition()).id);
+            progress.dismiss();
+
         });
     }
 
