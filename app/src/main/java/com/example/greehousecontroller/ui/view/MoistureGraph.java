@@ -50,12 +50,9 @@ public class MoistureGraph extends Fragment {
         binding = MoistureGraph1Binding.inflate(inflater, container, false);
         moistureViewModel = new ViewModelProvider(this).get(MoistureViewModel.class);
         moistureChart = binding.humidityChart;
-        return binding.getRoot();
-    }
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         initMoistureChart();
+
+        return binding.getRoot();
     }
     public Table moistureGraph(){
         Table table = Table.instantiate("x");
@@ -68,6 +65,8 @@ public class MoistureGraph extends Fragment {
                         data.add(new GraphsFragment.OHCLDataEntry((long) Objects.requireNonNull(moistureViewModel.getLatestHumidity().getValue()).getTime(), 0.1, 0.1, 0.1, moistureViewModel.getLatestHumidity().getValue().getMoisture()));
                     }
                     for (Moisture moisture : moistureHistoryData) {
+                        System.out.println(moisture+"This is moisture"+"\n");
+
                         data.add(new GraphsFragment.OHCLDataEntry(moisture.getTime(), moisture.getMoisture(), moisture.getMoisture(), moisture.getMoisture(), moisture.getMoisture()));
                     }
                     table.addData(data);

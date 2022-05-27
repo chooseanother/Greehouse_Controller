@@ -42,11 +42,6 @@ public class TemperatureGraphFragment extends Fragment {
         return binding.getRoot();
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        updateMeasurements();
-    }
     private void loadingScreen()
     {
         progress = ProgressDialog.show(getContext(), "Temperature graph", "Loading...", true);

@@ -42,25 +42,30 @@ public class MoistureRepository {
         history = new MutableLiveData<>();
         toastMaker = ToastMaker.getInstance();
         moistureDAO = appDatabase.moistureDAO();
+        cachedData(0);
+    }
+    public void cachedData(int potId) {
+
+            executorService.execute(() -> {
+                if (moistureDAO.getAllByPotId(potId) != null) {
+                    if (moistureDAO.getAllByPotId(potId) == null || moistureDAO.getAllByPotId(potId).isEmpty()) {
+                        latest = new MutableLiveData<>();
+                    } else {
+                        latest = new MutableLiveData<>(moistureDAO.getAllByPotId(potId).get(0));
+                    }
+                }
+            });
+            executorService.execute(() -> {
+                if (moistureDAO.getAllByPotId(potId) != null) {
+                    if (moistureDAO.getAllByPotId(potId) == null || moistureDAO.getAllByPotId(potId).isEmpty()) {
+                        history = new MutableLiveData<>();
+                    } else {
+                        history = new MutableLiveData<>(moistureDAO.getAllByPotId(potId));
+                    }
+                }
+            });
 
 
-        executorService.execute(()->{
-            if(moistureDAO.getAllByPotId(0) == null || moistureDAO.getAllByPotId(0).isEmpty()){
-                latest = new MutableLiveData<>();
-            }
-            else{
-                latest = new MutableLiveData<>(moistureDAO.getAllByPotId(0).get(0));
-            }
-        });
-
-        executorService.execute(()->{
-            if(moistureDAO.getAllByPotId(0) == null || moistureDAO.getAllByPotId(0).isEmpty()){
-                history = new MutableLiveData<>();
-            }
-            else{
-                history = new MutableLiveData<>(moistureDAO.getAllByPotId(0));
-            }
-        });
     }
 
     public static MoistureRepository getInstance(Application app){
@@ -95,11 +100,6 @@ public class MoistureRepository {
                 }
                 if(!response.isSuccessful()){
                     toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_retrieve_measurements));
-                    executorService.execute(()-> {
-                        System.out.println("MoistureRepository: " + moistureDAO.getAllByPotId(potId));
-                        history = new MutableLiveData<>(moistureDAO.getAllByPotId(potId));
-                        latest = new MutableLiveData<>(moistureDAO.getAllByPotId(potId).size() > 0 ? moistureDAO.getAllByPotId(potId).get(0) : null);
-                    });
                 }
             }
             @EverythingIsNonNull
@@ -107,10 +107,6 @@ public class MoistureRepository {
             public void onFailure(Call<List<Moisture>> call, Throwable t) {
                 Log.e("Api-moist-hist",t.getMessage());
                 toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
-                executorService.execute(()->{
-                    history = new MutableLiveData<>(moistureDAO.getAllByPotId(potId));
-                    latest = new MutableLiveData<>(moistureDAO.getAllByPotId(potId).get(0));
-                });
             }
 
         });
@@ -128,23 +124,6 @@ public class MoistureRepository {
                     latest.setValue(result);
                 }
             }
-             /*executorService.execute(()->{
-                        ArrayList<Humidity> result = (ArrayList<Humidity>) response.body();
-                        if(result.size() < 2000){
-                            humidityDAO.delete();
-                            humidityDAO.insert(response.body());
-                        }
-                        else{
-                            humidityDAO.delete();
-                            humidityDAO.insert(response.body().subList(0, 1999));
-                        }
-                    });
-                }
-                if(!response.isSuccessful()){
-                    toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_retrieve_measurements));
-                }
-
-            }*/
             @EverythingIsNonNull
             @Override
             public void onFailure(Call<List<Moisture>> call, Throwable t) {
@@ -152,6 +131,11 @@ public class MoistureRepository {
                 toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
             }
         });
+    }
+
+    public void resetLiveData(){
+        history = new MutableLiveData<>();
+        latest = new MutableLiveData<>();
     }
 
     public MutableLiveData<Moisture> getLatest() {

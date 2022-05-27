@@ -19,7 +19,7 @@ import com.example.greehousecontroller.data.model.Pot;
 import com.example.greehousecontroller.data.model.Temperature;
 import com.example.greehousecontroller.data.model.Threshold;
 
-@Database(entities = {CO2.class, Humidity.class, Pot.class, Temperature.class, Threshold.class, Moisture.class}, version = 4)
+@Database(entities = {CO2.class, Humidity.class, Pot.class, Temperature.class, Threshold.class, Moisture.class}, version = 5)
 public abstract class AppDatabase extends RoomDatabase {
 
     public static AppDatabase instance;

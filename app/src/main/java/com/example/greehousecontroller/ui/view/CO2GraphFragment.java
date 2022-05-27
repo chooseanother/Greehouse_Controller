@@ -39,6 +39,7 @@ public class CO2GraphFragment extends Fragment {
         binding = Co2GraphBinding.inflate(inflater, container, false);
         co2GraphViewModel = new ViewModelProvider(this).get(CO2GraphViewModel.class);
         co2Chart = binding.co2Chart;
+        updateMeasurements();
         return binding.getRoot();
     }
 
@@ -49,7 +50,6 @@ public class CO2GraphFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        updateMeasurements();
         initCO2Chart();
     }
     public void initCO2Chart()

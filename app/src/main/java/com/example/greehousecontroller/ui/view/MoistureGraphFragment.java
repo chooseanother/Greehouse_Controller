@@ -56,14 +56,14 @@ public class MoistureGraphFragment extends Fragment {
         moistureViewModel = new ViewModelProvider(this).get(MoistureViewModel.class);
         spinner = binding.spinner;
         initSpinner();
-        return binding.getRoot();
-    }
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        onChangeSpinner();
         loadingScreen();
         updateMeasurements();
+        return binding.getRoot();
+    }
 
+    private void onChangeSpinner()
+    {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -104,15 +104,22 @@ public class MoistureGraphFragment extends Fragment {
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinner.setAdapter(adapter);
                 }
+                else {
+                    spinnerList = new ArrayList<>();
+                    ArrayAdapter<PotSpinner> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, spinnerList);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner.setAdapter(adapter);
+                }
             }
         });
     }
     private void updateMeasurements(){
         moistureViewModel.initUserInfo();
         moistureViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
-            moistureViewModel.updateHistoryData(userInfo.getGreenhouseID(), spinnerList.get(spinner.getSelectedItemPosition()).id);
+            if(spinnerList.size() > 0) {
+                moistureViewModel.updateHistoryData(userInfo.getGreenhouseID(), spinnerList.get(spinner.getSelectedItemPosition()).id);
+            }
             progress.dismiss();
-
         });
     }
 

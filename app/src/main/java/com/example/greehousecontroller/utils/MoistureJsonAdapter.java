@@ -16,6 +16,8 @@ public class MoistureJsonAdapter extends TypeAdapter<Moisture> {
         out.value(value.getMoisture());
         out.name("time");
         out.value(value.getTime());
+        out.name("potId");
+        out.value(value.getPotId());
         out.endObject();
     }
 
@@ -24,6 +26,7 @@ public class MoistureJsonAdapter extends TypeAdapter<Moisture> {
         in.beginObject();
         double moisture = 0.0;
         long time = 0;
+        int poiId = 0;
         while(in.hasNext()){
             switch (in.nextName()){
                 case "moisture":
@@ -32,10 +35,11 @@ public class MoistureJsonAdapter extends TypeAdapter<Moisture> {
                 case "time":
                     time = in.nextLong()*1000L;
                     break;
-
+                case "potId":
+                    poiId = in.nextInt();
             }
         }
         in.endObject();
-        return new Moisture(moisture,time);
+        return new Moisture(moisture,time,poiId);
     }
 }

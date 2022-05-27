@@ -40,15 +40,12 @@ public class HumidityGraphFragment extends Fragment {
         humidityViewModel = new ViewModelProvider(this).get(HumidityGraphViewModel.class);
         humidityChart = binding.humidityChart;
         loadingScreen();
+        updateMeasurements();
         return binding.getRoot();
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        updateMeasurements();
-        initHumidityChart();
-    }
+
+
     public Table humidityGraph(){
         Table table = Table.instantiate("x");
         List<DataEntry> data = new ArrayList<>();
@@ -83,6 +80,7 @@ public class HumidityGraphFragment extends Fragment {
         humidityViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
             humidityViewModel.updateHistoryData(userInfo.getGreenhouseID());
             progress.dismiss();
+            initHumidityChart();
         });
     }
     private void loadingScreen()

@@ -42,9 +42,9 @@ public class MoistureViewModel extends AndroidViewModel {
     }
     public void updateHistoryData(String greenHouseId,int potId)
     {
+        moistureRepository.cachedData(potId);
         moistureRepository.updateLatestData(greenHouseId, potId);
         moistureRepository.updateHistoricalData(greenHouseId, potId);
-
     }
     public LiveData<List<Moisture>> getMoistureHistoryData()
     {
