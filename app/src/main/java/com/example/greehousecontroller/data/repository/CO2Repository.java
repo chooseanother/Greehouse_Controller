@@ -45,6 +45,25 @@ public class CO2Repository {
         thresholdDAO = database.thresholdDAO();
         toastMaker = ToastMaker.getInstance();
 
+        loadCachedData();
+    }
+
+    public static com.example.greehousecontroller.data.repository.CO2Repository getInstance(Application app){
+        if (instance == null){
+            instance = new CO2Repository(app);
+        }
+        return instance;
+    }
+
+    public MutableLiveData<CO2> getLatest() {
+        return latest;
+    }
+
+    public MutableLiveData<Threshold> getThreshold(){
+        return threshold;
+    }
+
+    private void loadCachedData(){
         executorService.execute(()->{
             if(co2DAO.getAll() == null || co2DAO.getAll().isEmpty()){
                 latest = new MutableLiveData<>();
@@ -73,22 +92,6 @@ public class CO2Repository {
                 history = new MutableLiveData<>(co2DAO.getAll());
             }
         });
-
-    }
-
-    public static com.example.greehousecontroller.data.repository.CO2Repository getInstance(Application app){
-        if (instance == null){
-            instance = new com.example.greehousecontroller.data.repository.CO2Repository(app);
-        }
-        return instance;
-    }
-
-    public MutableLiveData<CO2> getLatest() {
-        return latest;
-    }
-
-    public MutableLiveData<Threshold> getThreshold(){
-        return threshold;
     }
 
     public void updateLatestMeasurement(String greenhouseId){
@@ -228,5 +231,11 @@ public class CO2Repository {
                 toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
             }
         });
+    }
+
+    public void resetLiveData(){
+        latest = new MutableLiveData<>();
+        threshold = new MutableLiveData<>(new Threshold("CO2",0,0));
+        history = new MutableLiveData<>();
     }
 }

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.view.ThresholdSettingsFragment"
+    android:background="@color/pastel_green"
+    android:padding="@dimen/margin_from_screen_edges">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_layout_temperature"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="@dimen/small_margin"
+        android:background="@drawable/round_layout_bg">
+
+        <TextView
+            android:id="@+id/edit_greenhouse_id_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_greenhouse_id_title"
+            android:textSize="@dimen/heading_text_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/edit_greenhouse_id_current_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/medium_text_size"
+            app:layout_constraintTop_toBottomOf="@id/edit_greenhouse_id_title"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/edit_greenhouse_id_current_title"
+            android:paddingTop="@dimen/small_margin"
+            android:paddingStart="@dimen/small_margin"
+            android:paddingEnd="@dimen/small_margin"
+            android:paddingBottom="@dimen/mini_margin"/>
+
+        <TextView
+            android:id="@+id/edit_greenhouse_id_enter_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/small_margin"
+            android:paddingStart="@dimen/small_margin"
+            android:paddingEnd="@dimen/small_margin"
+            android:paddingBottom="@dimen/mini_margin"
+            android:text="@string/edit_greenhouse_id_enter_title"
+            android:textSize="@dimen/medium_text_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_greenhouse_id_current_id" />
+
+        <TextView
+            android:id="@+id/edit_greenhouse_id_current_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/mini_margin"
+            android:paddingStart="@dimen/small_margin"
+            android:paddingEnd="@dimen/small_margin"
+            android:paddingBottom="@dimen/small_margin"
+            android:layout_marginStart="@dimen/small_margin"
+            android:textSize="@dimen/medium_text_size"
+            android:text=""
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_greenhouse_id_current_title" />
+
+        <EditText
+            android:id="@+id/edit_greenhouse_id_new_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/edit_greenhouse_id_dummy_value"
+            android:maxLength="20"
+            android:paddingTop="@dimen/mini_margin"
+            android:paddingStart="@dimen/small_margin"
+            android:paddingEnd="@dimen/small_margin"
+            android:paddingBottom="@dimen/small_margin"
+            android:layout_marginStart="@dimen/small_margin"
+            android:textColorHint="#00FFFFFF"
+            android:textSize="@dimen/medium_text_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_greenhouse_id_enter_title" />
+
+
+        <ImageView
+            android:id="@+id/edit_greenhouse_id_save"
+            android:layout_width="@dimen/home_edit_image_size"
+            android:layout_height="@dimen/home_edit_image_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:src="@drawable/ic_save"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
