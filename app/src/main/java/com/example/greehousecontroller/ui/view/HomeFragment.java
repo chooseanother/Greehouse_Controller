@@ -1,6 +1,7 @@
 package com.example.greehousecontroller.ui.view;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,7 @@ public class HomeFragment extends Fragment {
         settingOfTextViews();
         getGreenhouseID();
         observeData();
+        observeApiStatus();
         return root;
     }
 
@@ -94,9 +96,6 @@ public class HomeFragment extends Fragment {
         homeViewModel.getLatestTemperature().observe(getViewLifecycleOwner(),temperature -> {
             String readings = temperature.getTemperature() + " °C";
             temperatureTextView.setText(readings);
-
-            // TODO: Maybe here?
-            swipeRefreshLayout.setRefreshing(false);
         });
 
         homeViewModel.getLatestHumidity().observe(getViewLifecycleOwner(),humidity -> {
@@ -158,6 +157,13 @@ public class HomeFragment extends Fragment {
         adapter.setOnClickListener(pot -> {
             Bundle bundle = homeViewModel.getPotBundle(pot);
             ((MainActivity)getActivity()).navController.navigate(R.id.nav_edit_pot, bundle);
+        });
+    }
+
+    private void observeApiStatus(){
+        homeViewModel.getApiFinished().observe(getViewLifecycleOwner(), aBoolean -> {
+            Log.d("home", aBoolean.toString());
+            swipeRefreshLayout.setRefreshing(aBoolean);
         });
     }
 }

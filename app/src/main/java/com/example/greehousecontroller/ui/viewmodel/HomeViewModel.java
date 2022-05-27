@@ -31,6 +31,7 @@ public class HomeViewModel extends AndroidViewModel {
     private final PotRepository potRepository;
     private final UserRepository userRepository;
     private final UserInfoRepository userInfoRepository;
+    private MutableLiveData<Boolean> refreshing;
 
     public HomeViewModel(Application application) {
         super(application);
@@ -40,6 +41,8 @@ public class HomeViewModel extends AndroidViewModel {
         co2Repository = CO2Repository.getInstance(application);
         userRepository = UserRepository.getInstance(application);
         userInfoRepository = UserInfoRepository.getInstance();
+
+        refreshing = new MutableLiveData<>(false);
     }
 
     public MutableLiveData<List<Pot>> getLatestPots() {
@@ -54,8 +57,15 @@ public class HomeViewModel extends AndroidViewModel {
         return humidityRepository.getLatest();
     }
 
+    public MutableLiveData<Boolean> getApiFinished() {
+        return refreshing;
+    }
+
     public void updateLatestMeasurements(String greenhouseId){
-        temperatureRepository.updateLatestMeasurement(greenhouseId);
+        refreshing.setValue(true);
+        temperatureRepository.updateLatestMeasurement(greenhouseId, () -> {
+            refreshing.postValue(false);
+        });
         humidityRepository.updateLatestMeasurement(greenhouseId);
         potRepository.updateLatestMeasurement(greenhouseId);
         co2Repository.updateLatestMeasurement(greenhouseId);
