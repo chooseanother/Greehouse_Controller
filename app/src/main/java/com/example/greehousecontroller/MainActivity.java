@@ -1,23 +1,16 @@
 package com.example.greehousecontroller;
 
-import static androidx.fragment.app.FragmentManager.TAG;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.greehousecontroller.databinding.ActivityMainBinding;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
@@ -65,12 +58,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupNavigation() {
-        navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        navController = Navigation.findNavController(this, R.id.navHostFragmentContentMain);
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_status, R.id.nav_graphs, R.id.nav_settings, R.id.nav_edit_id)
                 .setOpenableLayout(drawer)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        NavController navController = Navigation.findNavController(this, R.id.navHostFragmentContentMain);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
@@ -137,11 +130,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUpMenuUserInfo(){
         FirebaseUser user = viewModel.getCurrentUser().getValue();
-        TextView username = binding.navView.getHeaderView(0).findViewById(R.id.menu_user_name);
+        TextView username = binding.navView.getHeaderView(0).findViewById(R.id.navHeaderUsername);
         username.setText(user.getDisplayName());
-        TextView email = binding.navView.getHeaderView(0).findViewById(R.id.menu_user_email);
+        TextView email = binding.navView.getHeaderView(0).findViewById(R.id.navHeaderUserEmail);
         email.setText(user.getEmail());
-        ImageView image = binding.navView.getHeaderView(0).findViewById(R.id.menu_user_image);
+        ImageView image = binding.navView.getHeaderView(0).findViewById(R.id.navHeaderUserImage);
         Uri photoUrl = user.getPhotoUrl();
         Glide.with(MainActivity.this).load(photoUrl).into(image);
     }

@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <com.anychart.AnyChartView
-        android:id="@+id/co2_chart"
+        android:id="@+id/co2Chart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"

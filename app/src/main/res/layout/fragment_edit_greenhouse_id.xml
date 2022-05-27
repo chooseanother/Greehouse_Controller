@@ -9,7 +9,7 @@
     android:padding="@dimen/margin_from_screen_edges">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraint_layout_temperature"
+        android:id="@+id/editGreenhouseIdConstraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,7 +19,7 @@
         android:background="@drawable/round_layout_bg">
 
         <TextView
-            android:id="@+id/edit_greenhouse_id_title"
+            android:id="@+id/editGreenhouseIdTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/edit_greenhouse_id_title"
@@ -27,11 +27,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
         <TextView
-            android:id="@+id/edit_greenhouse_id_current_title"
+            android:id="@+id/editGreenhouseIdCurrentTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/medium_text_size"
-            app:layout_constraintTop_toBottomOf="@id/edit_greenhouse_id_title"
+            app:layout_constraintTop_toBottomOf="@id/editGreenhouseIdTextView"
             app:layout_constraintStart_toStartOf="parent"
             android:text="@string/edit_greenhouse_id_current_title"
             android:paddingTop="@dimen/small_margin"
@@ -40,7 +40,7 @@
             android:paddingBottom="@dimen/mini_margin"/>
 
         <TextView
-            android:id="@+id/edit_greenhouse_id_enter_title"
+            android:id="@+id/editGreenhouseIdEnterTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/small_margin"
@@ -50,10 +50,10 @@
             android:text="@string/edit_greenhouse_id_enter_title"
             android:textSize="@dimen/medium_text_size"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_greenhouse_id_current_id" />
+            app:layout_constraintTop_toBottomOf="@+id/editGreenhouseIdCurrentIdTextView" />
 
         <TextView
-            android:id="@+id/edit_greenhouse_id_current_id"
+            android:id="@+id/editGreenhouseIdCurrentIdTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/mini_margin"
@@ -64,10 +64,10 @@
             android:textSize="@dimen/medium_text_size"
             android:text=""
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_greenhouse_id_current_title" />
+            app:layout_constraintTop_toBottomOf="@+id/editGreenhouseIdCurrentTextView" />
 
         <EditText
-            android:id="@+id/edit_greenhouse_id_new_id"
+            android:id="@+id/editGreenhouseIdNewEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/edit_greenhouse_id_dummy_value"
@@ -80,11 +80,11 @@
             android:textColorHint="#00FFFFFF"
             android:textSize="@dimen/medium_text_size"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_greenhouse_id_enter_title" />
+            app:layout_constraintTop_toBottomOf="@+id/editGreenhouseIdEnterTextView" />
 
 
         <ImageView
-            android:id="@+id/edit_greenhouse_id_save"
+            android:id="@+id/editGreenhouseIdSave"
             android:layout_width="@dimen/home_edit_image_size"
             android:layout_height="@dimen/home_edit_image_size"
             app:layout_constraintEnd_toEndOf="parent"

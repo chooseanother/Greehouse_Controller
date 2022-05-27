@@ -34,7 +34,7 @@ public class GraphsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        navController = Navigation.findNavController(getActivity(),R.id.nav_host_fragment_graphs);
+        navController = Navigation.findNavController(getActivity(),R.id.graphsNavHostFragment);
         graphsViewModel = new ViewModelProvider(this).get(GraphsViewModel.class);
         bottomAppBar = binding.bottomNavigationGraphs;
         bottomAppBar.setOnNavigationItemSelectedListener( item -> {

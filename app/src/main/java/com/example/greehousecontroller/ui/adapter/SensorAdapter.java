@@ -1,6 +1,5 @@
 package com.example.greehousecontroller.ui.adapter;
 
-import android.graphics.drawable.ShapeDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,8 +60,8 @@ public class SensorAdapter extends RecyclerView.Adapter<SensorAdapter.ViewHolder
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            sensor = itemView.findViewById(R.id.sensor_name);
-            status = itemView.findViewById(R.id.sensor_status);
+            sensor = itemView.findViewById(R.id.sensorItemName);
+            status = itemView.findViewById(R.id.sensorItemStatus);
         }
     }
 }

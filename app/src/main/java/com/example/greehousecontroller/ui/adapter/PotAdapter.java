@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -79,10 +78,10 @@ public class PotAdapter extends RecyclerView.Adapter<PotAdapter.ViewHolder> {
 
         ViewHolder(View itemView){
             super(itemView);
-            name = itemView.findViewById(R.id.potNameTextView);
-            currentHumidity = itemView.findViewById(R.id.currentHumidityTextView);
-            minimalHumidity = itemView.findViewById(R.id.minimalHumidityTextView);
-            edit = itemView.findViewById(R.id.potMoistureEdit);
+            name = itemView.findViewById(R.id.potItemNameTextView);
+            currentHumidity = itemView.findViewById(R.id.potItemCurrentMoistureMeasurementTextView);
+            minimalHumidity = itemView.findViewById(R.id.potItemMinimalMoistureMeasurementTextView);
+            edit = itemView.findViewById(R.id.potItemEdit);
             edit.setOnClickListener(v -> {
                 //listener.OnClick(pots.get(getAdapterPosition()));
             });

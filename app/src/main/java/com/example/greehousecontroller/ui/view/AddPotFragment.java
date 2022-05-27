@@ -44,7 +44,7 @@ public class AddPotFragment extends Fragment {
                 new ViewModelProvider(this).get(AddPotViewModel.class);
         binding = FragmentAddPotBinding.inflate(inflater, container, false);
         root = binding.getRoot();
-        navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment_content_main);
+        navController = Navigation.findNavController(getActivity(), R.id.navHostFragmentContentMain);
 
         getGreenhouseID();
         setUpBinding();

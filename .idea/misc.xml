@@ -14,17 +14,23 @@
         <entry key="..\:/Users/Maggie/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/drawable/ic_sensor_circle.xml" value="0.1" />
         <entry key="..\:/Users/Maggie/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/drawable/ic_sensor_circle_green.xml" value="0.123" />
         <entry key="..\:/Users/Maggie/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/activity_greenhouse_id.xml" value="0.20863616930312098" />
+        <entry key="..\:/Users/Maggie/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/activity_log_in.xml" value="0.3009833262077811" />
         <entry key="..\:/Users/Maggie/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/activity_main.xml" value="0.20863616930312098" />
         <entry key="..\:/Users/Maggie/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/app_bar_main.xml" value="0.20863616930312098" />
+        <entry key="..\:/Users/Maggie/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/co2_graph.xml" value="0.3009833262077811" />
+        <entry key="..\:/Users/Maggie/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/content_main.xml" value="0.3009833262077811" />
         <entry key="..\:/Users/Maggie/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/fragment_add_pot.xml" value="0.4" />
+        <entry key="..\:/Users/Maggie/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/fragment_edit_greenhouse_id.xml" value="0.3009833262077811" />
         <entry key="..\:/Users/Maggie/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/fragment_edit_pot.xml" value="0.176" />
         <entry key="..\:/Users/Maggie/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/fragment_graphs.xml" value="0.19010416666666666" />
-        <entry key="..\:/Users/Maggie/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/fragment_home.xml" value="0.128" />
+        <entry key="..\:/Users/Maggie/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/fragment_home.xml" value="0.4" />
         <entry key="..\:/Users/Maggie/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/fragment_status.xml" value="0.1188542112013681" />
         <entry key="..\:/Users/Maggie/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/fragment_threshold_settings.xml" value="0.264" />
+        <entry key="..\:/Users/Maggie/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/humidity_graph.xml" value="0.3009833262077811" />
         <entry key="..\:/Users/Maggie/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/nav_header_main.xml" value="0.19174977334542156" />
-        <entry key="..\:/Users/Maggie/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/pot_item.xml" value="0.1" />
+        <entry key="..\:/Users/Maggie/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/pot_item.xml" value="0.264" />
         <entry key="..\:/Users/Maggie/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/sensor_item.xml" value="0.264" />
+        <entry key="..\:/Users/Maggie/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/layout/temperature_graph.xml" value="0.3009833262077811" />
         <entry key="..\:/Users/Maggie/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/menu/bottom_navigation_graphs.xml" value="0.2" />
         <entry key="..\:/Users/Maggie/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/menu/main.xml" value="0.20863616930312098" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/Greehouse_Controller/app/src/main/res/drawable/fully_round_layout_bg.xml" value="0.3545" />

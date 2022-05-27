@@ -18,7 +18,7 @@
         android:padding="@dimen/medium_margin">
 
         <Button
-            android:id="@+id/save_pot_button"
+            android:id="@+id/editPotSaveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/green_button_save"
@@ -29,11 +29,11 @@
             android:textColor="@color/button_text_grey"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView14"
+            app:layout_constraintTop_toBottomOf="@+id/editPotMinimalMoistureTextView"
             app:layout_constraintVertical_bias="1.0" />
 
         <EditText
-            android:id="@+id/minimum_threshold_edit_text"
+            android:id="@+id/editPotMinimumThresholdEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/small_margin"
@@ -42,21 +42,21 @@
             android:hint="@string/settings_dummy_value_temperature_humidity"
             android:paddingTop="@dimen/small_margin"
             android:textSize="@dimen/medium_text_size"
-            app:layout_constraintStart_toEndOf="@+id/textView14"
-            app:layout_constraintTop_toBottomOf="@+id/pot_name_edit_text" />
+            app:layout_constraintStart_toEndOf="@+id/editPotMinimalMoistureTextView"
+            app:layout_constraintTop_toBottomOf="@+id/editPotNameEditText" />
 
         <EditText
-            android:id="@+id/pot_name_edit_text"
+            android:id="@+id/editPotNameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/small_margin"
             android:textAlignment="center"
             android:textSize="@dimen/medium_text_size"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+            app:layout_constraintTop_toBottomOf="@+id/editPotNameTextView" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/editPotNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/pot_name"
@@ -65,7 +65,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView14"
+            android:id="@+id/editPotMinimalMoistureTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/medium_text_size"
@@ -74,10 +74,10 @@
             android:paddingStart="0dp"
             android:layout_marginTop="@dimen/small_margin"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pot_name_edit_text" />
+            app:layout_constraintTop_toBottomOf="@+id/editPotNameEditText" />
 
         <Button
-            android:id="@+id/cancel_edit_pot_button"
+            android:id="@+id/editPotCancelButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/red_button_cancel"
@@ -88,7 +88,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:padding="@dimen/small_margin"
-            app:layout_constraintTop_toBottomOf="@+id/textView14" />
+            app:layout_constraintTop_toBottomOf="@+id/editPotMinimalMoistureTextView" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
