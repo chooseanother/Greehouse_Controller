@@ -36,11 +36,12 @@ public class SensorAdapter extends RecyclerView.Adapter<SensorAdapter.ViewHolder
         holder.sensor.setText(sensor.getSensor());
         //if returns true = works -> set color to green
         if (sensor.isStatus()){
-            holder.status.setColorFilter(R.color.green_button_save);
+            holder.status.setImageResource(R.drawable.ic_sensor_circle_green);
         }
         //if returns false = does not work -> set color to red
         else{
-            holder.status.setColorFilter(R.color.red_button_cancel);
+
+            holder.status.setImageResource(R.drawable.ic_sensor_circle_red);
         }
     }
 

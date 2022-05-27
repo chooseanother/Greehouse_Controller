@@ -4,7 +4,7 @@
     android:shape="oval">
 
     <solid
-        android:color="#666666"/>
+        android:color="@color/red_button_cancel"/>
 
     <size
         android:width="@dimen/status_circle_size"

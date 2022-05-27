@@ -1,19 +1,48 @@
 package com.example.greehousecontroller.ui.viewmodel;
 
+import android.app.Application;
+
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class StatusViewModel extends ViewModel {
+import com.example.greehousecontroller.data.model.Sensor;
+import com.example.greehousecontroller.data.model.UserInfo;
+import com.example.greehousecontroller.data.repository.SensorRepository;
+import com.example.greehousecontroller.data.repository.UserInfoRepository;
+import com.example.greehousecontroller.data.repository.UserRepository;
 
-    private final MutableLiveData<String> mText;
+import java.util.List;
 
-    public StatusViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is status fragment");
+public class StatusViewModel extends AndroidViewModel {
+    private final SensorRepository sensorRepository;
+    private final UserRepository userRepository;
+    private final UserInfoRepository userInfoRepository;
+
+
+    public StatusViewModel(Application application) {
+        super(application);
+        sensorRepository = SensorRepository.getInstance(application);
+        userRepository = UserRepository.getInstance(application);
+        userInfoRepository = UserInfoRepository.getInstance();
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public MutableLiveData<List<Sensor>> getSensorsStatus(){
+        return sensorRepository.getSensors();
+    }
+
+    public void initUserInfo(){
+        userInfoRepository.init(userRepository.getCurrentUser().getValue().getUid());
+    }
+
+    public LiveData<UserInfo> getUserInfo(){
+        return userInfoRepository.getUserInfo();
+    }
+
+    public void updateSensorStatus(String greenhouseId){
+        //Todo once done debugging replace the dummy data with the actual api call
+        sensorRepository.setUpTestData();
+        //sensorRepository.updateSensors(greenhouseId);
     }
 }

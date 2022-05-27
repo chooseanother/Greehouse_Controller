@@ -182,7 +182,8 @@ public class TemperatureRepository {
                         else{
                             thresholdDAO.update("Temperature", response.body().getUpperThreshold(), response.body().getLowerThreshold());
                         }
-                    });                }
+                    });
+                }
 
                 if(!response.isSuccessful()){
                     toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_retrieve_threshold));
