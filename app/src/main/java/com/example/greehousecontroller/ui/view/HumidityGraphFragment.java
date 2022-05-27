@@ -1,5 +1,6 @@
 package com.example.greehousecontroller.ui.view;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,22 +32,20 @@ public class HumidityGraphFragment extends Fragment {
     private HumidityGraphBinding binding;
     private HumidityGraphViewModel humidityViewModel;
     private AnyChartView humidityChart;
-
+    ProgressDialog progress;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = HumidityGraphBinding.inflate(inflater, container, false);
         humidityViewModel = new ViewModelProvider(this).get(HumidityGraphViewModel.class);
         humidityChart = binding.humidityChart;
+        loadingScreen();
+        updateMeasurements();
         return binding.getRoot();
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        updateMeasurements();
-        initHumidityChart();
-    }
+
+
     public Table humidityGraph(){
         Table table = Table.instantiate("x");
         List<DataEntry> data = new ArrayList<>();
@@ -80,6 +79,12 @@ public class HumidityGraphFragment extends Fragment {
         humidityViewModel.initUserInfo();
         humidityViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
             humidityViewModel.updateHistoryData(userInfo.getGreenhouseID());
+            progress.dismiss();
+            initHumidityChart();
         });
+    }
+    private void loadingScreen()
+    {
+        progress = ProgressDialog.show(getContext(),"Humidity graph","Loading...",  true);
     }
 }

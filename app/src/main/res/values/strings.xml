@@ -105,6 +105,8 @@
     <string name="graphs_bottom_navigation_temperature">Temperature</string>
     <string name="graphs_bottom_navigation_humidity">Humidity</string>
     <string name="graphs_bottom_navigation_co2">CO2</string>
+    <string name="graphs_bottom_navigation_moisture">Moisture</string>
+
 
     <!--Status-->
 

@@ -13,6 +13,7 @@ import com.example.greehousecontroller.data.database.AppDatabase;
 import com.example.greehousecontroller.data.model.UserInfo;
 import com.example.greehousecontroller.data.repository.CO2Repository;
 import com.example.greehousecontroller.data.repository.HumidityRepository;
+import com.example.greehousecontroller.data.repository.MoistureRepository;
 import com.example.greehousecontroller.data.repository.PotRepository;
 import com.example.greehousecontroller.data.repository.TemperatureRepository;
 import com.example.greehousecontroller.data.repository.UserInfoRepository;
@@ -32,6 +33,7 @@ public class EditGreenhouseIdViewModel extends AndroidViewModel {
     private HumidityRepository humidityRepository;
     private CO2Repository co2Repository;
     private PotRepository potRepository;
+    private MoistureRepository moistureRepository;
 
     public EditGreenhouseIdViewModel(@NonNull Application application) {
         super(application);
@@ -41,6 +43,7 @@ public class EditGreenhouseIdViewModel extends AndroidViewModel {
         userInfoRepository = UserInfoRepository.getInstance();
         executorService = Executors.newFixedThreadPool(2);
 
+        moistureRepository = MoistureRepository.getInstance(application);
         temperatureRepository = TemperatureRepository.getInstance(app);
         humidityRepository = HumidityRepository.getInstance(app);
         co2Repository = CO2Repository.getInstance(app);
@@ -94,5 +97,7 @@ public class EditGreenhouseIdViewModel extends AndroidViewModel {
         humidityRepository.resetLiveData();
         co2Repository.resetLiveData();
         potRepository.resetLiveData();
+        moistureRepository.resetLiveData();
+
     }
 }
