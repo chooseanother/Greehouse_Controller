@@ -147,8 +147,13 @@ public class HomeFragment extends Fragment {
     private void fabHandle(){
         floatingActionButton = binding.fab;
         floatingActionButton.setOnClickListener(clicked->{
-            ((MainActivity)getActivity()).navController.navigate(R.id.nav_add_pot);
+            if(homeViewModel.getLatestPots().getValue().size() < 6){
+                ((MainActivity)getActivity()).navController.navigate(R.id.nav_add_pot);
+            } else {
+                Toast.makeText(getContext(), R.string.home_pot_limit_reached_toast_message, Toast.LENGTH_SHORT).show();
+            }
         });
+
     }
 
     private void recyclerViewHandle(){

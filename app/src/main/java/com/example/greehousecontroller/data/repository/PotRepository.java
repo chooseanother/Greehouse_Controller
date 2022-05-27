@@ -14,6 +14,7 @@ import com.example.greehousecontroller.data.database.AppDatabase;
 import com.example.greehousecontroller.data.model.Pot;
 import com.example.greehousecontroller.utils.ToastMaker;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -53,7 +54,7 @@ public class PotRepository {
     private void loadCachedData(){
         executorService.execute(() -> {
             if (potDAO.getAll() == null || potDAO.getAll().isEmpty()) {
-                pots = new MutableLiveData<>();
+                pots = new MutableLiveData<>(new ArrayList<>());
             } else {
                 pots = new MutableLiveData<>(potDAO.getAll());
             }
@@ -120,9 +121,9 @@ public class PotRepository {
         });
     }
 
-    public void addPot(String greenhouseId, String name, double minimumMoistureThreshold) {
+    public void addPot(String greenhouseId, int sensorId, String name, double minimumMoistureThreshold) {
         PotAPI potAPI = ServiceGenerator.getPotAPI();
-        Pot pot = new Pot(name, 0, minimumMoistureThreshold);
+        Pot pot = new Pot(name, sensorId, 0, minimumMoistureThreshold);
         Call<Pot> call = potAPI.addPotDetailsById(greenhouseId, pot);
         call.enqueue(new Callback<Pot>() {
             @Override

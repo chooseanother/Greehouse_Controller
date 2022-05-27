@@ -24,6 +24,7 @@
     <string name="home_pot_minimal_moisture">Minimal moisture: </string>
     <string name="home_your_greenhouse">Your greenhouse</string>
     <string name="home_hello_message">"Hello</string>
+    <string name="home_pot_limit_reached_toast_message">Limit of 6 pots reached, can\'t add more</string>
 
     <!--LOG IN, REGISTER-->
     <string name="login">Login</string>
@@ -59,6 +60,7 @@
     <string name="add_pot_minimal_moisture">Minimal moisture:</string>
     <string name="add_pot_name">Name:</string>
     <string name="add_pot_missing_name_exception">The name is missing</string>
+    <string name="add_pot_missing_sensor_exception">Choose a sensor</string>
     <string name="add_pot_sensor">Sensor: </string>
 
     <!--Edit pot-->
@@ -71,6 +73,7 @@
     <!--Enter greenhouse id-->
     <string name="enter_your_greenhouse_id">Enter your greenhouse ID</string>
     <string name="greenhouse_id">Greenhouse ID</string>
+    <string name="save">Save</string>
 
     <!-- Edit greenhouse id-->
     <string name="edit_greenhouse_id_nav_label">Edit greenhouse Id</string>
