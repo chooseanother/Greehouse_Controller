@@ -4,13 +4,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-
 import com.anychart.APIlib;
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
@@ -22,7 +21,6 @@ import com.anychart.enums.StockSeriesType;
 import com.example.greehousecontroller.data.model.Moisture;
 import com.example.greehousecontroller.databinding.MoistureGraph1Binding;
 import com.example.greehousecontroller.ui.viewmodel.MoistureViewModel;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -31,12 +29,15 @@ public class MoistureGraph extends Fragment {
     private MoistureGraph1Binding binding;
     private MoistureViewModel moistureViewModel;
     private AnyChartView moistureChart;
+    private ProgressBar progressBar;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = MoistureGraph1Binding.inflate(inflater, container, false);
         moistureViewModel = new ViewModelProvider(this).get(MoistureViewModel.class);
+        progressBar = binding.moistureGraphProgressBar;
         moistureChart = binding.humidityChart;
+        moistureChart.setProgressBar(progressBar);
         initMoistureChart();
 
         return binding.getRoot();

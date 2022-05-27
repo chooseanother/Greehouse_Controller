@@ -1,11 +1,9 @@
 package com.example.greehousecontroller.ui.viewmodel;
 
 import android.app.Application;
-
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-
 import com.example.greehousecontroller.data.model.Humidity;
 import com.example.greehousecontroller.data.model.UserInfo;
 import com.example.greehousecontroller.data.repository.HumidityRepository;
@@ -13,7 +11,6 @@ import com.example.greehousecontroller.data.repository.UserInfoRepository;
 import com.example.greehousecontroller.data.repository.UserRepository;
 
 import java.util.List;
-
 public class HumidityGraphViewModel extends AndroidViewModel {
     private HumidityRepository humidityRepository;
     private UserInfoRepository userInfoRepository;
@@ -41,6 +38,7 @@ public class HumidityGraphViewModel extends AndroidViewModel {
 
     public void updateHistoryData(String greenhouseId)
     {
+        humidityRepository.updateLatestMeasurement(greenhouseId);
         humidityRepository.updateHistoricalData(greenhouseId);
     }
 }

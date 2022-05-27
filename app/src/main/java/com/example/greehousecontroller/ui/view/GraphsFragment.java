@@ -1,18 +1,18 @@
 package com.example.greehousecontroller.ui.view;
+
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.anychart.chart.common.dataentry.HighLowDataEntry;
 
 import com.example.greehousecontroller.R;
@@ -25,7 +25,6 @@ public class GraphsFragment extends Fragment {
     private GraphsViewModel graphsViewModel;
     private SwipeRefreshLayout swipeRefreshLayout;
     public String greenhouseid;
-
     private BottomNavigationView bottomAppBar;
     private NavController navController;
 

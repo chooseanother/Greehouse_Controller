@@ -1,17 +1,15 @@
 package com.example.greehousecontroller.ui.view;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-
 import com.anychart.APIlib;
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
@@ -20,11 +18,9 @@ import com.anychart.charts.Stock;
 import com.anychart.core.stock.Plot;
 import com.anychart.data.Table;
 import com.anychart.enums.StockSeriesType;
-import com.example.greehousecontroller.R;
 import com.example.greehousecontroller.data.model.CO2;
 import com.example.greehousecontroller.databinding.Co2GraphBinding;
 import com.example.greehousecontroller.ui.viewmodel.CO2GraphViewModel;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -33,20 +29,18 @@ public class CO2GraphFragment extends Fragment {
     private Co2GraphBinding binding;
     private AnyChartView co2Chart;
     private CO2GraphViewModel co2GraphViewModel;
-    private ProgressDialog progress;
+    private ProgressBar progressBar;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = Co2GraphBinding.inflate(inflater, container, false);
         co2GraphViewModel = new ViewModelProvider(this).get(CO2GraphViewModel.class);
         co2Chart = binding.co2Chart;
+        progressBar = binding.co2ProgressBar;
+        co2Chart.setProgressBar(progressBar);
         updateMeasurements();
         return binding.getRoot();
-    }
-
-    private void loadingScreen()
-    {
-        progress = ProgressDialog.show(getContext(), getString(R.string.graphs_co2_graph), getString(R.string.graphs_loading), true);
     }
 
     @Override
@@ -57,7 +51,6 @@ public class CO2GraphFragment extends Fragment {
 
     public void initCO2Chart()
     {
-        loadingScreen();
         APIlib.getInstance().setActiveAnyChartView(co2Chart);
         Stock stock3 = AnyChart.stock();
         Plot plot3 = stock3.plot(0);
@@ -98,7 +91,6 @@ public class CO2GraphFragment extends Fragment {
         co2GraphViewModel.initUserInfo();
         co2GraphViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
             co2GraphViewModel.updateHistoryData(userInfo.getGreenhouseID());
-            progress.dismiss();
         });
     }
 }

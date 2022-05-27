@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -34,24 +36,20 @@ public class TemperatureGraphFragment extends Fragment {
 
     private TemperatureGraphBinding binding;
     private AnyChartView temperatureChart;
-    private ProgressDialog progress;
-
+    private ProgressBar progressBar;
     private TemperatureGraphViewModel temperatureGraphViewModel;
-
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = TemperatureGraphBinding.inflate(inflater, container, false);
         temperatureChart = binding.temperatureChart;
+        progressBar = binding.temperatureProgressBar;
         temperatureGraphViewModel = new ViewModelProvider(this).get(TemperatureGraphViewModel.class);
+        temperatureChart.setProgressBar(progressBar);
         updateMeasurements();
-        loadingScreen();
         return binding.getRoot();
     }
 
-    private void loadingScreen()
-    {
-        progress = ProgressDialog.show(getContext(), getString(R.string.graphs_temperature_graph), getString(R.string.graphs_loading), true);
-    }
+
 
     public Table temperatureGraph()
     {
@@ -99,7 +97,6 @@ public class TemperatureGraphFragment extends Fragment {
             if(userInfo.getGreenhouseID() != null)
             {
                 initTemperatureChart();
-                progress.dismiss();
             }
         });
     }

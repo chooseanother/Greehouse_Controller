@@ -20,5 +20,5 @@
         android:id="@+id/graphsNavigationMoisture"
         android:title="@string/graphs_bottom_navigation_moisture"
         android:enabled="true"
-        android:icon="@drawable/ic_graphs_bottom_nav_humidity"/>
+        android:icon="@drawable/ic_graphs_bottom_nav_moisture"/>
 </menu>
