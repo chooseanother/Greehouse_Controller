@@ -94,16 +94,21 @@ public class HomeFragment extends Fragment {
         homeViewModel.getLatestTemperature().observe(getViewLifecycleOwner(),temperature -> {
             String readings = temperature.getTemperature() + " °C";
             temperatureTextView.setText(readings);
+            swipeRefreshLayout.setRefreshing(false);
         });
 
         homeViewModel.getLatestHumidity().observe(getViewLifecycleOwner(),humidity -> {
             String readings = humidity.getHumidity() + " %";
             humidityTextView.setText(readings);
+            swipeRefreshLayout.setRefreshing(false);
+
         });
 
         homeViewModel.getLatestCO2().observe(getViewLifecycleOwner(), co2 -> {
             String readings = (int)co2.getCo2Measurement() + " ppm";
             co2TextView.setText(readings);
+            swipeRefreshLayout.setRefreshing(false);
+
         });
 
     }
