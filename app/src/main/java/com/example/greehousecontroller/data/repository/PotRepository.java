@@ -38,13 +38,8 @@ public class PotRepository {
         potDAO = appDatabase.potDAO();
         toastMaker = ToastMaker.getInstance();
 
-        executorService.execute(() -> {
-            if (potDAO.getAll() == null || potDAO.getAll().isEmpty()) {
-                pots = new MutableLiveData<>();
-            } else {
-                pots = new MutableLiveData<>(potDAO.getAll());
-            }
-        });
+        loadCachedData();
+
         currentPot = new MutableLiveData<>();
     }
 
@@ -53,6 +48,16 @@ public class PotRepository {
             instance = new PotRepository(app);
         }
         return instance;
+    }
+
+    private void loadCachedData(){
+        executorService.execute(() -> {
+            if (potDAO.getAll() == null || potDAO.getAll().isEmpty()) {
+                pots = new MutableLiveData<>();
+            } else {
+                pots = new MutableLiveData<>(potDAO.getAll());
+            }
+        });
     }
 
     public void init(String greenHouseId, int potId) {
@@ -172,5 +177,9 @@ public class PotRepository {
                 toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
             }
         });
+    }
+
+    public void resetLiveData(){
+        pots = new MutableLiveData<>();
     }
 }
