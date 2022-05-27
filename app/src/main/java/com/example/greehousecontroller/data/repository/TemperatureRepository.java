@@ -46,6 +46,17 @@ public class TemperatureRepository {
         thresholdDAO = appDatabase.thresholdDAO();
         toastMaker = ToastMaker.getInstance();
 
+        loadCachedData();
+    }
+
+    public static TemperatureRepository getInstance(Application app){
+        if (instance == null){
+            instance = new TemperatureRepository(app);
+        }
+        return instance;
+    }
+
+    private void loadCachedData(){
         executorService.execute(()->{
             if(temperatureDAO.getAll() == null || temperatureDAO.getAll().isEmpty()){
                 latest = new MutableLiveData<>();
@@ -73,13 +84,6 @@ public class TemperatureRepository {
                 historical = new MutableLiveData<>(temperatureDAO.getAll());
             }
         });
-    }
-
-    public static TemperatureRepository getInstance(Application app){
-        if (instance == null){
-            instance = new TemperatureRepository(app);
-        }
-        return instance;
     }
 
     public MutableLiveData<Temperature> getLatest() {
@@ -178,7 +182,8 @@ public class TemperatureRepository {
                         else{
                             thresholdDAO.update("Temperature", response.body().getUpperThreshold(), response.body().getLowerThreshold());
                         }
-                    });                }
+                    });
+                }
 
                 if(!response.isSuccessful()){
                     toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_retrieve_threshold));
@@ -225,5 +230,11 @@ public class TemperatureRepository {
                 toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
             }
         });
+    }
+
+    public void resetLiveData(){
+        latest = new MutableLiveData<>();
+        threshold = new MutableLiveData<>(new Threshold("Temperature",0,0));
+        historical = new MutableLiveData<>();
     }
 }

@@ -14,6 +14,7 @@
     <string name="menu_graphs">Graphs</string>
     <string name="menu_pots">Pots</string>
     <string name="menu_settings">Threshold settings</string>
+    <string name="menu_edit_greenhouse_id">Edit greenhouse Id</string>
     <string name="menu_log_out">Log out</string>
 
 
@@ -23,6 +24,7 @@
     <string name="home_pot_minimal_moisture">Minimal moisture: </string>
     <string name="home_your_greenhouse">Your greenhouse</string>
     <string name="home_hello_message">"Hello</string>
+    <string name="home_pot_limit_reached_toast_message">Limit of 6 pots reached, can\'t add more</string>
 
     <!--LOG IN, REGISTER-->
     <string name="login">Login</string>
@@ -58,6 +60,7 @@
     <string name="add_pot_minimal_moisture">Minimal moisture:</string>
     <string name="add_pot_name">Name:</string>
     <string name="add_pot_missing_name_exception">The name is missing</string>
+    <string name="add_pot_missing_sensor_exception">Choose a sensor</string>
     <string name="add_pot_sensor">Sensor: </string>
 
     <!--Edit pot-->
@@ -70,12 +73,26 @@
     <!--Enter greenhouse id-->
     <string name="enter_your_greenhouse_id">Enter your greenhouse ID</string>
     <string name="greenhouse_id">Greenhouse ID</string>
+    <string name="save">Save</string>
+
+    <!-- Edit greenhouse id-->
+    <string name="edit_greenhouse_id_nav_label">Edit greenhouse Id</string>
+    <string name="edit_greenhouse_id_title">Greenhouse Id</string>
+    <string name="edit_greenhouse_id_current_title">Current Id</string>
+    <string name="edit_greenhouse_id_enter_title">Enter new Id</string>
+    <string name="edit_greenhouse_id_dummy_value">0004A30B00E7E7C1</string>
+    <string name="edit_greenhouse_id_notify_same_id">Same greenhouse Id entered</string>
+
 
     <string name="add_pot_minimal_humidity">Minimum moisture threshold</string>
+
+    <!--Success messages-->
+    <string name="edit_greenhouse_id_success">Successfully updated Id</string>
 
     <!--Error messages-->
     <string name="connection_error">Connection error</string>
     <string name="unable_to_retrieve_measurements">Unable to retrieve latest measurements</string>
+    <string name="unable_to_retrieve_sensor_status">Unable to retrieve sensor status</string>
     <string name="unable_to_retrieve_threshold">Unable to retrieve latest threshold</string>
     <string name="unable_to_access_server">Unable to access server</string>
     <string name="unable_to_retrieve_pot_details">Unable to retrieve pot details</string>
@@ -90,5 +107,7 @@
     <string name="graphs_bottom_navigation_co2">CO2</string>
     <string name="graphs_bottom_navigation_moisture">Moisture</string>
 
+
+    <!--Status-->
 
 </resources>

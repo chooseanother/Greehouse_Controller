@@ -45,6 +45,29 @@ public class HumidityRepository {
         thresholdDAO = database.thresholdDAO();
         toastMaker = ToastMaker.getInstance();
 
+        loadCachedData();
+    }
+
+    public static HumidityRepository getInstance(Application app){
+        if (instance == null){
+            instance = new HumidityRepository(app);
+        }
+        return instance;
+    }
+
+    public MutableLiveData<Humidity> getLatest() {
+        return latest;
+    }
+
+    public MutableLiveData<Threshold> getThreshold(){
+        return threshold;
+    }
+
+    public MutableLiveData<List<Humidity>> getHistoricalData(){
+        return history;
+    }
+
+    private void loadCachedData(){
         executorService.execute(()->{
             if(humidityDAO.getAll() == null || humidityDAO.getAll().isEmpty()){
                 latest = new MutableLiveData<>();
@@ -72,26 +95,6 @@ public class HumidityRepository {
                 history = new MutableLiveData<>((ArrayList<Humidity>) humidityDAO.getAll());
             }
         });
-    }
-
-    public static HumidityRepository getInstance(Application app){
-        if (instance == null){
-            instance = new HumidityRepository(app);
-        }
-        return instance;
-    }
-
-    public MutableLiveData<Humidity> getLatest() {
-        return latest;
-    }
-
-
-    public MutableLiveData<Threshold> getThreshold(){
-        return threshold;
-    }
-
-    public MutableLiveData<List<Humidity>> getHistoricalData(){
-        return history;
     }
 
     public void updateHistoricalData(String greenhouseId) {
@@ -231,5 +234,11 @@ public class HumidityRepository {
                 toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
             }
         });
+    }
+
+    public void resetLiveData(){
+        latest = new MutableLiveData<>();
+        threshold = new MutableLiveData<>(new Threshold("Humidity",0,0));
+        history = new MutableLiveData<>();
     }
 }

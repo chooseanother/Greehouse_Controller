@@ -40,4 +40,10 @@
         android:label="@string/add_pot_fragment_title"
         tools:layout="@layout/fragment_add_pot" />
 
+    <fragment
+        android:id="@+id/nav_edit_id"
+        android:name="com.example.greehousecontroller.ui.view.EditGreenhouseIdFragment"
+        android:label="@string/edit_greenhouse_id_nav_label"
+        tools:layout="@layout/fragment_edit_greenhouse_id" />
+
 </navigation>

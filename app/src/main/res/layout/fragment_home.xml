@@ -26,7 +26,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/margin_from_screen_edge_to_recycler_view"
-            android:layout_marginBottom="@dimen/margin_from_screen_edges"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -43,17 +42,6 @@
 
             </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
-
-        <!--<TextView
-                android:id="@+id/dayDescriptionTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_from_screen_edges"
-                android:layout_marginTop="@dimen/medium_margin"
-                android:textColor="@color/white"
-                android:textSize="@dimen/medium_text_size"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />-->
 
         <TextView
             android:id="@+id/welcomingTextView"

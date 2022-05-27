@@ -13,6 +13,7 @@ public class ServiceGenerator {
     private static PotAPI potAPI;
     private static CO2Api co2Api;
     private static MoistureApi moistureApi;
+    private static SensorApi sensorApi;
 
     public static TemperatureApi getTemperatureAPI() {
         if (temperatureApi == null) {
@@ -66,6 +67,17 @@ public class ServiceGenerator {
                     .create(CO2Api.class);
         }
         return co2Api;
+    }
+
+    public static SensorApi getSensorApi(){
+        if(sensorApi == null){
+            sensorApi = new Retrofit.Builder()
+                    .baseUrl(Config.API_BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
+                    .create(SensorApi.class);
+        }
+        return sensorApi;
     }
 
 }
