@@ -92,6 +92,7 @@
     <!--Error messages-->
     <string name="connection_error">Connection error</string>
     <string name="unable_to_retrieve_measurements">Unable to retrieve latest measurements</string>
+    <string name="unable_to_retrieve_sensor_status">Unable to retrieve sensor status</string>
     <string name="unable_to_retrieve_threshold">Unable to retrieve latest threshold</string>
     <string name="unable_to_access_server">Unable to access server</string>
     <string name="unable_to_retrieve_pot_details">Unable to retrieve pot details</string>
@@ -104,5 +105,7 @@
     <string name="graphs_bottom_navigation_temperature">Temperature</string>
     <string name="graphs_bottom_navigation_humidity">Humidity</string>
     <string name="graphs_bottom_navigation_co2">CO2</string>
+
+    <!--Status-->
 
 </resources>

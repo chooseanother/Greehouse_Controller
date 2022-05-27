@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,7 +23,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class HomeFragment extends Fragment {
 
@@ -39,7 +37,7 @@ public class HomeFragment extends Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     private View root;
     private FloatingActionButton floatingActionButton;
-    private String greenhouseid;
+    private String greenhouseId;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -89,8 +87,8 @@ public class HomeFragment extends Fragment {
     private void getGreenhouseID(){
         homeViewModel.initUserInfo();
         homeViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
-            greenhouseid = userInfo.getGreenhouseID();
-            if(greenhouseid != null) {
+            greenhouseId = userInfo.getGreenhouseID();
+            if(greenhouseId != null) {
                 updateLatestMeasurements();
             }
         });
@@ -138,9 +136,8 @@ public class HomeFragment extends Fragment {
     }
 
     private void updateLatestMeasurements(){
-        // TODO: Figure out how to handle greenhouseId
-        if(greenhouseid != null) {
-            homeViewModel.updateLatestMeasurements(greenhouseid);
+        if(greenhouseId != null) {
+            homeViewModel.updateLatestMeasurements(greenhouseId);
         }
     }
 
