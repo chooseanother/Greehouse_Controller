@@ -13,11 +13,11 @@
         android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/imageView8"
+        android:id="@+id/graphsImageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.8"
-        android:contentDescription="@string/backgroundimage"
+        android:contentDescription="@string/login_background_image"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,19 +27,19 @@
 
 
     <fragment
-        android:id="@+id/nav_host_fragment_graphs"
+        android:id="@+id/graphsNavHostFragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:defaultNavHost="true"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_graphs"
+        app:layout_constraintBottom_toTopOf="@+id/graphsBottomNavigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/graphs_navigation" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation_graphs"
+        android:id="@+id/graphsBottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/graphs_bottom_nav_padding"

@@ -10,7 +10,7 @@
     android:padding="@dimen/small_margin">
 
     <TextView
-        android:id="@+id/sensor_name"
+        android:id="@+id/sensorItemName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/medium_text_size"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/sensor_status"
+        android:id="@+id/sensorItemStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_sensor_circle_red"

@@ -9,13 +9,13 @@
     tools:openDrawer="start">
 
     <include
-        android:id="@+id/app_bar_main"
+        android:id="@+id/appBarMain"
         layout="@layout/app_bar_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
     <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
+        android:id="@+id/navView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
@@ -36,11 +36,11 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_logout"
+                app:srcCompat="@drawable/ic_nav_logout"
                 android:layout_marginEnd="@dimen/nav_header_vertical_spacing"/>
 
             <TextView
-                android:id="@+id/menu_log_out"
+                android:id="@+id/menuLogOut"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"

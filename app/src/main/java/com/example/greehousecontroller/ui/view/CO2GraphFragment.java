@@ -1,17 +1,15 @@
 package com.example.greehousecontroller.ui.view;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-
 import com.anychart.APIlib;
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
@@ -23,7 +21,6 @@ import com.anychart.enums.StockSeriesType;
 import com.example.greehousecontroller.data.model.CO2;
 import com.example.greehousecontroller.databinding.Co2GraphBinding;
 import com.example.greehousecontroller.ui.viewmodel.CO2GraphViewModel;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -32,29 +29,28 @@ public class CO2GraphFragment extends Fragment {
     private Co2GraphBinding binding;
     private AnyChartView co2Chart;
     private CO2GraphViewModel co2GraphViewModel;
-    ProgressDialog progress;
+    private ProgressBar progressBar;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = Co2GraphBinding.inflate(inflater, container, false);
         co2GraphViewModel = new ViewModelProvider(this).get(CO2GraphViewModel.class);
         co2Chart = binding.co2Chart;
+        progressBar = binding.co2ProgressBar;
+        co2Chart.setProgressBar(progressBar);
         updateMeasurements();
         return binding.getRoot();
     }
 
-    private void loadingScreen()
-    {
-        progress = ProgressDialog.show(getContext(), "CO2 graph", "Loading...", true);
-    }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initCO2Chart();
     }
+
     public void initCO2Chart()
     {
-        loadingScreen();
         APIlib.getInstance().setActiveAnyChartView(co2Chart);
         Stock stock3 = AnyChart.stock();
         Plot plot3 = stock3.plot(0);
@@ -76,7 +72,9 @@ public class CO2GraphFragment extends Fragment {
             public void onChanged(@Nullable List<CO2> co2s) {
                 if (co2s.size() > 0) {
                     for (int i = 0; i < 1; i++) {
-                        data.add(new GraphsFragment.OHCLDataEntry((long) Objects.requireNonNull(co2GraphViewModel.getLatestCO2().getValue()).getTime(), 0.1, 0.1, 0.1, Objects.requireNonNull(co2GraphViewModel.getLatestCO2().getValue()).getCo2Measurement()));
+                        long time = (long) Objects.requireNonNull(co2GraphViewModel.getLatestCO2().getValue()).getTime();
+                        double measurement = Objects.requireNonNull(co2GraphViewModel.getLatestCO2().getValue()).getCo2Measurement();
+                        data.add(new GraphsFragment.OHCLDataEntry(time, 0.1, 0.1, 0.1, measurement));
                     }
                     for (CO2 co2 : co2s) {
                         data.add(new GraphsFragment.OHCLDataEntry(co2.getTime(), co2.getCo2Measurement(), co2.getCo2Measurement(), co2.getCo2Measurement(), co2.getCo2Measurement()));
@@ -93,7 +91,6 @@ public class CO2GraphFragment extends Fragment {
         co2GraphViewModel.initUserInfo();
         co2GraphViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
             co2GraphViewModel.updateHistoryData(userInfo.getGreenhouseID());
-            progress.dismiss();
         });
     }
 }

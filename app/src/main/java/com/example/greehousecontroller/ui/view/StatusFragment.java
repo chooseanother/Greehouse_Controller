@@ -22,7 +22,7 @@ public class StatusFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private SensorAdapter adapter;
-    StatusViewModel statusViewModel;
+    private StatusViewModel statusViewModel;
     private FragmentStatusBinding binding;
     private String greenhouseId;
     private View root;
@@ -35,7 +35,6 @@ public class StatusFragment extends Fragment {
 
         getGreenhouseId();
         updateSensorStatus();
-
         recyclerViewHandle();
 
         return root;
@@ -64,7 +63,7 @@ public class StatusFragment extends Fragment {
     }
 
     private void recyclerViewHandle(){
-        recyclerView = binding.listOfSensorsRecyclerView;
+        recyclerView = binding.statusListOfSensorsRecyclerView;
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new SensorAdapter(new ArrayList<>());

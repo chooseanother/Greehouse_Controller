@@ -2,23 +2,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_temperature"
+        android:id="@+id/graphsNavigationTemperature"
         android:title="@string/graphs_bottom_navigation_temperature"
         android:enabled="true"
         android:icon="@drawable/ic_home_temperature"/>
     <item
-        android:id="@+id/navigation_humidity"
+        android:id="@+id/graphsNavigationHumidity"
         android:title="@string/graphs_bottom_navigation_humidity"
         android:enabled="true"
         android:icon="@drawable/ic_graphs_bottom_nav_humidity"/>
     <item
-        android:id="@+id/navigation_co2"
+        android:id="@+id/graphsNavigationCo2"
         android:title="@string/graphs_bottom_navigation_co2"
         android:enabled="true"
         android:icon="@drawable/ic_home_co2"/>
     <item
-        android:id="@+id/navigation_moisture"
+        android:id="@+id/graphsNavigationMoisture"
         android:title="@string/graphs_bottom_navigation_moisture"
         android:enabled="true"
-        android:icon="@drawable/ic_graphs_bottom_nav_humidity"/>
+        android:icon="@drawable/ic_graphs_bottom_nav_moisture"/>
 </menu>

@@ -10,61 +10,61 @@
     android:padding="@dimen/small_margin">
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/potItemMoistureImageView"
         android:layout_width="@dimen/home_circle_image_size"
         android:layout_height="@dimen/home_circle_image_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/potNameTextView"
+        app:layout_constraintTop_toBottomOf="@+id/potItemNameTextView"
         app:srcCompat="@drawable/ic_home_moisture"
         tools:src="@drawable/ic_home_moisture"
         android:layout_marginTop="@dimen/small_margin"/>
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/potItemCurrentMoistureTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/home_pot_current_moisture"
         android:textSize="@dimen/medium_small_text_size"
         android:layout_marginStart="@dimen/small_margin"
-        app:layout_constraintStart_toEndOf="@+id/imageView6"
-        app:layout_constraintTop_toBottomOf="@+id/potNameTextView"
+        app:layout_constraintStart_toEndOf="@+id/potItemMoistureImageView"
+        app:layout_constraintTop_toBottomOf="@+id/potItemNameTextView"
         android:layout_marginTop="@dimen/small_margin"/>
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/potItemMinimalMoistureTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/small_margin"
         android:text="@string/home_pot_minimal_moisture"
         android:textSize="@dimen/medium_small_text_size"
         android:layout_marginTop="@dimen/mini_margin"
-        app:layout_constraintStart_toEndOf="@+id/imageView6"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintStart_toEndOf="@+id/potItemMoistureImageView"
+        app:layout_constraintTop_toBottomOf="@+id/potItemCurrentMoistureTextView"
         android:layout_marginBottom="@dimen/small_margin"/>
 
     <TextView
-        android:id="@+id/currentHumidityTextView"
+        android:id="@+id/potItemCurrentMoistureMeasurementTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/medium_small_text_size"
-        app:layout_constraintStart_toEndOf="@+id/textView3"
-        app:layout_constraintTop_toBottomOf="@+id/potNameTextView"
+        app:layout_constraintStart_toEndOf="@+id/potItemCurrentMoistureTextView"
+        app:layout_constraintTop_toBottomOf="@+id/potItemNameTextView"
         android:layout_marginStart="@dimen/mini_margin"
         android:layout_marginTop="@dimen/small_margin"/>
 
     <TextView
-        android:id="@+id/minimalHumidityTextView"
+        android:id="@+id/potItemMinimalMoistureMeasurementTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/medium_small_text_size"
         android:layout_marginStart="@dimen/mini_margin"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintStart_toEndOf="@+id/potItemMinimalMoistureTextView"
+        app:layout_constraintTop_toBottomOf="@+id/potItemCurrentMoistureTextView"
         android:layout_marginTop="@dimen/mini_margin"/>
 
     <TextView
-        android:id="@+id/potNameTextView"
+        android:id="@+id/potItemNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/home_pot"
@@ -73,7 +73,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/potMoistureEdit"
+        android:id="@+id/potItemEdit"
         android:layout_width="@dimen/home_edit_image_size"
         android:layout_height="@dimen/home_edit_image_size"
         android:src="@drawable/ic_home_edit_pot"

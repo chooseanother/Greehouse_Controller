@@ -38,12 +38,12 @@ public class EditGreenhouseIdFragment extends Fragment {
     private void observerUserInfo(){
         viewModel.getCurrentUserInto().observe(getViewLifecycleOwner(), userInfo -> {
             greenhouseId = userInfo.getGreenhouseID();
-            binding.editGreenhouseIdCurrentId.setText(greenhouseId);
+            binding.editGreenhouseIdCurrentIdTextView.setText(greenhouseId);
         });
     }
 
     private void bindSaveButton(){
-        EditText newIdText = binding.editGreenhouseIdNewId;
+        EditText newIdText = binding.editGreenhouseIdNewEditText;
         binding.editGreenhouseIdSave.setOnClickListener(view -> {
             String oldGreenhouseId = greenhouseId;
             String newGreenhouseId = newIdText.getText().toString();

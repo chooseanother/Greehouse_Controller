@@ -1,22 +1,15 @@
 package com.example.greehousecontroller.ui.view;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.Spinner;
-
+import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-
 import com.anychart.APIlib;
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
@@ -25,35 +18,31 @@ import com.anychart.charts.Stock;
 import com.anychart.core.stock.Plot;
 import com.anychart.data.Table;
 import com.anychart.enums.StockSeriesType;
-import com.example.greehousecontroller.R;
-import com.example.greehousecontroller.data.model.Humidity;
 import com.example.greehousecontroller.data.model.Moisture;
-import com.example.greehousecontroller.data.model.Pot;
-import com.example.greehousecontroller.databinding.FragmentMoisturePotsGraphsBinding;
 import com.example.greehousecontroller.databinding.MoistureGraph1Binding;
 import com.example.greehousecontroller.ui.viewmodel.MoistureViewModel;
-
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 public class MoistureGraph extends Fragment {
-
     private MoistureGraph1Binding binding;
     private MoistureViewModel moistureViewModel;
     private AnyChartView moistureChart;
+    private ProgressBar progressBar;
+
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = MoistureGraph1Binding.inflate(inflater, container, false);
         moistureViewModel = new ViewModelProvider(this).get(MoistureViewModel.class);
+        progressBar = binding.moistureGraphProgressBar;
         moistureChart = binding.humidityChart;
+        moistureChart.setProgressBar(progressBar);
         initMoistureChart();
 
         return binding.getRoot();
     }
+
     public Table moistureGraph(){
         Table table = Table.instantiate("x");
         List<DataEntry> data = new ArrayList<>();
@@ -75,6 +64,7 @@ public class MoistureGraph extends Fragment {
         });
         return table;
     }
+
     public void initMoistureChart(){
         APIlib.getInstance().setActiveAnyChartView(moistureChart);
         Stock stock2 = AnyChart.stock();
@@ -85,5 +75,4 @@ public class MoistureGraph extends Fragment {
         stock2.title().enabled(true);
         moistureChart.setChart(stock2);
     }
-
 }

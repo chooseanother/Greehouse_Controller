@@ -13,33 +13,33 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
-        android:id="@+id/menu_user_image"
+        android:id="@+id/navHeaderUserImage"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginTop="24dp"
         android:contentDescription="@string/nav_header_desc"
-        app:layout_constraintBottom_toTopOf="@+id/menu_user_name"
+        app:layout_constraintBottom_toTopOf="@+id/navHeaderUsername"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:background="@drawable/nav_header_round_img"
         android:clipToOutline="true"/>
 
     <TextView
-        android:id="@+id/menu_user_name"
+        android:id="@+id/navHeaderUsername"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="@string/nav_header_title"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintBottom_toTopOf="@+id/menu_user_email"
+        app:layout_constraintBottom_toTopOf="@+id/navHeaderUserEmail"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/menu_user_image" />
+        app:layout_constraintStart_toStartOf="@+id/navHeaderUserImage" />
 
     <TextView
-        android:id="@+id/menu_user_email"
+        android:id="@+id/navHeaderUserEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/nav_header_subtitle"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/menu_user_name" />
+        app:layout_constraintStart_toStartOf="@+id/navHeaderUsername" />
 </androidx.constraintlayout.widget.ConstraintLayout>

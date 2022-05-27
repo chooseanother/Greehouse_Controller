@@ -9,7 +9,7 @@
     android:padding="@dimen/margin_from_screen_edges">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraint_layout_temperature"
+        android:id="@+id/thresholdSettingsTemperatureConstraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,7 +19,7 @@
         android:background="@drawable/round_layout_bg">
 
         <TextView
-            android:id="@+id/settings_temperature"
+            android:id="@+id/thresholdSettingsTemperatureTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/settings_temperature"
@@ -27,28 +27,28 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
         <TextView
-            android:id="@+id/settings_temperature_upper_t"
+            android:id="@+id/thresholdSettingsTemperatureUpperThresholdTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/medium_text_size"
-            app:layout_constraintTop_toBottomOf="@id/settings_temperature"
+            app:layout_constraintTop_toBottomOf="@id/thresholdSettingsTemperatureTextView"
             app:layout_constraintStart_toStartOf="parent"
             android:text="@string/settings_upper_threshold"
             android:padding="@dimen/small_margin"
             android:paddingEnd="@dimen/mini_margin"/>
         <TextView
-            android:id="@+id/settings_temperature_lower_t"
+            android:id="@+id/thresholdSettingsTemperatureLowerThresholdTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/medium_text_size"
-            app:layout_constraintTop_toBottomOf="@id/settings_temperature_upper_t"
+            app:layout_constraintTop_toBottomOf="@id/thresholdSettingsTemperatureUpperThresholdTextView"
             app:layout_constraintStart_toStartOf="parent"
             android:text="@string/settings_lower_threshold"
             android:padding="@dimen/small_margin"
             android:paddingEnd="@dimen/mini_margin"/>
 
         <EditText
-            android:id="@+id/settings_temperature_upper_t_edit_text"
+            android:id="@+id/thresholdSettingsTemperatureUpperThresholdEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/settings_dummy_value_temperature_humidity"
@@ -56,12 +56,12 @@
             android:padding="@dimen/small_margin"
             android:textColorHint="#00FFFFFF"
             android:textSize="@dimen/medium_text_size"
-            app:layout_constraintEnd_toStartOf="@+id/settings_temperature_upper_t_celsius"
-            app:layout_constraintStart_toEndOf="@id/settings_temperature_upper_t"
-            app:layout_constraintTop_toBottomOf="@id/settings_temperature" />
+            app:layout_constraintEnd_toStartOf="@+id/thresholdSettingsTemperatureUpperThresholdCelsiusTextView"
+            app:layout_constraintStart_toEndOf="@id/thresholdSettingsTemperatureUpperThresholdTextView"
+            app:layout_constraintTop_toBottomOf="@id/thresholdSettingsTemperatureTextView" />
 
         <EditText
-            android:id="@+id/settings_temperature_lower_t_edit_text"
+            android:id="@+id/thresholdSettingsTemperatureLowerThresholdEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/settings_dummy_value_temperature_humidity"
@@ -69,12 +69,12 @@
             android:maxLength="4"
             android:textColorHint="#00FFFFFF"
             android:textSize="@dimen/medium_text_size"
-            app:layout_constraintEnd_toStartOf="@+id/settings_temperature_lower_t_celsius"
-            app:layout_constraintStart_toEndOf="@id/settings_temperature_lower_t"
-            app:layout_constraintTop_toBottomOf="@id/settings_temperature_upper_t_edit_text" />
+            app:layout_constraintEnd_toStartOf="@+id/thresholdSettingsTemperatureLowerThresholdCelsiusTextView"
+            app:layout_constraintStart_toEndOf="@id/thresholdSettingsTemperatureLowerThresholdTextView"
+            app:layout_constraintTop_toBottomOf="@id/thresholdSettingsTemperatureUpperThresholdEditText" />
 
         <TextView
-            android:id="@+id/settings_temperature_upper_t_celsius"
+            android:id="@+id/thresholdSettingsTemperatureUpperThresholdCelsiusTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/small_margin"
@@ -82,10 +82,10 @@
             android:text="@string/settings_temperature_celsius"
             android:textSize="@dimen/medium_text_size"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/settings_temperature" />
+            app:layout_constraintTop_toBottomOf="@id/thresholdSettingsTemperatureTextView" />
 
         <TextView
-            android:id="@+id/settings_temperature_lower_t_celsius"
+            android:id="@+id/thresholdSettingsTemperatureLowerThresholdCelsiusTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/small_margin"
@@ -93,10 +93,10 @@
             android:text="@string/settings_temperature_celsius"
             android:textSize="@dimen/medium_text_size"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/settings_temperature_upper_t_celsius" />
+            app:layout_constraintTop_toBottomOf="@id/thresholdSettingsTemperatureUpperThresholdCelsiusTextView" />
 
         <ImageView
-            android:id="@+id/settings_temperature_save"
+            android:id="@+id/thresholdSettingsTemperatureSave"
             android:layout_width="@dimen/home_edit_image_size"
             android:layout_height="@dimen/home_edit_image_size"
             app:layout_constraintEnd_toEndOf="parent"
@@ -105,7 +105,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraint_layout_co2"
+        android:id="@+id/thresholdSettingsCo2ConstraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/medium_margin"
@@ -113,10 +113,10 @@
         android:padding="@dimen/small_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/constraint_layout_temperature">
+        app:layout_constraintTop_toBottomOf="@id/thresholdSettingsTemperatureConstraintLayout">
 
         <TextView
-            android:id="@+id/settings_co2"
+            android:id="@+id/thresholdSettingsCo2TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/settings_co2"
@@ -125,7 +125,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/settings_co2_upper_t"
+            android:id="@+id/thresholdSettingsCo2UpperThresholdTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/small_margin"
@@ -133,10 +133,10 @@
             android:text="@string/settings_upper_threshold"
             android:textSize="@dimen/medium_text_size"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/settings_co2" />
+            app:layout_constraintTop_toBottomOf="@id/thresholdSettingsCo2TextView" />
 
         <TextView
-            android:id="@+id/settings_co2_lower_t"
+            android:id="@+id/thresholdSettingsCo2LowerThresholdTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/small_margin"
@@ -144,10 +144,10 @@
             android:text="@string/settings_lower_threshold"
             android:textSize="@dimen/medium_text_size"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/settings_co2_upper_t" />
+            app:layout_constraintTop_toBottomOf="@id/thresholdSettingsCo2UpperThresholdTextView" />
 
         <EditText
-            android:id="@+id/settings_co2_upper_t_edit_text"
+            android:id="@+id/thresholdSettingsCo2UpperThresholdEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/settings_dummy_value_temperature_humidity"
@@ -155,12 +155,12 @@
             android:maxLength="4"
             android:textColorHint="#00FFFFFF"
             android:textSize="@dimen/medium_text_size"
-            app:layout_constraintEnd_toStartOf="@+id/settings_co2_upper_t_celsius"
-            app:layout_constraintStart_toEndOf="@id/settings_co2_upper_t"
-            app:layout_constraintTop_toBottomOf="@id/settings_co2" />
+            app:layout_constraintEnd_toStartOf="@+id/thresholdSettingsCo2UpperThresholdPpmTextView"
+            app:layout_constraintStart_toEndOf="@id/thresholdSettingsCo2UpperThresholdTextView"
+            app:layout_constraintTop_toBottomOf="@id/thresholdSettingsCo2TextView" />
 
         <EditText
-            android:id="@+id/settings_co2_lower_t_edit_text"
+            android:id="@+id/thresholdSettingsCo2LowerThresholdEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/settings_dummy_value_temperature_humidity"
@@ -168,12 +168,12 @@
             android:maxLength="4"
             android:textColorHint="#00FFFFFF"
             android:textSize="@dimen/medium_text_size"
-            app:layout_constraintEnd_toStartOf="@+id/settings_co2_lower_t_celsius"
-            app:layout_constraintStart_toEndOf="@id/settings_co2_lower_t"
-            app:layout_constraintTop_toBottomOf="@id/settings_co2_upper_t_edit_text" />
+            app:layout_constraintEnd_toStartOf="@+id/thresholdSettingsCo2LowerThresholdPpmTextView"
+            app:layout_constraintStart_toEndOf="@id/thresholdSettingsCo2LowerThresholdTextView"
+            app:layout_constraintTop_toBottomOf="@id/thresholdSettingsCo2UpperThresholdEditText" />
 
         <TextView
-            android:id="@+id/settings_co2_upper_t_celsius"
+            android:id="@+id/thresholdSettingsCo2UpperThresholdPpmTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/small_margin"
@@ -181,10 +181,10 @@
             android:text="@string/settings_co2_ppm"
             android:textSize="@dimen/medium_text_size"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/settings_co2" />
+            app:layout_constraintTop_toBottomOf="@id/thresholdSettingsCo2TextView" />
 
         <TextView
-            android:id="@+id/settings_co2_lower_t_celsius"
+            android:id="@+id/thresholdSettingsCo2LowerThresholdPpmTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/small_margin"
@@ -192,10 +192,10 @@
             android:text="@string/settings_co2_ppm"
             android:textSize="@dimen/medium_text_size"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/settings_co2_upper_t_celsius" />
+            app:layout_constraintTop_toBottomOf="@id/thresholdSettingsCo2UpperThresholdPpmTextView" />
 
         <ImageView
-            android:id="@+id/settings_co2_save"
+            android:id="@+id/thresholdSettingsCo2Save"
             android:layout_width="@dimen/home_edit_image_size"
             android:layout_height="@dimen/home_edit_image_size"
             android:src="@drawable/ic_save"
@@ -205,7 +205,7 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraint_layout_humidity"
+        android:id="@+id/thresholdSettingsHumidityConstraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/medium_margin"
@@ -213,10 +213,10 @@
         android:padding="@dimen/small_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/constraint_layout_co2">
+        app:layout_constraintTop_toBottomOf="@id/thresholdSettingsCo2ConstraintLayout">
 
         <TextView
-            android:id="@+id/settings_humidity"
+            android:id="@+id/thresholdSettingsHumidityTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/settings_humidity"
@@ -225,7 +225,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/settings_humidity_upper_t"
+            android:id="@+id/thresholdSettingsHumidityUpperThresholdTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/small_margin"
@@ -233,10 +233,10 @@
             android:text="@string/settings_upper_threshold"
             android:textSize="@dimen/medium_text_size"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/settings_humidity" />
+            app:layout_constraintTop_toBottomOf="@id/thresholdSettingsHumidityTextView" />
 
         <TextView
-            android:id="@+id/settings_humidity_lower_t"
+            android:id="@+id/thresholdSettingsHumidityLowerThresholdTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/small_margin"
@@ -244,10 +244,10 @@
             android:text="@string/settings_lower_threshold"
             android:textSize="@dimen/medium_text_size"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/settings_humidity_upper_t" />
+            app:layout_constraintTop_toBottomOf="@id/thresholdSettingsHumidityUpperThresholdTextView" />
 
         <EditText
-            android:id="@+id/settings_humidity_upper_t_edit_text"
+            android:id="@+id/thresholdSettingsHumidityUpperThresholdEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/settings_dummy_value_temperature_humidity"
@@ -255,12 +255,12 @@
             android:maxLength="4"
             android:textColorHint="#00FFFFFF"
             android:textSize="@dimen/medium_text_size"
-            app:layout_constraintEnd_toStartOf="@+id/settings_humidity_upper_t_celsius"
-            app:layout_constraintStart_toEndOf="@id/settings_humidity_upper_t"
-            app:layout_constraintTop_toBottomOf="@id/settings_humidity" />
+            app:layout_constraintEnd_toStartOf="@+id/thresholdSettingsHumidityUpperThresholdPercentageTextView"
+            app:layout_constraintStart_toEndOf="@id/thresholdSettingsHumidityUpperThresholdTextView"
+            app:layout_constraintTop_toBottomOf="@id/thresholdSettingsHumidityTextView" />
 
         <EditText
-            android:id="@+id/settings_humidity_lower_t_edit_text"
+            android:id="@+id/thresholdSettingsHumidityLowerThresholdEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/settings_dummy_value_temperature_humidity"
@@ -268,12 +268,12 @@
             android:textColorHint="#00FFFFFF"
             android:maxLength="4"
             android:textSize="@dimen/medium_text_size"
-            app:layout_constraintEnd_toStartOf="@+id/settings_humidity_lower_t_celsius"
-            app:layout_constraintStart_toEndOf="@id/settings_humidity_lower_t"
-            app:layout_constraintTop_toBottomOf="@id/settings_humidity_upper_t_edit_text" />
+            app:layout_constraintEnd_toStartOf="@+id/thresholdSettingsHumidityLowerThresholdPercentageTextView"
+            app:layout_constraintStart_toEndOf="@id/thresholdSettingsHumidityLowerThresholdTextView"
+            app:layout_constraintTop_toBottomOf="@id/thresholdSettingsHumidityUpperThresholdEditText" />
 
         <TextView
-            android:id="@+id/settings_humidity_upper_t_celsius"
+            android:id="@+id/thresholdSettingsHumidityUpperThresholdPercentageTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/small_margin"
@@ -281,10 +281,10 @@
             android:text="@string/settings_humidity_percentage"
             android:textSize="@dimen/medium_text_size"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/settings_humidity" />
+            app:layout_constraintTop_toBottomOf="@id/thresholdSettingsHumidityTextView" />
 
         <TextView
-            android:id="@+id/settings_humidity_lower_t_celsius"
+            android:id="@+id/thresholdSettingsHumidityLowerThresholdPercentageTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/small_margin"
@@ -292,10 +292,10 @@
             android:text="@string/settings_humidity_percentage"
             android:textSize="@dimen/medium_text_size"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/settings_humidity_upper_t_celsius" />
+            app:layout_constraintTop_toBottomOf="@id/thresholdSettingsHumidityUpperThresholdPercentageTextView" />
 
         <ImageView
-            android:id="@+id/settings_humidity_save"
+            android:id="@+id/thresholdSettingsHumiditySave"
             android:layout_width="@dimen/home_edit_image_size"
             android:layout_height="@dimen/home_edit_image_size"
             android:src="@drawable/ic_save"

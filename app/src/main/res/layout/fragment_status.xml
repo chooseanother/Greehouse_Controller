@@ -7,7 +7,7 @@
     tools:context=".ui.view.StatusFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/listOfSensorsRecyclerView"
+        android:id="@+id/statusListOfSensorsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/margin_from_screen_edges"
