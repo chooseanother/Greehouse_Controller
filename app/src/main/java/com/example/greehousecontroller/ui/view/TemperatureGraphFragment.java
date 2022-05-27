@@ -21,6 +21,7 @@ import com.anychart.core.stock.Plot;
 import com.anychart.data.Table;
 import com.anychart.enums.StockSeriesType;
 
+import com.example.greehousecontroller.R;
 import com.example.greehousecontroller.data.model.Temperature;
 import com.example.greehousecontroller.databinding.TemperatureGraphBinding;
 import com.example.greehousecontroller.ui.viewmodel.TemperatureGraphViewModel;
@@ -33,7 +34,7 @@ public class TemperatureGraphFragment extends Fragment {
 
     private TemperatureGraphBinding binding;
     private AnyChartView temperatureChart;
-    ProgressDialog progress;
+    private ProgressDialog progress;
 
     private TemperatureGraphViewModel temperatureGraphViewModel;
 
@@ -49,7 +50,7 @@ public class TemperatureGraphFragment extends Fragment {
 
     private void loadingScreen()
     {
-        progress = ProgressDialog.show(getContext(), "Temperature graph", "Loading...", true);
+        progress = ProgressDialog.show(getContext(), getString(R.string.graphs_temperature_graph), getString(R.string.graphs_loading), true);
     }
 
     public Table temperatureGraph()

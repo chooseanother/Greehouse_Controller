@@ -20,6 +20,7 @@ import com.anychart.charts.Stock;
 import com.anychart.core.stock.Plot;
 import com.anychart.data.Table;
 import com.anychart.enums.StockSeriesType;
+import com.example.greehousecontroller.R;
 import com.example.greehousecontroller.data.model.Humidity;
 import com.example.greehousecontroller.databinding.HumidityGraphBinding;
 import com.example.greehousecontroller.ui.viewmodel.HumidityGraphViewModel;
@@ -32,8 +33,7 @@ public class HumidityGraphFragment extends Fragment {
     private HumidityGraphBinding binding;
     private HumidityGraphViewModel humidityViewModel;
     private AnyChartView humidityChart;
-
-    ProgressDialog progress;
+    private ProgressDialog progress;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -51,8 +51,6 @@ public class HumidityGraphFragment extends Fragment {
         updateMeasurements();
         initHumidityChart();
     }
-
-
 
     public Table humidityGraph(){
         Table table = Table.instantiate("x");
@@ -75,6 +73,7 @@ public class HumidityGraphFragment extends Fragment {
         });
         return table;
     }
+
     public void initHumidityChart(){
         APIlib.getInstance().setActiveAnyChartView(humidityChart);
         Stock stock2 = AnyChart.stock();
@@ -94,8 +93,9 @@ public class HumidityGraphFragment extends Fragment {
             initHumidityChart();
         });
     }
+
     private void loadingScreen()
     {
-        progress = ProgressDialog.show(getContext(),"Humidity graph","Loading...",  true);
+        progress = ProgressDialog.show(getContext(),getString(R.string.graphs_humidity_graph),getString(R.string.graphs_loading),  true);
     }
 }

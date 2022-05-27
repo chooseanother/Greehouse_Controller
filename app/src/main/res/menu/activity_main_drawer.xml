@@ -5,25 +5,25 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
+            android:id="@+id/navigationHome"
             android:icon="@drawable/ic_nav_home"
             android:title="@string/menu_home" />
         <item
-            android:id="@+id/nav_status"
+            android:id="@+id/navigationStatus"
             android:icon="@drawable/ic_nav_status"
             android:title="@string/menu_status" />
         <item
-            android:id="@+id/nav_graphs"
+            android:id="@+id/navigationGraphs"
             android:icon="@drawable/ic_nav_graphs"
             android:title="@string/menu_graphs" />
 
         <item
-            android:id="@+id/nav_settings"
+            android:id="@+id/navigationThresholdSettings"
             android:icon="@drawable/ic_nav_threshold_settings"
             android:title="@string/menu_settings" />
 
         <item
-            android:id="@+id/nav_edit_id"
+            android:id="@+id/navigationEditGreenhouseId"
             android:icon="@drawable/ic_nav_edit_greenhouse_id"
             android:title="@string/menu_edit_greenhouse_id" />
     </group>

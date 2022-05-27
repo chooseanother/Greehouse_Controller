@@ -20,6 +20,7 @@ import com.anychart.charts.Stock;
 import com.anychart.core.stock.Plot;
 import com.anychart.data.Table;
 import com.anychart.enums.StockSeriesType;
+import com.example.greehousecontroller.R;
 import com.example.greehousecontroller.data.model.CO2;
 import com.example.greehousecontroller.databinding.Co2GraphBinding;
 import com.example.greehousecontroller.ui.viewmodel.CO2GraphViewModel;
@@ -32,7 +33,7 @@ public class CO2GraphFragment extends Fragment {
     private Co2GraphBinding binding;
     private AnyChartView co2Chart;
     private CO2GraphViewModel co2GraphViewModel;
-    ProgressDialog progress;
+    private ProgressDialog progress;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -45,13 +46,15 @@ public class CO2GraphFragment extends Fragment {
 
     private void loadingScreen()
     {
-        progress = ProgressDialog.show(getContext(), "CO2 graph", "Loading...", true);
+        progress = ProgressDialog.show(getContext(), getString(R.string.graphs_co2_graph), getString(R.string.graphs_loading), true);
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initCO2Chart();
     }
+
     public void initCO2Chart()
     {
         loadingScreen();

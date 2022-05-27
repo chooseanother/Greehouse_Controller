@@ -80,11 +80,18 @@
     <string name="edit_greenhouse_id_dummy_value">0004A30B00E7E7C1</string>
     <string name="edit_greenhouse_id_notify_same_id">Same greenhouse Id entered</string>
 
-    <!--graphs bottom navigation-->
+    <!--graphs-->
+    <!--bottom navigation-->
     <string name="graphs_bottom_navigation_temperature">Temperature</string>
     <string name="graphs_bottom_navigation_humidity">Humidity</string>
     <string name="graphs_bottom_navigation_co2">CO2</string>
-
+    <string name="graphs_bottom_navigation_moisture">Moisture</string>
+    <!--loading-->
+    <string name="graphs_loading">Loading...</string>
+    <string name="graphs_temperature_graph">Temperature graph</string>
+    <string name="graphs_humidity_graph">Humidity graph</string>
+    <string name="graphs_moisture_graph">Moisture graph</string>
+    <string name="graphs_co2_graph">CO2 graph</string>
 
 
     <!--NOT VIEW SPECIFIC-->
@@ -103,15 +110,6 @@
     <string name="unable_to_add_pot">Unable to add pot</string>
     <string name="unable_to_update_pot">Unable to update pot</string>
 
-
-    <!--Graphs bottom navigation-->
-    <string name="graphs_bottom_navigation_temperature">Temperature</string>
-    <string name="graphs_bottom_navigation_humidity">Humidity</string>
-    <string name="graphs_bottom_navigation_co2">CO2</string>
-    <string name="graphs_bottom_navigation_moisture">Moisture</string>
-
-
-    <!--Status-->
     <!--Buttons for the whole app-->
     <string name="cancel_button">Cancel</string>
     <string name="save_button">Save</string>

@@ -3,16 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/moisture_swap_fragment"
-    app:startDestination="@+id/moisture_graph">
+    app:startDestination="@+id/moistureGraph">
 
     <fragment
-        android:id="@+id/moisture_graph"
+        android:id="@+id/moistureGraph"
         android:name="com.example.greehousecontroller.ui.view.MoistureGraph"
         android:label="Moisture"
         tools:layout="@layout/moisture_graph1"/>
 
     <fragment
-        android:id="@+id/moisture_graph2"
+        android:id="@+id/moistureGraph2"
         android:name="com.example.greehousecontroller.ui.view.MoistureGraph"
         android:label="Moisture"
         tools:layout="@layout/moisture_graph2"/>

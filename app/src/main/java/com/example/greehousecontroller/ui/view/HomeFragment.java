@@ -26,19 +26,20 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
-
     private RecyclerView recyclerView;
     private PotAdapter adapter;
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
+    private String greenhouseId;
+    private View root;
+
+    //xml elements
     private TextView temperatureTextView;
     private TextView co2TextView;
     private TextView humidityTextView;
     private TextView welcomingTextView;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private View root;
     private FloatingActionButton floatingActionButton;
-    private String greenhouseId;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

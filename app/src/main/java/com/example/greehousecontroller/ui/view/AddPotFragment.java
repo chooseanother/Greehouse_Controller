@@ -88,7 +88,7 @@ public class AddPotFragment extends Fragment {
                             potMinimalHumidityEditText.getText().toString());
                 }
                 if(result){
-                    navController.navigate(R.id.nav_home);
+                    navController.navigate(R.id.navigationHome);
                 }
             }
         });
@@ -96,7 +96,7 @@ public class AddPotFragment extends Fragment {
         cancelPotButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navController.navigate(R.id.nav_home);
+                navController.navigate(R.id.navigationHome);
             }
         });
     }

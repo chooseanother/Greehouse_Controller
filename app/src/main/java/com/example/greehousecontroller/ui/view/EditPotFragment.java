@@ -22,7 +22,6 @@ import com.example.greehousecontroller.ui.viewmodel.EditPotViewModel;
 import java.text.DecimalFormat;
 
 public class EditPotFragment extends Fragment {
-
     private FragmentEditPotBinding binding;
     private EditPotViewModel viewModel;
     private View root;
@@ -71,7 +70,7 @@ public class EditPotFragment extends Fragment {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity)getActivity()).navController.navigate(R.id.nav_home);
+                ((MainActivity)getActivity()).navController.navigate(R.id.navigationHome);
             }
         });
     }
@@ -84,7 +83,7 @@ public class EditPotFragment extends Fragment {
                 if (pot.getValue() != null) {
                     boolean response = viewModel.updateCurrentPot(greenhouseId, pot.getValue().getId(), potName.getText().toString(), minimalThreshold.getText().toString());
                     if (response) {
-                        ((MainActivity) getActivity()).navController.navigate(R.id.nav_home);
+                        ((MainActivity) getActivity()).navController.navigate(R.id.navigationHome);
                     }
                 }
 
