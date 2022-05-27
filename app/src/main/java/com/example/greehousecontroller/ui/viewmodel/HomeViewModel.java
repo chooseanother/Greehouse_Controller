@@ -25,11 +25,11 @@ import java.util.List;
 
 public class HomeViewModel extends AndroidViewModel {
 
-    private TemperatureRepository temperatureRepository;
-    private HumidityRepository humidityRepository;
-    private CO2Repository co2Repository;
-    private PotRepository potRepository;
-    private UserRepository userRepository;
+    private final TemperatureRepository temperatureRepository;
+    private final HumidityRepository humidityRepository;
+    private final CO2Repository co2Repository;
+    private final PotRepository potRepository;
+    private final UserRepository userRepository;
     private final UserInfoRepository userInfoRepository;
 
     public HomeViewModel(Application application) {
