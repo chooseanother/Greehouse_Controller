@@ -1,17 +1,15 @@
 package com.example.greehousecontroller.ui.view;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-
 import com.anychart.APIlib;
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
@@ -20,11 +18,9 @@ import com.anychart.charts.Stock;
 import com.anychart.core.stock.Plot;
 import com.anychart.data.Table;
 import com.anychart.enums.StockSeriesType;
-import com.example.greehousecontroller.R;
 import com.example.greehousecontroller.data.model.Humidity;
 import com.example.greehousecontroller.databinding.HumidityGraphBinding;
 import com.example.greehousecontroller.ui.viewmodel.HumidityGraphViewModel;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -33,14 +29,15 @@ public class HumidityGraphFragment extends Fragment {
     private HumidityGraphBinding binding;
     private HumidityGraphViewModel humidityViewModel;
     private AnyChartView humidityChart;
-    private ProgressDialog progress;
+    private ProgressBar progressBar;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = HumidityGraphBinding.inflate(inflater, container, false);
         humidityViewModel = new ViewModelProvider(this).get(HumidityGraphViewModel.class);
         humidityChart = binding.humidityChart;
-        loadingScreen();
+        progressBar = binding.humidityProgressBar;
+        humidityChart.setProgressBar(progressBar);
         updateMeasurements();
         return binding.getRoot();
     }
@@ -89,13 +86,7 @@ public class HumidityGraphFragment extends Fragment {
         humidityViewModel.initUserInfo();
         humidityViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
             humidityViewModel.updateHistoryData(userInfo.getGreenhouseID());
-            progress.dismiss();
             initHumidityChart();
         });
-    }
-
-    private void loadingScreen()
-    {
-        progress = ProgressDialog.show(getContext(),getString(R.string.graphs_humidity_graph),getString(R.string.graphs_loading),  true);
     }
 }

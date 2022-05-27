@@ -1,6 +1,5 @@
 package com.example.greehousecontroller.ui.view;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -16,12 +14,10 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-
 import com.example.greehousecontroller.R;
 import com.example.greehousecontroller.data.model.Pot;
 import com.example.greehousecontroller.databinding.FragmentMoisturePotsGraphsBinding;
 import com.example.greehousecontroller.ui.viewmodel.MoistureViewModel;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +27,6 @@ public class MoistureGraphFragment extends Fragment {
     private Spinner spinner;
     private List<PotSpinner> spinnerList;
     private NavController navController;
-    private ProgressDialog progress;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -40,7 +35,6 @@ public class MoistureGraphFragment extends Fragment {
         spinner = binding.spinner;
         initSpinner();
         onChangeSpinner();
-        loadingScreen();
         updateMeasurements();
         return binding.getRoot();
     }
@@ -50,7 +44,6 @@ public class MoistureGraphFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                loadingScreen();
                 updateMeasurements();
                 navController = Navigation.findNavController(getActivity(),R.id.moisture_swap_fragment);
                 if(navController.getCurrentDestination().getId() == R.id.moisture_swap_fragment) {
@@ -64,11 +57,6 @@ public class MoistureGraphFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
-    }
-
-    private void loadingScreen()
-    {
-        progress = ProgressDialog.show(getContext(),getString(R.string.graphs_moisture_graph),getString(R.string.graphs_loading),  true);
     }
 
     public void initSpinner()
@@ -101,7 +89,6 @@ public class MoistureGraphFragment extends Fragment {
             if(spinnerList.size() > 0) {
                 moistureViewModel.updateHistoryData(userInfo.getGreenhouseID(), spinnerList.get(spinner.getSelectedItemPosition()).id);
             }
-            progress.dismiss();
         });
     }
 
