@@ -41,7 +41,7 @@ public class CO2GraphViewModel extends AndroidViewModel {
 
     public void updateHistoryData(String greenhouseId)
     {
-        co2Repository.updateLatestMeasurement(greenhouseId);
+        co2Repository.updateLatestMeasurement(greenhouseId, null);
         co2Repository.updateHistoricalData(greenhouseId);
     }
 }

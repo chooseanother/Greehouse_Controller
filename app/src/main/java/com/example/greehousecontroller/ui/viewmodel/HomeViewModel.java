@@ -62,13 +62,19 @@ public class HomeViewModel extends AndroidViewModel {
     }
 
     public void updateLatestMeasurements(String greenhouseId){
-        refreshing.setValue(true);
         temperatureRepository.updateLatestMeasurement(greenhouseId, () -> {
             refreshing.postValue(false);
         });
-        humidityRepository.updateLatestMeasurement(greenhouseId);
-        potRepository.updateLatestMeasurement(greenhouseId);
-        co2Repository.updateLatestMeasurement(greenhouseId);
+        humidityRepository.updateLatestMeasurement(greenhouseId, () -> {
+            refreshing.postValue(false);
+        });
+        potRepository.updateLatestMeasurement(greenhouseId, () -> {
+            refreshing.postValue(false);
+        });
+        co2Repository.updateLatestMeasurement(greenhouseId, () -> {
+            refreshing.postValue(false);
+        });
+
     }
 
     public LiveData<UserInfo> getUserInfo(){

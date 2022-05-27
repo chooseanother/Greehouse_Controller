@@ -67,8 +67,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume(){
         super.onResume();
-        // TODO: Figure out where to place this, is this the best place
-        //  since this is always called no matter what
         updateLatestMeasurements();
     }
 

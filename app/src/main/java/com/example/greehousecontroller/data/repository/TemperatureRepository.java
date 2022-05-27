@@ -154,10 +154,11 @@ public class TemperatureRepository {
 
                 if(!response.isSuccessful()){
                     toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_retrieve_measurements));
+                    if (callback != null){
+                        callback.call();
+                    }
                 }
-                if (callback != null){
-                    callback.call();
-                }
+
             }
             @EverythingIsNonNull
             @Override
