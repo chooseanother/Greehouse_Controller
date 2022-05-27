@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +38,7 @@ public class GraphsFragment extends Fragment {
         updateMeasurements();
         initSwipeRefreshLayout();
         observeData();
+        observeApiStatus();
         return binding.getRoot();
     }
 
@@ -64,6 +67,13 @@ public class GraphsFragment extends Fragment {
             return false;
         });
     }
+
+    private void observeApiStatus(){
+        graphsViewModel.getRefreshing().observe(getViewLifecycleOwner(), aBoolean -> {
+            swipeRefreshLayout.setRefreshing(aBoolean);
+        });
+    }
+
 
     private void initSwipeRefreshLayout(){
         swipeRefreshLayout = binding.swipeRefreshLayout;

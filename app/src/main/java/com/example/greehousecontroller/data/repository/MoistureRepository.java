@@ -76,7 +76,7 @@ public class MoistureRepository {
         return instance;
     }
 
-    public void updateHistoricalData(String greenhouseId,int potId) {
+    public void updateHistoricalData(String greenhouseId,int potId,RepositoryCallback callback) {
         history.setValue(new ArrayList<>());
         MoistureApi moistureApi = ServiceGenerator.getMoistureAPI();
         Call<List<Moisture>> call = moistureApi.getHistoricalMoisture(greenhouseId,potId);
@@ -101,6 +101,9 @@ public class MoistureRepository {
                 }
                 if(!response.isSuccessful()){
                     toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_retrieve_measurements));
+                    if (callback != null){
+                        callback.call();
+                    }
                 }
             }
             @EverythingIsNonNull
@@ -108,6 +111,9 @@ public class MoistureRepository {
             public void onFailure(Call<List<Moisture>> call, Throwable t) {
                 Log.e("Api-moist-hist",t.getMessage());
                 toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
+                if (callback != null){
+                    callback.call();
+                }
             }
 
         });
