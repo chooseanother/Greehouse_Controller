@@ -23,6 +23,7 @@
     <string name="home_pot_minimal_moisture">Minimal moisture: </string>
     <string name="home_your_greenhouse">Your greenhouse</string>
     <string name="home_hello_message">"Hello</string>
+    <string name="home_pot_limit_reached_toast_message">Limit of 6 pots reached, can\'t add more</string>
 
     <!--LOG IN, REGISTER-->
     <string name="login">Login</string>
