@@ -38,24 +38,19 @@ public class EditPotFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         viewModel =
                 new ViewModelProvider(this).get(EditPotViewModel.class);
-        getGreenhouseID();
+        setUpTextViews();
         viewModel.init(greenhouseId, Integer.parseInt(getArguments().getString("id")));
         binding = FragmentEditPotBinding.inflate(inflater, container, false);
         root = binding.getRoot();
 
         setUpBinding();
-        getGreenhouseID();
+        setUpTextViews();
+        setUpCancelButton();
 
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((MainActivity)getActivity()).navController.navigate(R.id.nav_home);
-            }
-        });
         return root;
     }
 
-    private void getGreenhouseID(){
+    private void setUpTextViews(){
         viewModel.initUserInfo();
         viewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
             greenhouseId = userInfo.getGreenhouseID();
@@ -68,20 +63,32 @@ public class EditPotFragment extends Fragment {
                     minimalThreshold.setText(df.format(pot.getValue().getLowerMoistureThreshold()));
                 }
             });
+            setUpSaveButton(pot);
+        });
+    }
 
-            saveButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //calling viewModel to check for input and updating pot in the D
-                    if (pot.getValue() != null) {
-                        boolean response = viewModel.updateCurrentPot(greenhouseId, pot.getValue().getId(), potName.getText().toString(), minimalThreshold.getText().toString());
-                        if (response) {
-                            ((MainActivity) getActivity()).navController.navigate(R.id.nav_home);
-                        }
+    private void setUpCancelButton(){
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity)getActivity()).navController.navigate(R.id.nav_home);
+            }
+        });
+    }
+
+    private void setUpSaveButton(MutableLiveData<Pot> pot){
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //calling viewModel to check for input and updating pot in the D
+                if (pot.getValue() != null) {
+                    boolean response = viewModel.updateCurrentPot(greenhouseId, pot.getValue().getId(), potName.getText().toString(), minimalThreshold.getText().toString());
+                    if (response) {
+                        ((MainActivity) getActivity()).navController.navigate(R.id.nav_home);
                     }
-
                 }
-            });
+
+            }
         });
     }
 
@@ -92,10 +99,10 @@ public class EditPotFragment extends Fragment {
     }
 
     private void setUpBinding(){
-        potName = binding.potNameEditText;
-        saveButton = root.findViewById(R.id.editPotSaveButton);
-        minimalThreshold = root.findViewById(R.id.editPotMinimumThresholdEditText);
+        potName = binding.editPotNameEditText;
+        saveButton = binding.editPotSaveButton;
+        minimalThreshold = binding.editPotMinimumThresholdEditText;
         minimalThreshold.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-        cancelButton = root.findViewById(R.id.editPotCancelButton);
+        cancelButton = binding.editPotCancelButton;
     }
 }

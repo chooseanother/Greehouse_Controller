@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         setupNavigation();
         bindLogOutMenu();
         toolbar = binding.appBarMain.toolbar;
-
     }
 
     private void initViews() {
@@ -66,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.navHostFragmentContentMain);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
     }
 
     @Override
@@ -99,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
                         startGreenhouseActivity();
                         finish();
                     }
-
                 });
             } else {
                 startLoginActivity();

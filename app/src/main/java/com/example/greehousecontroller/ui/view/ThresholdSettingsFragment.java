@@ -75,31 +75,31 @@ public class ThresholdSettingsFragment extends Fragment {
     }
 
     private void setUpBindingThresholdsEditText(){
-        temperatureLowerThreshold = binding.settingsTemperatureLowerTEditText;
-        temperatureUpperThreshold = binding.settingsTemperatureUpperTEditText;
+        temperatureLowerThreshold = binding.thresholdSettingsTemperatureLowerThresholdEditText;
+        temperatureUpperThreshold = binding.thresholdSettingsTemperatureUpperThresholdEditText;
 
-        co2LowerThreshold = binding.settingsCo2LowerTEditText;
-        co2UpperThreshold = binding.settingsCo2UpperTEditText;
+        co2LowerThreshold = binding.thresholdSettingsCo2LowerThresholdEditText;
+        co2UpperThreshold = binding.thresholdSettingsCo2UpperThresholdEditText;
 
-        humidityLowerThreshold = binding.settingsHumidityLowerTEditText;
-        humidityUpperThreshold = binding.settingsHumidityUpperTEditText;
+        humidityLowerThreshold = binding.thresholdSettingsHumidityLowerThresholdEditText;
+        humidityUpperThreshold = binding.thresholdSettingsHumidityUpperThresholdEditText;
     }
 
     private void setUpBindingThresholdsSave(){
         //temperature
-        saveTemperatureThreshold = binding.settingsTemperatureSave;
+        saveTemperatureThreshold = binding.thresholdSettingsTemperatureSave;
         saveTemperatureThreshold.setOnClickListener(view -> {
             viewModel.setTemperatureThreshold(greenhouseId, temperatureUpperThreshold.getText().toString(), temperatureLowerThreshold.getText().toString());
         });
 
         //co2
-        saveCo2Threshold = binding.settingsCo2Save;
+        saveCo2Threshold = binding.thresholdSettingsCo2Save;
         saveCo2Threshold.setOnClickListener(view -> {
             viewModel.setCo2Threshold(greenhouseId, co2UpperThreshold.getText().toString(), co2UpperThreshold.getText().toString());
         });
 
         //humidity
-        saveHumidityThreshold = binding.settingsHumiditySave;
+        saveHumidityThreshold = binding.thresholdSettingsHumiditySave;
         saveHumidityThreshold.setOnClickListener(view -> {
             viewModel.setHumidityThreshold(greenhouseId, humidityUpperThreshold.getText().toString(), humidityLowerThreshold.getText().toString());
         });
@@ -107,7 +107,6 @@ public class ThresholdSettingsFragment extends Fragment {
 
     private void initializeData(){
         viewModel.initializeData(greenhouseId);
-
     }
 
     private void initializeObserve(){

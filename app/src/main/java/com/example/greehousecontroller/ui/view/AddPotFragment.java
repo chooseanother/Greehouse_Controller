@@ -30,8 +30,8 @@ public class AddPotFragment extends Fragment {
     private String greenhouseId;
 
     //xml elements
-    private EditText namePotTextView;
-    private EditText minimalHumidityTextView;
+    private EditText potNameEditText;
+    private EditText potMinimalHumidityEditText;
     private Button savePotButton;
     private Button cancelPotButton;
     private View root;
@@ -65,12 +65,12 @@ public class AddPotFragment extends Fragment {
     }
 
     private void setUpBinding(){
-        namePotTextView = binding.potNameTextView;
-        minimalHumidityTextView = binding.minimalHumidityTextView;
-        minimalHumidityTextView.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-        savePotButton = binding.saveAddPotButton;
-        cancelPotButton = binding.cancelPotButton;
-        spinner = binding.sensorSpinner;
+        potNameEditText = binding.addPotNameEditText;
+        potMinimalHumidityEditText = binding.addPotMinimalMoistureEditText;
+        potMinimalHumidityEditText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        savePotButton = binding.addPotSaveButton;
+        cancelPotButton = binding.addPotCancelButton;
+        spinner = binding.addPotSensorSpinner;
     }
 
     private void setUpListeners(){
@@ -79,13 +79,13 @@ public class AddPotFragment extends Fragment {
             public void onClick(View view) {
                 boolean result;
                 if(spinner.getSelectedItem() == null){
-                    result = viewModel.validInput(greenhouseId, null , namePotTextView.getText().toString(),
-                            minimalHumidityTextView.getText().toString());
+                    result = viewModel.validInput(greenhouseId, null , potNameEditText.getText().toString(),
+                            potMinimalHumidityEditText.getText().toString());
                 }
                 else
                 {
-                    result = viewModel.validInput(greenhouseId, spinner.getSelectedItem().toString() , namePotTextView.getText().toString(),
-                            minimalHumidityTextView.getText().toString());
+                    result = viewModel.validInput(greenhouseId, spinner.getSelectedItem().toString() , potNameEditText.getText().toString(),
+                            potMinimalHumidityEditText.getText().toString());
                 }
                 if(result){
                     navController.navigate(R.id.nav_home);

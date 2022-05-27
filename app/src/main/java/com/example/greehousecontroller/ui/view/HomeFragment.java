@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,7 +40,6 @@ public class HomeFragment extends Fragment {
     private FloatingActionButton floatingActionButton;
     private String greenhouseId;
 
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
@@ -59,11 +59,6 @@ public class HomeFragment extends Fragment {
         recyclerViewHandle();
         initSwipeRefreshLayout();
         recyclerView.setAdapter(adapter);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
     }
 
     @Override
@@ -117,22 +112,20 @@ public class HomeFragment extends Fragment {
 
     public void settingOfTextViews(){
         // Measurements
-        temperatureTextView = binding.temperatureMeasurementTextView;
-        co2TextView = binding.co2measurementTextView;
-        humidityTextView = binding.humidityMeasurementTextView;
+        temperatureTextView = binding.homeTemperatureMeasurementTextView;
+        co2TextView = binding.homeCo2measurementTextView;
+        humidityTextView = binding.homeHumidityMeasurementTextView;
 
         //Header
-        welcomingTextView = binding.welcomingTextView;
+        welcomingTextView = binding.homeWelcomingTextView;
 
         FirebaseUser user = homeViewModel.getUser();
+        String welcomeMessage = getString(R.string.home_hello_message);
         if(user != null){
-            String welcomeMessage = getString(R.string.home_hello_message) + ", " + homeViewModel.getUser().getDisplayName() + "!";
-            welcomingTextView.setText(welcomeMessage);
+            welcomeMessage += ", " + homeViewModel.getUser().getDisplayName();
         }
-        else{
-            String welcomeMessage = getString(R.string.home_hello_message) + "!";
-            welcomingTextView.setText(welcomeMessage);
-        }
+        welcomeMessage += "!";
+        welcomingTextView.setText(welcomeMessage);
     }
 
     private void updateLatestMeasurements(){
@@ -142,7 +135,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void fabHandle(){
-        floatingActionButton = binding.fab;
+        floatingActionButton = binding.homeFab;
         floatingActionButton.setOnClickListener(clicked->{
             if(homeViewModel.getLatestPots().getValue().size() < 6){
                 ((MainActivity)getActivity()).navController.navigate(R.id.nav_add_pot);
@@ -150,11 +143,10 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(getContext(), R.string.home_pot_limit_reached_toast_message, Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     private void recyclerViewHandle(){
-        recyclerView = binding.listOfPotsRecycleView;
+        recyclerView = binding.homeListOfPotsRecycleView;
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new PotAdapter(new ArrayList<>());

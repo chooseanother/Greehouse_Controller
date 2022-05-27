@@ -27,7 +27,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/potItemNameTextView"
+            android:id="@+id/addPotNameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/mini_margin"
@@ -45,7 +45,7 @@
             android:paddingStart="0dp"
             android:textSize="@dimen/medium_text_size"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/potItemNameTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/addPotNameEditText" />
 
         <Button
             android:id="@+id/addPotSaveButton"
@@ -53,7 +53,6 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/green_button_save"
             android:layout_marginTop="@dimen/medium_margin"
-            android:onClick="saveButtonHandle"
             android:padding="@dimen/small_margin"
             android:textSize="@dimen/medium_text_size"
             android:text="@string/save_button"
@@ -67,7 +66,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/red_button_cancel"
-            android:onClick="cancelButtonHandle"
             android:textSize="@dimen/medium_text_size"
             android:layout_marginTop="@dimen/medium_margin"
             android:text="@string/cancel_button"
@@ -78,7 +76,7 @@
             app:layout_constraintTop_toBottomOf="@+id/addPotSensorTextView" />
 
         <EditText
-            android:id="@+id/potItemMinimalMoistureMeasurementTextView"
+            android:id="@+id/addPotMinimalMoistureEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/settings_dummy_value_temperature_humidity"
@@ -88,7 +86,7 @@
             android:maxLength="4"
             android:layout_marginTop="@dimen/small_margin"
             app:layout_constraintStart_toEndOf="@+id/addPotMinimalMoistureTextView"
-            app:layout_constraintTop_toBottomOf="@+id/potItemNameTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/addPotNameEditText" />
 
 
         <TextView
