@@ -101,7 +101,7 @@
             android:layout_height="@dimen/home_edit_image_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/ic_settings_save"/>
+            android:src="@drawable/ic_save"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -198,7 +198,7 @@
             android:id="@+id/settings_co2_save"
             android:layout_width="@dimen/home_edit_image_size"
             android:layout_height="@dimen/home_edit_image_size"
-            android:src="@drawable/ic_settings_save"
+            android:src="@drawable/ic_save"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -298,7 +298,7 @@
             android:id="@+id/settings_humidity_save"
             android:layout_width="@dimen/home_edit_image_size"
             android:layout_height="@dimen/home_edit_image_size"
-            android:src="@drawable/ic_settings_save"
+            android:src="@drawable/ic_save"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

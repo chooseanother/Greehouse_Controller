@@ -12,6 +12,7 @@ import com.example.greehousecontroller.data.api.ServiceGenerator;
 import com.example.greehousecontroller.data.dao.PotDAO;
 import com.example.greehousecontroller.data.database.AppDatabase;
 import com.example.greehousecontroller.data.model.Pot;
+import com.example.greehousecontroller.utils.ToastMaker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,20 +30,17 @@ public class PotRepository {
     private static PotRepository instance;
     private final Application app;
     private final ExecutorService executorService;
+    private ToastMaker toastMaker;
 
     private PotRepository(Application app) {
         this.app = app;
         AppDatabase appDatabase = AppDatabase.getInstance(app);
         executorService = Executors.newFixedThreadPool(2);
         potDAO = appDatabase.potDAO();
+        toastMaker = ToastMaker.getInstance();
 
-        executorService.execute(() -> {
-            if (potDAO.getAll() == null || potDAO.getAll().isEmpty()) {
-                pots = new MutableLiveData<>(new ArrayList<>());
-            } else {
-                pots = new MutableLiveData<>(potDAO.getAll());
-            }
-        });
+        loadCachedData();
+
         currentPot = new MutableLiveData<>();
     }
 
@@ -51,6 +49,16 @@ public class PotRepository {
             instance = new PotRepository(app);
         }
         return instance;
+    }
+
+    private void loadCachedData(){
+        executorService.execute(() -> {
+            if (potDAO.getAll() == null || potDAO.getAll().isEmpty()) {
+                pots = new MutableLiveData<>(new ArrayList<>());
+            } else {
+                pots = new MutableLiveData<>(potDAO.getAll());
+            }
+        });
     }
 
     public void init(String greenHouseId, int potId) {
@@ -67,14 +75,14 @@ public class PotRepository {
                 }
 
                 if (!response.isSuccessful()) {
-                    Toast.makeText(app.getApplicationContext(), R.string.unable_to_retrieve_pot_details, Toast.LENGTH_SHORT);
+                    toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_retrieve_pot_details));
                 }
             }
 
             @Override
             public void onFailure(Call<Pot> call, Throwable t) {
                 Log.e("Api-pot-ulm", t.getMessage());
-                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT);
+                toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
             }
         });
     }
@@ -101,14 +109,14 @@ public class PotRepository {
                 }
 
                 if (!response.isSuccessful()) {
-                    Toast.makeText(app.getApplicationContext(), R.string.unable_to_update_pot, Toast.LENGTH_SHORT);
+                    toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_update_pot));
                 }
             }
 
             @Override
             public void onFailure(Call<Pot> call, Throwable t) {
                 Log.e("Api-pot-ulm", t.getMessage());
-                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT);
+                toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
             }
         });
     }
@@ -127,14 +135,14 @@ public class PotRepository {
                 }
 
                 if (!response.isSuccessful()) {
-                    Toast.makeText(app.getApplicationContext(), R.string.unable_to_add_pot, Toast.LENGTH_SHORT);
+                    toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_add_pot));
                 }
             }
 
             @Override
             public void onFailure(Call<Pot> call, Throwable t) {
                 Log.e("Api-pot-ulm", t.getMessage());
-                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT);
+                toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
             }
         });
     }
@@ -160,15 +168,19 @@ public class PotRepository {
                 }
 
                 if (!response.isSuccessful()) {
-                    Toast.makeText(app.getApplicationContext(), R.string.unable_to_retrieve_measurements, Toast.LENGTH_SHORT);
+                    toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_retrieve_measurements));
                 }
             }
 
             @Override
             public void onFailure(Call<List<Pot>> call, Throwable t) {
                 Log.e("Api-pot-ulm", t.getMessage());
-                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT);
+                toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
             }
         });
+    }
+
+    public void resetLiveData(){
+        pots = new MutableLiveData<>();
     }
 }

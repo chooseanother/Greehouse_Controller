@@ -14,6 +14,7 @@ import com.example.greehousecontroller.data.dao.ThresholdDAO;
 import com.example.greehousecontroller.data.database.AppDatabase;
 import com.example.greehousecontroller.data.model.CO2;
 import com.example.greehousecontroller.data.model.Threshold;
+import com.example.greehousecontroller.utils.ToastMaker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,7 @@ public class CO2Repository {
     private MutableLiveData<Threshold> threshold;
     private MutableLiveData<List<CO2>> history;
     private final ExecutorService executorService;
+    private ToastMaker toastMaker;
 
     private CO2Repository(Application app){
         this.app = app;
@@ -41,7 +43,27 @@ public class CO2Repository {
         executorService = Executors.newFixedThreadPool(4);
         co2DAO = database.co2DAO();
         thresholdDAO = database.thresholdDAO();
+        toastMaker = ToastMaker.getInstance();
 
+        loadCachedData();
+    }
+
+    public static com.example.greehousecontroller.data.repository.CO2Repository getInstance(Application app){
+        if (instance == null){
+            instance = new CO2Repository(app);
+        }
+        return instance;
+    }
+
+    public MutableLiveData<CO2> getLatest() {
+        return latest;
+    }
+
+    public MutableLiveData<Threshold> getThreshold(){
+        return threshold;
+    }
+
+    private void loadCachedData(){
         executorService.execute(()->{
             if(co2DAO.getAll() == null || co2DAO.getAll().isEmpty()){
                 latest = new MutableLiveData<>();
@@ -70,22 +92,6 @@ public class CO2Repository {
                 history = new MutableLiveData<>(co2DAO.getAll());
             }
         });
-
-    }
-
-    public static com.example.greehousecontroller.data.repository.CO2Repository getInstance(Application app){
-        if (instance == null){
-            instance = new com.example.greehousecontroller.data.repository.CO2Repository(app);
-        }
-        return instance;
-    }
-
-    public MutableLiveData<CO2> getLatest() {
-        return latest;
-    }
-
-    public MutableLiveData<Threshold> getThreshold(){
-        return threshold;
     }
 
     public void updateLatestMeasurement(String greenhouseId){
@@ -107,14 +113,14 @@ public class CO2Repository {
                 }
 
                 if(!response.isSuccessful()){
-                    Toast.makeText(app.getApplicationContext(), R.string.unable_to_retrieve_measurements, Toast.LENGTH_SHORT);
+                    toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_retrieve_measurements));
                 }
             }
             @EverythingIsNonNull
             @Override
             public void onFailure(Call<List<CO2>> call, Throwable t) {
                 Log.e("Api-co2-ulm",t.getMessage());
-                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT);
+                toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
             }
         });
     }
@@ -143,11 +149,15 @@ public class CO2Repository {
                             }
                     });
                 }
+                if(!response.isSuccessful()){
+                    toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_retrieve_measurements));
+                }
             }
             @EverythingIsNonNull
             @Override
             public void onFailure(Call<ArrayList<CO2>> call, Throwable t) {
                 Log.e("Api-co2-hist",t.getMessage());
+                toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
             }
         });
     }
@@ -175,14 +185,14 @@ public class CO2Repository {
                 }
 
                 if(!response.isSuccessful()){
-                        Toast.makeText(app.getApplicationContext(), R.string.unable_to_retrieve_threshold, Toast.LENGTH_SHORT);
+                        toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_retrieve_threshold));
                     }
                 }
             @retrofit2.internal.EverythingIsNonNull
             @Override
             public void onFailure(Call<Threshold> call, Throwable t) {
                 Log.e("Api-co2-ut",t.getMessage());
-                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT);
+                toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
             }
         });
     }
@@ -211,15 +221,21 @@ public class CO2Repository {
                 }
 
                 if(!response.isSuccessful()){
-                        Toast.makeText(app.getApplicationContext(), R.string.unable_to_update_threshold, Toast.LENGTH_SHORT);
+                        toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_update_threshold));
                     }
             }
             @retrofit2.internal.EverythingIsNonNull
             @Override
             public void onFailure(Call<Threshold> call, Throwable t) {
                 Log.e("Api-co2-st",t.getMessage());
-                Toast.makeText(app.getApplicationContext(), R.string.connection_error, Toast.LENGTH_SHORT);
+                toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
             }
         });
+    }
+
+    public void resetLiveData(){
+        latest = new MutableLiveData<>();
+        threshold = new MutableLiveData<>(new Threshold("CO2",0,0));
+        history = new MutableLiveData<>();
     }
 }

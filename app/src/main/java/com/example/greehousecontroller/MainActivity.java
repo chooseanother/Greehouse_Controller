@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     private void setupNavigation() {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_status, R.id.nav_graphs, R.id.nav_settings)
+                R.id.nav_home, R.id.nav_status, R.id.nav_graphs, R.id.nav_settings, R.id.nav_edit_id)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
             // Log and toast
             String msg = "FCM token: "+token;
             Log.d("FCM-getCurrentToken", msg);
-            Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
         });
     }
 }
