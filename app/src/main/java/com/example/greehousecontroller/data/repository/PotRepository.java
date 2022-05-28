@@ -12,6 +12,7 @@ import com.example.greehousecontroller.data.api.ServiceGenerator;
 import com.example.greehousecontroller.data.dao.PotDAO;
 import com.example.greehousecontroller.data.database.AppDatabase;
 import com.example.greehousecontroller.data.model.Pot;
+import com.example.greehousecontroller.utils.RepositoryCallback;
 import com.example.greehousecontroller.utils.ToastMaker;
 
 import java.util.ArrayList;
@@ -147,7 +148,7 @@ public class PotRepository {
         });
     }
 
-    public void updateLatestMeasurement(String greenhouseId) {
+    public void updateLatestMeasurement(String greenhouseId, RepositoryCallback callback) {
         PotAPI potAPI = ServiceGenerator.getPotAPI();
         Call<List<Pot>> call = potAPI.getAllPotsByGreenhouseId(greenhouseId);
         call.enqueue(new Callback<List<Pot>>() {
@@ -169,6 +170,9 @@ public class PotRepository {
 
                 if (!response.isSuccessful()) {
                     toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_retrieve_measurements));
+                    if (callback != null){
+                        callback.call();
+                    }
                 }
             }
 
@@ -176,6 +180,9 @@ public class PotRepository {
             public void onFailure(Call<List<Pot>> call, Throwable t) {
                 Log.e("Api-pot-ulm", t.getMessage());
                 toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
+                if (callback != null){
+                    callback.call();
+                }
             }
         });
     }

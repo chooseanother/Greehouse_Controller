@@ -10,6 +10,7 @@ import com.example.greehousecontroller.data.database.AppDatabase;
 import com.example.greehousecontroller.data.model.Humidity;
 import com.example.greehousecontroller.data.model.Moisture;
 import com.example.greehousecontroller.data.model.Threshold;
+import com.example.greehousecontroller.utils.RepositoryCallback;
 import com.example.greehousecontroller.utils.ToastMaker;
 
 import java.util.ArrayList;
@@ -111,7 +112,7 @@ public class MoistureRepository {
 
         });
     }
-    public void updateLatestData(String greenhouseId,int potId) {
+    public void updateLatestData(String greenhouseId, int potId, RepositoryCallback callback) {
         MoistureApi moistureApi = ServiceGenerator.getMoistureAPI();
         Call<List<Moisture>> call = moistureApi.getLatestMoisture(greenhouseId,potId);
         call.enqueue(new Callback<List<Moisture>>() {
@@ -123,12 +124,22 @@ public class MoistureRepository {
                     Moisture result = response.body().get(0);
                     latest.setValue(result);
                 }
+                if(!response.isSuccessful()){
+                    toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_retrieve_measurements));
+                    if (callback != null){
+                        callback.call();
+                    }
+                }
+
             }
             @EverythingIsNonNull
             @Override
             public void onFailure(Call<List<Moisture>> call, Throwable t) {
                 Log.e("Api-moist-latest",t.getMessage());
                 toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
+                if (callback != null){
+                    callback.call();
+                }
             }
         });
     }

@@ -14,6 +14,7 @@ import com.example.greehousecontroller.data.dao.ThresholdDAO;
 import com.example.greehousecontroller.data.database.AppDatabase;
 import com.example.greehousecontroller.data.model.Temperature;
 import com.example.greehousecontroller.data.model.Threshold;
+import com.example.greehousecontroller.utils.RepositoryCallback;
 import com.example.greehousecontroller.utils.ToastMaker;
 
 import java.util.ArrayList;
@@ -134,7 +135,7 @@ public class TemperatureRepository {
         return threshold;
     }
 
-    public void updateLatestMeasurement(String greenhouseId){
+    public void updateLatestMeasurement(String greenhouseId, RepositoryCallback callback){
         TemperatureApi temperatureApi = ServiceGenerator.getTemperatureAPI();
         Call<List<Temperature>> call = temperatureApi.getLatestTemperature(greenhouseId);
         call.enqueue(new Callback<List<Temperature>>() {
@@ -153,13 +154,20 @@ public class TemperatureRepository {
 
                 if(!response.isSuccessful()){
                     toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_retrieve_measurements));
+                    if (callback != null){
+                        callback.call();
+                    }
                 }
+
             }
             @EverythingIsNonNull
             @Override
             public void onFailure(Call<List<Temperature>> call, Throwable t) {
                 Log.e("Api-temp-ulm",t.getMessage());
                 toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
+                if (callback != null){
+                    callback.call();
+                }
             }
         });
     }

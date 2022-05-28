@@ -14,6 +14,7 @@ import com.example.greehousecontroller.data.dao.ThresholdDAO;
 import com.example.greehousecontroller.data.database.AppDatabase;
 import com.example.greehousecontroller.data.model.Humidity;
 import com.example.greehousecontroller.data.model.Threshold;
+import com.example.greehousecontroller.utils.RepositoryCallback;
 import com.example.greehousecontroller.utils.ToastMaker;
 
 import java.util.ArrayList;
@@ -133,7 +134,7 @@ public class HumidityRepository {
         });
     }
 
-    public void updateLatestMeasurement(String greenhouseId){
+    public void updateLatestMeasurement(String greenhouseId, RepositoryCallback callback){
         HumidityApi humidityApi = ServiceGenerator.getHumidityAPI();
         Call<List<Humidity>> call = humidityApi.getLatestHumidity(greenhouseId);
         call.enqueue(new Callback<List<Humidity>>() {
@@ -150,9 +151,11 @@ public class HumidityRepository {
                         });
                     }
                 }
-
                 if(!response.isSuccessful()){
                     toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_retrieve_measurements));
+                    if (callback != null){
+                        callback.call();
+                    }
                 }
             }
             @EverythingIsNonNull
@@ -160,6 +163,9 @@ public class HumidityRepository {
             public void onFailure(Call<List<Humidity>> call, Throwable t) {
                 Log.e("Api-hum-ulm",t.getMessage());
                 toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
+                if (callback != null){
+                    callback.call();
+                }
             }
         });
     }

@@ -1,6 +1,7 @@
 package com.example.greehousecontroller.ui.view;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,7 @@ public class HomeFragment extends Fragment {
         settingOfTextViews();
         getGreenhouseID();
         observeData();
+        observeApiStatus();
         return root;
     }
 
@@ -65,8 +67,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume(){
         super.onResume();
-        // TODO: Figure out where to place this, is this the best place
-        //  since this is always called no matter what
         updateLatestMeasurements();
     }
 
@@ -94,19 +94,21 @@ public class HomeFragment extends Fragment {
         homeViewModel.getLatestTemperature().observe(getViewLifecycleOwner(),temperature -> {
             String readings = temperature.getTemperature() + " °C";
             temperatureTextView.setText(readings);
-
-            // TODO: Maybe here?
             swipeRefreshLayout.setRefreshing(false);
         });
 
         homeViewModel.getLatestHumidity().observe(getViewLifecycleOwner(),humidity -> {
             String readings = humidity.getHumidity() + " %";
             humidityTextView.setText(readings);
+            swipeRefreshLayout.setRefreshing(false);
+
         });
 
         homeViewModel.getLatestCO2().observe(getViewLifecycleOwner(), co2 -> {
             String readings = (int)co2.getCo2Measurement() + " ppm";
             co2TextView.setText(readings);
+            swipeRefreshLayout.setRefreshing(false);
+
         });
 
     }
@@ -158,6 +160,13 @@ public class HomeFragment extends Fragment {
         adapter.setOnClickListener(pot -> {
             Bundle bundle = homeViewModel.getPotBundle(pot);
             ((MainActivity)getActivity()).navController.navigate(R.id.nav_edit_pot, bundle);
+        });
+    }
+
+    private void observeApiStatus(){
+        homeViewModel.getApiFinished().observe(getViewLifecycleOwner(), aBoolean -> {
+            Log.d("home", aBoolean.toString());
+            swipeRefreshLayout.setRefreshing(aBoolean);
         });
     }
 }
