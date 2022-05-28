@@ -98,7 +98,7 @@ public class HumidityRepository {
         });
     }
 
-    public void updateHistoricalData(String greenhouseId) {
+    public void updateHistoricalData(String greenhouseId,RepositoryCallback callback) {
         HumidityApi humidityApi = ServiceGenerator.getHumidityAPI();
         Call<List<Humidity>> call = humidityApi.getHistoricalHumidity(greenhouseId);
         call.enqueue(new Callback<List<Humidity>>() {

@@ -31,7 +31,6 @@ public class GraphsViewModel extends AndroidViewModel {
     private UserRepository userRepository;
     private HumidityRepository humidityRepository;
     private CO2Repository co2Repository;
-
     private MutableLiveData<Boolean> refreshing;
 
     public GraphsViewModel(Application application){
@@ -49,14 +48,16 @@ public class GraphsViewModel extends AndroidViewModel {
     }
     public void updateHistoryData(String greenHouseId)
     {
-
-        humidityRepository.updateHistoricalData(greenHouseId);
-
-        co2Repository.updateHistoricalData(greenHouseId);
-
+        humidityRepository.updateHistoricalData(greenHouseId,()->{
+            refreshing.setValue(false);
+        });
+        co2Repository.updateHistoricalData(greenHouseId,()->{
+            refreshing.setValue(false);
+        });
         temperatureRepository.updateHistoricalMeasurement(greenHouseId, () -> {
             refreshing.postValue(false);
         });
+
     }
 
     public MutableLiveData<Boolean> getRefreshing() {

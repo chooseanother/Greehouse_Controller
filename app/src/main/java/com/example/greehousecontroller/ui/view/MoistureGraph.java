@@ -49,16 +49,18 @@ public class MoistureGraph extends Fragment {
         moistureViewModel.getMoistureHistoryData().observe(getViewLifecycleOwner(), new Observer<List<Moisture>>() {
             @Override
             public void onChanged(List<Moisture> moistureHistoryData) {
-                if(moistureViewModel.getLatestHumidity().getValue() != null) {
-                    for (int i = 0; i < 1; i++) {
-                        data.add(new GraphsFragment.OHCLDataEntry((long) Objects.requireNonNull(moistureViewModel.getLatestHumidity().getValue()).getTime(), 0.1, 0.1, 0.1, moistureViewModel.getLatestHumidity().getValue().getMoisture()));
-                    }
-                    for (Moisture moisture : moistureHistoryData) {
-                        System.out.println(moisture+"This is moisture"+"\n");
+                if(moistureHistoryData != null) {
+                    if (moistureViewModel.getLatestHumidity().getValue() != null) {
+                        for (int i = 0; i < 1; i++) {
+                            data.add(new GraphsFragment.OHCLDataEntry((long) Objects.requireNonNull(moistureViewModel.getLatestHumidity().getValue()).getTime(), 0.1, 0.1, 0.1, moistureViewModel.getLatestHumidity().getValue().getMoisture()));
+                        }
+                        for (Moisture moisture : moistureHistoryData) {
+                            System.out.println(moisture + "This is moisture" + "\n");
 
-                        data.add(new GraphsFragment.OHCLDataEntry(moisture.getTime(), moisture.getMoisture(), moisture.getMoisture(), moisture.getMoisture(), moisture.getMoisture()));
+                            data.add(new GraphsFragment.OHCLDataEntry(moisture.getTime(), moisture.getMoisture(), moisture.getMoisture(), moisture.getMoisture(), moisture.getMoisture()));
+                        }
+                        table.addData(data);
                     }
-                    table.addData(data);
                 }
             }
         });
