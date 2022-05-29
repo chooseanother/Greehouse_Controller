@@ -16,7 +16,7 @@ public interface PotAPI {
     Call<List<Pot>> getAllPotsByGreenhouseId(@Path("greenhouseId") String greenhouseId);
 
     @POST("Pot/{greenhouseId}")
-    Call<Pot> addPotDetailsById(@Path("greenhouseId") String greenhouseId, @Body Pot pot);
+    Call<Pot> addPotDetailsByGreenhouseId(@Path("greenhouseId") String greenhouseId, @Body Pot pot);
 
     @GET("Pot/{greenhouseId}/{PotId}")
     Call<Pot> getPotDetailsById(@Path("greenhouseId") String greenhouseId, @Path("PotId") int potId);

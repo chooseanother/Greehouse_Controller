@@ -43,6 +43,12 @@ public class CO2GraphFragment extends Fragment {
         return binding.getRoot();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     private void setBindings(){
         co2Chart = binding.co2Chart;
         progressBar = binding.co2ProgressBar;

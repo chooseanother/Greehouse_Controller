@@ -56,7 +56,9 @@ public class AddPotFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        binding = null;
     }
+
     private void getGreenhouseID(){
         viewModel.initUserInfo();
         viewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
@@ -74,31 +76,24 @@ public class AddPotFragment extends Fragment {
     }
 
     private void setUpListeners(){
-        savePotButton.setOnClickListener( new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                boolean result;
-                if(spinner.getSelectedItem() == null){
-                    result = viewModel.validInput(greenhouseId, null , potNameEditText.getText().toString(),
-                            potMinimalHumidityEditText.getText().toString());
-                }
-                else
-                {
-                    result = viewModel.validInput(greenhouseId, spinner.getSelectedItem().toString() , potNameEditText.getText().toString(),
-                            potMinimalHumidityEditText.getText().toString());
-                }
-                if(result){
-                    navController.navigate(R.id.navigationHome);
-                }
+        savePotButton.setOnClickListener(view -> {
+            boolean result;
+            if(spinner.getSelectedItem() == null){
+                result = viewModel.validInput(greenhouseId, null , potNameEditText.getText().toString(),
+                        potMinimalHumidityEditText.getText().toString());
             }
-        });
-
-        cancelPotButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            else
+            {
+                result = viewModel.validInput(greenhouseId, spinner.getSelectedItem().toString() , potNameEditText.getText().toString(),
+                        potMinimalHumidityEditText.getText().toString());
+            }
+            if(result){
+                viewModel.addPot(greenhouseId, spinner.getSelectedItem().toString(), potNameEditText.getText().toString(), potMinimalHumidityEditText.getText().toString());
                 navController.navigate(R.id.navigationHome);
             }
         });
+
+        cancelPotButton.setOnClickListener(view -> navController.navigate(R.id.navigationHome));
     }
 
     private void setUpSpinner(){

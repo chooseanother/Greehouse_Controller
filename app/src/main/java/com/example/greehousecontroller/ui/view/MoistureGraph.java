@@ -42,6 +42,12 @@ public class MoistureGraph extends Fragment {
         return binding.getRoot();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     private void setBindings(){
         progressBar = binding.moistureGraphProgressBar;
         moistureChart = binding.humidityChart;

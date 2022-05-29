@@ -12,6 +12,7 @@ import com.example.greehousecontroller.data.model.UserInfo;
 import com.example.greehousecontroller.data.repository.PotRepository;
 import com.example.greehousecontroller.data.repository.UserInfoRepository;
 import com.example.greehousecontroller.data.repository.UserRepository;
+import com.example.greehousecontroller.utils.Config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +52,6 @@ public class AddPotViewModel extends AndroidViewModel {
             return false;
         }
         else {
-            addPot(greenhouseId, Integer.parseInt(moistureSensorId)-1, name, Double.parseDouble(minimumHumidity));
             return true;
         }
     }
@@ -65,8 +65,8 @@ public class AddPotViewModel extends AndroidViewModel {
         }
     }
 
-    public void addPot(String greenhouseId, int moistureSensorId, String name, double minimumHumidity) {
-        potRepository.addPot(greenhouseId, moistureSensorId, name, minimumHumidity);
+    public void addPot(String greenhouseId, String moistureSensorId, String name, String minimumHumidity) {
+        potRepository.addPot(greenhouseId, Integer.parseInt(moistureSensorId)-1, name, Double.parseDouble(minimumHumidity));
     }
 
     private boolean checkForThresholdNumberSize(String minimumThreshold) {
@@ -110,12 +110,9 @@ public class AddPotViewModel extends AndroidViewModel {
         List<Pot> temp = potRepository.getPots().getValue();
 
         if(temp == null || temp.isEmpty()){
-            listOfSensors.add("1");
-            listOfSensors.add("2");
-            listOfSensors.add("3");
-            listOfSensors.add("4");
-            listOfSensors.add("5");
-            listOfSensors.add("6");
+            for (int i = 1; i <= Config.MAX_NUMBER_OF_POTS; i++){
+                listOfSensors.add(""+i);
+            }
         }
         else
         {
@@ -125,7 +122,7 @@ public class AddPotViewModel extends AndroidViewModel {
                 temp2.add(String.valueOf(temp.get(i).getMoistureSensorId()));
             }
 
-            for(int i= 0; i< 6; i++){
+            for(int i= 0; i< Config.MAX_NUMBER_OF_POTS; i++){
                 if(!temp2.contains(String.valueOf(i))){
                     listOfSensors.add(String.valueOf(i+1));
                 }

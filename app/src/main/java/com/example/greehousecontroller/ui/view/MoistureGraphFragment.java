@@ -39,6 +39,13 @@ public class MoistureGraphFragment extends Fragment {
         updateMeasurements();
         return binding.getRoot();
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     private void onChangeSpinner()
     {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

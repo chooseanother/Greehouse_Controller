@@ -91,7 +91,7 @@ public class MoistureRepository {
                             moistureDAO.insert(result);
                         } else {
                             moistureDAO.delete(potId);
-                            moistureDAO.insert(result);
+                            moistureDAO.insert((ArrayList<Moisture>) result.subList(0, 1999));
                         }
                     });
                 }

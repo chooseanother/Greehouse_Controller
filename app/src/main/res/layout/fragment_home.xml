@@ -30,14 +30,14 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+            app:layout_constraintTop_toBottomOf="@+id/homeConstraintLayout">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/homeListOfPotsRecycleView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/margin_from_screen_edges"
-                android:layout_marginTop="@dimen/medium_margin"
+                android:layout_marginTop="@dimen/nav_header_vertical_spacing"
                 android:layout_marginRight="@dimen/margin_from_screen_edges">
 
             </androidx.recyclerview.widget.RecyclerView>

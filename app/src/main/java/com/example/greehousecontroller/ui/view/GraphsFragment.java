@@ -108,4 +108,10 @@ public class GraphsFragment extends Fragment {
             setValue("close", close);
         }
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
 }

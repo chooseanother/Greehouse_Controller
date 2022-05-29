@@ -4,7 +4,11 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import com.example.greehousecontroller.utils.PotJsonAdapter;
+import com.google.gson.annotations.JsonAdapter;
+
 @Entity
+@JsonAdapter(PotJsonAdapter.class)
 public class Pot {
     @PrimaryKey
     private int id;
@@ -26,6 +30,13 @@ public class Pot {
         this.name = name;
         this.moistureSensorId = moistureSensorId;
         this.currentMoisture = currentMoisture;
+        this.lowerMoistureThreshold = lowerMoistureThreshold;
+    }
+
+    @Ignore
+    public Pot(String name, int moistureSensorId, double lowerMoistureThreshold) {
+        this.name = name;
+        this.moistureSensorId = moistureSensorId;
         this.lowerMoistureThreshold = lowerMoistureThreshold;
     }
 
@@ -67,5 +78,16 @@ public class Pot {
 
     public double getLowerMoistureThreshold(){
         return lowerMoistureThreshold;
+    }
+
+    @Override
+    public String toString() {
+        return "Pot{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", moistureSensorId=" + moistureSensorId +
+                ", currentMoisture=" + currentMoisture +
+                ", lowerMoistureThreshold=" + lowerMoistureThreshold +
+                '}';
     }
 }

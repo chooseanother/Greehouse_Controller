@@ -2,7 +2,6 @@ package com.example.greehousecontroller.data.repository;
 
 import android.app.Application;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -14,6 +13,7 @@ import com.example.greehousecontroller.data.database.AppDatabase;
 import com.example.greehousecontroller.data.model.Pot;
 import com.example.greehousecontroller.utils.RepositoryCallback;
 import com.example.greehousecontroller.utils.ToastMaker;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,9 +96,10 @@ public class PotRepository {
         return currentPot;
     }
 
-    public void updateCurrentPot(String greenHouseId, int potId, String name, double minimumThreshold) {
+    public void updateCurrentPot(String greenHouseId, int potId, String name, int moistureSensorId, double minimumThreshold) {
         PotAPI potAPI = ServiceGenerator.getPotAPI();
-        Pot pot = new Pot(potId, name, minimumThreshold);
+        Pot pot = new Pot(name, moistureSensorId, minimumThreshold);
+        Log.i("Api-pot-update-info", "pot string: "+pot + " pot json: " + new Gson().toJson(pot) + " potId " + potId);
         Call<Pot> call = potAPI.updatePotDetailsById(greenHouseId, potId, pot);
         call.enqueue(new Callback<Pot>() {
             @Override
@@ -124,14 +125,15 @@ public class PotRepository {
 
     public void addPot(String greenhouseId, int moistureSensorId, String name, double minimumMoistureThreshold) {
         PotAPI potAPI = ServiceGenerator.getPotAPI();
-        Pot pot = new Pot(name, moistureSensorId, 0, minimumMoistureThreshold);
-        Call<Pot> call = potAPI.addPotDetailsById(greenhouseId, pot);
+        Pot pot = new Pot(0, moistureSensorId, name, minimumMoistureThreshold);
+        Log.i("Api-pot-add-new", new Gson().toJson(pot));
+        Call<Pot> call = potAPI.addPotDetailsByGreenhouseId(greenhouseId, pot);
         call.enqueue(new Callback<Pot>() {
             @Override
             public void onResponse(Call<Pot> call, Response<Pot> response) {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
-                        Log.i("Api-hum-ulm", response.body().toString());
+                        Log.i("Api-pot-add-(:", response.body().toString());
                     }
                 }
 
@@ -142,7 +144,7 @@ public class PotRepository {
 
             @Override
             public void onFailure(Call<Pot> call, Throwable t) {
-                Log.e("Api-pot-ulm", t.getMessage());
+                Log.e("Api-pot-add-):", t.getMessage());
                 toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
             }
         });
@@ -156,14 +158,11 @@ public class PotRepository {
             public void onResponse(Call<List<Pot>> call, Response<List<Pot>> response) {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
-                        Log.i("Api-pot-ulm", response.body().toString());
+                        Log.i("Api-pot-getallpots-(:", response.body().toString());
                         pots.setValue(response.body());
                         executorService.execute(() -> {
-                            if (potDAO.getAll().isEmpty() || potDAO.getAll() == null) {
-                                potDAO.insert(response.body());
-                            } else {
-                                potDAO.update(response.body());
-                            }
+                            potDAO.delete();
+                            potDAO.insert(response.body());
                         });
                     }
                 }
@@ -178,7 +177,7 @@ public class PotRepository {
 
             @Override
             public void onFailure(Call<List<Pot>> call, Throwable t) {
-                Log.e("Api-pot-ulm", t.getMessage());
+                Log.e("Api-pot-getallpots-):", t.getMessage());
                 toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
                 if (callback != null){
                     callback.call();
