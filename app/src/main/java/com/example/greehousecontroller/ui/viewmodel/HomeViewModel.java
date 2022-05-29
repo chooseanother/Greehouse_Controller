@@ -100,4 +100,11 @@ public class HomeViewModel extends AndroidViewModel {
     public MutableLiveData<CO2> getLatestCO2() {
         return co2Repository.getLatest();
     }
+
+    public void getLatestCachedData(){
+        humidityRepository.loadLatestCachedData();
+        temperatureRepository.loadLatestCachedData();
+        potRepository.loadCachedData();
+        co2Repository.loadLatestCachedData();
+    }
 }

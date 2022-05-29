@@ -73,6 +73,8 @@
         <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/co2_graph.xml" value="0.375" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_add_pot.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_edit_greenhouse_id.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_edit_pot.xml" value="0.15534420289855072" />
         <entry key="app/src/main/res/layout/fragment_gallery.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_graphs.xml" value="0.22" />

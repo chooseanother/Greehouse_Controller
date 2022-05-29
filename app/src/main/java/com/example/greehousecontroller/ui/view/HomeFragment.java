@@ -51,6 +51,7 @@ public class HomeFragment extends Fragment {
         settingOfTextViews();
         getGreenhouseID();
         observeData();
+        homeViewModel.getLatestCachedData();
         observeApiStatus();
         return root;
     }

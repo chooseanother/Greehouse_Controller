@@ -35,12 +35,16 @@ public class MoistureGraph extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         binding = MoistureGraph1Binding.inflate(inflater, container, false);
         moistureViewModel = new ViewModelProvider(this).get(MoistureViewModel.class);
-        progressBar = binding.moistureGraphProgressBar;
-        moistureChart = binding.humidityChart;
-        moistureChart.setProgressBar(progressBar);
+        setBindings();
+
         initMoistureChart();
 
         return binding.getRoot();
+    }
+
+    private void setBindings(){
+        progressBar = binding.moistureGraphProgressBar;
+        moistureChart = binding.humidityChart;
     }
 
     public Table moistureGraph(){
@@ -68,6 +72,7 @@ public class MoistureGraph extends Fragment {
     }
 
     public void initMoistureChart(){
+        moistureChart.setProgressBar(progressBar);
         APIlib.getInstance().setActiveAnyChartView(moistureChart);
         Stock stock2 = AnyChart.stock();
         Plot plot2 = stock2.plot(0);

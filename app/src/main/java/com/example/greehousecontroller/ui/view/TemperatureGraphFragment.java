@@ -42,15 +42,17 @@ public class TemperatureGraphFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = TemperatureGraphBinding.inflate(inflater, container, false);
-        temperatureChart = binding.temperatureChart;
-        progressBar = binding.temperatureProgressBar;
         temperatureGraphViewModel = new ViewModelProvider(this).get(TemperatureGraphViewModel.class);
-        temperatureChart.setProgressBar(progressBar);
+        setBindings();
+        temperatureGraphViewModel.loadCachedData();
         updateMeasurements();
         return binding.getRoot();
     }
 
-
+    private void setBindings(){
+        temperatureChart = binding.temperatureChart;
+        progressBar = binding.temperatureProgressBar;
+    }
 
     public Table temperatureGraph()
     {
@@ -81,6 +83,7 @@ public class TemperatureGraphFragment extends Fragment {
     {
         if (temperatureGraphViewModel.getUserInfo().getValue() != null) {
             if(temperatureGraphViewModel.getLatestTemperature() != null) {
+                temperatureChart.setProgressBar(progressBar);
                 APIlib.getInstance().setActiveAnyChartView(temperatureChart);
                 Stock stock4 = AnyChart.stock();
                 Plot plot4 = stock4.plot(0);

@@ -39,8 +39,7 @@ public class PotRepository {
         executorService = Executors.newFixedThreadPool(2);
         potDAO = appDatabase.potDAO();
         toastMaker = ToastMaker.getInstance();
-
-        loadCachedData();
+        pots = new MutableLiveData<>(new ArrayList<>());
 
         currentPot = new MutableLiveData<>();
     }
@@ -52,12 +51,13 @@ public class PotRepository {
         return instance;
     }
 
-    private void loadCachedData(){
+    public void loadCachedData(){
         executorService.execute(() -> {
-            if (potDAO.getAll() == null || potDAO.getAll().isEmpty()) {
-                pots = new MutableLiveData<>(new ArrayList<>());
+            List<Pot> allPots = potDAO.getAll();
+            if (allPots == null || allPots.isEmpty()) {
+                pots.postValue(new ArrayList<>());
             } else {
-                pots = new MutableLiveData<>(potDAO.getAll());
+                pots.postValue(allPots);
             }
         });
     }
@@ -185,9 +185,5 @@ public class PotRepository {
                 }
             }
         });
-    }
-
-    public void resetLiveData(){
-        pots = new MutableLiveData<>();
     }
 }

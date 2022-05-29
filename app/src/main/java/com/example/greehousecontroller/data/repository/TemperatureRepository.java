@@ -46,8 +46,9 @@ public class TemperatureRepository {
         temperatureDAO = appDatabase.temperatureDAO();
         thresholdDAO = appDatabase.thresholdDAO();
         toastMaker = ToastMaker.getInstance();
-
-        loadCachedData();
+        latest = new MutableLiveData<>(new Temperature());
+        threshold = new MutableLiveData<>(new Threshold("Temperature",0,0));
+        historical = new MutableLiveData<>(new ArrayList<>());
     }
 
     public static TemperatureRepository getInstance(Application app){
@@ -57,32 +58,38 @@ public class TemperatureRepository {
         return instance;
     }
 
-    private void loadCachedData(){
-        executorService.execute(()->{
-            if(temperatureDAO.getAll() == null || temperatureDAO.getAll().isEmpty()){
-                latest = new MutableLiveData<>();
-            }
-            else{
-                latest = new MutableLiveData<>(temperatureDAO.getAll().get(0));
-            }
-        });
-
-        executorService.execute(()->{
-            if(thresholdDAO.getThreshold("Temperature") == null){
-                threshold = new MutableLiveData<>(new Threshold("Temperature",0,0));
-            }
-            else{
-                threshold = new MutableLiveData<>(thresholdDAO.getThreshold("Temperature"));
+    public void loadLatestCachedData() {
+        executorService.execute(() -> {
+            // Get latest
+            Temperature latestMeasurement = temperatureDAO.getLatest();
+            if (latestMeasurement == null) {
+                latest.postValue(new Temperature());
+            } else {
+                latest.postValue(latestMeasurement);
             }
         });
+    }
 
+    public void loadThresholdCachedData() {
+        executorService.execute(() -> {
+            Threshold temperatureThreshold = thresholdDAO.getThreshold("Temperature");
+            if (temperatureThreshold == null) {
+                threshold.postValue(new Threshold("Temperature", 0, 0));
+            } else {
+                threshold.postValue(temperatureThreshold);
+            }
+        });
+    }
+
+    public void loadHistoricalCachedData(){
         executorService.execute(()->{
-            if(temperatureDAO.getAll() == null || temperatureDAO.getAll().isEmpty()){
-                historical = new MutableLiveData<>();
+            List<Temperature> temperatureHistory = temperatureDAO.getAll();
+            if(temperatureHistory == null || temperatureHistory.isEmpty()){
+                historical.postValue(new ArrayList<>());
             }
             else{
-                Log.i("History Temperature: ",temperatureDAO.getAll().toString());
-                historical = new MutableLiveData<>(temperatureDAO.getAll());
+                Log.i("History Temperature: ",temperatureHistory.toString());
+                historical.postValue(temperatureHistory);
             }
         });
     }
@@ -189,13 +196,8 @@ public class TemperatureRepository {
                     Log.i("Api-temp-ut", response.body().toString());
                     threshold.setValue(response.body());
                     executorService.execute(()-> {
-                        if(thresholdDAO.getThreshold("Temperature") == null){
-                            Threshold threshold = new Threshold("Temperature",response.body().getUpperThreshold(), response.body().getLowerThreshold());
-                            thresholdDAO.insert(threshold);
-                        }
-                        else{
-                            thresholdDAO.update("Temperature", response.body().getUpperThreshold(), response.body().getLowerThreshold());
-                        }
+                        Threshold threshold = new Threshold("Temperature",response.body().getUpperThreshold(), response.body().getLowerThreshold());
+                        thresholdDAO.insert(threshold);
                     });
                 }
 
@@ -223,13 +225,8 @@ public class TemperatureRepository {
                     Log.i("Api-temp-st", response.body().toString());
                     threshold.setValue(response.body());
                     executorService.execute(()-> {
-                        if(thresholdDAO.getThreshold("Temperature") == null){
-                            Threshold threshold = new Threshold("Temperature",response.body().getUpperThreshold(), response.body().getLowerThreshold());
-                            thresholdDAO.insert(threshold);
-                        }
-                        else{
-                            thresholdDAO.update("Temperature", response.body().getUpperThreshold(), response.body().getLowerThreshold());
-                        }
+                        Threshold threshold = new Threshold("Temperature",response.body().getUpperThreshold(), response.body().getLowerThreshold());
+                        thresholdDAO.insert(threshold);
                     });
                 }
 
@@ -244,11 +241,5 @@ public class TemperatureRepository {
                 toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
             }
         });
-    }
-
-    public void resetLiveData(){
-        latest = new MutableLiveData<>();
-        threshold = new MutableLiveData<>(new Threshold("Temperature",0,0));
-        historical = new MutableLiveData<>();
     }
 }

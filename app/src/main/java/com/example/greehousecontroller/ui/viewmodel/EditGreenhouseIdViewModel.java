@@ -93,11 +93,5 @@ public class EditGreenhouseIdViewModel extends AndroidViewModel {
 
     public void clearCachedDate(){
         executorService.execute(() -> database.clearAllTables());
-        temperatureRepository.resetLiveData();
-        humidityRepository.resetLiveData();
-        co2Repository.resetLiveData();
-        potRepository.resetLiveData();
-        moistureRepository.resetLiveData();
-
     }
 }

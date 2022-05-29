@@ -44,4 +44,9 @@ public class TemperatureGraphViewModel extends AndroidViewModel {
         temperatureRepository.updateHistoricalMeasurement(greenhouseId,null);
         temperatureRepository.updateLatestMeasurement(greenhouseId, null);
     }
+
+    public void loadCachedData(){
+        temperatureRepository.loadLatestCachedData();
+        temperatureRepository.loadHistoricalCachedData();
+    }
 }

@@ -12,7 +12,7 @@
     <dimen name="medium_margin">32dp</dimen>
     <dimen name="margin_from_screen_edge_to_recycler_view">263dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="margin_from_screen_edges">32dp</dimen>
+    <dimen name="margin_from_screen_edges">16dp</dimen>
 
     <!--TEXT SIZE-->
     <dimen name="small_text_size">12sp</dimen>

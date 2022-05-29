@@ -36,21 +36,21 @@ public class CO2GraphFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         binding = Co2GraphBinding.inflate(inflater, container, false);
         co2GraphViewModel = new ViewModelProvider(this).get(CO2GraphViewModel.class);
-        co2Chart = binding.co2Chart;
-        progressBar = binding.co2ProgressBar;
-        co2Chart.setProgressBar(progressBar);
+        setBindings();
+        co2GraphViewModel.loadCachedData();
         updateMeasurements();
+        initCO2Chart();
         return binding.getRoot();
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        initCO2Chart();
+    private void setBindings(){
+        co2Chart = binding.co2Chart;
+        progressBar = binding.co2ProgressBar;
     }
 
     public void initCO2Chart()
     {
+        co2Chart.setProgressBar(progressBar);
         APIlib.getInstance().setActiveAnyChartView(co2Chart);
         Stock stock3 = AnyChart.stock();
         Plot plot3 = stock3.plot(0);

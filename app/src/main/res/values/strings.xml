@@ -114,4 +114,7 @@
     <string name="cancel_button">Cancel</string>
     <string name="save_button">Save</string>
 
+    <!--Greenhouse Id's-->
+    <string name="greenhouse_one_id">0004A30B00E7E7C1</string>
+    <string name="greenhouse_two_id">0004A30B00E7E212</string>
 </resources>

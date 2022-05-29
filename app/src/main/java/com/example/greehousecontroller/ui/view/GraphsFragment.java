@@ -35,9 +35,10 @@ public class GraphsFragment extends Fragment {
         graphsViewModel = new ViewModelProvider(this).get(GraphsViewModel.class);
         binding = FragmentGraphsBinding.inflate(inflater, container, false);
         bottomAppBar = binding.graphsBottomNavigation;
-        updateMeasurements();
-        initSwipeRefreshLayout();
         observeData();
+        graphsViewModel.loadCachedData();
+        initSwipeRefreshLayout();
+        updateMeasurements();
         observeApiStatus();
         return binding.getRoot();
     }
@@ -88,7 +89,6 @@ public class GraphsFragment extends Fragment {
     }
 
     private void updateLatestMeasurements(){
-        // TODO: Figure out how to handle greenhouseId
         if(greenhouseid != null) {
             graphsViewModel.updateHistoryData(greenhouseid);
         }

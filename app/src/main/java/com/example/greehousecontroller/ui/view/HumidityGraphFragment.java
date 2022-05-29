@@ -35,19 +35,18 @@ public class HumidityGraphFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         binding = HumidityGraphBinding.inflate(inflater, container, false);
         humidityViewModel = new ViewModelProvider(this).get(HumidityGraphViewModel.class);
-        humidityChart = binding.humidityChart;
-        progressBar = binding.humidityProgressBar;
-        humidityChart.setProgressBar(progressBar);
+        setBindings();
+        humidityViewModel.loadCachedData();
         updateMeasurements();
+        initHumidityChart();
         return binding.getRoot();
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        updateMeasurements();
-        initHumidityChart();
+    private void setBindings(){
+        humidityChart = binding.humidityChart;
+        progressBar = binding.humidityProgressBar;
     }
+
 
     public Table humidityGraph(){
         Table table = Table.instantiate("x");
@@ -74,6 +73,7 @@ public class HumidityGraphFragment extends Fragment {
     }
 
     public void initHumidityChart(){
+        humidityChart.setProgressBar(progressBar);
         APIlib.getInstance().setActiveAnyChartView(humidityChart);
         Stock stock2 = AnyChart.stock();
         Plot plot2 = stock2.plot(0);

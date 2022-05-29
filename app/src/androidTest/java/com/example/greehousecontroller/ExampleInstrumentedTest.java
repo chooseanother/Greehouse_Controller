@@ -23,4 +23,9 @@ public class ExampleInstrumentedTest {
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         assertEquals("com.example.greehousecontroller", appContext.getPackageName());
     }
+
+    @Test
+    public void temperatureApiWrongId(){
+
+    }
 }

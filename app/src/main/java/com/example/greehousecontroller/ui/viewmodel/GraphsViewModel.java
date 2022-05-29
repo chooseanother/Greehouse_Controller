@@ -72,5 +72,9 @@ public class GraphsViewModel extends AndroidViewModel {
         userInfoRepository.init(userRepository.getCurrentUser().getValue().getUid());
     }
 
+    public void loadCachedData(){
+        temperatureRepository.loadLatestCachedData();
+        temperatureRepository.loadHistoricalCachedData();
+    }
 
 }
