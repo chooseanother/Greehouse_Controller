@@ -40,11 +40,11 @@ public class GreenHouseIdActivity extends AppCompatActivity {
     private void setupBindings(){
         bindLogOutButton();
         bindSaveIdButton();
-        greenhouseIDText = binding.GreenHouseIDEditText;
+        greenhouseIDText = binding.enterGreenhouseIdEditText;
     }
 
     private void bindSaveIdButton(){
-        binding.SaveGreenHouseID.setOnClickListener(view -> {
+        binding.enterGreenhouseIdSaveButton.setOnClickListener(view -> {
             String greenhouseID = greenhouseIDText.getText().toString();
             viewModel.saveGreenHouseId(greenhouseID);
             viewModel.subscribeToGreenhouse(greenhouseID);
@@ -54,7 +54,7 @@ public class GreenHouseIdActivity extends AppCompatActivity {
     }
 
     private void bindLogOutButton(){
-        binding.signOutGreenhouseid.setOnClickListener(view -> {
+        binding.enterGreenhouseIdSignOutButton.setOnClickListener(view -> {
             logOut();
         });
     }

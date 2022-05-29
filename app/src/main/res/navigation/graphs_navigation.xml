@@ -3,24 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/graphs_navigation"
-    app:startDestination="@+id/navigation_temperature_graph">
+    app:startDestination="@+id/graphsNavigationTemperatureGraph">
 
     <fragment
-        android:id="@+id/navigation_temperature_graph"
+        android:id="@+id/graphsNavigationTemperatureGraph"
         android:name="com.example.greehousecontroller.ui.view.TemperatureGraphFragment"
         android:label="Temperature"
         tools:layout="@layout/temperature_graph" />
 
     <fragment
-        android:id="@+id/navigation_humidity_graph"
+        android:id="@+id/graphsNavigationHumidityGraph"
         android:name="com.example.greehousecontroller.ui.view.HumidityGraphFragment"
         android:label="Humidity"
         tools:layout="@layout/humidity_graph" />
 
     <fragment
-        android:id="@+id/navigation_co2_graph"
+        android:id="@+id/graphsNavigationCo2Graph"
         android:name="com.example.greehousecontroller.ui.view.CO2GraphFragment"
         android:label="CO2"
         tools:layout="@layout/co2_graph" />
 
+    <fragment
+        android:id="@+id/graphsNavigationMoistureGraph"
+        android:name="com.example.greehousecontroller.ui.view.MoistureGraphFragment"
+        android:label="Moisture"
+        tools:layout="@layout/fragment_moisture_pots_graphs" />
 </navigation>

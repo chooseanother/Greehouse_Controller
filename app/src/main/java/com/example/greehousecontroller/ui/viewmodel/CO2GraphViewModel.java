@@ -24,7 +24,6 @@ public class CO2GraphViewModel extends AndroidViewModel {
         co2Repository = CO2Repository.getInstance(application);
         userInfoRepository = UserInfoRepository.getInstance();
         userRepository = UserRepository.getInstance(application);
-
     }
     public LiveData<List<CO2>> getCo2HistoryData() {
         return co2Repository.getCo2HistoryData();
@@ -42,6 +41,7 @@ public class CO2GraphViewModel extends AndroidViewModel {
 
     public void updateHistoryData(String greenhouseId)
     {
-        co2Repository.updateHistoricalData(greenhouseId);
+        co2Repository.updateLatestMeasurement(greenhouseId, null);
+        co2Repository.updateHistoricalData(greenhouseId,null);
     }
 }

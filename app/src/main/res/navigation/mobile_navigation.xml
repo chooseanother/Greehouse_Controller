@@ -3,22 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/navigationHome">
 
     <fragment
-        android:id="@+id/nav_home"
+        android:id="@+id/navigationHome"
         android:name="com.example.greehousecontroller.ui.view.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_status"
+        android:id="@+id/navigationStatus"
         android:name="com.example.greehousecontroller.ui.view.StatusFragment"
         android:label="@string/menu_status"
         tools:layout="@layout/fragment_status" />
 
     <fragment
-        android:id="@+id/nav_graphs"
+        android:id="@+id/navigationGraphs"
         android:name="com.example.greehousecontroller.ui.view.GraphsFragment"
         android:label="@string/menu_graphs"
         tools:layout="@layout/fragment_graphs" />
@@ -30,7 +30,7 @@
         tools:layout="@layout/fragment_edit_pot" />
 
     <fragment
-        android:id="@+id/nav_settings"
+        android:id="@+id/navigationThresholdSettings"
         android:name="com.example.greehousecontroller.ui.view.ThresholdSettingsFragment"
         android:label="@string/menu_settings"
         tools:layout="@layout/fragment_threshold_settings" />
@@ -41,7 +41,7 @@
         tools:layout="@layout/fragment_add_pot" />
 
     <fragment
-        android:id="@+id/nav_edit_id"
+        android:id="@+id/navigationEditGreenhouseId"
         android:name="com.example.greehousecontroller.ui.view.EditGreenhouseIdFragment"
         android:label="@string/edit_greenhouse_id_nav_label"
         tools:layout="@layout/fragment_edit_greenhouse_id" />

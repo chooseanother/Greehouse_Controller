@@ -14,6 +14,7 @@ import com.example.greehousecontroller.data.dao.ThresholdDAO;
 import com.example.greehousecontroller.data.database.AppDatabase;
 import com.example.greehousecontroller.data.model.CO2;
 import com.example.greehousecontroller.data.model.Threshold;
+import com.example.greehousecontroller.utils.RepositoryCallback;
 import com.example.greehousecontroller.utils.ToastMaker;
 
 import java.util.ArrayList;
@@ -94,7 +95,7 @@ public class CO2Repository {
         });
     }
 
-    public void updateLatestMeasurement(String greenhouseId){
+    public void updateLatestMeasurement(String greenhouseId, RepositoryCallback callback){
         CO2Api co2Api = ServiceGenerator.getCO2Api();
         Call<List<CO2>> call = co2Api.getLatestCO2(greenhouseId);
         call.enqueue(new Callback<List<CO2>>() {
@@ -114,6 +115,9 @@ public class CO2Repository {
 
                 if(!response.isSuccessful()){
                     toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_retrieve_measurements));
+                    if (callback != null){
+                        callback.call();
+                    }
                 }
             }
             @EverythingIsNonNull
@@ -121,6 +125,9 @@ public class CO2Repository {
             public void onFailure(Call<List<CO2>> call, Throwable t) {
                 Log.e("Api-co2-ulm",t.getMessage());
                 toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
+                if (callback != null){
+                    callback.call();
+                }
             }
         });
     }
@@ -129,7 +136,7 @@ public class CO2Repository {
         return history;
     }
 
-    public void updateHistoricalData(String greenhouseId){
+    public void updateHistoricalData(String greenhouseId,RepositoryCallback callback){
         CO2Api co2Api = ServiceGenerator.getCO2Api();
         Call<ArrayList<CO2>> call = co2Api.getHistoricalCO2(greenhouseId);
         call.enqueue(new Callback<ArrayList<CO2>>() {

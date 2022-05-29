@@ -1,6 +1,7 @@
 package com.example.greehousecontroller.ui.view;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,20 +27,20 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
-
     private RecyclerView recyclerView;
     private PotAdapter adapter;
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
+    private String greenhouseId;
+    private View root;
+
+    //xml elements
     private TextView temperatureTextView;
     private TextView co2TextView;
     private TextView humidityTextView;
     private TextView welcomingTextView;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private View root;
     private FloatingActionButton floatingActionButton;
-    private String greenhouseId;
-
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -50,6 +51,7 @@ public class HomeFragment extends Fragment {
         settingOfTextViews();
         getGreenhouseID();
         observeData();
+        observeApiStatus();
         return root;
     }
 
@@ -63,15 +65,8 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
     public void onResume(){
         super.onResume();
-        // TODO: Figure out where to place this, is this the best place
-        //  since this is always called no matter what
         updateLatestMeasurements();
     }
 
@@ -99,41 +94,41 @@ public class HomeFragment extends Fragment {
         homeViewModel.getLatestTemperature().observe(getViewLifecycleOwner(),temperature -> {
             String readings = temperature.getTemperature() + " °C";
             temperatureTextView.setText(readings);
-
-            // TODO: Maybe here?
             swipeRefreshLayout.setRefreshing(false);
         });
 
         homeViewModel.getLatestHumidity().observe(getViewLifecycleOwner(),humidity -> {
             String readings = humidity.getHumidity() + " %";
             humidityTextView.setText(readings);
+            swipeRefreshLayout.setRefreshing(false);
+
         });
 
         homeViewModel.getLatestCO2().observe(getViewLifecycleOwner(), co2 -> {
             String readings = (int)co2.getCo2Measurement() + " ppm";
             co2TextView.setText(readings);
+            swipeRefreshLayout.setRefreshing(false);
+
         });
 
     }
 
     public void settingOfTextViews(){
         // Measurements
-        temperatureTextView = binding.temperatureMeasurementTextView;
-        co2TextView = binding.co2measurementTextView;
-        humidityTextView = binding.humidityMeasurementTextView;
+        temperatureTextView = binding.homeTemperatureMeasurementTextView;
+        co2TextView = binding.homeCo2measurementTextView;
+        humidityTextView = binding.homeHumidityMeasurementTextView;
 
         //Header
-        welcomingTextView = binding.welcomingTextView;
+        welcomingTextView = binding.homeWelcomingTextView;
 
         FirebaseUser user = homeViewModel.getUser();
+        String welcomeMessage = getString(R.string.home_hello_message);
         if(user != null){
-            String welcomeMessage = getString(R.string.home_hello_message) + ", " + homeViewModel.getUser().getDisplayName() + "!";
-            welcomingTextView.setText(welcomeMessage);
+            welcomeMessage += ", " + homeViewModel.getUser().getDisplayName();
         }
-        else{
-            String welcomeMessage = getString(R.string.home_hello_message) + "!";
-            welcomingTextView.setText(welcomeMessage);
-        }
+        welcomeMessage += "!";
+        welcomingTextView.setText(welcomeMessage);
     }
 
     private void updateLatestMeasurements(){
@@ -143,7 +138,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void fabHandle(){
-        floatingActionButton = binding.fab;
+        floatingActionButton = binding.homeFab;
         floatingActionButton.setOnClickListener(clicked->{
             if(homeViewModel.getLatestPots().getValue().size() < 6){
                 ((MainActivity)getActivity()).navController.navigate(R.id.nav_add_pot);
@@ -151,11 +146,10 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(getContext(), R.string.home_pot_limit_reached_toast_message, Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     private void recyclerViewHandle(){
-        recyclerView = binding.listOfPotsRecycleView;
+        recyclerView = binding.homeListOfPotsRecycleView;
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new PotAdapter(new ArrayList<>());
@@ -166,6 +160,13 @@ public class HomeFragment extends Fragment {
         adapter.setOnClickListener(pot -> {
             Bundle bundle = homeViewModel.getPotBundle(pot);
             ((MainActivity)getActivity()).navController.navigate(R.id.nav_edit_pot, bundle);
+        });
+    }
+
+    private void observeApiStatus(){
+        homeViewModel.getApiFinished().observe(getViewLifecycleOwner(), aBoolean -> {
+            Log.d("home", aBoolean.toString());
+            swipeRefreshLayout.setRefreshing(aBoolean);
         });
     }
 }
