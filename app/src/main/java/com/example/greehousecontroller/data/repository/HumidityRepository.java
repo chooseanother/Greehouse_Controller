@@ -17,6 +17,7 @@ import com.example.greehousecontroller.data.model.Threshold;
 import com.example.greehousecontroller.utils.RepositoryCallback;
 import com.example.greehousecontroller.utils.ToastMaker;
 
+import java.time.chrono.HijrahChronology;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -70,11 +71,12 @@ public class HumidityRepository {
 
     private void loadCachedData(){
         executorService.execute(()->{
-            if(humidityDAO.getAll() == null || humidityDAO.getAll().isEmpty()){
+            Humidity latestMeasurement = humidityDAO.getLatest();
+            if(latestMeasurement == null){
                 latest = new MutableLiveData<>();
             }
             else{
-                latest = new MutableLiveData<>(humidityDAO.getAll().get(humidityDAO.getAll().size() -1));
+                latest = new MutableLiveData<>(latestMeasurement);
             }
         });
 

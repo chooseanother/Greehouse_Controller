@@ -10,8 +10,11 @@ import com.example.greehousecontroller.data.model.Humidity;
 import java.util.List;
 @Dao
 public interface HumidityDAO {
-    @Query("SELECT * FROM Humidity ORDER BY time DESC")
+    @Query("SELECT * FROM Humidity")
     List<Humidity> getAll();
+
+    @Query("SELECT * FROM Humidity WHERE time = (SELECT MAX(time) FROM Humidity)")
+    Humidity getLatest();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(List<Humidity> humidity);
