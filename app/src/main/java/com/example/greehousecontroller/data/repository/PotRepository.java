@@ -122,9 +122,9 @@ public class PotRepository {
         });
     }
 
-    public void addPot(String greenhouseId, int sensorId, String name, double minimumMoistureThreshold) {
+    public void addPot(String greenhouseId, int moistureSensorId, String name, double minimumMoistureThreshold) {
         PotAPI potAPI = ServiceGenerator.getPotAPI();
-        Pot pot = new Pot(name, sensorId, 0, minimumMoistureThreshold);
+        Pot pot = new Pot(name, moistureSensorId, 0, minimumMoistureThreshold);
         Call<Pot> call = potAPI.addPotDetailsById(greenhouseId, pot);
         call.enqueue(new Callback<Pot>() {
             @Override

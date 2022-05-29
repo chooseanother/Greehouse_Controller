@@ -9,30 +9,30 @@ public class Pot {
     @PrimaryKey
     private int id;
     private String name;
-    private int sensorId;
+    private int moistureSensorId;
     private double currentMoisture;
     private double lowerMoistureThreshold;
 
-    public Pot(int id, String name, int sensorId, double currentMoisture, double lowerMoistureThreshold) {
+    public Pot(int id, String name, int moistureSensorId, double currentMoisture, double lowerMoistureThreshold) {
         this.id = id;
         this.name = name;
-        this.sensorId = sensorId;
+        this.moistureSensorId = moistureSensorId;
         this.currentMoisture = currentMoisture;
         this.lowerMoistureThreshold = lowerMoistureThreshold;
     }
 
     @Ignore
-    public Pot(String name, int sensorId, double currentMoisture, double lowerMoistureThreshold) {
+    public Pot(String name, int moistureSensorId, double currentMoisture, double lowerMoistureThreshold) {
         this.name = name;
-        this.sensorId = sensorId;
+        this.moistureSensorId = moistureSensorId;
         this.currentMoisture = currentMoisture;
         this.lowerMoistureThreshold = lowerMoistureThreshold;
     }
 
     @Ignore
-    public Pot(int id, int sensorId, String name, double lowerMoistureThreshold){
+    public Pot(int id, int moistureSensorId, String name, double lowerMoistureThreshold){
         this.id = id;
-        this.sensorId = sensorId;
+        this.moistureSensorId = moistureSensorId;
         this.name = name;
         this.lowerMoistureThreshold = lowerMoistureThreshold;
     }
@@ -59,7 +59,7 @@ public class Pot {
         return name;
     }
 
-    public int getSensorId(){ return sensorId; }
+    public int getMoistureSensorId(){ return moistureSensorId; }
 
     public double getCurrentMoisture() {
         return currentMoisture;
