@@ -28,6 +28,7 @@ public class MoistureGraphFragment extends Fragment {
     private List<PotSpinner> spinnerList;
     private NavController navController;
 
+
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentMoisturePotsGraphsBinding.inflate(inflater, container, false);
@@ -38,7 +39,6 @@ public class MoistureGraphFragment extends Fragment {
         updateMeasurements();
         return binding.getRoot();
     }
-
     private void onChangeSpinner()
     {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

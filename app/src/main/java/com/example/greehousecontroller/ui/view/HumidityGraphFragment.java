@@ -55,16 +55,18 @@ public class HumidityGraphFragment extends Fragment {
         humidityViewModel.getHumidityHistoryData().observe(getViewLifecycleOwner(), new Observer<List<Humidity>>() {
             @Override
             public void onChanged(@Nullable List<Humidity> humidities) {
-                if (humidities.size() > 0) {
-                    for (int i = 0; i < 1; i++) {
-                        long time = (long) Objects.requireNonNull(humidityViewModel.getLatestHumidity().getValue()).getTime();
-                        double measurement = Objects.requireNonNull(humidityViewModel.getLatestHumidity().getValue()).getHumidity();
-                        data.add(new GraphsFragment.OHCLDataEntry(time, 0.1, 0.1, 0.1, measurement));
+                if (humidities != null) {
+                    if (humidities.size() > 0) {
+                        for (int i = 0; i < 1; i++) {
+                            long time = (long) Objects.requireNonNull(humidityViewModel.getLatestHumidity().getValue()).getTime();
+                            double measurement = Objects.requireNonNull(humidityViewModel.getLatestHumidity().getValue()).getHumidity();
+                            data.add(new GraphsFragment.OHCLDataEntry(time, 0.1, 0.1, 0.1, measurement));
+                        }
+                        for (Humidity humidity : humidities) {
+                            data.add(new GraphsFragment.OHCLDataEntry(humidity.getTime(), humidity.getHumidity(), humidity.getHumidity(), humidity.getHumidity(), humidity.getHumidity()));
+                        }
+                        table.addData(data);
                     }
-                    for (Humidity humidity : humidities) {
-                        data.add(new GraphsFragment.OHCLDataEntry(humidity.getTime(), humidity.getHumidity(), humidity.getHumidity(), humidity.getHumidity(), humidity.getHumidity()));
-                    }
-                    table.addData(data);
                 }
             }
         });

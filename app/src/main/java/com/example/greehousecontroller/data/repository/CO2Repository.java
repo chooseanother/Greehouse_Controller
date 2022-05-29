@@ -136,7 +136,7 @@ public class CO2Repository {
         return history;
     }
 
-    public void updateHistoricalData(String greenhouseId){
+    public void updateHistoricalData(String greenhouseId,RepositoryCallback callback){
         CO2Api co2Api = ServiceGenerator.getCO2Api();
         Call<ArrayList<CO2>> call = co2Api.getHistoricalCO2(greenhouseId);
         call.enqueue(new Callback<ArrayList<CO2>>() {

@@ -4,6 +4,7 @@ import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.greehousecontroller.data.model.Humidity;
 import com.example.greehousecontroller.data.model.Moisture;
@@ -23,7 +24,7 @@ public class MoistureViewModel extends AndroidViewModel {
     private Application application;
     private MoistureRepository moistureRepository;
     private final PotRepository potRepository;
-
+    private MutableLiveData<Boolean> refreshing;
     public MoistureViewModel(Application application) {
         super(application);
         this.application = application;
@@ -31,6 +32,8 @@ public class MoistureViewModel extends AndroidViewModel {
         userInfoRepository = UserInfoRepository.getInstance();
         userRepository = UserRepository.getInstance(application);
         moistureRepository = MoistureRepository.getInstance(application);
+
+        refreshing = new MutableLiveData<>(false);
     }
 
     public LiveData<UserInfo> getUserInfo() {
@@ -43,9 +46,18 @@ public class MoistureViewModel extends AndroidViewModel {
     public void updateHistoryData(String greenHouseId,int potId)
     {
         moistureRepository.cachedData(potId);
-        moistureRepository.updateLatestData(greenHouseId, potId, null);
-        moistureRepository.updateHistoricalData(greenHouseId, potId);
+        moistureRepository.updateHistoricalData(greenHouseId,potId, () -> {
+            refreshing.postValue(false);
+        });
+        moistureRepository.updateLatestData(greenHouseId,potId, () -> {
+            refreshing.postValue(false);
+        });
     }
+
+    public MutableLiveData<Boolean> getRefreshing() {
+        return refreshing;
+    }
+
     public LiveData<List<Moisture>> getMoistureHistoryData()
     {
         return moistureRepository.getHistoricalData();

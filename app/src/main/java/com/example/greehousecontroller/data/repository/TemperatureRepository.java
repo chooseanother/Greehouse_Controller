@@ -95,7 +95,7 @@ public class TemperatureRepository {
         return historical;
     }
 
-    public void updateHistoricalMeasurement(String greenhouseId){
+    public void updateHistoricalMeasurement(String greenhouseId,RepositoryCallback callback){
         TemperatureApi temperatureApi = ServiceGenerator.getTemperatureAPI();
         Call<List<Temperature>> call = temperatureApi.getHistoricalTemperature(greenhouseId);
         call.enqueue(new Callback<List<Temperature>>() {
@@ -120,6 +120,9 @@ public class TemperatureRepository {
 
                 if(!response.isSuccessful()){
                     toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_retrieve_measurements));
+                    if (callback != null){
+                        callback.call();
+                    }
                 }
             }
             @EverythingIsNonNull
@@ -127,6 +130,9 @@ public class TemperatureRepository {
             public void onFailure(Call<List<Temperature>> call, Throwable t) {
                 Log.e("Api-temp-ulm",t.getMessage());
                 toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
+                if (callback != null){
+                    callback.call();
+                }
             }
         });
     }
