@@ -11,14 +11,17 @@ public class PotJsonAdapter extends TypeAdapter<Pot> {
     @Override
     public void write(JsonWriter out, Pot value) throws IOException {
         out.beginObject();
+        out.name("latestMoisture");
+        out.value(0.0);
         out.name("name");
         out.value(value.getName());
         out.name("lowerMoistureThreshold");
         out.value(value.getLowerMoistureThreshold());
-        /*out.name("id");
-        out.value(value.getId());*/
+        out.name("id");
+        out.value(0);
         out.name("moistureSensorId");
         out.value(value.getMoistureSensorId());
+
         out.endObject();
     }
 
