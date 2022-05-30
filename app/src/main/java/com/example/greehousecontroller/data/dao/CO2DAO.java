@@ -6,13 +6,17 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.greehousecontroller.data.model.CO2;
+import com.example.greehousecontroller.data.model.Humidity;
 
 import java.util.List;
 
 @Dao
 public interface CO2DAO {
-    @Query("SELECT * FROM CO2 ORDER BY time DESC")
+    @Query("SELECT * FROM CO2")
     List<CO2> getAll();
+
+    @Query("SELECT * FROM CO2 WHERE time = (SELECT MAX(time) FROM CO2)")
+    CO2 getLatest();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(List<CO2> co2s);

@@ -47,7 +47,7 @@ public class ThresholdSettingsFragment extends Fragment {
         getGreenhouseID();
         binding = FragmentThresholdSettingsBinding.inflate(inflater, container, false);
         root = binding.getRoot();
-
+        viewModel.loadCachedData();
         setUpBindingThresholdsEditText();
         setUpEditTextNumberOnly();
         setUpBindingThresholdsSave();

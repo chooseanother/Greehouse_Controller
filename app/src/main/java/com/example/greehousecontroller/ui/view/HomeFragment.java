@@ -21,6 +21,7 @@ import com.example.greehousecontroller.R;
 import com.example.greehousecontroller.databinding.FragmentHomeBinding;
 import com.example.greehousecontroller.ui.adapter.PotAdapter;
 import com.example.greehousecontroller.ui.viewmodel.HomeViewModel;
+import com.example.greehousecontroller.utils.Config;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -51,6 +52,7 @@ public class HomeFragment extends Fragment {
         settingOfTextViews();
         getGreenhouseID();
         observeData();
+        homeViewModel.getLatestCachedData();
         observeApiStatus();
         return root;
     }
@@ -73,6 +75,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        binding = null;
     }
 
     private void initSwipeRefreshLayout(){
@@ -140,7 +143,7 @@ public class HomeFragment extends Fragment {
     private void fabHandle(){
         floatingActionButton = binding.homeFab;
         floatingActionButton.setOnClickListener(clicked->{
-            if(homeViewModel.getLatestPots().getValue().size() < 6){
+            if(homeViewModel.getLatestPots().getValue().size() < Config.MAX_NUMBER_OF_POTS){
                 ((MainActivity)getActivity()).navController.navigate(R.id.nav_add_pot);
             } else {
                 Toast.makeText(getContext(), R.string.home_pot_limit_reached_toast_message, Toast.LENGTH_SHORT).show();

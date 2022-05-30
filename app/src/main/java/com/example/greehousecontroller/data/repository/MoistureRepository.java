@@ -1,23 +1,24 @@
 package com.example.greehousecontroller.data.repository;
+
 import android.app.Application;
 import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
+
 import com.example.greehousecontroller.R;
 import com.example.greehousecontroller.data.api.MoistureApi;
 import com.example.greehousecontroller.data.api.ServiceGenerator;
 import com.example.greehousecontroller.data.dao.MoistureDAO;
 import com.example.greehousecontroller.data.database.AppDatabase;
-import com.example.greehousecontroller.data.model.Humidity;
 import com.example.greehousecontroller.data.model.Moisture;
-import com.example.greehousecontroller.data.model.Threshold;
 import com.example.greehousecontroller.utils.RepositoryCallback;
 import com.example.greehousecontroller.utils.ToastMaker;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,134 +35,125 @@ public class MoistureRepository {
     private ToastMaker toastMaker;
 
 
-
-    private MoistureRepository(Application app){
+    private MoistureRepository(Application app) {
         this.app = app;
         AppDatabase appDatabase = AppDatabase.getInstance(app);
         executorService = Executors.newFixedThreadPool(4);
-        latest = new MutableLiveData<>();
-        history = new MutableLiveData<>();
+        latest = new MutableLiveData<>(new Moisture());
+        history = new MutableLiveData<>(new ArrayList<>());
         toastMaker = ToastMaker.getInstance();
         moistureDAO = appDatabase.moistureDAO();
-        cachedData(0);
-    }
-    public void cachedData(int potId) {
-
-            executorService.execute(() -> {
-                if (moistureDAO.getAllByPotId(potId) != null) {
-                    if (moistureDAO.getAllByPotId(potId) == null || moistureDAO.getAllByPotId(potId).isEmpty()) {
-                        latest = new MutableLiveData<>();
-                    } else {
-                        latest = new MutableLiveData<>(moistureDAO.getAllByPotId(potId).get(0));
-                    }
-                }
-            });
-            executorService.execute(() -> {
-                if (moistureDAO.getAllByPotId(potId) != null) {
-                    if (moistureDAO.getAllByPotId(potId) == null || moistureDAO.getAllByPotId(potId).isEmpty()) {
-                        history = new MutableLiveData<>();
-                    } else {
-                        history = new MutableLiveData<>(moistureDAO.getAllByPotId(potId));
-                    }
-                }
-            });
-
-
+        loadCachedData(0);
     }
 
-    public static MoistureRepository getInstance(Application app){
-        if (instance == null){
+    public void loadCachedData(int potId) {
+        executorService.execute(() -> {
+            Moisture latestMoisture = moistureDAO.getLatestByPotId(potId);
+            if (latestMoisture == null) {
+                latest.postValue(new Moisture());
+            } else {
+                latest.postValue(latestMoisture);
+            }
+        });
+
+        executorService.execute(() -> {
+            List<Moisture> historicalMoisture = moistureDAO.getAllByPotId(potId);
+            if (historicalMoisture == null || historicalMoisture.isEmpty()) {
+                history.postValue(new ArrayList<>());
+            } else {
+                history.postValue(historicalMoisture);
+            }
+        });
+    }
+
+    public static MoistureRepository getInstance(Application app) {
+        if (instance == null) {
             instance = new MoistureRepository(app);
         }
         return instance;
     }
 
-    public void updateHistoricalData(String greenhouseId,int potId,RepositoryCallback callback) {
+    public void updateHistoricalData(String greenhouseId, int potId, RepositoryCallback callback) {
         history.setValue(new ArrayList<>());
         MoistureApi moistureApi = ServiceGenerator.getMoistureAPI();
-        Call<List<Moisture>> call = moistureApi.getHistoricalMoisture(greenhouseId,potId);
+        Call<List<Moisture>> call = moistureApi.getHistoricalMoisture(greenhouseId, potId);
         call.enqueue(new Callback<List<Moisture>>() {
             @EverythingIsNonNull
             @Override
             public void onResponse(Call<List<Moisture>> call, Response<List<Moisture>> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     Log.i("Api-moist-hist", response.body().toString());
                     history.setValue(response.body());
-                    executorService.execute(()->{
+                    executorService.execute(() -> {
                         ArrayList<Moisture> result = (ArrayList<Moisture>) response.body();
-                        if(result.size() < 2000){
+                        if (result.size() < 2000) {
                             moistureDAO.delete(potId);
                             moistureDAO.insert(result);
-                        }
-                        else{
+                        } else {
                             moistureDAO.delete(potId);
-                            moistureDAO.insert(result);
+                            moistureDAO.insert((ArrayList<Moisture>) result.subList(0, 1999));
                         }
                     });
                 }
-                if(!response.isSuccessful()){
+                if (!response.isSuccessful()) {
                     toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_retrieve_measurements));
-                    if (callback != null){
+                    if (callback != null) {
                         callback.call();
                     }
                 }
             }
+
             @EverythingIsNonNull
             @Override
             public void onFailure(Call<List<Moisture>> call, Throwable t) {
-                Log.e("Api-moist-hist",t.getMessage());
+                Log.e("Api-moist-hist", t.getMessage());
                 toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
-                if (callback != null){
+                if (callback != null) {
                     callback.call();
                 }
             }
 
         });
     }
+
     public void updateLatestData(String greenhouseId, int potId, RepositoryCallback callback) {
         MoistureApi moistureApi = ServiceGenerator.getMoistureAPI();
-        Call<List<Moisture>> call = moistureApi.getLatestMoisture(greenhouseId,potId);
+        Call<List<Moisture>> call = moistureApi.getLatestMoisture(greenhouseId, potId);
         call.enqueue(new Callback<List<Moisture>>() {
             @EverythingIsNonNull
             @Override
             public void onResponse(Call<List<Moisture>> call, Response<List<Moisture>> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     Log.i("Api-moist-latest", response.body().toString());
                     Moisture result = response.body().get(0);
                     latest.setValue(result);
                 }
-                if(!response.isSuccessful()){
+                if (!response.isSuccessful()) {
                     toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_retrieve_measurements));
-                    if (callback != null){
+                    if (callback != null) {
                         callback.call();
                     }
                 }
 
             }
+
             @EverythingIsNonNull
             @Override
             public void onFailure(Call<List<Moisture>> call, Throwable t) {
-                Log.e("Api-moist-latest",t.getMessage());
+                Log.e("Api-moist-latest", t.getMessage());
                 toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
-                if (callback != null){
+                if (callback != null) {
                     callback.call();
                 }
             }
         });
-    }
-
-    public void resetLiveData(){
-        history = new MutableLiveData<>();
-        latest = new MutableLiveData<>();
     }
 
     public MutableLiveData<Moisture> getLatest() {
         return latest;
     }
 
-    public MutableLiveData<List<Moisture>> getHistoricalData(){
+    public MutableLiveData<List<Moisture>> getHistoricalData() {
         return history;
     }
-
-
 }

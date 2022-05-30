@@ -6,7 +6,6 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.greehousecontroller.data.model.Humidity;
 import com.example.greehousecontroller.data.model.Moisture;
 import com.example.greehousecontroller.data.model.Pot;
 import com.example.greehousecontroller.data.model.UserInfo;
@@ -45,7 +44,7 @@ public class MoistureViewModel extends AndroidViewModel {
     }
     public void updateHistoryData(String greenHouseId,int potId)
     {
-        moistureRepository.cachedData(potId);
+        moistureRepository.loadCachedData(potId);
         moistureRepository.updateHistoricalData(greenHouseId,potId, () -> {
             refreshing.postValue(false);
         });

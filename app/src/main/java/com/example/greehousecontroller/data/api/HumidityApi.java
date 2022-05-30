@@ -20,7 +20,7 @@ public interface HumidityApi {
     @GET("threshold/{greenhouseid}/humidity")
     Call<Threshold> getHumidityThresholds(@Path("greenhouseid") String greenhouseId);
     @PATCH("threshold/{greenhouseid}/humidity")
-    Call<Threshold> setHumidityThresholds(@Path("greenhouseid") String greenhouseId, @Body Threshold threshold);
+    Call<Void> setHumidityThresholds(@Path("greenhouseid") String greenhouseId, @Body Threshold threshold);
 
     @GET("Humidity/{greenhouseId}")
     Call<List<Humidity>> getHistoricalHumidity(@Path("greenhouseId") String greenhouseId);

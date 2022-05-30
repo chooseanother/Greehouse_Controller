@@ -19,4 +19,7 @@ public interface MoistureDAO {
 
     @Query("SELECT * FROM Moisture WHERE moisture.potId = :potId ORDER BY time DESC")
     List<Moisture> getAllByPotId(int potId);
+
+    @Query("SELECT * FROM Moisture WHERE moisture.potId = :potId AND time = (SELECT MAX(time) FROM Moisture)")
+    Moisture getLatestByPotId(int potId);
 }

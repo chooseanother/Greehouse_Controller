@@ -41,4 +41,9 @@ public class HumidityGraphViewModel extends AndroidViewModel {
         humidityRepository.updateLatestMeasurement(greenhouseId, null);
         humidityRepository.updateHistoricalData(greenhouseId,null);
     }
+
+    public void loadCachedData(){
+        humidityRepository.loadLatestCachedData();
+        humidityRepository.loadHistoricalCachedData();
+    }
 }

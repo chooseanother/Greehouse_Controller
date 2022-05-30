@@ -38,7 +38,6 @@ public class EditPotFragment extends Fragment {
         viewModel =
                 new ViewModelProvider(this).get(EditPotViewModel.class);
         setUpTextViews();
-        viewModel.init(greenhouseId, Integer.parseInt(getArguments().getString("id")));
         binding = FragmentEditPotBinding.inflate(inflater, container, false);
         root = binding.getRoot();
 
@@ -81,7 +80,7 @@ public class EditPotFragment extends Fragment {
             public void onClick(View view) {
                 //calling viewModel to check for input and updating pot in the D
                 if (pot.getValue() != null) {
-                    boolean response = viewModel.updateCurrentPot(greenhouseId, pot.getValue().getId(), potName.getText().toString(), minimalThreshold.getText().toString());
+                    boolean response = viewModel.updateCurrentPot(greenhouseId, pot.getValue().getId(), potName.getText().toString(), pot.getValue().getMoistureSensorId(), minimalThreshold.getText().toString());
                     if (response) {
                         ((MainActivity) getActivity()).navController.navigate(R.id.navigationHome);
                     }

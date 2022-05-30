@@ -17,6 +17,7 @@ import com.example.greehousecontroller.data.model.Threshold;
 import com.example.greehousecontroller.utils.RepositoryCallback;
 import com.example.greehousecontroller.utils.ToastMaker;
 
+import java.time.chrono.HijrahChronology;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -38,19 +39,20 @@ public class HumidityRepository {
     private ToastMaker toastMaker;
     private final ExecutorService executorService;
 
-    private HumidityRepository(Application app){
+    private HumidityRepository(Application app) {
         this.app = app;
         AppDatabase database = AppDatabase.getInstance(app);
         executorService = Executors.newFixedThreadPool(4);
         humidityDAO = database.humidityDAO();
         thresholdDAO = database.thresholdDAO();
         toastMaker = ToastMaker.getInstance();
-
-        loadCachedData();
+        latest = new MutableLiveData<>(new Humidity());
+        history = new MutableLiveData<>(new ArrayList<>());
+        threshold = new MutableLiveData<>(new Threshold("Humidity", 0, 0));
     }
 
-    public static HumidityRepository getInstance(Application app){
-        if (instance == null){
+    public static HumidityRepository getInstance(Application app) {
+        if (instance == null) {
             instance = new HumidityRepository(app);
         }
         return instance;
@@ -60,40 +62,43 @@ public class HumidityRepository {
         return latest;
     }
 
-    public MutableLiveData<Threshold> getThreshold(){
+    public MutableLiveData<Threshold> getThreshold() {
         return threshold;
     }
 
-    public MutableLiveData<List<Humidity>> getHistoricalData(){
+    public MutableLiveData<List<Humidity>> getHistoricalData() {
         return history;
     }
 
-    private void loadCachedData(){
-        executorService.execute(()->{
-            if(humidityDAO.getAll() == null || humidityDAO.getAll().isEmpty()){
-                latest = new MutableLiveData<>();
-            }
-            else{
-                latest = new MutableLiveData<>(humidityDAO.getAll().get(humidityDAO.getAll().size() -1));
-            }
-        });
-
-        executorService.execute(()->{
-            if(thresholdDAO.getThreshold("Humidity") == null){
-                threshold = new MutableLiveData<>(new Threshold("Humidity", 0,0));
-            }
-            else{
-                threshold = new MutableLiveData<>(thresholdDAO.getThreshold("Humidity"));
+    public void loadLatestCachedData() {
+        executorService.execute(() -> {
+            Humidity latestMeasurement = humidityDAO.getLatest();
+            if (latestMeasurement == null) {
+                latest.postValue(new Humidity());
+            } else {
+                latest.postValue(latestMeasurement);
             }
         });
+    }
 
-        executorService.execute(()->{
-            if(humidityDAO.getAll() == null){
-                history = new MutableLiveData<>();
+    public void loadThresholdCachedData() {
+        executorService.execute(() -> {
+            Threshold humidityThreshold = thresholdDAO.getThreshold("Humidity");
+            if (humidityThreshold == null) {
+                threshold.postValue(new Threshold("Humidity", 0, 0));
+            } else {
+                threshold.postValue(humidityThreshold);
             }
-            else{
-                Log.i("History Humidity: ",humidityDAO.getAll().toString());
-                history = new MutableLiveData<>((ArrayList<Humidity>) humidityDAO.getAll());
+        });
+    }
+
+    public void loadHistoricalCachedData() {
+        executorService.execute(() -> {
+            List<Humidity> humidityAll = humidityDAO.getAll();
+            if (humidityAll == null) {
+                history.postValue(new ArrayList<>());
+            } else {
+                history.postValue(humidityDAO.getAll());
             }
         });
     }
@@ -182,13 +187,8 @@ public class HumidityRepository {
                         Log.i("Api-hum-ut", response.body().toString());
                         threshold.setValue(response.body());
                         executorService.execute(()-> {
-                            if(thresholdDAO.getThreshold("Humidity") == null){
-                                Threshold threshold = new Threshold("Humidity",response.body().getUpperThreshold(), response.body().getLowerThreshold());
-                                thresholdDAO.insert(threshold);
-                            }
-                            else{
-                                thresholdDAO.update("Humidity", response.body().getUpperThreshold(), response.body().getLowerThreshold());
-                            }
+                            Threshold threshold = new Threshold("Humidity",response.body().getUpperThreshold(), response.body().getLowerThreshold());
+                            thresholdDAO.insert(threshold);
                         });
                     }
                 }
@@ -208,43 +208,21 @@ public class HumidityRepository {
 
     public void setThreshold(String greenhouseId, Threshold newThreshold){
         HumidityApi humidityApi = ServiceGenerator.getHumidityAPI();
-        Call<Threshold> call = humidityApi.setHumidityThresholds(greenhouseId, newThreshold);
-        call.enqueue(new Callback<Threshold>() {
+        Call<Void> call = humidityApi.setHumidityThresholds(greenhouseId, newThreshold);
+        call.enqueue(new Callback<Void>() {
             @EverythingIsNonNull
             @Override
-            public void onResponse(Call<Threshold> call, Response<Threshold> response) {
-                if (response.isSuccessful()){
-                    if(response.body() != null){
-                        Log.i("Api-hum-st", response.body().toString());
-                        threshold.setValue(response.body());
-                        executorService.execute(()-> {
-                            if(thresholdDAO.getThreshold("Humidity") == null){
-                                Threshold threshold = new Threshold("Humidity",response.body().getUpperThreshold(), response.body().getLowerThreshold());
-                                thresholdDAO.insert(threshold);
-                            }
-                            else{
-                                thresholdDAO.update("Humidity", response.body().getUpperThreshold(), response.body().getLowerThreshold());
-                            }
-                        });
-                    }
-                }
-
+            public void onResponse(Call<Void> call, Response<Void> response) {
                 if(!response.isSuccessful()){
                     toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_update_threshold));
                 }
             }
             @EverythingIsNonNull
             @Override
-            public void onFailure(Call<Threshold> call, Throwable t) {
+            public void onFailure(Call<Void> call, Throwable t) {
                 Log.e("Api-hum-st",t.getMessage());
                 toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
             }
         });
-    }
-
-    public void resetLiveData(){
-        latest = new MutableLiveData<>();
-        threshold = new MutableLiveData<>(new Threshold("Humidity",0,0));
-        history = new MutableLiveData<>();
     }
 }

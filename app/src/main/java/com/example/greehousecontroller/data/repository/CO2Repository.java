@@ -45,11 +45,14 @@ public class CO2Repository {
         co2DAO = database.co2DAO();
         thresholdDAO = database.thresholdDAO();
         toastMaker = ToastMaker.getInstance();
+        latest = new MutableLiveData<>(new CO2());
+        history = new MutableLiveData<>(new ArrayList<>());
+        threshold = new MutableLiveData<>(new Threshold("CO2",0,0));
 
-        loadCachedData();
+
     }
 
-    public static com.example.greehousecontroller.data.repository.CO2Repository getInstance(Application app){
+    public static CO2Repository getInstance(Application app){
         if (instance == null){
             instance = new CO2Repository(app);
         }
@@ -64,33 +67,36 @@ public class CO2Repository {
         return threshold;
     }
 
-    private void loadCachedData(){
-        executorService.execute(()->{
-            if(co2DAO.getAll() == null || co2DAO.getAll().isEmpty()){
-                latest = new MutableLiveData<>();
-            }
-            else
-            {
-                latest = new MutableLiveData<>(co2DAO.getAll().get(co2DAO.getAll().size() -1));
-            }
-        });
-
-        executorService.execute(()->{
-            if(thresholdDAO.getThreshold("CO2") == null){
-                threshold = new MutableLiveData<>(new Threshold("CO2", 0, 0));
-            }
-            else
-            {
-                threshold = new MutableLiveData<>(thresholdDAO.getThreshold("CO2"));
+    public void loadLatestCachedData() {
+        executorService.execute(() -> {
+            CO2 latestCo2 = co2DAO.getLatest();
+            if (latestCo2 == null) {
+                latest.postValue(new CO2());
+            } else {
+                latest.postValue(latestCo2);
             }
         });
+    }
 
+    public void loadThresholdCachedData() {
+        executorService.execute(() -> {
+            Threshold co2Threshold = thresholdDAO.getThreshold("CO2");
+            if (co2Threshold == null) {
+                threshold.postValue(new Threshold("CO2", 0, 0));
+            } else {
+                threshold.postValue(co2Threshold);
+            }
+        });
+    }
+
+    public void loadHistoricalCachedData(){
         executorService.execute(()->{
-            if(co2DAO.getAll() == null){
-                history = new MutableLiveData<>();
+            List<CO2> co2History = co2DAO.getAll();
+            if(co2History == null){
+                history.postValue(new ArrayList<>());
             }
             else{
-                history = new MutableLiveData<>(co2DAO.getAll());
+                history.postValue(co2History);
             }
         });
     }
@@ -180,13 +186,8 @@ public class CO2Repository {
                         Log.i("Api-co2-ut", response.body().toString());
                         threshold.setValue(response.body());
                         executorService.execute(()-> {
-                            if(thresholdDAO.getThreshold("CO2") == null){
-                                Threshold threshold = new Threshold("CO2",response.body().getUpperThreshold(), response.body().getLowerThreshold());
+                            Threshold threshold = new Threshold("CO2",response.body().getUpperThreshold(), response.body().getLowerThreshold());
                             thresholdDAO.insert(threshold);
-                            }
-                            else{
-                                thresholdDAO.update("CO2", response.body().getUpperThreshold(), response.body().getLowerThreshold());
-                            }
                         });
                     }
                 }
@@ -206,43 +207,21 @@ public class CO2Repository {
 
     public void setThreshold(String greenhouseId, Threshold newThreshold){
         CO2Api co2Api = ServiceGenerator.getCO2Api();
-        Call<Threshold> call = co2Api.setCo2Thresholds(greenhouseId, newThreshold);
-        call.enqueue(new Callback<Threshold>() {
+        Call<Void> call = co2Api.setCo2Thresholds(greenhouseId, newThreshold);
+        call.enqueue(new Callback<Void>() {
             @retrofit2.internal.EverythingIsNonNull
             @Override
-            public void onResponse(Call<Threshold> call, Response<Threshold> response) {
-                if (response.isSuccessful()){
-                    if(response.body() != null){
-                        Log.i("Api-co2-st", response.body().toString());
-                        threshold.setValue(response.body());
-                        executorService.execute(()-> {
-                            if(thresholdDAO.getThreshold("CO2") == null){
-                                Threshold threshold = new Threshold("CO2",response.body().getUpperThreshold(), response.body().getLowerThreshold());
-                                thresholdDAO.insert(threshold);
-                            }
-                            else{
-                                thresholdDAO.update("CO2", response.body().getUpperThreshold(), response.body().getLowerThreshold());
-                            }
-                        });
-                    }
-                }
-
+            public void onResponse(Call<Void> call, Response<Void> response) {
                 if(!response.isSuccessful()){
                         toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_update_threshold));
-                    }
+                }
             }
             @retrofit2.internal.EverythingIsNonNull
             @Override
-            public void onFailure(Call<Threshold> call, Throwable t) {
+            public void onFailure(Call<Void> call, Throwable t) {
                 Log.e("Api-co2-st",t.getMessage());
                 toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
             }
         });
-    }
-
-    public void resetLiveData(){
-        latest = new MutableLiveData<>();
-        threshold = new MutableLiveData<>(new Threshold("CO2",0,0));
-        history = new MutableLiveData<>();
     }
 }

@@ -39,7 +39,7 @@ public class EditPotViewModel extends AndroidViewModel {
         return potRepository.getCurrentPot();
     }
 
-    public boolean updateCurrentPot(String greenhouseId, int id, String name, String minimumThreshold) {
+    public boolean updateCurrentPot(String greenhouseId, int potId, String name, int moistureSensorId, String minimumThreshold) {
         if (!checkForNameInput(name)) {
             Toast.makeText(application, R.string.add_pot_missing_name_exception, Toast.LENGTH_SHORT).show();
             return false;
@@ -52,7 +52,7 @@ public class EditPotViewModel extends AndroidViewModel {
             Toast.makeText(application, R.string.settings_out_of_bounds_humidity_exception, Toast.LENGTH_SHORT).show();
             return false;
         } else {
-            potRepository.updateCurrentPot(greenhouseId, id, name, Double.parseDouble(minimumThreshold));
+            potRepository.updateCurrentPot(greenhouseId, potId, name, moistureSensorId, Double.parseDouble(minimumThreshold));
             return true;
         }
     }

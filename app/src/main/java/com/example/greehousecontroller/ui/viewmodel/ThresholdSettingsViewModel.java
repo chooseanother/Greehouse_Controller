@@ -46,6 +46,12 @@ public class ThresholdSettingsViewModel extends AndroidViewModel {
         co2Repository.updateThreshold(greenHouseId);
     }
 
+    public void loadCachedData(){
+        humidityRepository.loadThresholdCachedData();
+        temperatureRepository.loadThresholdCachedData();
+        co2Repository.loadThresholdCachedData();
+    }
+
     public LiveData<UserInfo> getUserInfo(){
         return userInfoRepository.getUserInfo();
     }

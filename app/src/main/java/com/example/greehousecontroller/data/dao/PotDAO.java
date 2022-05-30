@@ -1,6 +1,7 @@
 package com.example.greehousecontroller.data.dao;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -19,4 +20,7 @@ public interface PotDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(List<Pot> pot);
+
+    @Query("DELETE FROM Pot")
+    void delete();
 }
