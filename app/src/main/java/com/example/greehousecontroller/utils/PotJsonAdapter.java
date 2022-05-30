@@ -29,6 +29,7 @@ public class PotJsonAdapter extends TypeAdapter<Pot> {
         double lowerMoistureThreshold = 0.0;
         int id = 0;
         int moistureSensorId = 0;
+        double latestMoisture = 0.0;
         in.beginObject();
         while(in.hasNext()){
             switch (in.nextName()){
@@ -44,9 +45,12 @@ public class PotJsonAdapter extends TypeAdapter<Pot> {
                 case "moistureSensorId":
                     moistureSensorId = in.nextInt();
                     break;
+                case "latestMoisture":
+                    latestMoisture = in.nextDouble();
+                    break;
             }
         }
         in.endObject();
-        return new Pot(id, moistureSensorId, name, lowerMoistureThreshold);
+        return new Pot(id, name, moistureSensorId, latestMoisture, lowerMoistureThreshold);
     }
 }
