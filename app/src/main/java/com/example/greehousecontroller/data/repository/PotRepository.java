@@ -100,10 +100,10 @@ public class PotRepository {
         PotAPI potAPI = ServiceGenerator.getPotAPI();
         Pot pot = new Pot(name, moistureSensorId, minimumThreshold);
         Log.i("Api-pot-update-info", "pot string: "+pot + " pot json: " + new Gson().toJson(pot) + " potId " + potId);
-        Call<Pot> call = potAPI.updatePotDetailsById(greenHouseId, potId, pot);
-        call.enqueue(new Callback<Pot>() {
+        Call<Void> call = potAPI.updatePotDetailsById(greenHouseId, potId, pot);
+        call.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<Pot> call, Response<Pot> response) {
+            public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
                         Log.i("Api-pot-ulm", response.body().toString());
@@ -116,7 +116,7 @@ public class PotRepository {
             }
 
             @Override
-            public void onFailure(Call<Pot> call, Throwable t) {
+            public void onFailure(Call<Void> call, Throwable t) {
                 Log.e("Api-pot-ulm", t.getMessage());
                 toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
             }
@@ -127,10 +127,10 @@ public class PotRepository {
         PotAPI potAPI = ServiceGenerator.getPotAPI();
         Pot pot = new Pot(0, moistureSensorId, name, minimumMoistureThreshold);
         Log.i("Api-pot-add-new", new Gson().toJson(pot));
-        Call<Pot> call = potAPI.addPotDetailsByGreenhouseId(greenhouseId, pot);
-        call.enqueue(new Callback<Pot>() {
+        Call<Void> call = potAPI.addPotDetailsByGreenhouseId(greenhouseId, pot);
+        call.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<Pot> call, Response<Pot> response) {
+            public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
                         Log.i("Api-pot-add-(:", response.body().toString());
@@ -143,7 +143,7 @@ public class PotRepository {
             }
 
             @Override
-            public void onFailure(Call<Pot> call, Throwable t) {
+            public void onFailure(Call<Void> call, Throwable t) {
                 Log.e("Api-pot-add-):", t.getMessage());
                 toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
             }

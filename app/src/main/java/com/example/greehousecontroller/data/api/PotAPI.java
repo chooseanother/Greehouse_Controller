@@ -16,11 +16,11 @@ public interface PotAPI {
     Call<List<Pot>> getAllPotsByGreenhouseId(@Path("greenhouseId") String greenhouseId);
 
     @POST("Pot/{greenhouseId}")
-    Call<Pot> addPotDetailsByGreenhouseId(@Path("greenhouseId") String greenhouseId, @Body Pot pot);
+    Call<Void> addPotDetailsByGreenhouseId(@Path("greenhouseId") String greenhouseId, @Body Pot pot);
 
     @GET("Pot/{greenhouseId}/{PotId}")
     Call<Pot> getPotDetailsById(@Path("greenhouseId") String greenhouseId, @Path("PotId") int potId);
 
     @PATCH("Pot/{greenhouseId}/{PotId}")
-    Call<Pot> updatePotDetailsById(@Path("greenhouseId") String greenhouseId, @Path("PotId") int potId, @Body Pot pot);
+    Call<Void> updatePotDetailsById(@Path("greenhouseId") String greenhouseId, @Path("PotId") int potId, @Body Pot pot);
 }
