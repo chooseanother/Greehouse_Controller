@@ -216,27 +216,18 @@ public class TemperatureRepository {
 
     public void setThreshold(String greenhouseId, Threshold newThreshold){
         TemperatureApi temperatureApi = ServiceGenerator.getTemperatureAPI();
-        Call<Threshold> call = temperatureApi.setTemperatureThresholds(greenhouseId, newThreshold);
-        call.enqueue(new Callback<Threshold>() {
+        Call<Void> call = temperatureApi.setTemperatureThresholds(greenhouseId, newThreshold);
+        call.enqueue(new Callback<Void>() {
             @EverythingIsNonNull
             @Override
-            public void onResponse(Call<Threshold> call, Response<Threshold> response) {
-                if (response.isSuccessful()){
-                    Log.i("Api-temp-st", response.body().toString());
-                    threshold.setValue(response.body());
-                    executorService.execute(()-> {
-                        Threshold threshold = new Threshold("Temperature",response.body().getUpperThreshold(), response.body().getLowerThreshold());
-                        thresholdDAO.insert(threshold);
-                    });
-                }
-
+            public void onResponse(Call<Void> call, Response<Void> response) {
                 if(!response.isSuccessful()){
                     toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_update_threshold));
                 }
             }
             @EverythingIsNonNull
             @Override
-            public void onFailure(Call<Threshold> call, Throwable t) {
+            public void onFailure(Call<Void> call, Throwable t) {
                 Log.e("Api-temp-st",t.getMessage());
                 toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
             }

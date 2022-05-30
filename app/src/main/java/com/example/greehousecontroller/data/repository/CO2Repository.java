@@ -207,29 +207,18 @@ public class CO2Repository {
 
     public void setThreshold(String greenhouseId, Threshold newThreshold){
         CO2Api co2Api = ServiceGenerator.getCO2Api();
-        Call<Threshold> call = co2Api.setCo2Thresholds(greenhouseId, newThreshold);
-        call.enqueue(new Callback<Threshold>() {
+        Call<Void> call = co2Api.setCo2Thresholds(greenhouseId, newThreshold);
+        call.enqueue(new Callback<Void>() {
             @retrofit2.internal.EverythingIsNonNull
             @Override
-            public void onResponse(Call<Threshold> call, Response<Threshold> response) {
-                if (response.isSuccessful()){
-                    if(response.body() != null){
-                        Log.i("Api-co2-st", response.body().toString());
-                        threshold.setValue(response.body());
-                        executorService.execute(()-> {
-                            Threshold threshold = new Threshold("CO2",response.body().getUpperThreshold(), response.body().getLowerThreshold());
-                            thresholdDAO.insert(threshold);
-                        });
-                    }
-                }
-
+            public void onResponse(Call<Void> call, Response<Void> response) {
                 if(!response.isSuccessful()){
                         toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_update_threshold));
-                    }
+                }
             }
             @retrofit2.internal.EverythingIsNonNull
             @Override
-            public void onFailure(Call<Threshold> call, Throwable t) {
+            public void onFailure(Call<Void> call, Throwable t) {
                 Log.e("Api-co2-st",t.getMessage());
                 toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
             }

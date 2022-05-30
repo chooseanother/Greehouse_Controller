@@ -131,12 +131,6 @@ public class PotRepository {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    if (response.body() != null) {
-                        Log.i("Api-pot-add-(:", response.body().toString());
-                    }
-                }
-
                 if (!response.isSuccessful()) {
                     toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_add_pot));
                 }

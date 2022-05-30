@@ -18,7 +18,7 @@ public interface TemperatureApi {
     @GET("threshold/{greenhouseid}/temperature")
     Call<Threshold> getTemperatureThresholds(@Path("greenhouseid") String greenhouseId);
     @PATCH("threshold/{greenhouseid}/temperature")
-    Call<Threshold> setTemperatureThresholds(@Path("greenhouseid") String greenhouseId, @Body Threshold threshold);
+    Call<Void> setTemperatureThresholds(@Path("greenhouseid") String greenhouseId, @Body Threshold threshold);
 
     @GET("Temperature/{greenhouseid}")
     Call<List<Temperature>> getHistoricalTemperature(@Path("greenhouseid") String greenhouseId);
