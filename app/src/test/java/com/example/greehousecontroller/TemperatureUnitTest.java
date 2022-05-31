@@ -9,6 +9,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import java.util.Calendar;
+import java.util.Random;
 import java.util.TimeZone;
 
 public class TemperatureUnitTest {
@@ -174,14 +175,14 @@ public class TemperatureUnitTest {
     public void getLocalTimeMany(){
         int id = 0;
         double measurement = 0;
-        long time = 45852398;
-        Temperature t = new Temperature(id, measurement, time);
 
         TimeZone localTimeZone = Calendar.getInstance().getTimeZone();
-
-        long result = time + localTimeZone.getRawOffset() + (localTimeZone.useDaylightTime() ? localTimeZone.getDSTSavings() : 0);
-
-        assertEquals(result, t.getLocalTime());
+        for (int i = 0; i<10;i++){
+            long time = new Random().nextLong();
+            Temperature t = new Temperature(id, measurement, time);
+            long result = time + localTimeZone.getRawOffset() + (localTimeZone.useDaylightTime() ? localTimeZone.getDSTSavings() : 0);
+            assertEquals(result, t.getLocalTime());
+        }
     }
 
     // Exceptions
