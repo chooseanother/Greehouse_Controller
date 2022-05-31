@@ -9,17 +9,20 @@ import androidx.lifecycle.LiveData;
 
 import com.example.greehousecontroller.data.repository.UserInfoRepository;
 import com.example.greehousecontroller.data.repository.UserRepository;
+import com.example.greehousecontroller.utils.GreenhouseFirebaseMessagingService;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 public class GreenHouseIdActivityViewModel extends AndroidViewModel {
     private final UserRepository userRepository;
     private final UserInfoRepository userInfoRepository;
+    private final GreenhouseFirebaseMessagingService messagingService;
 
     public GreenHouseIdActivityViewModel(@NonNull Application application) {
         super(application);
         userRepository = UserRepository.getInstance(application);
         userInfoRepository = UserInfoRepository.getInstance();
+        messagingService = new GreenhouseFirebaseMessagingService();
     }
 
     public void initUserInfo() {
@@ -44,13 +47,6 @@ public class GreenHouseIdActivityViewModel extends AndroidViewModel {
     }
 
     public void subscribeToGreenhouse(String greenhouseID) {
-        FirebaseMessaging.getInstance().subscribeToTopic(greenhouseID)
-                .addOnCompleteListener(task -> {
-                    String msg = "successfully subscribed to greenhouse " + greenhouseID;
-                    if (!task.isSuccessful()) {
-                        msg = "failed to subscribe to greenhouse " + greenhouseID;
-                    }
-                    Log.d("GreenhouseIDVM-sub", msg);
-                });
+        messagingService.subscribeToGreenhouse(greenhouseID);
     }
 }
