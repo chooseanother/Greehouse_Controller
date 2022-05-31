@@ -66,12 +66,12 @@ public class HumidityGraphFragment extends Fragment {
                 if (humidities != null) {
                     if (humidities.size() > 0) {
                         for (int i = 0; i < 1; i++) {
-                            long time = (long) Objects.requireNonNull(humidityViewModel.getLatestHumidity().getValue()).getTime();
-                            double measurement = Objects.requireNonNull(humidityViewModel.getLatestHumidity().getValue()).getHumidity();
-                            data.add(new GraphsFragment.OHCLDataEntry(time, 0.1, 0.1, 0.1, measurement));
+                            long localTime = (long) Objects.requireNonNull(humidityViewModel.getLatestHumidity().getValue()).getLocalTime();
+                            double measurement = humidityViewModel.getLatestHumidity().getValue().getHumidity();
+                            data.add(new GraphsFragment.OHCLDataEntry(localTime, 0.1, 0.1, 0.1, measurement));
                         }
                         for (Humidity humidity : humidities) {
-                            data.add(new GraphsFragment.OHCLDataEntry(humidity.getTime(), humidity.getHumidity(), humidity.getHumidity(), humidity.getHumidity(), humidity.getHumidity()));
+                            data.add(new GraphsFragment.OHCLDataEntry(humidity.getLocalTime(), humidity.getHumidity(), humidity.getHumidity(), humidity.getHumidity(), humidity.getHumidity()));
                         }
                         table.addData(data);
                     }

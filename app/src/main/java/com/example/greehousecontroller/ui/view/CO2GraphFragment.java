@@ -80,12 +80,12 @@ public class CO2GraphFragment extends Fragment {
                 if (co2s != null) {
                     if (co2s.size() > 0) {
                         for (int i = 0; i < 1; i++) {
-                            long time = (long) Objects.requireNonNull(co2GraphViewModel.getLatestCO2().getValue()).getTime();
-                            double measurement = Objects.requireNonNull(co2GraphViewModel.getLatestCO2().getValue()).getCo2Measurement();
-                            data.add(new GraphsFragment.OHCLDataEntry(time, 0.1, 0.1, 0.1, measurement));
+                            long localTime = (long) Objects.requireNonNull(co2GraphViewModel.getLatestCO2().getValue()).getLocalTime();
+                            double measurement = co2GraphViewModel.getLatestCO2().getValue().getCo2Measurement();
+                            data.add(new GraphsFragment.OHCLDataEntry(localTime, 0.1, 0.1, 0.1, measurement));
                         }
                         for (CO2 co2 : co2s) {
-                            data.add(new GraphsFragment.OHCLDataEntry(co2.getTime(), co2.getCo2Measurement(), co2.getCo2Measurement(), co2.getCo2Measurement(), co2.getCo2Measurement()));
+                            data.add(new GraphsFragment.OHCLDataEntry(co2.getLocalTime(), co2.getCo2Measurement(), co2.getCo2Measurement(), co2.getCo2Measurement(), co2.getCo2Measurement()));
                         }
 
                         table.addData(data);

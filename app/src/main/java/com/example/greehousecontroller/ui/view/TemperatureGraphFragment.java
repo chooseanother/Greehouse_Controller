@@ -65,12 +65,12 @@ public class TemperatureGraphFragment extends Fragment {
                 if (temperatures != null) {
                     if (temperatures.size() > 0) {
                         for (int i = 0; i < 1; i++) {
-                            long time = (long) Objects.requireNonNull(temperatureGraphViewModel.getLatestTemperature().getValue()).getTime();
-                            double measurement = Objects.requireNonNull(temperatureGraphViewModel.getLatestTemperature().getValue()).getTemperature();
-                            data.add(new GraphsFragment.OHCLDataEntry(time, 0.1, 0.1, 0.1, measurement));
+                            long localTime = (long) Objects.requireNonNull(temperatureGraphViewModel.getLatestTemperature().getValue()).getLocalTime();
+                            double measurement = temperatureGraphViewModel.getLatestTemperature().getValue().getTemperature();
+                            data.add(new GraphsFragment.OHCLDataEntry(localTime, 0.1, 0.1, 0.1, measurement));
                         }
                         for (Temperature temperature : temperatures) {
-                            data.add(new GraphsFragment.OHCLDataEntry(temperature.getTime(), temperature.getTemperature(), temperature.getTemperature(), temperature.getTemperature(), temperature.getTemperature()));
+                            data.add(new GraphsFragment.OHCLDataEntry(temperature.getLocalTime(), temperature.getTemperature(), temperature.getTemperature(), temperature.getTemperature(), temperature.getTemperature()));
                         }
                         table.addData(data);
                     }

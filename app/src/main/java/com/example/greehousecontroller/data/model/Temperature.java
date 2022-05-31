@@ -7,6 +7,9 @@ import androidx.room.PrimaryKey;
 import com.example.greehousecontroller.utils.TemperatureJsonAdapter;
 import com.google.gson.annotations.JsonAdapter;
 
+import java.util.Calendar;
+import java.util.TimeZone;
+
 @Entity
 @JsonAdapter(TemperatureJsonAdapter.class)
 public class Temperature {
@@ -53,6 +56,15 @@ public class Temperature {
 
     public void setTime(long time) {
         this.time = time;
+    }
+
+    public long getLocalTime() {
+        TimeZone localTimeZone = Calendar.getInstance().getTimeZone();
+        int offset = localTimeZone.getRawOffset();
+        if (localTimeZone.useDaylightTime()) {
+            offset += localTimeZone.getDSTSavings();
+        }
+        return time + offset;
     }
 
     @Override

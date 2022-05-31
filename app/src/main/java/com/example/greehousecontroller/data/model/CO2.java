@@ -7,6 +7,9 @@ import androidx.room.PrimaryKey;
 import com.example.greehousecontroller.utils.CO2JsonAdapter;
 import com.google.gson.annotations.JsonAdapter;
 
+import java.util.Calendar;
+import java.util.TimeZone;
+
 @Entity
 @JsonAdapter(CO2JsonAdapter.class)
 public class CO2 {
@@ -47,6 +50,15 @@ public class CO2 {
 
     public void setTime(long time) {
         this.time = time;
+    }
+
+    public long getLocalTime() {
+        TimeZone localTimeZone = Calendar.getInstance().getTimeZone();
+        int offset = localTimeZone.getRawOffset();
+        if (localTimeZone.useDaylightTime()) {
+            offset += localTimeZone.getDSTSavings();
+        }
+        return time + offset;
     }
 
     @Override
