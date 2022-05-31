@@ -78,12 +78,11 @@ public class ThresholdSettingsViewModel extends AndroidViewModel {
             } else {
                 //upper cannot be lower than lower
                 if (checkLowerThresholdNotHigherThanUpper(lowerThresholdDouble, upperThresholdDouble)) {
+                    Threshold newThreshold = new Threshold(upperThresholdDouble, lowerThresholdDouble);
+                    temperatureRepository.setThreshold(greenhouseId, newThreshold);
                     Toast.makeText(application, R.string.settings_changes_saved, Toast.LENGTH_SHORT).show();
                 }
             }
-
-            Threshold newThreshold = new Threshold(upperThresholdDouble, lowerThresholdDouble);
-            temperatureRepository.setThreshold(greenhouseId, newThreshold);
 
         } catch (NumberFormatException e) {
             Toast.makeText(application, R.string.settings_not_a_number_exception, Toast.LENGTH_SHORT).show();
@@ -100,11 +99,11 @@ public class ThresholdSettingsViewModel extends AndroidViewModel {
             } else {
                 //upper cannot be lower than lower
                 if (checkLowerThresholdNotHigherThanUpper(lowerThresholdDouble, upperThresholdDouble)) {
+                    Threshold newThreshold = new Threshold(upperThresholdDouble, lowerThresholdDouble);
+                    co2Repository.setThreshold(greenhouseId, newThreshold);
                     Toast.makeText(application, R.string.settings_changes_saved, Toast.LENGTH_SHORT).show();
                 }
             }
-            Threshold newThreshold = new Threshold(upperThresholdDouble, lowerThresholdDouble);
-            co2Repository.setThreshold(greenhouseId, newThreshold);
         } catch (NumberFormatException e) {
             Toast.makeText(application, R.string.settings_not_a_number_exception, Toast.LENGTH_SHORT).show();
         }
@@ -120,11 +119,11 @@ public class ThresholdSettingsViewModel extends AndroidViewModel {
             } else {
                 //upper cannot be lower than lower
                 if (checkLowerThresholdNotHigherThanUpper(lowerThresholdDouble, upperThresholdDouble)) {
+                    Threshold newThreshold = new Threshold(upperThresholdDouble, lowerThresholdDouble);
+                    humidityRepository.setThreshold(greenhouseId, newThreshold);
                     Toast.makeText(application, R.string.settings_changes_saved, Toast.LENGTH_SHORT).show();
                 }
             }
-            Threshold newThreshold = new Threshold(upperThresholdDouble, lowerThresholdDouble);
-            humidityRepository.setThreshold(greenhouseId, newThreshold);
         } catch (NumberFormatException e) {
             Toast.makeText(application, R.string.settings_not_a_number_exception, Toast.LENGTH_SHORT).show();
         }
