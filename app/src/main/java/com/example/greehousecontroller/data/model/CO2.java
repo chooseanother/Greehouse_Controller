@@ -54,10 +54,7 @@ public class CO2 {
 
     public long getLocalTime() {
         TimeZone localTimeZone = Calendar.getInstance().getTimeZone();
-        int offset = localTimeZone.getRawOffset();
-        if (localTimeZone.useDaylightTime()) {
-            offset += localTimeZone.getDSTSavings();
-        }
+        int offset = localTimeZone.getRawOffset() + (localTimeZone.useDaylightTime() ? localTimeZone.getDSTSavings() : 0);
         return time + offset;
     }
 
