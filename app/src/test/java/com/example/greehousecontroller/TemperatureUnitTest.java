@@ -140,4 +140,49 @@ public class TemperatureUnitTest {
 
         assertEquals(result, t.getLocalTime());
     }
+
+    @Test
+    public void getLocalTimeOne(){
+        int id = 0;
+        double measurement = 0;
+        long time = 1;
+        Temperature t = new Temperature(id, measurement, time);
+
+        TimeZone localTimeZone = Calendar.getInstance().getTimeZone();
+
+        long result = time + localTimeZone.getRawOffset() + (localTimeZone.useDaylightTime() ? localTimeZone.getDSTSavings() : 0);
+
+        assertEquals(result, t.getLocalTime());
+    }
+
+    @Test
+    public void getLocalTimeLowerBoundary(){
+        int id = 0;
+        double measurement = 0;
+        long time = -1;
+        Temperature t = new Temperature(id, measurement, time);
+
+        TimeZone localTimeZone = Calendar.getInstance().getTimeZone();
+
+        long result = time + localTimeZone.getRawOffset() + (localTimeZone.useDaylightTime() ? localTimeZone.getDSTSavings() : 0);
+
+        assertEquals(result, t.getLocalTime());
+    }
+
+    // Equivalent testing
+    @Test
+    public void getLocalTimeMany(){
+        int id = 0;
+        double measurement = 0;
+        long time = 45852398;
+        Temperature t = new Temperature(id, measurement, time);
+
+        TimeZone localTimeZone = Calendar.getInstance().getTimeZone();
+
+        long result = time + localTimeZone.getRawOffset() + (localTimeZone.useDaylightTime() ? localTimeZone.getDSTSavings() : 0);
+
+        assertEquals(result, t.getLocalTime());
+    }
+
+    // Exceptions
 }
