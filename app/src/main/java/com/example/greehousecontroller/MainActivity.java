@@ -79,27 +79,29 @@ public class MainActivity extends AppCompatActivity {
             if (user != null) {
                 // Init menu with user info
                 setUpMenuUserInfo();
-
                 viewModel.initUserInfo();
-
-                viewModel.getCurrentUserInfo().observe(this, userInfo -> {
-                    // If for some reason user info is deleted from database when application is
-                    //  running, then this will prevent a crash.
-                    if (userInfo == null) {
-                        startGreenhouseActivity();
-                        finish();
-                    }
-
-                    if (userInfo.getGreenhouseID() == null) {
-                        startGreenhouseActivity();
-                        finish();
-                    } else if (userInfo.getGreenhouseID().equals("")) {
-                        startGreenhouseActivity();
-                        finish();
-                    }
-                });
+                observerUserInfo();
             } else {
                 startLoginActivity();
+            }
+        });
+    }
+
+    private void observerUserInfo(){
+        viewModel.getCurrentUserInfo().observe(this, userInfo -> {
+            // If for some reason user info is deleted from database when application is
+            //  running, then this will prevent a crash.
+            if (userInfo == null) {
+                startGreenhouseActivity();
+                finish();
+            }
+
+            if (userInfo.getGreenhouseID() == null) {
+                startGreenhouseActivity();
+                finish();
+            } else if (userInfo.getGreenhouseID().equals("")) {
+                startGreenhouseActivity();
+                finish();
             }
         });
     }

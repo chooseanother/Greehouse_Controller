@@ -18,6 +18,7 @@ import com.example.greehousecontroller.data.repository.PotRepository;
 import com.example.greehousecontroller.data.repository.TemperatureRepository;
 import com.example.greehousecontroller.data.repository.UserInfoRepository;
 import com.example.greehousecontroller.data.repository.UserRepository;
+import com.example.greehousecontroller.utils.GreenhouseFirebaseMessagingService;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.concurrent.ExecutorService;
@@ -34,6 +35,7 @@ public class EditGreenhouseIdViewModel extends AndroidViewModel {
     private final CO2Repository co2Repository;
     private final PotRepository potRepository;
     private final MoistureRepository moistureRepository;
+    private GreenhouseFirebaseMessagingService messagingService;
 
     public EditGreenhouseIdViewModel(@NonNull Application application) {
         super(application);
@@ -42,7 +44,7 @@ public class EditGreenhouseIdViewModel extends AndroidViewModel {
         userRepository = UserRepository.getInstance(application);
         userInfoRepository = UserInfoRepository.getInstance();
         executorService = Executors.newFixedThreadPool(2);
-
+        messagingService = new GreenhouseFirebaseMessagingService();
         moistureRepository = MoistureRepository.getInstance(application);
         temperatureRepository = TemperatureRepository.getInstance(app);
         humidityRepository = HumidityRepository.getInstance(app);
@@ -68,27 +70,11 @@ public class EditGreenhouseIdViewModel extends AndroidViewModel {
     }
 
     public void subscribeToGreenhouse(String greenhouseID) {
-        FirebaseMessaging.getInstance().subscribeToTopic(greenhouseID)
-                .addOnCompleteListener(task -> {
-                    String msg = "successfully subscribed to greenhouse " + greenhouseID;
-                    if (!task.isSuccessful()) {
-                        msg = "failed to subscribe to greenhouse " + greenhouseID;
-                    }
-                    Log.d("GreenhouseIDVM-sub", msg);
-                    Toast.makeText(app.getApplicationContext(), R.string.edit_greenhouse_id_success, Toast.LENGTH_SHORT).show();
-                });
+        messagingService.subscribeToGreenhouse(greenhouseID);
     }
 
     public void unsubscribeFromGreenhouse(String greenhouseId) {
-        FirebaseMessaging.getInstance().unsubscribeFromTopic(greenhouseId)
-                .addOnCompleteListener(task -> {
-                    String msg = "successfully unsubscribed from greenhouse " + greenhouseId;
-                    if (!task.isSuccessful()) {
-                        msg = "failed to unsubscribe from greenhouse " + greenhouseId;
-                    }
-                    Log.d("GreenhouseIDVM-unsub", msg);
-
-                });
+        messagingService.unsubscribeFromGreenhouse(greenhouseId);
     }
 
     public void clearCachedDate() {
