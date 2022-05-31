@@ -1,8 +1,6 @@
 package com.example.greehousecontroller.ui.view;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +8,6 @@ import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -23,8 +20,6 @@ import com.anychart.charts.Stock;
 import com.anychart.core.stock.Plot;
 import com.anychart.data.Table;
 import com.anychart.enums.StockSeriesType;
-
-import com.example.greehousecontroller.R;
 import com.example.greehousecontroller.data.model.Temperature;
 import com.example.greehousecontroller.databinding.TemperatureGraphBinding;
 import com.example.greehousecontroller.ui.viewmodel.TemperatureGraphViewModel;
@@ -39,6 +34,7 @@ public class TemperatureGraphFragment extends Fragment {
     private AnyChartView temperatureChart;
     private ProgressBar progressBar;
     private TemperatureGraphViewModel temperatureGraphViewModel;
+
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = TemperatureGraphBinding.inflate(inflater, container, false);
@@ -55,19 +51,18 @@ public class TemperatureGraphFragment extends Fragment {
         binding = null;
     }
 
-    private void setBindings(){
+    private void setBindings() {
         temperatureChart = binding.temperatureChart;
         progressBar = binding.temperatureProgressBar;
     }
 
-    public Table temperatureGraph()
-    {
+    public Table temperatureGraph() {
         Table table = Table.instantiate("x");
         List<DataEntry> data = new ArrayList<>();
         temperatureGraphViewModel.getTemperatureHistoryData().observe(getViewLifecycleOwner(), new Observer<List<Temperature>>() {
             @Override
             public void onChanged(List<Temperature> temperatures) {
-                if (temperatures != null){
+                if (temperatures != null) {
                     if (temperatures.size() > 0) {
                         for (int i = 0; i < 1; i++) {
                             long time = (long) Objects.requireNonNull(temperatureGraphViewModel.getLatestTemperature().getValue()).getTime();
@@ -85,10 +80,9 @@ public class TemperatureGraphFragment extends Fragment {
         return table;
     }
 
-    public void initTemperatureChart()
-    {
+    public void initTemperatureChart() {
         if (temperatureGraphViewModel.getUserInfo().getValue() != null) {
-            if(temperatureGraphViewModel.getLatestTemperature() != null) {
+            if (temperatureGraphViewModel.getLatestTemperature() != null) {
                 temperatureChart.setProgressBar(progressBar);
                 APIlib.getInstance().setActiveAnyChartView(temperatureChart);
                 Stock stock4 = AnyChart.stock();
@@ -102,12 +96,11 @@ public class TemperatureGraphFragment extends Fragment {
         }
     }
 
-    private void updateMeasurements(){
+    private void updateMeasurements() {
         temperatureGraphViewModel.initUserInfo();
         temperatureGraphViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
             temperatureGraphViewModel.updateHistoryData(userInfo.getGreenhouseID());
-            if(userInfo.getGreenhouseID() != null)
-            {
+            if (userInfo.getGreenhouseID() != null) {
                 initTemperatureChart();
             }
         });

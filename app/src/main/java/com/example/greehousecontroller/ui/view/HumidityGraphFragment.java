@@ -5,11 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
 import com.anychart.APIlib;
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
@@ -21,6 +23,7 @@ import com.anychart.enums.StockSeriesType;
 import com.example.greehousecontroller.data.model.Humidity;
 import com.example.greehousecontroller.databinding.HumidityGraphBinding;
 import com.example.greehousecontroller.ui.viewmodel.HumidityGraphViewModel;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -48,13 +51,13 @@ public class HumidityGraphFragment extends Fragment {
         binding = null;
     }
 
-    private void setBindings(){
+    private void setBindings() {
         humidityChart = binding.humidityChart;
         progressBar = binding.humidityProgressBar;
     }
 
 
-    public Table humidityGraph(){
+    public Table humidityGraph() {
         Table table = Table.instantiate("x");
         List<DataEntry> data = new ArrayList<>();
         humidityViewModel.getHumidityHistoryData().observe(getViewLifecycleOwner(), new Observer<List<Humidity>>() {
@@ -78,7 +81,7 @@ public class HumidityGraphFragment extends Fragment {
         return table;
     }
 
-    public void initHumidityChart(){
+    public void initHumidityChart() {
         humidityChart.setProgressBar(progressBar);
         APIlib.getInstance().setActiveAnyChartView(humidityChart);
         Stock stock2 = AnyChart.stock();
@@ -90,7 +93,7 @@ public class HumidityGraphFragment extends Fragment {
         humidityChart.setChart(stock2);
     }
 
-    private void updateMeasurements(){
+    private void updateMeasurements() {
         humidityViewModel.initUserInfo();
         humidityViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
             humidityViewModel.updateHistoryData(userInfo.getGreenhouseID());

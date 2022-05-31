@@ -5,7 +5,6 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.example.greehousecontroller.data.model.Sensor;
 import com.example.greehousecontroller.data.model.UserInfo;
@@ -28,19 +27,19 @@ public class StatusViewModel extends AndroidViewModel {
         userInfoRepository = UserInfoRepository.getInstance();
     }
 
-    public MutableLiveData<List<Sensor>> getSensorsStatus(){
+    public MutableLiveData<List<Sensor>> getSensorsStatus() {
         return sensorRepository.getSensors();
     }
 
-    public void initUserInfo(){
+    public void initUserInfo() {
         userInfoRepository.init(userRepository.getCurrentUser().getValue().getUid());
     }
 
-    public LiveData<UserInfo> getUserInfo(){
+    public LiveData<UserInfo> getUserInfo() {
         return userInfoRepository.getUserInfo();
     }
 
-    public void updateSensorStatus(String greenhouseId){
+    public void updateSensorStatus(String greenhouseId) {
         sensorRepository.updateSensors(greenhouseId);
     }
 }

@@ -8,7 +8,7 @@ import java.util.List;
 
 public class PotCallBack extends DiffUtil.Callback {
     private final List<Pot> old;
-    private List<Pot> newList;
+    private final List<Pot> newList;
 
     public PotCallBack(List<Pot> old, List<Pot> newList) {
         this.old = old;

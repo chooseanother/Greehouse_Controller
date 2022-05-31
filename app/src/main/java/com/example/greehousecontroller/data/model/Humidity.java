@@ -1,10 +1,8 @@
 package com.example.greehousecontroller.data.model;
 
-import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
-
 
 import com.example.greehousecontroller.utils.HumidityJsonAdapter;
 import com.google.gson.annotations.JsonAdapter;

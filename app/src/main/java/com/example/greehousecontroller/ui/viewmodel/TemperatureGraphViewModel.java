@@ -15,9 +15,9 @@ import com.example.greehousecontroller.data.repository.UserRepository;
 import java.util.List;
 
 public class TemperatureGraphViewModel extends AndroidViewModel {
-    private TemperatureRepository temperatureRepository;
-    private UserInfoRepository userInfoRepository;
-    private UserRepository userRepository;
+    private final TemperatureRepository temperatureRepository;
+    private final UserInfoRepository userInfoRepository;
+    private final UserRepository userRepository;
 
     public TemperatureGraphViewModel(Application application) {
         super(application);
@@ -25,27 +25,29 @@ public class TemperatureGraphViewModel extends AndroidViewModel {
         userInfoRepository = UserInfoRepository.getInstance();
         userRepository = UserRepository.getInstance(application);
     }
+
     public LiveData<List<Temperature>> getTemperatureHistoryData() {
         return temperatureRepository.getTemperatureHistoryData();
     }
-    public MutableLiveData<Temperature> getLatestTemperature(){
+
+    public MutableLiveData<Temperature> getLatestTemperature() {
         return temperatureRepository.getLatest();
     }
-    public LiveData<UserInfo> getUserInfo(){
+
+    public LiveData<UserInfo> getUserInfo() {
         return userInfoRepository.getUserInfo();
     }
 
-    public void initUserInfo(){
+    public void initUserInfo() {
         userInfoRepository.init(userRepository.getCurrentUser().getValue().getUid());
     }
 
-    public void updateHistoryData(String greenhouseId)
-    {
-        temperatureRepository.updateHistoricalMeasurement(greenhouseId,null);
+    public void updateHistoryData(String greenhouseId) {
+        temperatureRepository.updateHistoricalMeasurement(greenhouseId, null);
         temperatureRepository.updateLatestMeasurement(greenhouseId, null);
     }
 
-    public void loadCachedData(){
+    public void loadCachedData() {
         temperatureRepository.loadLatestCachedData();
         temperatureRepository.loadHistoricalCachedData();
     }

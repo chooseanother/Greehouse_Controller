@@ -13,8 +13,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 public class GreenHouseIdActivityViewModel extends AndroidViewModel {
-    private UserRepository userRepository;
-    private UserInfoRepository userInfoRepository;
+    private final UserRepository userRepository;
+    private final UserInfoRepository userInfoRepository;
 
     public GreenHouseIdActivityViewModel(@NonNull Application application) {
         super(application);
@@ -22,12 +22,12 @@ public class GreenHouseIdActivityViewModel extends AndroidViewModel {
         userInfoRepository = UserInfoRepository.getInstance();
     }
 
-    public void initUserInfo(){
+    public void initUserInfo() {
         String userId = userRepository.getCurrentUser().getValue().getUid();
         userInfoRepository.init(userId);
     }
 
-    public LiveData<FirebaseUser> getCurrentUser(){
+    public LiveData<FirebaseUser> getCurrentUser() {
         return userRepository.getCurrentUser();
     }
 
@@ -35,22 +35,22 @@ public class GreenHouseIdActivityViewModel extends AndroidViewModel {
         return userInfoRepository.getUserInfo().getValue().getGreenhouseID();
     }
 
-    public void logOut(){
+    public void logOut() {
         userRepository.signOut();
     }
 
-    public void saveGreenHouseId(String id){
+    public void saveGreenHouseId(String id) {
         userInfoRepository.saveGreenhouseID(id);
     }
 
-    public void subscribeToGreenhouse(String greenhouseID){
+    public void subscribeToGreenhouse(String greenhouseID) {
         FirebaseMessaging.getInstance().subscribeToTopic(greenhouseID)
                 .addOnCompleteListener(task -> {
-                    String msg = "successfully subscribed to greenhouse "+ greenhouseID;
-                    if (!task.isSuccessful()){
+                    String msg = "successfully subscribed to greenhouse " + greenhouseID;
+                    if (!task.isSuccessful()) {
                         msg = "failed to subscribe to greenhouse " + greenhouseID;
                     }
-                    Log.d("GreenhouseIDVM-sub",msg);
+                    Log.d("GreenhouseIDVM-sub", msg);
                 });
     }
 }

@@ -24,16 +24,16 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class EditGreenhouseIdViewModel extends AndroidViewModel {
-    private UserRepository userRepository;
-    private UserInfoRepository userInfoRepository;
-    private Application app;
-    private AppDatabase database;
+    private final UserRepository userRepository;
+    private final UserInfoRepository userInfoRepository;
+    private final Application app;
+    private final AppDatabase database;
     private final ExecutorService executorService;
-    private TemperatureRepository temperatureRepository;
-    private HumidityRepository humidityRepository;
-    private CO2Repository co2Repository;
-    private PotRepository potRepository;
-    private MoistureRepository moistureRepository;
+    private final TemperatureRepository temperatureRepository;
+    private final HumidityRepository humidityRepository;
+    private final CO2Repository co2Repository;
+    private final PotRepository potRepository;
+    private final MoistureRepository moistureRepository;
 
     public EditGreenhouseIdViewModel(@NonNull Application application) {
         super(application);
@@ -50,12 +50,12 @@ public class EditGreenhouseIdViewModel extends AndroidViewModel {
         potRepository = PotRepository.getInstance(app);
     }
 
-    public void initUserInfo(){
+    public void initUserInfo() {
         String userId = userRepository.getCurrentUser().getValue().getUid();
         userInfoRepository.init(userId);
     }
 
-    public LiveData<UserInfo> getCurrentUserInto(){
+    public LiveData<UserInfo> getCurrentUserInto() {
         return userInfoRepository.getUserInfo();
     }
 
@@ -63,35 +63,35 @@ public class EditGreenhouseIdViewModel extends AndroidViewModel {
         return userInfoRepository.getUserInfo().getValue().getGreenhouseID();
     }
 
-    public void saveGreenHouseId(String id){
+    public void saveGreenHouseId(String id) {
         userInfoRepository.saveGreenhouseID(id);
     }
 
-    public void subscribeToGreenhouse(String greenhouseID){
+    public void subscribeToGreenhouse(String greenhouseID) {
         FirebaseMessaging.getInstance().subscribeToTopic(greenhouseID)
                 .addOnCompleteListener(task -> {
-                    String msg = "successfully subscribed to greenhouse "+ greenhouseID;
-                    if (!task.isSuccessful()){
+                    String msg = "successfully subscribed to greenhouse " + greenhouseID;
+                    if (!task.isSuccessful()) {
                         msg = "failed to subscribe to greenhouse " + greenhouseID;
                     }
-                    Log.d("GreenhouseIDVM-sub",msg);
+                    Log.d("GreenhouseIDVM-sub", msg);
                     Toast.makeText(app.getApplicationContext(), R.string.edit_greenhouse_id_success, Toast.LENGTH_SHORT).show();
                 });
     }
 
-    public void unsubscribeFromGreenhouse(String greenhouseId){
+    public void unsubscribeFromGreenhouse(String greenhouseId) {
         FirebaseMessaging.getInstance().unsubscribeFromTopic(greenhouseId)
                 .addOnCompleteListener(task -> {
-                    String msg = "successfully unsubscribed from greenhouse "+ greenhouseId;
-                    if (!task.isSuccessful()){
+                    String msg = "successfully unsubscribed from greenhouse " + greenhouseId;
+                    if (!task.isSuccessful()) {
                         msg = "failed to unsubscribe from greenhouse " + greenhouseId;
                     }
-                    Log.d("GreenhouseIDVM-unsub",msg);
+                    Log.d("GreenhouseIDVM-unsub", msg);
 
                 });
     }
 
-    public void clearCachedDate(){
+    public void clearCachedDate() {
         executorService.execute(() -> database.clearAllTables());
     }
 }

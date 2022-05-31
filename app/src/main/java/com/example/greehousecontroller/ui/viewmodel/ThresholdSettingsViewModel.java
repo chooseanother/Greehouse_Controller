@@ -15,22 +15,17 @@ import com.example.greehousecontroller.data.repository.HumidityRepository;
 import com.example.greehousecontroller.data.repository.TemperatureRepository;
 import com.example.greehousecontroller.data.repository.UserInfoRepository;
 import com.example.greehousecontroller.data.repository.UserRepository;
+import com.example.greehousecontroller.utils.Config;
 
 public class ThresholdSettingsViewModel extends AndroidViewModel {
-    Application application;
-    private TemperatureRepository temperatureRepository;
-    private HumidityRepository humidityRepository;
-    private CO2Repository co2Repository;
-    private double maxUpperThresholdTemperature = 60;
-    private double minLowerThresholdTemperature = -20;
-    private double maxUpperThresholdHumidity = 100;
-    private double minLowerThresholdHumidity = 0;
-    private double maxUpperThresholdCo2 = 5000;
-    private double minLowerThresholdCo2 = 0;
-    private UserRepository userRepository;
+    private final TemperatureRepository temperatureRepository;
+    private final HumidityRepository humidityRepository;
+    private final CO2Repository co2Repository;
+    private final UserRepository userRepository;
     private final UserInfoRepository userInfoRepository;
+    Application application;
 
-    public ThresholdSettingsViewModel(Application application){
+    public ThresholdSettingsViewModel(Application application) {
         super(application);
         this.application = application;
         temperatureRepository = TemperatureRepository.getInstance(application);
@@ -40,48 +35,49 @@ public class ThresholdSettingsViewModel extends AndroidViewModel {
         userInfoRepository = UserInfoRepository.getInstance();
     }
 
-    public void initializeData(String greenHouseId){
+    public void initializeData(String greenHouseId) {
         temperatureRepository.updateThreshold(greenHouseId);
         humidityRepository.updateThreshold(greenHouseId);
         co2Repository.updateThreshold(greenHouseId);
     }
 
-    public void loadCachedData(){
+    public void loadCachedData() {
         humidityRepository.loadThresholdCachedData();
         temperatureRepository.loadThresholdCachedData();
         co2Repository.loadThresholdCachedData();
     }
 
-    public LiveData<UserInfo> getUserInfo(){
+    public LiveData<UserInfo> getUserInfo() {
         return userInfoRepository.getUserInfo();
     }
 
-    public void initUserInfo(){
+    public void initUserInfo() {
         userInfoRepository.init(userRepository.getCurrentUser().getValue().getUid());
     }
 
-    public MutableLiveData<Threshold> getTemperatureThreshold(){
+    public MutableLiveData<Threshold> getTemperatureThreshold() {
         return temperatureRepository.getThreshold();
     }
-    public MutableLiveData<Threshold> getHumidityThreshold(){
+
+    public MutableLiveData<Threshold> getHumidityThreshold() {
         return humidityRepository.getThreshold();
     }
-    public MutableLiveData<Threshold> getCo2Threshold(){
+
+    public MutableLiveData<Threshold> getCo2Threshold() {
         return co2Repository.getThreshold();
     }
 
-    public void setTemperatureThreshold(String greenhouseId, String upperThreshold, String lowerThreshold){
-        try{
+    public void setTemperatureThreshold(String greenhouseId, String upperThreshold, String lowerThreshold) {
+        try {
             double upperThresholdDouble = Double.parseDouble(upperThreshold);
             double lowerThresholdDouble = Double.parseDouble(lowerThreshold);
 
             //temperature must be between -20 and 60
-            if(upperThresholdDouble > maxUpperThresholdTemperature || lowerThresholdDouble < minLowerThresholdTemperature){
+            if (upperThresholdDouble > Config.MAX_UPPER_THRESHOLD_TEMPERATURE || lowerThresholdDouble < Config.MIN_LOWER_THRESHOLD_TEMPERATURE) {
                 Toast.makeText(application, R.string.settings_out_of_bounds_temperature_exception, Toast.LENGTH_SHORT).show();
-            }
-            else{
+            } else {
                 //upper cannot be lower than lower
-                if(checkLowerThresholdNotHigherThanUpper(lowerThresholdDouble, upperThresholdDouble)){
+                if (checkLowerThresholdNotHigherThanUpper(lowerThresholdDouble, upperThresholdDouble)) {
                     Toast.makeText(application, R.string.settings_changes_saved, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -89,56 +85,53 @@ public class ThresholdSettingsViewModel extends AndroidViewModel {
             Threshold newThreshold = new Threshold(upperThresholdDouble, lowerThresholdDouble);
             temperatureRepository.setThreshold(greenhouseId, newThreshold);
 
-        }
-        catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             Toast.makeText(application, R.string.settings_not_a_number_exception, Toast.LENGTH_SHORT).show();
         }
     }
-    public void setCo2Threshold(String greenhouseId, String upperThreshold, String lowerThreshold){
-        try{
+
+    public void setCo2Threshold(String greenhouseId, String upperThreshold, String lowerThreshold) {
+        try {
             double upperThresholdDouble = Double.parseDouble(upperThreshold);
             double lowerThresholdDouble = Double.parseDouble(lowerThreshold);
             //co2 must be between 0 and 5000
-            if(upperThresholdDouble > maxUpperThresholdCo2 || lowerThresholdDouble < minLowerThresholdCo2){
+            if (upperThresholdDouble > Config.MAX_UPPER_THRESHOLD_CO2 || lowerThresholdDouble < Config.MIN_LOWER_THRESHOLD_CO2) {
                 Toast.makeText(application, R.string.settings_out_of_bounds_co2_exception, Toast.LENGTH_SHORT).show();
-            }
-            else{
+            } else {
                 //upper cannot be lower than lower
-                if(checkLowerThresholdNotHigherThanUpper(lowerThresholdDouble, upperThresholdDouble)){
+                if (checkLowerThresholdNotHigherThanUpper(lowerThresholdDouble, upperThresholdDouble)) {
                     Toast.makeText(application, R.string.settings_changes_saved, Toast.LENGTH_SHORT).show();
                 }
             }
             Threshold newThreshold = new Threshold(upperThresholdDouble, lowerThresholdDouble);
             co2Repository.setThreshold(greenhouseId, newThreshold);
-        }
-        catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             Toast.makeText(application, R.string.settings_not_a_number_exception, Toast.LENGTH_SHORT).show();
         }
     }
-    public void setHumidityThreshold(String greenhouseId, String upperThreshold, String lowerThreshold){
-        try{
+
+    public void setHumidityThreshold(String greenhouseId, String upperThreshold, String lowerThreshold) {
+        try {
             double upperThresholdDouble = Double.parseDouble(upperThreshold);
             double lowerThresholdDouble = Double.parseDouble(lowerThreshold);
             //humidity must be between 0 and 100
-            if(upperThresholdDouble > maxUpperThresholdHumidity || lowerThresholdDouble < minLowerThresholdHumidity){
+            if (upperThresholdDouble > Config.MAX_UPPER_THRESHOLD_HUMIDITY || lowerThresholdDouble < Config.MIN_LOWER_THRESHOLD_HUMIDITY) {
                 Toast.makeText(application, R.string.settings_out_of_bounds_co2_exception, Toast.LENGTH_SHORT).show();
-            }
-            else{
+            } else {
                 //upper cannot be lower than lower
-                if(checkLowerThresholdNotHigherThanUpper(lowerThresholdDouble, upperThresholdDouble)){
+                if (checkLowerThresholdNotHigherThanUpper(lowerThresholdDouble, upperThresholdDouble)) {
                     Toast.makeText(application, R.string.settings_changes_saved, Toast.LENGTH_SHORT).show();
                 }
             }
             Threshold newThreshold = new Threshold(upperThresholdDouble, lowerThresholdDouble);
             humidityRepository.setThreshold(greenhouseId, newThreshold);
-        }
-        catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             Toast.makeText(application, R.string.settings_not_a_number_exception, Toast.LENGTH_SHORT).show();
         }
     }
 
-    private boolean checkLowerThresholdNotHigherThanUpper(double lowerThreshold, double upperThreshold){
-        if(upperThreshold < lowerThreshold){
+    private boolean checkLowerThresholdNotHigherThanUpper(double lowerThreshold, double upperThreshold) {
+        if (upperThreshold < lowerThreshold) {
             Toast.makeText(application, R.string.settings_lower_higher_than_upper_threshold_exception, Toast.LENGTH_SHORT).show();
             return false;
         }

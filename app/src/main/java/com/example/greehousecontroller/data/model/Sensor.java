@@ -4,7 +4,7 @@ public class Sensor {
     String sensor;
     boolean status;
 
-    public Sensor(){
+    public Sensor() {
 
     }
 

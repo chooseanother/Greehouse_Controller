@@ -6,7 +6,6 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.greehousecontroller.data.model.CO2;
-import com.example.greehousecontroller.data.model.Humidity;
 
 import java.util.List;
 

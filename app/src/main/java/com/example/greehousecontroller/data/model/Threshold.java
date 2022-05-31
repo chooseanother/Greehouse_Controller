@@ -14,16 +14,16 @@ public class Threshold {
     private double lowerThreshold;
 
     @Ignore
-    public Threshold(){
+    public Threshold() {
     }
 
     @Ignore
-    public Threshold(double upperThreshold, double lowerThreshold){
+    public Threshold(double upperThreshold, double lowerThreshold) {
         this.upperThreshold = upperThreshold;
         this.lowerThreshold = lowerThreshold;
     }
 
-    public Threshold(String type, double upperThreshold, double lowerThreshold){
+    public Threshold(String type, double upperThreshold, double lowerThreshold) {
         this.type = type;
         this.upperThreshold = upperThreshold;
         this.lowerThreshold = lowerThreshold;

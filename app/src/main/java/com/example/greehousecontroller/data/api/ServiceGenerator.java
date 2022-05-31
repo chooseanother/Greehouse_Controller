@@ -1,7 +1,5 @@
 package com.example.greehousecontroller.data.api;
 
-
-
 import com.example.greehousecontroller.utils.Config;
 
 import retrofit2.Retrofit;
@@ -58,8 +56,9 @@ public class ServiceGenerator {
         }
         return potAPI;
     }
-    public static CO2Api getCO2Api(){
-        if (co2Api == null){
+
+    public static CO2Api getCO2Api() {
+        if (co2Api == null) {
             co2Api = new Retrofit.Builder()
                     .baseUrl(Config.API_BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
@@ -69,8 +68,8 @@ public class ServiceGenerator {
         return co2Api;
     }
 
-    public static SensorApi getSensorApi(){
-        if(sensorApi == null){
+    public static SensorApi getSensorApi() {
+        if (sensorApi == null) {
             sensorApi = new Retrofit.Builder()
                     .baseUrl(Config.API_BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())

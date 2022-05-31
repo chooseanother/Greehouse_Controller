@@ -67,7 +67,7 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         updateLatestMeasurements();
     }
@@ -78,29 +78,29 @@ public class HomeFragment extends Fragment {
         binding = null;
     }
 
-    private void initSwipeRefreshLayout(){
+    private void initSwipeRefreshLayout() {
         swipeRefreshLayout = binding.homeRefreshLayout;
         swipeRefreshLayout.setOnRefreshListener(this::updateLatestMeasurements);
     }
 
-    private void getGreenhouseID(){
+    private void getGreenhouseID() {
         homeViewModel.initUserInfo();
         homeViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
             greenhouseId = userInfo.getGreenhouseID();
-            if(greenhouseId != null) {
+            if (greenhouseId != null) {
                 updateLatestMeasurements();
             }
         });
     }
 
-    private void observeData(){
-        homeViewModel.getLatestTemperature().observe(getViewLifecycleOwner(),temperature -> {
+    private void observeData() {
+        homeViewModel.getLatestTemperature().observe(getViewLifecycleOwner(), temperature -> {
             String readings = temperature.getTemperature() + " °C";
             temperatureTextView.setText(readings);
             swipeRefreshLayout.setRefreshing(false);
         });
 
-        homeViewModel.getLatestHumidity().observe(getViewLifecycleOwner(),humidity -> {
+        homeViewModel.getLatestHumidity().observe(getViewLifecycleOwner(), humidity -> {
             String readings = humidity.getHumidity() + " %";
             humidityTextView.setText(readings);
             swipeRefreshLayout.setRefreshing(false);
@@ -108,7 +108,7 @@ public class HomeFragment extends Fragment {
         });
 
         homeViewModel.getLatestCO2().observe(getViewLifecycleOwner(), co2 -> {
-            String readings = (int)co2.getCo2Measurement() + " ppm";
+            String readings = (int) co2.getCo2Measurement() + " ppm";
             co2TextView.setText(readings);
             swipeRefreshLayout.setRefreshing(false);
 
@@ -116,7 +116,7 @@ public class HomeFragment extends Fragment {
 
     }
 
-    public void settingOfTextViews(){
+    public void settingOfTextViews() {
         // Measurements
         temperatureTextView = binding.homeTemperatureMeasurementTextView;
         co2TextView = binding.homeCo2measurementTextView;
@@ -127,31 +127,31 @@ public class HomeFragment extends Fragment {
 
         FirebaseUser user = homeViewModel.getUser();
         String welcomeMessage = getString(R.string.home_hello_message);
-        if(user != null){
+        if (user != null) {
             welcomeMessage += ", " + homeViewModel.getUser().getDisplayName();
         }
         welcomeMessage += "!";
         welcomingTextView.setText(welcomeMessage);
     }
 
-    private void updateLatestMeasurements(){
-        if(greenhouseId != null) {
+    private void updateLatestMeasurements() {
+        if (greenhouseId != null) {
             homeViewModel.updateLatestMeasurements(greenhouseId);
         }
     }
 
-    private void fabHandle(){
+    private void fabHandle() {
         floatingActionButton = binding.homeFab;
-        floatingActionButton.setOnClickListener(clicked->{
-            if(homeViewModel.getLatestPots().getValue().size() < Config.MAX_NUMBER_OF_POTS){
-                ((MainActivity)getActivity()).navController.navigate(R.id.nav_add_pot);
+        floatingActionButton.setOnClickListener(clicked -> {
+            if (homeViewModel.getLatestPots().getValue().size() < Config.MAX_NUMBER_OF_POTS) {
+                ((MainActivity) getActivity()).navController.navigate(R.id.nav_add_pot);
             } else {
                 Toast.makeText(getContext(), R.string.home_pot_limit_reached_toast_message, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void recyclerViewHandle(){
+    private void recyclerViewHandle() {
         recyclerView = binding.homeListOfPotsRecycleView;
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -162,11 +162,11 @@ public class HomeFragment extends Fragment {
 
         adapter.setOnClickListener(pot -> {
             Bundle bundle = homeViewModel.getPotBundle(pot);
-            ((MainActivity)getActivity()).navController.navigate(R.id.nav_edit_pot, bundle);
+            ((MainActivity) getActivity()).navController.navigate(R.id.nav_edit_pot, bundle);
         });
     }
 
-    private void observeApiStatus(){
+    private void observeApiStatus() {
         homeViewModel.getApiFinished().observe(getViewLifecycleOwner(), aBoolean -> {
             Log.d("home", aBoolean.toString());
             swipeRefreshLayout.setRefreshing(aBoolean);

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -14,10 +15,12 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+
 import com.example.greehousecontroller.R;
 import com.example.greehousecontroller.data.model.Pot;
 import com.example.greehousecontroller.databinding.FragmentMoisturePotsGraphsBinding;
 import com.example.greehousecontroller.ui.viewmodel.MoistureViewModel;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,28 +49,26 @@ public class MoistureGraphFragment extends Fragment {
         binding = null;
     }
 
-    private void onChangeSpinner()
-    {
+    private void onChangeSpinner() {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 updateMeasurements();
-                navController = Navigation.findNavController(getActivity(),R.id.moisture_swap_fragment);
-                if(navController.getCurrentDestination().getId() == R.id.moisture_swap_fragment) {
+                navController = Navigation.findNavController(getActivity(), R.id.moisture_swap_fragment);
+                if (navController.getCurrentDestination().getId() == R.id.moisture_swap_fragment) {
                     navController.navigate(R.id.moistureGraph);
-                }
-                else {
+                } else {
                     navController.navigate(R.id.moistureGraph2);
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
     }
 
-    public void initSpinner()
-    {
+    public void initSpinner() {
         spinnerList = new ArrayList<>();
         moistureViewModel.getPots().observe(getViewLifecycleOwner(), new Observer<List<Pot>>() {
             @Override
@@ -79,8 +80,7 @@ public class MoistureGraphFragment extends Fragment {
                     ArrayAdapter<PotSpinner> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, spinnerList);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinner.setAdapter(adapter);
-                }
-                else {
+                } else {
                     spinnerList = new ArrayList<>();
                     ArrayAdapter<PotSpinner> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, spinnerList);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -90,26 +90,26 @@ public class MoistureGraphFragment extends Fragment {
         });
     }
 
-    private void updateMeasurements(){
+    private void updateMeasurements() {
         moistureViewModel.initUserInfo();
         moistureViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
-            if(spinnerList.size() > 0) {
+            if (spinnerList.size() > 0) {
                 moistureViewModel.updateHistoryData(userInfo.getGreenhouseID(), spinnerList.get(spinner.getSelectedItemPosition()).id);
             }
         });
     }
 
-    private static class PotSpinner
-    {
-        private String name;
-        private int id;
+    private static class PotSpinner {
+        private final String name;
+        private final int id;
+
         private PotSpinner(String name, int id) {
             this.name = name;
             this.id = id;
         }
+
         @Override
-        public String toString()
-        {
+        public String toString() {
             return name;
         }
 

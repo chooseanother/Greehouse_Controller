@@ -31,7 +31,7 @@ public class HomeViewModel extends AndroidViewModel {
     private final PotRepository potRepository;
     private final UserRepository userRepository;
     private final UserInfoRepository userInfoRepository;
-    private MutableLiveData<Boolean> refreshing;
+    private final MutableLiveData<Boolean> refreshing;
 
     public HomeViewModel(Application application) {
         super(application);
@@ -61,7 +61,7 @@ public class HomeViewModel extends AndroidViewModel {
         return refreshing;
     }
 
-    public void updateLatestMeasurements(String greenhouseId){
+    public void updateLatestMeasurements(String greenhouseId) {
         temperatureRepository.updateLatestMeasurement(greenhouseId, () -> {
             refreshing.postValue(false);
         });
@@ -77,19 +77,19 @@ public class HomeViewModel extends AndroidViewModel {
 
     }
 
-    public LiveData<UserInfo> getUserInfo(){
+    public LiveData<UserInfo> getUserInfo() {
         return userInfoRepository.getUserInfo();
     }
 
-    public void initUserInfo(){
+    public void initUserInfo() {
         userInfoRepository.init(userRepository.getCurrentUser().getValue().getUid());
     }
 
-    public FirebaseUser getUser(){
+    public FirebaseUser getUser() {
         return userRepository.getCurrentUser().getValue();
     }
 
-    public Bundle getPotBundle(Pot pot){
+    public Bundle getPotBundle(Pot pot) {
         Fragment fragment = new Fragment();
         Bundle bundle = new Bundle();
         bundle.putString("id", String.valueOf(pot.getId()));
@@ -101,7 +101,7 @@ public class HomeViewModel extends AndroidViewModel {
         return co2Repository.getLatest();
     }
 
-    public void getLatestCachedData(){
+    public void getLatestCachedData() {
         humidityRepository.loadLatestCachedData();
         temperatureRepository.loadLatestCachedData();
         potRepository.loadCachedData();

@@ -1,13 +1,13 @@
 package com.example.greehousecontroller;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.greehousecontroller.databinding.ActivityLogInBinding;
 import com.firebase.ui.auth.AuthUI;
@@ -19,12 +19,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class LogInActivity extends AppCompatActivity {
-    private final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+    private ActivityLogInBinding binding;    private final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new FirebaseAuthUIActivityResultContract(),
             this::onSignInResult
     );
-
-    private ActivityLogInBinding binding;
     private LogInActivityViewModel viewModel;
 
     @Override
@@ -43,7 +41,7 @@ public class LogInActivity extends AppCompatActivity {
             // Successfully signed in
             handleResult(viewModel.getCurrentUser().getValue().getDisplayName());
         } else {
-            if (response == null){
+            if (response == null) {
                 Toast.makeText(this, "Sign in cancelled", Toast.LENGTH_SHORT).show();
                 signIn();
             } else {
@@ -64,7 +62,7 @@ public class LogInActivity extends AppCompatActivity {
 
     private void checkIfSignedIn() {
         viewModel.getCurrentUser().observe(this, user -> {
-            if (user != null){
+            if (user != null) {
                 // handle result
                 handleResult(user.getDisplayName());
             } else {
@@ -73,15 +71,14 @@ public class LogInActivity extends AppCompatActivity {
         });
     }
 
-    private void handleResult(String name){
+    private void handleResult(String name) {
         // get user info from firebase to check if they have greenhouseId/Code registered
         viewModel.initUserInfo();
 
         viewModel.getCurrentUserInfo().observe(this, userInfo -> {
-            if (userInfo == null){
+            if (userInfo == null) {
                 startGreenhouseActivity();
-            }
-            else {
+            } else {
                 startMainActivity();
             }
         });
@@ -100,4 +97,6 @@ public class LogInActivity extends AppCompatActivity {
                 .build();
         activityResultLauncher.launch(signInIntent);
     }
+
+
 }

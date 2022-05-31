@@ -17,13 +17,13 @@ import com.example.greehousecontroller.data.repository.UserRepository;
 import java.util.List;
 
 public class MoistureViewModel extends AndroidViewModel {
-
-    private UserInfoRepository userInfoRepository;
-    private UserRepository userRepository;
-    private Application application;
-    private MoistureRepository moistureRepository;
+    private final UserInfoRepository userInfoRepository;
+    private final UserRepository userRepository;
+    private final Application application;
+    private final MoistureRepository moistureRepository;
     private final PotRepository potRepository;
-    private MutableLiveData<Boolean> refreshing;
+    private final MutableLiveData<Boolean> refreshing;
+
     public MoistureViewModel(Application application) {
         super(application);
         this.application = application;
@@ -42,13 +42,13 @@ public class MoistureViewModel extends AndroidViewModel {
     public void initUserInfo() {
         userInfoRepository.init(userRepository.getCurrentUser().getValue().getUid());
     }
-    public void updateHistoryData(String greenHouseId,int potId)
-    {
+
+    public void updateHistoryData(String greenHouseId, int potId) {
         moistureRepository.loadCachedData(potId);
-        moistureRepository.updateHistoricalData(greenHouseId,potId, () -> {
+        moistureRepository.updateHistoricalData(greenHouseId, potId, () -> {
             refreshing.postValue(false);
         });
-        moistureRepository.updateLatestData(greenHouseId,potId, () -> {
+        moistureRepository.updateLatestData(greenHouseId, potId, () -> {
             refreshing.postValue(false);
         });
     }
@@ -57,20 +57,19 @@ public class MoistureViewModel extends AndroidViewModel {
         return refreshing;
     }
 
-    public LiveData<List<Moisture>> getMoistureHistoryData()
-    {
+    public LiveData<List<Moisture>> getMoistureHistoryData() {
         return moistureRepository.getHistoricalData();
     }
-    public LiveData<Moisture> getLatestHumidity()
-    {
+
+    public LiveData<Moisture> getLatestHumidity() {
         return moistureRepository.getLatest();
     }
-    public LiveData<Pot> getPot()
-    {
+
+    public LiveData<Pot> getPot() {
         return potRepository.getCurrentPot();
     }
-    public LiveData<List<Pot>> getPots()
-    {
+
+    public LiveData<List<Pot>> getPots() {
         return potRepository.getPots();
     }
 }

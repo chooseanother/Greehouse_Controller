@@ -1,7 +1,5 @@
 package com.example.greehousecontroller.data.model;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
@@ -11,7 +9,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 public class UserInfoLiveData extends LiveData<UserInfo> {
-    private DatabaseReference databaseReference;
+    private final DatabaseReference databaseReference;
 
     private final ValueEventListener listener = new ValueEventListener() {
         @Override
@@ -26,7 +24,7 @@ public class UserInfoLiveData extends LiveData<UserInfo> {
         }
     };
 
-    public UserInfoLiveData(DatabaseReference ref){
+    public UserInfoLiveData(DatabaseReference ref) {
         databaseReference = ref;
     }
 

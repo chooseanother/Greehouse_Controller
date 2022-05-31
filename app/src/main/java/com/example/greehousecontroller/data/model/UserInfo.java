@@ -10,12 +10,12 @@ public class UserInfo {
         this.GreenhouseID = GreenhouseID;
     }
 
-    public void setGreenhouseID(String greenhouseID) {
-        GreenhouseID = greenhouseID;
-    }
-
     public String getGreenhouseID() {
         return GreenhouseID;
+    }
+
+    public void setGreenhouseID(String greenhouseID) {
+        GreenhouseID = greenhouseID;
     }
 
     @Override

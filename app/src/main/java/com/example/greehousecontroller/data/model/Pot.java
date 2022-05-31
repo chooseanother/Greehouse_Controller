@@ -10,12 +10,12 @@ import com.google.gson.annotations.JsonAdapter;
 @Entity
 @JsonAdapter(PotJsonAdapter.class)
 public class Pot {
+    private final String name;
+    private final double lowerMoistureThreshold;
     @PrimaryKey
     private int id;
-    private String name;
     private int moistureSensorId;
     private double currentMoisture;
-    private double lowerMoistureThreshold;
 
     public Pot(int id, String name, int moistureSensorId, double currentMoisture, double lowerMoistureThreshold) {
         this.id = id;
@@ -41,7 +41,7 @@ public class Pot {
     }
 
     @Ignore
-    public Pot(int id, int moistureSensorId, String name, double lowerMoistureThreshold){
+    public Pot(int id, int moistureSensorId, String name, double lowerMoistureThreshold) {
         this.id = id;
         this.moistureSensorId = moistureSensorId;
         this.name = name;
@@ -49,7 +49,7 @@ public class Pot {
     }
 
     @Ignore
-    public Pot(int id, String name, double lowerMoistureThreshold){
+    public Pot(int id, String name, double lowerMoistureThreshold) {
         this.id = id;
         this.name = name;
         this.lowerMoistureThreshold = lowerMoistureThreshold;
@@ -70,13 +70,15 @@ public class Pot {
         return name;
     }
 
-    public int getMoistureSensorId(){ return moistureSensorId; }
+    public int getMoistureSensorId() {
+        return moistureSensorId;
+    }
 
     public double getCurrentMoisture() {
         return currentMoisture;
     }
 
-    public double getLowerMoistureThreshold(){
+    public double getLowerMoistureThreshold() {
         return lowerMoistureThreshold;
     }
 
