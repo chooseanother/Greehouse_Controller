@@ -59,14 +59,14 @@ public class AddPotFragment extends Fragment {
         binding = null;
     }
 
-    private void getGreenhouseID(){
+    private void getGreenhouseID() {
         viewModel.initUserInfo();
         viewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
             greenhouseId = userInfo.getGreenhouseID();
         });
     }
 
-    private void setUpBinding(){
+    private void setUpBinding() {
         potNameEditText = binding.addPotNameEditText;
         potMinimalHumidityEditText = binding.addPotMinimalMoistureEditText;
         potMinimalHumidityEditText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
@@ -75,19 +75,17 @@ public class AddPotFragment extends Fragment {
         spinner = binding.addPotSensorSpinner;
     }
 
-    private void setUpListeners(){
+    private void setUpListeners() {
         savePotButton.setOnClickListener(view -> {
             boolean result;
-            if(spinner.getSelectedItem() == null){
-                result = viewModel.validInput(greenhouseId, null , potNameEditText.getText().toString(),
+            if (spinner.getSelectedItem() == null) {
+                result = viewModel.validInput(greenhouseId, null, potNameEditText.getText().toString(),
+                        potMinimalHumidityEditText.getText().toString());
+            } else {
+                result = viewModel.validInput(greenhouseId, spinner.getSelectedItem().toString(), potNameEditText.getText().toString(),
                         potMinimalHumidityEditText.getText().toString());
             }
-            else
-            {
-                result = viewModel.validInput(greenhouseId, spinner.getSelectedItem().toString() , potNameEditText.getText().toString(),
-                        potMinimalHumidityEditText.getText().toString());
-            }
-            if(result){
+            if (result) {
                 viewModel.addPot(greenhouseId, spinner.getSelectedItem().toString(), potNameEditText.getText().toString(), potMinimalHumidityEditText.getText().toString());
                 navController.navigate(R.id.navigationHome);
             }
@@ -96,7 +94,7 @@ public class AddPotFragment extends Fragment {
         cancelPotButton.setOnClickListener(view -> navController.navigate(R.id.navigationHome));
     }
 
-    private void setUpSpinner(){
+    private void setUpSpinner() {
         ArrayList<String> sensors = (ArrayList<String>) viewModel.getAvailableSensors();
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getContext(), com.anychart.R.layout.support_simple_spinner_dropdown_item, sensors);
         spinner.setAdapter(dataAdapter);

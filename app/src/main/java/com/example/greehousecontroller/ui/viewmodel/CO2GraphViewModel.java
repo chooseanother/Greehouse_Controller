@@ -15,9 +15,9 @@ import com.example.greehousecontroller.data.repository.UserRepository;
 import java.util.List;
 
 public class CO2GraphViewModel extends AndroidViewModel {
-    private CO2Repository co2Repository;
-    private UserInfoRepository userInfoRepository;
-    private UserRepository userRepository;
+    private final CO2Repository co2Repository;
+    private final UserInfoRepository userInfoRepository;
+    private final UserRepository userRepository;
 
     public CO2GraphViewModel(Application application) {
         super(application);
@@ -25,27 +25,29 @@ public class CO2GraphViewModel extends AndroidViewModel {
         userInfoRepository = UserInfoRepository.getInstance();
         userRepository = UserRepository.getInstance(application);
     }
+
     public LiveData<List<CO2>> getCo2HistoryData() {
         return co2Repository.getCo2HistoryData();
     }
-    public MutableLiveData<CO2> getLatestCO2(){
+
+    public MutableLiveData<CO2> getLatestCO2() {
         return co2Repository.getLatest();
     }
-    public LiveData<UserInfo> getUserInfo(){
+
+    public LiveData<UserInfo> getUserInfo() {
         return userInfoRepository.getUserInfo();
     }
 
-    public void initUserInfo(){
+    public void initUserInfo() {
         userInfoRepository.init(userRepository.getCurrentUser().getValue().getUid());
     }
 
-    public void updateHistoryData(String greenhouseId)
-    {
+    public void updateHistoryData(String greenhouseId) {
         co2Repository.updateLatestMeasurement(greenhouseId, null);
-        co2Repository.updateHistoricalData(greenhouseId,null);
+        co2Repository.updateHistoricalData(greenhouseId, null);
     }
 
-    public void loadCachedData(){
+    public void loadCachedData() {
         co2Repository.loadLatestCachedData();
         co2Repository.loadHistoricalCachedData();
     }

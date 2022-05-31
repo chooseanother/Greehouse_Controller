@@ -24,17 +24,17 @@ public class TemperatureJsonAdapter extends TypeAdapter<Temperature> {
         in.beginObject();
         double temp = 0.0;
         long time = 0;
-        while(in.hasNext()){
-            switch (in.nextName()){
+        while (in.hasNext()) {
+            switch (in.nextName()) {
                 case "temperature":
                     temp = in.nextDouble();
                     break;
                 case "time":
-                    time = in.nextLong()*1000L;
+                    time = in.nextLong() * 1000L;
                     break;
             }
         }
         in.endObject();
-        return new Temperature(temp,time);
+        return new Temperature(temp, time);
     }
 }

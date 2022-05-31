@@ -8,6 +8,7 @@ import androidx.room.Query;
 import com.example.greehousecontroller.data.model.Humidity;
 
 import java.util.List;
+
 @Dao
 public interface HumidityDAO {
     @Query("SELECT * FROM Humidity")

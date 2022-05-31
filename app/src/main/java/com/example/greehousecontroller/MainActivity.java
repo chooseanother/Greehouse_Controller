@@ -7,28 +7,28 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.example.greehousecontroller.databinding.ActivityMainBinding;
-import com.google.android.material.navigation.NavigationView;
-
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
+
+import com.bumptech.glide.Glide;
+import com.example.greehousecontroller.databinding.ActivityMainBinding;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 
 public class MainActivity extends AppCompatActivity {
 
+    public NavController navController;
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
-    public NavController navController;
     private MainActivityViewModel viewModel;
 
     private DrawerLayout drawer;
@@ -73,10 +73,10 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    private void checkIfSignedIn(){
+    private void checkIfSignedIn() {
         LiveData<FirebaseUser> currentUser = viewModel.getCurrentUser();
         currentUser.observe(this, user -> {
-            if (user != null){
+            if (user != null) {
                 // Init menu with user info
                 setUpMenuUserInfo();
 
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                 viewModel.getCurrentUserInfo().observe(this, userInfo -> {
                     // If for some reason user info is deleted from database when application is
                     //  running, then this will prevent a crash.
-                    if (userInfo == null){
+                    if (userInfo == null) {
                         startGreenhouseActivity();
                         finish();
                     }
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void bindLogOutMenu(){
+    private void bindLogOutMenu() {
         binding.menuLogOut.setOnClickListener(view -> {
             logOut();
         });
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-    private void startGreenhouseActivity(){
+    private void startGreenhouseActivity() {
         startActivity(new Intent(this, GreenHouseIdActivity.class));
         finish();
     }
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
         viewModel.logOut();
     }
 
-    private void setUpMenuUserInfo(){
+    private void setUpMenuUserInfo() {
         FirebaseUser user = viewModel.getCurrentUser().getValue();
         TextView username = binding.navView.getHeaderView(0).findViewById(R.id.navHeaderUsername);
         username.setText(user.getDisplayName());
@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
     // When you need to retrieve the current token
     // For sending test notifications to a specific device, we aren't using it anywhere else
     // when done doing development and testing this should be removed
-    public void getCurrentToken(){
+    public void getCurrentToken() {
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
             if (!task.isSuccessful()) {
                 Log.w("FCM-getCurrentToken", "Fetching FCM registration token failed", task.getException());
@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
             String token = task.getResult();
 
             // Log and toast
-            String msg = "FCM token: "+token;
+            String msg = "FCM token: " + token;
             Log.d("FCM-getCurrentToken", msg);
             //Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
         });

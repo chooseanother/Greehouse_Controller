@@ -34,8 +34,8 @@ public class PotJsonAdapter extends TypeAdapter<Pot> {
         int moistureSensorId = 0;
         double latestMoisture = 0.0;
         in.beginObject();
-        while(in.hasNext()){
-            switch (in.nextName()){
+        while (in.hasNext()) {
+            switch (in.nextName()) {
                 case "name":
                     name = in.nextString();
                     break;

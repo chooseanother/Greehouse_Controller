@@ -1,6 +1,5 @@
 package com.example.greehousecontroller.data.api;
 
-
 import com.example.greehousecontroller.data.model.Humidity;
 import com.example.greehousecontroller.data.model.Threshold;
 
@@ -19,6 +18,7 @@ public interface HumidityApi {
     //thresholds
     @GET("threshold/{greenhouseid}/humidity")
     Call<Threshold> getHumidityThresholds(@Path("greenhouseid") String greenhouseId);
+
     @PATCH("threshold/{greenhouseid}/humidity")
     Call<Void> setHumidityThresholds(@Path("greenhouseid") String greenhouseId, @Body Threshold threshold);
 

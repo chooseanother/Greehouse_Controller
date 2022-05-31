@@ -31,26 +31,25 @@ public class EditGreenhouseIdFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         bindSaveButton();
     }
 
-    private void observerUserInfo(){
+    private void observerUserInfo() {
         viewModel.getCurrentUserInto().observe(getViewLifecycleOwner(), userInfo -> {
             greenhouseId = userInfo.getGreenhouseID();
             binding.editGreenhouseIdCurrentIdTextView.setText(greenhouseId);
         });
     }
 
-    private void bindSaveButton(){
+    private void bindSaveButton() {
         EditText newIdText = binding.editGreenhouseIdNewEditText;
         binding.editGreenhouseIdSave.setOnClickListener(view -> {
             String oldGreenhouseId = greenhouseId;
             String newGreenhouseId = newIdText.getText().toString();
             if (oldGreenhouseId.equals(newGreenhouseId)) {
                 Toast.makeText(getContext(), R.string.change_greenhouse_id_notify_same_id, Toast.LENGTH_SHORT).show();
-            }
-            else {
+            } else {
                 viewModel.unsubscribeFromGreenhouse(oldGreenhouseId);
                 viewModel.saveGreenHouseId(newGreenhouseId);
                 viewModel.subscribeToGreenhouse(newGreenhouseId);

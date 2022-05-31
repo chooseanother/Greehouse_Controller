@@ -25,13 +25,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PotRepository {
-    private MutableLiveData<List<Pot>> pots;
-    private MutableLiveData<Pot> currentPot;
-    private final PotDAO potDAO;
     private static PotRepository instance;
+    private final MutableLiveData<List<Pot>> pots;
+    private final MutableLiveData<Pot> currentPot;
+    private final PotDAO potDAO;
     private final Application app;
     private final ExecutorService executorService;
-    private ToastMaker toastMaker;
+    private final ToastMaker toastMaker;
 
     private PotRepository(Application app) {
         this.app = app;
@@ -51,7 +51,7 @@ public class PotRepository {
         return instance;
     }
 
-    public void loadCachedData(){
+    public void loadCachedData() {
         executorService.execute(() -> {
             List<Pot> allPots = potDAO.getAll();
             if (allPots == null || allPots.isEmpty()) {
@@ -99,7 +99,7 @@ public class PotRepository {
     public void updateCurrentPot(String greenHouseId, int potId, String name, int moistureSensorId, double minimumThreshold) {
         PotAPI potAPI = ServiceGenerator.getPotAPI();
         Pot pot = new Pot(name, moistureSensorId, minimumThreshold);
-        Log.i("Api-pot-update-info", "pot string: "+pot + " pot json: " + new Gson().toJson(pot) + " potId " + potId);
+        Log.i("Api-pot-update-info", "pot string: " + pot + " pot json: " + new Gson().toJson(pot) + " potId " + potId);
         Call<Void> call = potAPI.updatePotDetailsById(greenHouseId, potId, pot);
         call.enqueue(new Callback<Void>() {
             @Override
@@ -163,7 +163,7 @@ public class PotRepository {
 
                 if (!response.isSuccessful()) {
                     toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_retrieve_measurements));
-                    if (callback != null){
+                    if (callback != null) {
                         callback.call();
                     }
                 }
@@ -173,7 +173,7 @@ public class PotRepository {
             public void onFailure(Call<List<Pot>> call, Throwable t) {
                 Log.e("Api-pot-getallpots-):", t.getMessage());
                 toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.connection_error));
-                if (callback != null){
+                if (callback != null) {
                     callback.call();
                 }
             }

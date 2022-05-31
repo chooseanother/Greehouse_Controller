@@ -17,7 +17,7 @@ import java.util.List;
 public class SensorAdapter extends RecyclerView.Adapter<SensorAdapter.ViewHolder> {
     private List<Sensor> sensors;
 
-    public SensorAdapter(List<Sensor> sensors){
+    public SensorAdapter(List<Sensor> sensors) {
         this.sensors = sensors;
     }
 
@@ -34,17 +34,17 @@ public class SensorAdapter extends RecyclerView.Adapter<SensorAdapter.ViewHolder
         Sensor sensor = sensors.get(position);
         holder.sensor.setText(sensor.getSensor());
         //if returns true = works -> set color to green
-        if (sensor.isStatus()){
+        if (sensor.isStatus()) {
             holder.status.setImageResource(R.drawable.ic_sensor_circle_green);
         }
         //if returns false = does not work -> set color to red
-        else{
+        else {
 
             holder.status.setImageResource(R.drawable.ic_sensor_circle_red);
         }
     }
 
-    public void setSensors(List<Sensor> sensors){
+    public void setSensors(List<Sensor> sensors) {
         this.sensors = sensors;
         notifyDataSetChanged();
     }

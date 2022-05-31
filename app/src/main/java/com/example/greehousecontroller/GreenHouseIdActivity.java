@@ -2,25 +2,12 @@ package com.example.greehousecontroller;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.greehousecontroller.databinding.ActivityGreenhouseIdBinding;
-import com.example.greehousecontroller.databinding.ActivityLogInBinding;
-import com.example.greehousecontroller.databinding.ActivityMainBinding;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.FirebaseMessagingService;
 
 public class GreenHouseIdActivity extends AppCompatActivity {
     private ActivityGreenhouseIdBinding binding;
@@ -37,13 +24,13 @@ public class GreenHouseIdActivity extends AppCompatActivity {
         setupBindings();
     }
 
-    private void setupBindings(){
+    private void setupBindings() {
         bindLogOutButton();
         bindSaveIdButton();
         greenhouseIDText = binding.enterGreenhouseIdEditText;
     }
 
-    private void bindSaveIdButton(){
+    private void bindSaveIdButton() {
         binding.enterGreenhouseIdSaveButton.setOnClickListener(view -> {
             String greenhouseID = greenhouseIDText.getText().toString();
             viewModel.saveGreenHouseId(greenhouseID);
@@ -53,7 +40,7 @@ public class GreenHouseIdActivity extends AppCompatActivity {
         });
     }
 
-    private void bindLogOutButton(){
+    private void bindLogOutButton() {
         binding.enterGreenhouseIdSignOutButton.setOnClickListener(view -> {
             logOut();
         });
@@ -63,9 +50,9 @@ public class GreenHouseIdActivity extends AppCompatActivity {
         viewModel.logOut();
     }
 
-    private void checkIfSignedIn(){
+    private void checkIfSignedIn() {
         viewModel.getCurrentUser().observe(this, user -> {
-            if (user != null){
+            if (user != null) {
                 viewModel.initUserInfo();
             } else {
                 startLoginActivity();

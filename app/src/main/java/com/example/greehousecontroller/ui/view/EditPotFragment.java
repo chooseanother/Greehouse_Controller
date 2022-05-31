@@ -48,7 +48,7 @@ public class EditPotFragment extends Fragment {
         return root;
     }
 
-    private void setUpTextViews(){
+    private void setUpTextViews() {
         viewModel.initUserInfo();
         viewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
             greenhouseId = userInfo.getGreenhouseID();
@@ -65,16 +65,16 @@ public class EditPotFragment extends Fragment {
         });
     }
 
-    private void setUpCancelButton(){
+    private void setUpCancelButton() {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity)getActivity()).navController.navigate(R.id.navigationHome);
+                ((MainActivity) getActivity()).navController.navigate(R.id.navigationHome);
             }
         });
     }
 
-    private void setUpSaveButton(MutableLiveData<Pot> pot){
+    private void setUpSaveButton(MutableLiveData<Pot> pot) {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,7 +96,7 @@ public class EditPotFragment extends Fragment {
         binding = null;
     }
 
-    private void setUpBinding(){
+    private void setUpBinding() {
         potName = binding.editPotNameEditText;
         saveButton = binding.editPotSaveButton;
         minimalThreshold = binding.editPotMinimumThresholdEditText;

@@ -20,10 +20,10 @@ import java.util.List;
 public class AddPotViewModel extends AndroidViewModel {
 
     private final PotRepository potRepository;
-    private UserInfoRepository userInfoRepository;
-    private UserRepository userRepository;
-    private Application application;
-    private List<String> listOfSensors;
+    private final UserInfoRepository userInfoRepository;
+    private final UserRepository userRepository;
+    private final Application application;
+    private final List<String> listOfSensors;
 
     public AddPotViewModel(Application application) {
         super(application);
@@ -47,35 +47,25 @@ public class AddPotViewModel extends AndroidViewModel {
             Toast.makeText(application, R.string.settings_out_of_bounds_humidity_exception, Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(!checkForSensorSelection(moistureSensorId)){
+        if (!checkForSensorSelection(moistureSensorId)) {
             Toast.makeText(application, R.string.add_pot_missing_sensor_exception, Toast.LENGTH_SHORT).show();
             return false;
-        }
-        else {
+        } else {
             return true;
         }
     }
 
     private boolean checkForSensorSelection(String moistureSensorId) {
-        if(moistureSensorId == null){
-            return false;
-        }
-        else{
-            return true;
-        }
+        return moistureSensorId != null;
     }
 
     public void addPot(String greenhouseId, String moistureSensorId, String name, String minimumHumidity) {
-        potRepository.addPot(greenhouseId, Integer.parseInt(moistureSensorId)-1, name, Double.parseDouble(minimumHumidity));
+        potRepository.addPot(greenhouseId, Integer.parseInt(moistureSensorId) - 1, name, Double.parseDouble(minimumHumidity));
     }
 
     private boolean checkForThresholdNumberSize(String minimumThreshold) {
         if (!minimumThreshold.isEmpty()) {
-            if (Double.parseDouble(minimumThreshold) <= 100.0 && Double.parseDouble(minimumThreshold) >= 0.0) {
-                return true;
-            } else {
-                return false;
-            }
+            return Double.parseDouble(minimumThreshold) <= 100.0 && Double.parseDouble(minimumThreshold) >= 0.0;
         } else {
 
             return false;
@@ -83,11 +73,7 @@ public class AddPotViewModel extends AndroidViewModel {
     }
 
     private boolean checkForThresholdType(String minimumThreshold) {
-        if (minimumThreshold.equals(".")) {
-            return false;
-        } else {
-            return true;
-        }
+        return !minimumThreshold.equals(".");
     }
 
     public LiveData<UserInfo> getUserInfo() {
@@ -99,32 +85,26 @@ public class AddPotViewModel extends AndroidViewModel {
     }
 
     private boolean checkForNameInput(String name) {
-        if (name.length() > 100 || name.equals("") || name == null) {
-            return false;
-        } else {
-            return true;
-        }
+        return name.length() <= 100 && !name.equals("") && name != null;
     }
 
     public List<String> getAvailableSensors() {
         List<Pot> temp = potRepository.getPots().getValue();
 
-        if(temp == null || temp.isEmpty()){
-            for (int i = 1; i <= Config.MAX_NUMBER_OF_POTS; i++){
-                listOfSensors.add(""+i);
+        if (temp == null || temp.isEmpty()) {
+            for (int i = 1; i <= Config.MAX_NUMBER_OF_POTS; i++) {
+                listOfSensors.add("" + i);
             }
-        }
-        else
-        {
+        } else {
             ArrayList<String> temp2 = new ArrayList<>();
 
-            for(int i= 0; i< temp.size(); i++){
+            for (int i = 0; i < temp.size(); i++) {
                 temp2.add(String.valueOf(temp.get(i).getMoistureSensorId()));
             }
 
-            for(int i= 0; i< Config.MAX_NUMBER_OF_POTS; i++){
-                if(!temp2.contains(String.valueOf(i))){
-                    listOfSensors.add(String.valueOf(i+1));
+            for (int i = 0; i < Config.MAX_NUMBER_OF_POTS; i++) {
+                if (!temp2.contains(String.valueOf(i))) {
+                    listOfSensors.add(String.valueOf(i + 1));
                 }
             }
 

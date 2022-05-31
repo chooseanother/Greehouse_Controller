@@ -24,15 +24,15 @@ public class PotAdapter extends RecyclerView.Adapter<PotAdapter.ViewHolder> {
     private List<Pot> pots;
     private PotClickCallBack callBack;
 
-    public void setOnClickListener(PotClickCallBack listener){
-        this.callBack = listener;
-    }
-
     public PotAdapter(List<Pot> pots) {
         this.pots = pots;
     }
 
-    public void setPots(List<Pot> potts){
+    public void setOnClickListener(PotClickCallBack listener) {
+        this.callBack = listener;
+    }
+
+    public void setPots(List<Pot> potts) {
         List<Pot> old = pots;
         List<Pot> newList = new ArrayList<>(potts);
         PotCallBack callback = new PotCallBack(old, newList);
@@ -69,14 +69,14 @@ public class PotAdapter extends RecyclerView.Adapter<PotAdapter.ViewHolder> {
     }
 
 
-    class ViewHolder extends RecyclerView.ViewHolder  {
-        private TextView name;
-        private TextView currentHumidity;
-        private TextView minimalHumidity;
-        private ImageView edit;
+    class ViewHolder extends RecyclerView.ViewHolder {
+        private final TextView name;
+        private final TextView currentHumidity;
+        private final TextView minimalHumidity;
+        private final ImageView edit;
 
 
-        ViewHolder(View itemView){
+        ViewHolder(View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.potItemNameTextView);
             currentHumidity = itemView.findViewById(R.id.potItemCurrentMoistureMeasurementTextView);

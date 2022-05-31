@@ -12,8 +12,8 @@ import com.example.greehousecontroller.data.repository.UserRepository;
 import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivityViewModel extends AndroidViewModel {
-    private UserRepository userRepository;
-    private UserInfoRepository userInfoRepository;
+    private final UserRepository userRepository;
+    private final UserInfoRepository userInfoRepository;
 
     public MainActivityViewModel(@NonNull Application application) {
         super(application);
@@ -21,20 +21,20 @@ public class MainActivityViewModel extends AndroidViewModel {
         userInfoRepository = UserInfoRepository.getInstance();
     }
 
-    public void initUserInfo(){
+    public void initUserInfo() {
         String userId = userRepository.getCurrentUser().getValue().getUid();
         userInfoRepository.init(userId);
     }
 
-    public LiveData<FirebaseUser> getCurrentUser(){
+    public LiveData<FirebaseUser> getCurrentUser() {
         return userRepository.getCurrentUser();
     }
 
-    public LiveData<UserInfo> getCurrentUserInfo(){
+    public LiveData<UserInfo> getCurrentUserInfo() {
         return userInfoRepository.getUserInfo();
     }
 
-    public void logOut(){
+    public void logOut() {
         userRepository.signOut();
     }
 }

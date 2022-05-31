@@ -1,19 +1,17 @@
 package com.example.greehousecontroller.ui.view;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.greehousecontroller.databinding.FragmentThresholdSettingsBinding;
 import com.example.greehousecontroller.ui.viewmodel.ThresholdSettingsViewModel;
@@ -55,7 +53,8 @@ public class ThresholdSettingsFragment extends Fragment {
 
         return root;
     }
-    private void getGreenhouseID(){
+
+    private void getGreenhouseID() {
         viewModel.initUserInfo();
         viewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
             greenhouseId = userInfo.getGreenhouseID();
@@ -74,7 +73,7 @@ public class ThresholdSettingsFragment extends Fragment {
         binding = null;
     }
 
-    private void setUpBindingThresholdsEditText(){
+    private void setUpBindingThresholdsEditText() {
         temperatureLowerThreshold = binding.thresholdSettingsTemperatureLowerThresholdEditText;
         temperatureUpperThreshold = binding.thresholdSettingsTemperatureUpperThresholdEditText;
 
@@ -85,7 +84,7 @@ public class ThresholdSettingsFragment extends Fragment {
         humidityUpperThreshold = binding.thresholdSettingsHumidityUpperThresholdEditText;
     }
 
-    private void setUpBindingThresholdsSave(){
+    private void setUpBindingThresholdsSave() {
         //temperature
         saveTemperatureThreshold = binding.thresholdSettingsTemperatureSave;
         saveTemperatureThreshold.setOnClickListener(view -> {
@@ -105,28 +104,28 @@ public class ThresholdSettingsFragment extends Fragment {
         });
     }
 
-    private void initializeData(){
+    private void initializeData() {
         viewModel.initializeData(greenhouseId);
     }
 
-    private void initializeObserve(){
+    private void initializeObserve() {
         DecimalFormat df = new DecimalFormat("0.0");
         DecimalFormat wholeNumber = new DecimalFormat("0");
-        viewModel.getTemperatureThreshold().observe(getViewLifecycleOwner(),threshold -> {
+        viewModel.getTemperatureThreshold().observe(getViewLifecycleOwner(), threshold -> {
             temperatureLowerThreshold.setText(df.format(threshold.getLowerThreshold()));
             temperatureUpperThreshold.setText(df.format(threshold.getUpperThreshold()));
         });
-        viewModel.getHumidityThreshold().observe(getViewLifecycleOwner(),threshold -> {
+        viewModel.getHumidityThreshold().observe(getViewLifecycleOwner(), threshold -> {
             humidityLowerThreshold.setText(df.format(threshold.getLowerThreshold()));
             humidityUpperThreshold.setText(df.format(threshold.getUpperThreshold()));
         });
-        viewModel.getCo2Threshold().observe(getViewLifecycleOwner(),threshold -> {
+        viewModel.getCo2Threshold().observe(getViewLifecycleOwner(), threshold -> {
             co2LowerThreshold.setText(wholeNumber.format(threshold.getLowerThreshold()));
             co2UpperThreshold.setText(wholeNumber.format(threshold.getUpperThreshold()));
         });
     }
 
-    private void setUpEditTextNumberOnly(){
+    private void setUpEditTextNumberOnly() {
         temperatureLowerThreshold.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         temperatureUpperThreshold.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         humidityLowerThreshold.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);

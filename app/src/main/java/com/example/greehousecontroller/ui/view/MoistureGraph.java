@@ -5,11 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
 import com.anychart.APIlib;
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
@@ -21,6 +23,7 @@ import com.anychart.enums.StockSeriesType;
 import com.example.greehousecontroller.data.model.Moisture;
 import com.example.greehousecontroller.databinding.MoistureGraph1Binding;
 import com.example.greehousecontroller.ui.viewmodel.MoistureViewModel;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -48,18 +51,18 @@ public class MoistureGraph extends Fragment {
         binding = null;
     }
 
-    private void setBindings(){
+    private void setBindings() {
         progressBar = binding.moistureGraphProgressBar;
         moistureChart = binding.humidityChart;
     }
 
-    public Table moistureGraph(){
+    public Table moistureGraph() {
         Table table = Table.instantiate("x");
         List<DataEntry> data = new ArrayList<>();
         moistureViewModel.getMoistureHistoryData().observe(getViewLifecycleOwner(), new Observer<List<Moisture>>() {
             @Override
             public void onChanged(List<Moisture> moistureHistoryData) {
-                if(moistureHistoryData != null) {
+                if (moistureHistoryData != null) {
                     if (moistureViewModel.getLatestHumidity().getValue() != null) {
                         for (int i = 0; i < 1; i++) {
                             data.add(new GraphsFragment.OHCLDataEntry((long) Objects.requireNonNull(moistureViewModel.getLatestHumidity().getValue()).getTime(), 0.1, 0.1, 0.1, moistureViewModel.getLatestHumidity().getValue().getMoisture()));
@@ -77,7 +80,7 @@ public class MoistureGraph extends Fragment {
         return table;
     }
 
-    public void initMoistureChart(){
+    public void initMoistureChart() {
         moistureChart.setProgressBar(progressBar);
         APIlib.getInstance().setActiveAnyChartView(moistureChart);
         Stock stock2 = AnyChart.stock();

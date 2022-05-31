@@ -29,10 +29,10 @@ public class MoistureRepository {
     private static MoistureRepository instance;
     private final Application app;
     private final MoistureDAO moistureDAO;
-    private MutableLiveData<Moisture> latest;
-    private MutableLiveData<List<Moisture>> history;
+    private final MutableLiveData<Moisture> latest;
+    private final MutableLiveData<List<Moisture>> history;
     private final ExecutorService executorService;
-    private ToastMaker toastMaker;
+    private final ToastMaker toastMaker;
 
 
     private MoistureRepository(Application app) {
@@ -44,6 +44,13 @@ public class MoistureRepository {
         toastMaker = ToastMaker.getInstance();
         moistureDAO = appDatabase.moistureDAO();
         loadCachedData(0);
+    }
+
+    public static MoistureRepository getInstance(Application app) {
+        if (instance == null) {
+            instance = new MoistureRepository(app);
+        }
+        return instance;
     }
 
     public void loadCachedData(int potId) {
@@ -64,13 +71,6 @@ public class MoistureRepository {
                 history.postValue(historicalMoisture);
             }
         });
-    }
-
-    public static MoistureRepository getInstance(Application app) {
-        if (instance == null) {
-            instance = new MoistureRepository(app);
-        }
-        return instance;
     }
 
     public void updateHistoricalData(String greenhouseId, int potId, RepositoryCallback callback) {

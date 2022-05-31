@@ -1,7 +1,6 @@
 package com.example.greehousecontroller.utils;
 
 import com.example.greehousecontroller.data.model.CO2;
-import com.example.greehousecontroller.data.model.Temperature;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
@@ -24,17 +23,17 @@ public class CO2JsonAdapter extends TypeAdapter<CO2> {
         in.beginObject();
         double co2Measurement = 0.0;
         long time = 0;
-        while(in.hasNext()){
-            switch (in.nextName()){
+        while (in.hasNext()) {
+            switch (in.nextName()) {
                 case "co2Measurement":
                     co2Measurement = in.nextDouble();
                     break;
                 case "time":
-                    time = in.nextLong()*1000L;
+                    time = in.nextLong() * 1000L;
                     break;
             }
         }
         in.endObject();
-        return new CO2(co2Measurement,time);
+        return new CO2(co2Measurement, time);
     }
 }

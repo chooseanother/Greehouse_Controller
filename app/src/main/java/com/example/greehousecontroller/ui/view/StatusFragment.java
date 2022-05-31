@@ -52,17 +52,17 @@ public class StatusFragment extends Fragment {
         binding = null;
     }
 
-    private void getGreenhouseId(){
+    private void getGreenhouseId() {
         statusViewModel.initUserInfo();
         statusViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
             greenhouseId = userInfo.getGreenhouseID();
-            if(greenhouseId != null) {
+            if (greenhouseId != null) {
                 updateSensorStatus();
             }
         });
     }
 
-    private void recyclerViewHandle(){
+    private void recyclerViewHandle() {
         recyclerView = binding.statusListOfSensorsRecyclerView;
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -70,12 +70,12 @@ public class StatusFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         statusViewModel.getSensorsStatus().observe(getViewLifecycleOwner(), sensors -> {
             adapter.setSensors(sensors);
-            Log.i("Fra-stat",sensors.toString());
+            Log.i("Fra-stat", sensors.toString());
         });
     }
 
-    private void updateSensorStatus(){
-        if(greenhouseId != null){
+    private void updateSensorStatus() {
+        if (greenhouseId != null) {
             statusViewModel.updateSensorStatus(greenhouseId);
         }
     }

@@ -5,11 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
 import com.anychart.APIlib;
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
@@ -21,6 +23,7 @@ import com.anychart.enums.StockSeriesType;
 import com.example.greehousecontroller.data.model.CO2;
 import com.example.greehousecontroller.databinding.Co2GraphBinding;
 import com.example.greehousecontroller.ui.viewmodel.CO2GraphViewModel;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -49,13 +52,12 @@ public class CO2GraphFragment extends Fragment {
         binding = null;
     }
 
-    private void setBindings(){
+    private void setBindings() {
         co2Chart = binding.co2Chart;
         progressBar = binding.co2ProgressBar;
     }
 
-    public void initCO2Chart()
-    {
+    public void initCO2Chart() {
         co2Chart.setProgressBar(progressBar);
         APIlib.getInstance().setActiveAnyChartView(co2Chart);
         Stock stock3 = AnyChart.stock();
@@ -67,8 +69,7 @@ public class CO2GraphFragment extends Fragment {
         co2Chart.setChart(stock3);
     }
 
-    public Table co2Graph()
-    {
+    public Table co2Graph() {
         Table table = Table.instantiate("x");
 
         List<DataEntry> data = new ArrayList<>();
@@ -95,7 +96,7 @@ public class CO2GraphFragment extends Fragment {
         return table;
     }
 
-    private void updateMeasurements(){
+    private void updateMeasurements() {
         co2GraphViewModel.initUserInfo();
         co2GraphViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
             co2GraphViewModel.updateHistoryData(userInfo.getGreenhouseID());

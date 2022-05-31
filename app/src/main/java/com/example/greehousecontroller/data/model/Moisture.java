@@ -3,6 +3,7 @@ package com.example.greehousecontroller.data.model;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+
 import com.example.greehousecontroller.utils.MoistureJsonAdapter;
 import com.google.gson.annotations.JsonAdapter;
 
@@ -20,7 +21,7 @@ public class Moisture {
     }
 
 
-    public Moisture(double moisture, long time,int potId) {
+    public Moisture(double moisture, long time, int potId) {
         this.moisture = moisture;
         this.time = time;
         this.potId = potId;

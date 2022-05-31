@@ -10,9 +10,9 @@ import com.google.firebase.auth.FirebaseUser;
 
 
 public class UserRepository {
+    private static UserRepository instance;
     private final UserLiveData currentUser;
     private final Application app;
-    private static UserRepository instance;
 
     private UserRepository(Application app) {
         this.app = app;

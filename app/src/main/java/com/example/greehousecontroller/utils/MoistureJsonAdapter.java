@@ -1,7 +1,6 @@
 package com.example.greehousecontroller.utils;
 
 import com.example.greehousecontroller.data.model.Moisture;
-import com.example.greehousecontroller.data.model.Temperature;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
@@ -27,19 +26,19 @@ public class MoistureJsonAdapter extends TypeAdapter<Moisture> {
         double moisture = 0.0;
         long time = 0;
         int poiId = 0;
-        while(in.hasNext()){
-            switch (in.nextName()){
+        while (in.hasNext()) {
+            switch (in.nextName()) {
                 case "moisture":
                     moisture = in.nextDouble();
                     break;
                 case "time":
-                    time = in.nextLong()*1000L;
+                    time = in.nextLong() * 1000L;
                     break;
                 case "potId":
                     poiId = in.nextInt();
             }
         }
         in.endObject();
-        return new Moisture(moisture,time,poiId);
+        return new Moisture(moisture, time, poiId);
     }
 }

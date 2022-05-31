@@ -7,7 +7,6 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-
 import com.example.greehousecontroller.R;
 import com.example.greehousecontroller.data.model.Pot;
 import com.example.greehousecontroller.data.model.UserInfo;
@@ -20,7 +19,7 @@ public class EditPotViewModel extends AndroidViewModel {
     private final PotRepository potRepository;
     private final UserInfoRepository userInfoRepository;
     private final UserRepository userRepository;
-    private Application application;
+    private final Application application;
 
 
     public EditPotViewModel(Application application) {
@@ -59,11 +58,7 @@ public class EditPotViewModel extends AndroidViewModel {
 
     private boolean checkForThresholdNumberSize(String minimumThreshold) {
         if (!minimumThreshold.isEmpty()) {
-            if (Double.parseDouble(minimumThreshold) <= 100.0 && Double.parseDouble(minimumThreshold) >= 0.0) {
-                return true;
-            } else {
-                return false;
-            }
+            return Double.parseDouble(minimumThreshold) <= 100.0 && Double.parseDouble(minimumThreshold) >= 0.0;
         } else {
 
             return false;
@@ -71,27 +66,18 @@ public class EditPotViewModel extends AndroidViewModel {
     }
 
     private boolean checkForThresholdType(String minimumThreshold) {
-        if (minimumThreshold.equals(".")) {
-            return false;
-        } else {
-            return true;
-        }
+        return !minimumThreshold.equals(".");
     }
 
-    public LiveData<UserInfo> getUserInfo(){
+    public LiveData<UserInfo> getUserInfo() {
         return userInfoRepository.getUserInfo();
     }
 
-    public void initUserInfo(){
+    public void initUserInfo() {
         userInfoRepository.init(userRepository.getCurrentUser().getValue().getUid());
     }
 
-    private boolean checkForNameInput(String name){
-        if(name.length() > 100 || name.equals("") || name == null){
-            return false;
-        }
-        else{
-            return true;
-        }
+    private boolean checkForNameInput(String name) {
+        return name.length() <= 100 && !name.equals("") && name != null;
     }
 }

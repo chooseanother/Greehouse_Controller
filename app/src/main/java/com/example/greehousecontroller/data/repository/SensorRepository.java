@@ -11,7 +11,6 @@ import com.example.greehousecontroller.data.api.ServiceGenerator;
 import com.example.greehousecontroller.data.model.Sensor;
 import com.example.greehousecontroller.utils.ToastMaker;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -21,37 +20,37 @@ import retrofit2.Response;
 public class SensorRepository {
     private static SensorRepository instance;
     private final Application application;
-    private MutableLiveData<List<Sensor>> sensors;
-    private ToastMaker toastMaker;
+    private final MutableLiveData<List<Sensor>> sensors;
+    private final ToastMaker toastMaker;
 
-    private SensorRepository(Application application){
+    private SensorRepository(Application application) {
         this.application = application;
         toastMaker = ToastMaker.getInstance();
         sensors = new MutableLiveData<>();
     }
 
-    public static SensorRepository getInstance(Application application){
-        if(instance == null){
+    public static SensorRepository getInstance(Application application) {
+        if (instance == null) {
             instance = new SensorRepository(application);
         }
         return instance;
     }
 
-    public MutableLiveData<List<Sensor>> getSensors(){
+    public MutableLiveData<List<Sensor>> getSensors() {
         return sensors;
     }
 
-    public void updateSensors(String greenhouseId){
+    public void updateSensors(String greenhouseId) {
         SensorApi sensorApi = ServiceGenerator.getSensorApi();
         Call<List<Sensor>> call = sensorApi.getSensorStatus(greenhouseId);
         call.enqueue(new Callback<List<Sensor>>() {
             @Override
             public void onResponse(Call<List<Sensor>> call, Response<List<Sensor>> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     Log.i("Api-sens-us", response.body().toString());
                     sensors.setValue(response.body());
                 }
-                if(!response.isSuccessful()){
+                if (!response.isSuccessful()) {
                     toastMaker.makeToast(application.getApplicationContext(), application.getString(R.string.unable_to_retrieve_sensor_status));
                 }
             }
