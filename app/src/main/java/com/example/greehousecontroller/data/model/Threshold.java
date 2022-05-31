@@ -18,6 +18,11 @@ public class Threshold {
     }
 
     @Ignore
+    public Threshold(String type){
+        this.type = type;
+    }
+
+    @Ignore
     public Threshold(double upperThreshold, double lowerThreshold) {
         this.upperThreshold = upperThreshold;
         this.lowerThreshold = lowerThreshold;

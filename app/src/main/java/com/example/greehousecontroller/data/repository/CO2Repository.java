@@ -46,7 +46,7 @@ public class CO2Repository {
         toastMaker = ToastMaker.getInstance();
         latest = new MutableLiveData<>(new CO2());
         history = new MutableLiveData<>(new ArrayList<>());
-        threshold = new MutableLiveData<>(new Threshold("CO2", 0, 0));
+        threshold = new MutableLiveData<>(new Threshold("CO2"));
 
 
     }
@@ -213,6 +213,13 @@ public class CO2Repository {
             @retrofit2.internal.EverythingIsNonNull
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    threshold.setValue(newThreshold);
+                    executorService.execute(() -> {
+                        newThreshold.setType("CO2");
+                        thresholdDAO.insert(newThreshold);
+                    });
+                }
                 if (!response.isSuccessful()) {
                     toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_update_threshold));
                 }

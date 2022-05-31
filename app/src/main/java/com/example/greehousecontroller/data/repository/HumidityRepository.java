@@ -46,7 +46,7 @@ public class HumidityRepository {
         toastMaker = ToastMaker.getInstance();
         latest = new MutableLiveData<>(new Humidity());
         history = new MutableLiveData<>(new ArrayList<>());
-        threshold = new MutableLiveData<>(new Threshold("Humidity", 0, 0));
+        threshold = new MutableLiveData<>(new Threshold("Humidity"));
     }
 
     public static HumidityRepository getInstance(Application app) {
@@ -213,6 +213,13 @@ public class HumidityRepository {
             @EverythingIsNonNull
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    threshold.setValue(newThreshold);
+                    executorService.execute(() -> {
+                        newThreshold.setType("Humidity");
+                        thresholdDAO.insert(newThreshold);
+                    });
+                }
                 if (!response.isSuccessful()) {
                     toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_update_threshold));
                 }

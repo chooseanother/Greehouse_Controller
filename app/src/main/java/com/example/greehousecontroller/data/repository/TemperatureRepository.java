@@ -46,7 +46,7 @@ public class TemperatureRepository {
         thresholdDAO = appDatabase.thresholdDAO();
         toastMaker = ToastMaker.getInstance();
         latest = new MutableLiveData<>(new Temperature());
-        threshold = new MutableLiveData<>(new Threshold("Temperature", 0, 0));
+        threshold = new MutableLiveData<>(new Threshold("Temperature"));
         historical = new MutableLiveData<>(new ArrayList<>());
     }
 
@@ -221,6 +221,13 @@ public class TemperatureRepository {
             @EverythingIsNonNull
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    threshold.setValue(newThreshold);
+                    executorService.execute(() -> {
+                        newThreshold.setType("Temperature");
+                        thresholdDAO.insert(newThreshold);
+                    });
+                }
                 if (!response.isSuccessful()) {
                     toastMaker.makeToast(app.getApplicationContext(), app.getString(R.string.unable_to_update_threshold));
                 }
