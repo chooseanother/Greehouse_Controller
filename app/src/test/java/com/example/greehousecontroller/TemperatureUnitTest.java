@@ -8,6 +8,9 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import java.util.Calendar;
+import java.util.TimeZone;
+
 public class TemperatureUnitTest {
 
     @Test
@@ -123,4 +126,63 @@ public class TemperatureUnitTest {
         assertEquals(d, t.getTemperature(), 1);
         assertEquals(l, t.getTime());
     }
+
+    @Test
+    public void getLocalTimeZero(){
+        int id = 0;
+        double measurement = 0;
+        long time = 0;
+        Temperature t = new Temperature(id, measurement, time);
+
+        TimeZone localTimeZone = Calendar.getInstance().getTimeZone();
+
+        long result = time + localTimeZone.getRawOffset() + (localTimeZone.useDaylightTime() ? localTimeZone.getDSTSavings() : 0);
+
+        assertEquals(result, t.getLocalTime());
+    }
+
+    @Test
+    public void getLocalTimeOne(){
+        int id = 0;
+        double measurement = 0;
+        long time = 1;
+        Temperature t = new Temperature(id, measurement, time);
+
+        TimeZone localTimeZone = Calendar.getInstance().getTimeZone();
+
+        long result = time + localTimeZone.getRawOffset() + (localTimeZone.useDaylightTime() ? localTimeZone.getDSTSavings() : 0);
+
+        assertEquals(result, t.getLocalTime());
+    }
+
+    @Test
+    public void getLocalTimeLowerBoundary(){
+        int id = 0;
+        double measurement = 0;
+        long time = -1;
+        Temperature t = new Temperature(id, measurement, time);
+
+        TimeZone localTimeZone = Calendar.getInstance().getTimeZone();
+
+        long result = time + localTimeZone.getRawOffset() + (localTimeZone.useDaylightTime() ? localTimeZone.getDSTSavings() : 0);
+
+        assertEquals(result, t.getLocalTime());
+    }
+
+    // Equivalent testing
+    @Test
+    public void getLocalTimeMany(){
+        int id = 0;
+        double measurement = 0;
+        long time = 45852398;
+        Temperature t = new Temperature(id, measurement, time);
+
+        TimeZone localTimeZone = Calendar.getInstance().getTimeZone();
+
+        long result = time + localTimeZone.getRawOffset() + (localTimeZone.useDaylightTime() ? localTimeZone.getDSTSavings() : 0);
+
+        assertEquals(result, t.getLocalTime());
+    }
+
+    // Exceptions
 }
