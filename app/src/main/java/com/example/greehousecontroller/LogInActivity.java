@@ -40,7 +40,7 @@ public class LogInActivity extends AppCompatActivity {
         IdpResponse response = result.getIdpResponse();
         if (result.getResultCode() == RESULT_OK) {
             // Successfully signed in
-            handleResult(viewModel.getCurrentUser().getValue().getDisplayName());
+            initObserveUserInfo();
         } else {
             if (response == null) {
                 Toast.makeText(this, "Sign in cancelled", Toast.LENGTH_SHORT).show();
@@ -65,14 +65,14 @@ public class LogInActivity extends AppCompatActivity {
         viewModel.getCurrentUser().observe(this, user -> {
             if (user != null) {
                 // handle result
-                handleResult(user.getDisplayName());
+                initObserveUserInfo();
             } else {
                 signIn();
             }
         });
     }
 
-    private void handleResult(String name) {
+    private void initObserveUserInfo() {
         // get user info from firebase to check if they have greenhouseId/Code registered
         viewModel.initUserInfo();
 
