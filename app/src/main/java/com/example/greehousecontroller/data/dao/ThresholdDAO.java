@@ -14,7 +14,4 @@ public interface ThresholdDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Threshold threshold);
-
-    @Query("DELETE FROM Threshold WHERE type = :type")
-    void delete(String type);
 }
