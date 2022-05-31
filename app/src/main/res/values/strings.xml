@@ -16,7 +16,7 @@
     <string name="menu_graphs">Graphs</string>
     <string name="menu_pots">Pots</string>
     <string name="menu_settings">Threshold settings</string>
-    <string name="menu_edit_greenhouse_id">Edit greenhouse Id</string>
+    <string name="menu_edit_greenhouse_id">Change greenhouse Id</string>
     <string name="menu_log_out">Log out</string>
 
     <!--home-->
@@ -72,13 +72,13 @@
     <string name="greenhouse_id_greenhouse_id">Greenhouse ID</string>
     <string name="greenhouse_id_save">Save</string>
 
-    <!-- edit greenhouse id-->
-    <string name="edit_greenhouse_id_nav_label">Edit greenhouse Id</string>
-    <string name="edit_greenhouse_id_title">Greenhouse Id</string>
-    <string name="edit_greenhouse_id_current_title">Current Id</string>
-    <string name="edit_greenhouse_id_enter_title">Enter new Id</string>
-    <string name="edit_greenhouse_id_dummy_value">0004A30B00E7E7C1</string>
-    <string name="edit_greenhouse_id_notify_same_id">Same greenhouse Id entered</string>
+    <!-- change greenhouse id-->
+    <string name="change_greenhouse_id_nav_label">Change greenhouse Id</string>
+    <string name="change_greenhouse_id_title">Greenhouse Id</string>
+    <string name="change_greenhouse_id_current_title">Current Id</string>
+    <string name="change_greenhouse_id_enter_title">Enter new Id</string>
+    <string name="change_greenhouse_id_dummy_value">0004A30B00E7E7C1</string>
+    <string name="change_greenhouse_id_notify_same_id">Same greenhouse Id entered</string>
 
     <!--graphs-->
     <!--bottom navigation-->

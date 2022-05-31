@@ -43,7 +43,7 @@
     <fragment
         android:id="@+id/navigationEditGreenhouseId"
         android:name="com.example.greehousecontroller.ui.view.EditGreenhouseIdFragment"
-        android:label="@string/edit_greenhouse_id_nav_label"
+        android:label="@string/change_greenhouse_id_nav_label"
         tools:layout="@layout/fragment_edit_greenhouse_id" />
 
 </navigation>

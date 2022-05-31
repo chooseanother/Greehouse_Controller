@@ -48,7 +48,7 @@ public class EditGreenhouseIdFragment extends Fragment {
             String oldGreenhouseId = greenhouseId;
             String newGreenhouseId = newIdText.getText().toString();
             if (oldGreenhouseId.equals(newGreenhouseId)) {
-                Toast.makeText(getContext(), R.string.edit_greenhouse_id_notify_same_id, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.change_greenhouse_id_notify_same_id, Toast.LENGTH_SHORT).show();
             }
             else {
                 viewModel.unsubscribeFromGreenhouse(oldGreenhouseId);
