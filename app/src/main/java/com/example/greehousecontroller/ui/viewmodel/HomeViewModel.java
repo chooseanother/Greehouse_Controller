@@ -68,7 +68,7 @@ public class HomeViewModel extends AndroidViewModel {
         humidityRepository.updateLatestMeasurement(greenhouseId, () -> {
             refreshing.postValue(false);
         });
-        potRepository.updateLatestMeasurement(greenhouseId, () -> {
+        potRepository.updatePotList(greenhouseId, () -> {
             refreshing.postValue(false);
         });
         co2Repository.updateLatestMeasurement(greenhouseId, () -> {
