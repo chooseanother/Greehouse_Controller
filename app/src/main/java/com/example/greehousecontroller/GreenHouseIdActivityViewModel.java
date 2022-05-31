@@ -13,16 +13,18 @@ import com.example.greehousecontroller.utils.GreenhouseFirebaseMessagingService;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.lang.ref.WeakReference;
+
 public class GreenHouseIdActivityViewModel extends AndroidViewModel {
     private final UserRepository userRepository;
     private final UserInfoRepository userInfoRepository;
-    private final GreenhouseFirebaseMessagingService messagingService;
+    private final WeakReference<GreenhouseFirebaseMessagingService> messagingService;
 
     public GreenHouseIdActivityViewModel(@NonNull Application application) {
         super(application);
         userRepository = UserRepository.getInstance(application);
         userInfoRepository = UserInfoRepository.getInstance();
-        messagingService = new GreenhouseFirebaseMessagingService();
+        messagingService = new WeakReference<>(new GreenhouseFirebaseMessagingService());
     }
 
     public void initUserInfo() {
@@ -47,6 +49,6 @@ public class GreenHouseIdActivityViewModel extends AndroidViewModel {
     }
 
     public void subscribeToGreenhouse(String greenhouseID) {
-        messagingService.subscribeToGreenhouse(greenhouseID);
+        messagingService.get().unsubscribeFromGreenhouse(greenhouseID);
     }
 }

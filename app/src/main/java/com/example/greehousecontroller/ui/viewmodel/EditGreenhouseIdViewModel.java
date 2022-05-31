@@ -21,6 +21,7 @@ import com.example.greehousecontroller.data.repository.UserRepository;
 import com.example.greehousecontroller.utils.GreenhouseFirebaseMessagingService;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.lang.ref.WeakReference;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -35,7 +36,7 @@ public class EditGreenhouseIdViewModel extends AndroidViewModel {
     private final CO2Repository co2Repository;
     private final PotRepository potRepository;
     private final MoistureRepository moistureRepository;
-    private GreenhouseFirebaseMessagingService messagingService;
+    private final WeakReference<GreenhouseFirebaseMessagingService> messagingService;
 
     public EditGreenhouseIdViewModel(@NonNull Application application) {
         super(application);
@@ -44,7 +45,7 @@ public class EditGreenhouseIdViewModel extends AndroidViewModel {
         userRepository = UserRepository.getInstance(application);
         userInfoRepository = UserInfoRepository.getInstance();
         executorService = Executors.newFixedThreadPool(2);
-        messagingService = new GreenhouseFirebaseMessagingService();
+        messagingService = new WeakReference<>(new GreenhouseFirebaseMessagingService());
         moistureRepository = MoistureRepository.getInstance(application);
         temperatureRepository = TemperatureRepository.getInstance(app);
         humidityRepository = HumidityRepository.getInstance(app);
@@ -70,11 +71,11 @@ public class EditGreenhouseIdViewModel extends AndroidViewModel {
     }
 
     public void subscribeToGreenhouse(String greenhouseID) {
-        messagingService.subscribeToGreenhouse(greenhouseID);
+        messagingService.get().subscribeToGreenhouse(greenhouseID);
     }
 
     public void unsubscribeFromGreenhouse(String greenhouseId) {
-        messagingService.unsubscribeFromGreenhouse(greenhouseId);
+        messagingService.get().unsubscribeFromGreenhouse(greenhouseId);
     }
 
     public void clearCachedDate() {
