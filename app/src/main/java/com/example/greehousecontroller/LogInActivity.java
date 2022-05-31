@@ -19,11 +19,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class LogInActivity extends AppCompatActivity {
-    private ActivityLogInBinding binding;    private final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+    private ActivityLogInBinding binding;
+    private LogInActivityViewModel viewModel;
+    private final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new FirebaseAuthUIActivityResultContract(),
             this::onSignInResult
     );
-    private LogInActivityViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +98,8 @@ public class LogInActivity extends AppCompatActivity {
                 .build();
         activityResultLauncher.launch(signInIntent);
     }
+
+
 
 
 }
