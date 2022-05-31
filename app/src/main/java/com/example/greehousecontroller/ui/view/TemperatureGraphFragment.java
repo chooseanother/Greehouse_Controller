@@ -24,14 +24,9 @@ import com.example.greehousecontroller.data.model.Temperature;
 import com.example.greehousecontroller.databinding.TemperatureGraphBinding;
 import com.example.greehousecontroller.ui.viewmodel.TemperatureGraphViewModel;
 
-import java.time.LocalDate;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.TimeZone;
 
 public class TemperatureGraphFragment extends Fragment {
 
