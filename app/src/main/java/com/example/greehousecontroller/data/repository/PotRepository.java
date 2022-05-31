@@ -144,7 +144,7 @@ public class PotRepository {
         });
     }
 
-    public void updateLatestMeasurement(String greenhouseId, RepositoryCallback callback) {
+    public void updatePotList(String greenhouseId, RepositoryCallback callback) {
         PotAPI potAPI = ServiceGenerator.getPotAPI();
         Call<List<Pot>> call = potAPI.getAllPotsByGreenhouseId(greenhouseId);
         call.enqueue(new Callback<List<Pot>>() {
