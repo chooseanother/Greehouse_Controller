@@ -7,6 +7,9 @@ import androidx.room.PrimaryKey;
 import com.example.greehousecontroller.utils.MoistureJsonAdapter;
 import com.google.gson.annotations.JsonAdapter;
 
+import java.util.Calendar;
+import java.util.TimeZone;
+
 @Entity
 @JsonAdapter(MoistureJsonAdapter.class)
 public class Moisture {
@@ -57,6 +60,15 @@ public class Moisture {
 
     public void setPotId(int potId) {
         this.potId = potId;
+    }
+
+    public long getLocalTime() {
+        TimeZone localTimeZone = Calendar.getInstance().getTimeZone();
+        int offset = localTimeZone.getRawOffset();
+        if (localTimeZone.useDaylightTime()) {
+            offset += localTimeZone.getDSTSavings();
+        }
+        return time + offset;
     }
 
     @Override
