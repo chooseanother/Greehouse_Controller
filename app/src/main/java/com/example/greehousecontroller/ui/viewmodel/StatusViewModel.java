@@ -41,8 +41,6 @@ public class StatusViewModel extends AndroidViewModel {
     }
 
     public void updateSensorStatus(String greenhouseId){
-        //Todo once done debugging replace the dummy data with the actual api call
-        sensorRepository.setUpTestData();
-        //sensorRepository.updateSensors(greenhouseId);
+        sensorRepository.updateSensors(greenhouseId);
     }
 }

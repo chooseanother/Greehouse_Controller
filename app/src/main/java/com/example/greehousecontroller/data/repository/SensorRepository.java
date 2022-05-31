@@ -63,15 +63,4 @@ public class SensorRepository {
             }
         });
     }
-
-    public void setUpTestData(){
-        List<Sensor> testData = new ArrayList<>();
-        testData.add(new Sensor("CO2", true));
-        testData.add(new Sensor("Temperature", true));
-        testData.add(new Sensor("Humidity", true));
-        testData.add(new Sensor("Cactus", false));
-        testData.add(new Sensor("Banana", true));
-        sensors.setValue(testData);
-    }
-
 }
